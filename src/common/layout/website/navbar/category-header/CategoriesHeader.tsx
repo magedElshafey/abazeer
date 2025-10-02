@@ -3,7 +3,7 @@ import AllCategories from "./AllCategories";
 
 const CategoriesHeader = () => {
   return (
-    <div className="hidden lg:block bg-white shadow-sm py-3">
+    <div className="hidden md:block bg-white shadow-sm py-3">
       <div className="containerr flex items-center gap-4">
         <AllCategories />
         <WebsiteLinks />

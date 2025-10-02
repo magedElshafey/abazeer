@@ -135,21 +135,24 @@ const Search = () => {
   }, []);
 
   return (
-    <div className="flex-1  bg-background-gray p-3 flex items-center gap-3">
+    <div className="flex-1 bg-background-gray p-3 flex items-center gap-3 min-w-0 overflow-hidden">
       {/* Dropdown */}
-      <div className="relative" ref={dropdownRef}>
+      <div
+        className="relative flex-shrink-0 min-w-[120px] max-w-[160px] truncate"
+        ref={dropdownRef}
+      >
         <button
           type="button"
           aria-haspopup="menu"
           aria-expanded={showDropDown}
           aria-controls="categories-menu"
           onClick={handleShowDropDown}
-          className="flex items-center gap-4"
+          className="flex items-center gap-2 w-full truncate"
         >
-          <div className="flex items-center gap-2">
-            <span>{selectedOpt ? selectedOpt.title : t("all categories")}</span>
-            <IoIosArrowDown size={15} aria-hidden="true" />
-          </div>
+          <span className="truncate">
+            {selectedOpt ? selectedOpt.title : t("all categories")}
+          </span>
+          <IoIosArrowDown size={15} aria-hidden="true" />
           <Border />
         </button>
         {showDropDown && (
@@ -161,7 +164,7 @@ const Search = () => {
       <input
         type="text"
         aria-label={t("search")}
-        className="flex-1 border-none outline-none bg-transparent caret-orangeColor"
+        className="flex-1 min-w-0 border-none outline-none bg-transparent caret-orangeColor truncate"
         placeholder={t("search")}
         value={searchTerm}
         onChange={handleSearchTermChange}
@@ -171,7 +174,7 @@ const Search = () => {
       <button
         onClick={handleSearchButtonClick}
         disabled={!selectedOpt && !searchTerm.trim()}
-        className="text-transition disabled:cursor-not-allowed disabled:opacity-40"
+        className="text-transition flex-shrink-0 disabled:cursor-not-allowed disabled:opacity-40"
         aria-label={t("search")}
       >
         <TfiSearch size={20} />

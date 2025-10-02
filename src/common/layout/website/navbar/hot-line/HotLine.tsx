@@ -21,7 +21,7 @@ const HotLine: React.FC<HotLineProps> = ({ hotline }) => {
   const { t } = useTranslation();
   return (
     <div className="flex flex-col gap-1">
-      <p dir="ltr" className="text-2xl font-extrabold">
+      <p dir="ltr" className="text-md xl:text-2xl font-extrabold">
         {formatNumber(hotline)}
       </p>
       <p className="text-xs text-gray-400">{t("24/7 support")}</p>

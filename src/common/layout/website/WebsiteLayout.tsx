@@ -8,7 +8,7 @@ import CategoriesHeader from "./navbar/category-header/CategoriesHeader";
 const WebsiteLayout = () => {
   return (
     <div className="flex flex-col min-h-screen">
-      <div className="lg:hidden">
+      <div className="md:hidden">
         <MobileNavbar />
       </div>
       <Header />
