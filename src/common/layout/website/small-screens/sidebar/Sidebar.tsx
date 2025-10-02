@@ -1,4 +1,3 @@
-import { useAuth } from "../../../../../store/AuthProvider";
 import { useTranslation } from "react-i18next";
 import { sidebarLinks } from "../../../../../data/data";
 import SidebarIntro from "../mobile-navbar/common/SidebarIntro";
@@ -14,7 +13,6 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   const { t } = useTranslation();
-  const { user } = useAuth();
   return (
     <>
       <Backdrop
@@ -48,49 +46,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                 </Link>
               </li>
             ))}
-            <li>
-              <Link
-                onClick={onClose}
-                to="/compare"
-                className="block text-lg font-medium text-transition py-2 border-b ms-2"
-              >
-                {t("compare")}
-              </Link>
-            </li>
-            {!user && (
-              <>
-                <li>
-                  <Link
-                    onClick={onClose}
-                    to="/auth/login"
-                    className="block text-lg font-medium text-transition py-2 border-b ms-2"
-                  >
-                    {t("login")}
-                  </Link>
-                </li>
-
-                <li>
-                  <Link
-                    onClick={onClose}
-                    to="/auth/register"
-                    className="block text-lg font-medium text-transition py-2 border-b ms-2"
-                  >
-                    {t("register")}
-                  </Link>
-                </li>
-              </>
-            )}
-            {user && (
-              <li>
-                <Link
-                  onClick={onClose}
-                  to="/my-profile"
-                  className="block text-lg font-medium text-transition py-2 border-b ms-2"
-                >
-                  {t("my profile")}
-                </Link>
-              </li>
-            )}
             <li className="py-2 border-b ms-2">
               <LanguageDropdown />
             </li>

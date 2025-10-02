@@ -56,7 +56,6 @@ export const sidebarLinks: Nav[] = [
     name: "About",
     link: "/about",
   },
-
   {
     name: "branches",
     link: "/branches",
@@ -73,14 +72,13 @@ export const sidebarLinks: Nav[] = [
     name: "contact",
     link: "/contact",
   },
-
-  {
-    name: "whishlist",
-    link: "/whishlist",
-  },
   {
     name: "order tracking",
     link: "/order-tracking",
+  },
+  {
+    name: "compare",
+    link: "/compare",
   },
 ];
 export const socials: Socials[] = [
