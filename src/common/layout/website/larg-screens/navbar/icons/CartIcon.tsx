@@ -1,6 +1,7 @@
 import { memo, useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { CiShoppingCart } from "react-icons/ci";
+import i18n from "../../../../../../lib/i18n/i18n";
 
 const CartIcon = memo(() => {
   const { t } = useTranslation();
@@ -45,7 +46,9 @@ const CartIcon = memo(() => {
       <div
         role="menu"
         aria-label={t("cart dropdown")}
-        className={`absolute top-full left-0 w-[250px] z-30 py-2 px-4 shadow-md bg-background-gray text-start rounded-md transform transition-all duration-300 ease-out 
+        className={`absolute top-full ${
+          i18n.language === "ar" ? "-right-[180px]" : "-left-[180px]"
+        }  w-[250px] z-30 py-2 px-4 shadow-md bg-background-gray text-start rounded-md transform transition-all duration-300 ease-out 
         ${
           open
             ? "opacity-100 translate-y-0"

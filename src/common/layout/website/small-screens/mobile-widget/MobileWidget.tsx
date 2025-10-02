@@ -63,7 +63,7 @@ const MobileWidget = () => {
         aria-label="Mobile bottom navigation"
       >
         <div className="containerr">
-          <ul className="flex justify-between items-center gap-5 overflow-x-auto">
+          <ul className="flex justify-between flex-nowrap text-nowrap items-center gap-5 overflow-x-auto">
             {actions.map(({ Icon, title, onClick }) => (
               <li key={title}>
                 <IconBadge Icon={Icon} title={title} onClick={onClick} />
