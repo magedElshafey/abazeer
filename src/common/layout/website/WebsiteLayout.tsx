@@ -4,6 +4,7 @@ import Footer from "./common/footer/Footer";
 import Header from "./larg-screens/header/Header";
 import MobileNavbar from "./small-screens/mobile-navbar/MobileNavbar";
 import CategoriesHeader from "./larg-screens/navbar/category-header/CategoriesHeader";
+import Breadcrumb from "../../../features/breadcrumb/components/Breadcrumb";
 
 const WebsiteLayout = () => {
   return (
@@ -14,6 +15,7 @@ const WebsiteLayout = () => {
       <Header />
       <Navbar />
       <CategoriesHeader />
+      <Breadcrumb />
       <main className="flex-1">
         <Outlet />
       </main>
