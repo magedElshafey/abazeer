@@ -1,9 +1,11 @@
 import { useMemo } from "react";
 import { Link, useMatches } from "react-router-dom";
 import { BreadcrumbItem, RouteHandle } from "../types/breadcrumb.types";
+import { useTranslation } from "react-i18next";
 
 const Breadcrumb = () => {
     const matches = useMatches();
+    const { t } = useTranslation();
 
     const breadcrumbItems: BreadcrumbItem[] = useMemo(() => {
         const homeRoute = {
@@ -36,7 +38,7 @@ const Breadcrumb = () => {
                                     to={item.path}
                                     className="last:pointer-events-none last:text-black text-text-link cursor-pointer"
                                 >
-                                    {item.label}
+                                    {t(item.label)}
                                 </Link>
                                 {
                                     !isLastItem && (

@@ -1,7 +1,26 @@
 import { useTranslation } from "react-i18next";
-import React from "react";
+import React, { PropsWithChildren } from "react";
+import { cv } from "css-variants";
+
+const themes = {
+  main: "bg-orangeColor text-black",
+  secondary: "bg-black text-white"
+}
+
+const buttonVariants = cv({
+  base: "px-2 py-1 rounded font-bold",
+  variants: {
+    theme: {
+      ...themes
+    }
+  },
+  defaultVariants: {
+    theme: "main"
+  }
+})
+
 interface MainBtnProps {
-  text: string;
+  text?: string;
   onClick?: (
     e: React.MouseEvent<HTMLButtonElement>,
     ...args: any[]
@@ -9,14 +28,20 @@ interface MainBtnProps {
   type?: "button" | "submit" | "reset";
   isPending?: boolean;
   bg?: string;
+  className?: string;
+  theme?: keyof typeof themes,
 }
 
-const MainBtn: React.FC<MainBtnProps> = ({
+
+
+const MainBtn: React.FC<PropsWithChildren<MainBtnProps>> = ({
   text,
   onClick,
   type = "button",
   isPending = false,
-  bg = "",
+  className,
+  children,
+  theme
 }) => {
   const { t } = useTranslation();
 
@@ -25,17 +50,15 @@ const MainBtn: React.FC<MainBtnProps> = ({
       onClick(e);
     }
   };
-  console.log("main button renderd");
+
   return (
     <button
       disabled={isPending}
       type={type}
       onClick={handleClick}
       aria-busy={isPending}
-      aria-label={isPending ? t("Submitting, please wait") : t(text)}
-      className={`w-full flex items-center justify-center p-4 ${
-        bg ? bg : "bg-gradient-to-t from-darkBlue to-lightBlue text-white"
-      }  rounded-2xl shadow-xl disabled:opacity-85 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-darkBlue`}
+      aria-label={isPending ? t("Submitting, please wait") : t(text || "")}
+      className={`${buttonVariants({ theme })} ${className}`}
     >
       {isPending ? (
         <div
@@ -45,7 +68,8 @@ const MainBtn: React.FC<MainBtnProps> = ({
           aria-label={t("Loading")}
         ></div>
       ) : (
-        t(text)
+        children ||
+        t(text || "")
       )}
     </button>
   );

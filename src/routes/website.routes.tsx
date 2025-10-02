@@ -61,5 +61,22 @@ export const websiteRoutes: RouteObject = {
         breadcrumb: "my_profile"
       }
     },
+    {
+      path: "products",
+      children: [
+        {
+          path: ":id",
+          element: lazyLoad(
+            () => import("../features/products/pages/ProductDetails")
+          ),
+          handle: {
+            breadcrumb: "product name"
+          }
+        }
+      ],
+      handle: {
+        breadcrumb: "products"
+      }
+    }
   ],
 };
