@@ -6,7 +6,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { CiStar } from "react-icons/ci";
 import { IoIosArrowBack } from "react-icons/io";
 
-type Categories = {
+export type Categories = {
   id: number;
   icon: IconType;
   mainCateogry: string;
@@ -17,8 +17,7 @@ type Categories = {
   }[];
 };
 
-// 🟢 static data خارج الكومبوننت عشان performance
-const categories: Categories[] = [
+export const categories: Categories[] = [
   {
     id: 1,
     icon: CiStar,

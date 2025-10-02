@@ -9,8 +9,6 @@ import type { AcademyServiceType } from "../features/home/website/types/AcademyS
 import {
   FaFacebook,
   FaInstagram,
-  FaBehance,
-  FaLinkedin,
   FaSnapchatGhost,
   FaWhatsapp,
 } from "react-icons/fa";
@@ -101,16 +99,6 @@ export const socials: Socials[] = [
     name: "instagram",
     url: "https://www.instagram.com/",
     icon: FaInstagram,
-  },
-  {
-    name: "behance",
-    url: "https://www.behance.com/",
-    icon: FaBehance,
-  },
-  {
-    name: "linkedin",
-    url: "https://www.linkedin.com/",
-    icon: FaLinkedin,
   },
   {
     name: "snapchat",
