@@ -50,7 +50,7 @@ const ProductInfo: FC = () => {
                 <p>
                     {t("quantity")}
                 </p>
-                <div className="flex items-stretch justify-stretch gap-2 mt-1">
+                <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-2 mt-1">
                     <ProductQuantity className="w-full" />
                     <MainBtn
                         className="w-full"
