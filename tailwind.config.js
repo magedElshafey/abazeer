@@ -21,6 +21,7 @@ export default {
           gray: "#828282",
           red: "#FF0000",
           subHeader: "#8593A3",
+          link: "#09c",
         },
         darkBlue: "#0642BC",
         lightBlue: "#3274FF",
