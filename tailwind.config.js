@@ -14,6 +14,7 @@ export default {
           dark: "#0f172a",
           babyBlue: "#F0EDFFCC",
           gray: "#f7f7f7",
+          green: "#26901b",
         },
         text: {
           light: "#1e293b",
@@ -22,6 +23,7 @@ export default {
           red: "#FF0000",
           subHeader: "#8593A3",
           link: "#09c",
+          darkRed: "#cb4321"
         },
         darkBlue: "#0642BC",
         lightBlue: "#3274FF",

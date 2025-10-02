@@ -16,7 +16,7 @@ const WebsiteLayout = () => {
       <Navbar />
       <CategoriesHeader />
       <Breadcrumb />
-      <main className="flex-1 pt-16">
+      <main className="flex-1">
         <Outlet />
       </main>
       <Footer />
