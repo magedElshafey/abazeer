@@ -47,7 +47,42 @@ export const navLinks: Nav[] = [
     link: "/contact",
   },
 ];
+export const sidebarLinks: Nav[] = [
+  {
+    name: "offers",
+    link: "/offers",
+  },
+  {
+    name: "About",
+    link: "/about",
+  },
 
+  {
+    name: "branches",
+    link: "/branches",
+  },
+  {
+    name: "blogs",
+    link: "/blogs",
+  },
+  {
+    name: "faq",
+    link: "/faq",
+  },
+  {
+    name: "contact",
+    link: "/contact",
+  },
+
+  {
+    name: "whishlist",
+    link: "/whishlist",
+  },
+  {
+    name: "order tracking",
+    link: "/order-tracking",
+  },
+];
 export const socials: Socials[] = [
   {
     name: "whatsapp",
