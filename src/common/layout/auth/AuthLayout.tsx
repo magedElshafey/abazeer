@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import BgImg from "./BgImg";
 import Logo from "../../components/logo/Logo";
-import logo from "../../../assets/logo.png";
+import logo from "../../../assets/logo (1).png";
 import { useLocation } from "react-router-dom";
 import successLogo from "../../../assets/Vector.png";
 import gifaya from "../../../assets/gifaya.gif";

@@ -276,12 +276,12 @@ const MainSelectInner = <T extends OptionType>(props: MainSelectProps<T>) => {
           onBlur={() => {
             // note: actual blur handling to forms will be called on select or explicitly if needed
           }}
-          className={`transition text-text-gray duration-150 rounded-lg w-full py-3 px-4 flex-between gap-3 bg-background-babyBlue
+          className={`transition text-text-gray duration-150 rounded-lg w-full py-3 px-4 flex-between gap-3 bg-background-gray
             ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}
             ${
               error
                 ? "ring-2 ring-red-500"
-                : "focus-within:ring-2 focus-within:ring-primary"
+                : "focus-within:ring-2 focus-within:ring-orangeColor"
             }`}
           onClick={handleToggle}
         >

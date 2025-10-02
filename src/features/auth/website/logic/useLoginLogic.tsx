@@ -15,14 +15,14 @@ const useLoginLogic = () => {
     mode: "onBlur",
     reValidateMode: "onBlur",
     defaultValues: {
-      username: "",
+      email: "",
       password: "",
       rememberMe: false,
     },
   });
   const onSubmit = async (data: LoginSchemaType) => {
     const formData = new FormData();
-    formData.append("user_name", data?.username);
+    formData.append("email", data?.email);
     formData?.append("password", data?.password);
     try {
       const response = await mutateAsync(formData);

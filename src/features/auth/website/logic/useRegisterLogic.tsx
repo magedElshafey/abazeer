@@ -30,10 +30,6 @@ const useRegisterLogic = () => {
     formData?.append("password", data?.password);
     formData?.append("phone", data?.phone);
     formData?.append("email", data?.email);
-    formData?.append("city_id", String(data.city));
-    formData?.append("country_id", String(data.country));
-    formData?.append("account_type_id", String(data.accountType));
-    formData?.append("birth_date", String(data.birthDate));
     try {
       const response = await mutateAsync(formData);
       if (response?.status) {
