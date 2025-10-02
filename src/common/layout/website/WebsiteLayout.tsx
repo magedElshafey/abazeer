@@ -1,9 +1,9 @@
 import { Outlet } from "react-router-dom";
-import Navbar from "./navbar/Navbar";
-import Footer from "./footer/Footer";
-import Header from "./header/Header";
-import MobileNavbar from "./mobile-navbar/MobileNavbar";
-import CategoriesHeader from "./navbar/category-header/CategoriesHeader";
+import Navbar from "./larg-screens/navbar/Navbar";
+import Footer from "./common/footer/Footer";
+import Header from "./larg-screens/header/Header";
+import MobileNavbar from "./small-screens/mobile-navbar/MobileNavbar";
+import CategoriesHeader from "./larg-screens/navbar/category-header/CategoriesHeader";
 
 const WebsiteLayout = () => {
   return (

@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { navLinks } from "../../../../../data/data";
+import { navLinks } from "../../../../../../data/data";
 const WebsiteLinks = () => {
   const { t } = useTranslation();
   return (

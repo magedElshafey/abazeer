@@ -1,6 +1,5 @@
 import { RiCloseLine } from "react-icons/ri";
-import Search from "../../navbar/search/Search";
-
+import Search from "../../larg-screens/navbar/search/Search";
 interface SearchSidebarProps {
   showSidebar: boolean;
   onClose: () => void;

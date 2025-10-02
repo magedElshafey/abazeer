@@ -1,6 +1,6 @@
-import Logo from "../../../../../components/logo/Logo";
-import logo from "../../../../../../assets/logo (1).png";
-import type { Nav } from "../../../../../../types/Nav";
+import Logo from "../../../../../../components/logo/Logo";
+import logo from "../../../../../../../assets/logo (1).png";
+import type { Nav } from "../../../../../../../types/Nav";
 import FooterLinkList from "./FooterLinkList";
 import NewsLetter from "../../newsletter/NewsLetter";
 const useflulLinks: Nav[] = [

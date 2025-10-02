@@ -1,5 +1,5 @@
 import { IoCloseSharp } from "react-icons/io5";
-import { navLinks } from "../../../../data/data";
+import { navLinks } from "../../../../../data/data";
 import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 // import LoginButton from "../navbar/icons/LoginButton";

@@ -1,9 +1,9 @@
 import FeatureCard from "./FeatureCard";
-import feat1 from "../../../../../../assets/feat-01.png";
-import feat2 from "../../../../../../assets/feat-02.png";
-import feat3 from "../../../../../../assets/feat-03.png";
-import feat4 from "../../../../../../assets/feat-04.png";
-import feat5 from "../../../../../../assets/feat-05.png";
+import feat1 from "../../../../../../../assets/feat-01.png";
+import feat2 from "../../../../../../../assets/feat-02.png";
+import feat3 from "../../../../../../../assets/feat-03.png";
+import feat4 from "../../../../../../../assets/feat-04.png";
+import feat5 from "../../../../../../../assets/feat-05.png";
 export type Feature = {
   image: string;
   title: string;

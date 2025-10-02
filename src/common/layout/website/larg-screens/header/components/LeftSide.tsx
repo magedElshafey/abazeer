@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import Border from "../../../../components/border/Border";
+import Border from "../../../../../components/border/Border";
 const LeftSide = () => {
   const { t } = useTranslation();
   return (

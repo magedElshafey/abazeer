@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback } from "react";
-import Logo from "../../../components/logo/Logo";
-import logo from "../../../../assets/logo (1).png";
-import SidebarIcon from "../navbar/icons/SidebarIcon";
+import Logo from "../../../../components/logo/Logo";
+import logo from "../../../../../assets/logo (1).png";
+import SidebarIcon from "../sidebar/SidebarIcon";
 import { TfiSearch } from "react-icons/tfi";
-import SearchSidebar from "./components/SearchSidebar";
+import SearchSidebar from "../search/SearchSidebar";
 import Sidebar from "../sidebar/Sidebar";
 
 const MobileNavbar = () => {

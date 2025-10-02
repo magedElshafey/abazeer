@@ -1,7 +1,7 @@
 import { useState, useCallback, memo, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import Border from "../../../../components/border/Border";
+import Border from "../../../../../components/border/Border";
 import { IoIosArrowDown } from "react-icons/io";
 import { TfiSearch } from "react-icons/tfi";
 

@@ -1,7 +1,6 @@
 import { useTranslation } from "react-i18next";
 import SocialLinks from "./SocialLinks";
-import { socials } from "../../../../../../data/data";
-
+import { socials } from "../../../../../../../data/data";
 const CopyRight = () => {
   const { t } = useTranslation();
 

@@ -1,8 +1,7 @@
 import { memo } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import type { Nav } from "../../../../../../types/Nav";
-
+import type { Nav } from "../../../../../../../types/Nav";
 interface FooterLinkListProps {
   title?: string;
   links: Nav[];

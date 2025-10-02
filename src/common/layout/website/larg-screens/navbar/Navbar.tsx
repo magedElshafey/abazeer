@@ -1,5 +1,5 @@
-import Logo from "../../../components/logo/Logo";
-import logo from "../../../../assets/logo (1).png";
+import Logo from "../../../../components/logo/Logo";
+import logo from "../../../../../assets/logo (1).png";
 import NavIcons from "./navIcons/NavIcons";
 import Search from "./search/Search";
 import HotLine from "./hot-line/HotLine";
