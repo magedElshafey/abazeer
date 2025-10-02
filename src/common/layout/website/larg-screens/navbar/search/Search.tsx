@@ -42,11 +42,12 @@ interface DropdownProps {
 }
 
 const Dropdown = memo(({ categories, onSelect }: DropdownProps) => {
+  console.log("resss");
   return (
     <ul
       role="menu"
       aria-label="categories"
-      className="absolute top-full right-0 w-[180px] bg-white shadow-lg p-2 border z-30 text-start max-h-56 overflow-y-auto"
+      className="absolute top-full right-0  w-[180px] bg-white shadow-lg p-2 border z-[100000] text-start max-h-56 overflow-y-auto"
     >
       {categories.map((category) => (
         <li key={category.id} className="mb-3">
@@ -117,7 +118,6 @@ const Search = () => {
     navigate(`/products?${queryString}`);
   }, [navigate, searchTerm, selectedOpt]);
 
-  // ✅ إغلاق الـ dropdown عند الضغط خارجها
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -133,12 +133,12 @@ const Search = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
+  console.log(showDropDown);
   return (
-    <div className="flex-1 bg-background-gray p-3 flex items-center gap-3 min-w-0 overflow-hidden">
+    <div className="flex-1 bg-background-gray p-3 flex items-center gap-3 min-w-0 ">
       {/* Dropdown */}
       <div
-        className="relative flex-shrink-0 min-w-[120px] max-w-[160px] truncate"
+        className="relative flex-shrink-0 min-w-[120px] max-w-[160px] "
         ref={dropdownRef}
       >
         <button
