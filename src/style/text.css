@@ -1,0 +1,3 @@
+.text-transition {
+    @apply transition duration-200 hover:text-orangeColor;
+}

@@ -1,0 +1,23 @@
+.custom-checkbox {
+    @apply relative cursor-pointer text-[13px] select-none;
+}
+
+.custom-checkbox input[type="checkbox"] {
+    @apply appearance-none w-[13px] h-[13px] border border-gray-600 transition-all cursor-pointer relative;
+}
+
+.custom-checkbox input[type="checkbox"]:checked {
+    @apply bg-darkBlue border-darkBlue;
+}
+
+.custom-checkbox input[type="checkbox"]:checked::after {
+    content: "";
+    @apply absolute left-[4px] top-0 w-[5px] h-[10px];
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+input[type="date"] {
+    @apply text-text-gray
+}

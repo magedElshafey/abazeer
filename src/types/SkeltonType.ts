@@ -1,0 +1,15 @@
+export type SkeletonType =
+  | "slider"
+  | "product"
+  | "category"
+  | "blog"
+  | "feature"
+  | "hero"
+  | "service"
+  | "image"
+  | "contact"
+  | "payment"
+  | "faq"
+  | "profile"
+  | "cart-table"
+  | "custome";

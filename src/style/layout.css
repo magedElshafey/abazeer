@@ -1,0 +1,44 @@
+/* Layout Helpers */
+.containerr {
+    @apply w-full max-w-[1320px] mx-auto px-4 lg:px-8;
+}
+
+.flex-center {
+    @apply flex items-center justify-center;
+}
+
+.flex-between {
+    @apply flex items-center justify-between;
+}
+
+.flex-column {
+    @apply flex flex-col;
+}
+
+.flex-roww {
+    @apply flex flex-row;
+}
+
+.grid-center {
+    @apply grid place-items-center;
+}
+
+.grid-2 {
+    @apply grid grid-cols-1 md:grid-cols-2;
+}
+
+.grid-3 {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3;
+}
+
+.grid-4 {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
+}
+
+.grid-5 {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5;
+}
+
+.grid-5 {
+    @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6;
+}
