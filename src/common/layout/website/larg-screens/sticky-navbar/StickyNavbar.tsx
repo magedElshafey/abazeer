@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import Navbar from "../navbar/Navbar";
-import CategoriesHeader from "../navbar/category-header/CategoriesHeader";
+// import CategoriesHeader from "../navbar/category-header/CategoriesHeader";
 const StickyNavbar = () => {
   const navRef = useRef<HTMLDivElement | null>(null);
   const [isSticky, setIsSticky] = useState(false);
@@ -28,7 +28,7 @@ const StickyNavbar = () => {
     <>
       <div ref={navRef}>
         <Navbar />
-        <CategoriesHeader />
+        {/* <CategoriesHeader /> */}
       </div>
 
       <div
@@ -41,7 +41,7 @@ const StickyNavbar = () => {
         `}
       >
         <Navbar />
-        <CategoriesHeader />
+        {/* <CategoriesHeader /> */}
       </div>
     </>
   );

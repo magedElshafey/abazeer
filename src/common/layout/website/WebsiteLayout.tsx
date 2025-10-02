@@ -6,6 +6,7 @@ import Breadcrumb from "./common/breadcrumb/components/Breadcrumb";
 import MobileWidget from "./small-screens/mobile-widget/MobileWidget";
 import StickyNavbar from "./larg-screens/sticky-navbar/StickyNavbar";
 import ScrollToTopButton from "./common/scroll-to-top/ScrollToTopButton";
+import CategoriesHeader from "./larg-screens/navbar/category-header/CategoriesHeader";
 const WebsiteLayout = () => {
   return (
     <div className="flex flex-col min-h-screen">
@@ -18,8 +19,9 @@ const WebsiteLayout = () => {
       </div>
       <Header />
       <StickyNavbar />
+      <CategoriesHeader />
       <Breadcrumb />
-      <main className="flex-1">
+      <main className="flex-1 ">
         <Outlet />
       </main>
       <Footer />
