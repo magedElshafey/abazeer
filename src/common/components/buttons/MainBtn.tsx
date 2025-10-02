@@ -8,7 +8,7 @@ const themes = {
 }
 
 const buttonVariants = cv({
-  base: "px-2 py-1 rounded font-bold",
+  base: "px-2 py-2 rounded font-bold",
   variants: {
     theme: {
       ...themes
