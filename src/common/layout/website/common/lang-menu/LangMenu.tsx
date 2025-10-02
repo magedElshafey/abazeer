@@ -2,21 +2,8 @@ import { useState, useMemo, useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useLanguage } from "../../../../../store/LanguageProvider";
 import { IoIosArrowDown } from "react-icons/io";
-
-import us from "../../../../../assets/us.png";
-import ksa from "../../../../../assets/ksa.png";
-
-type Lang = {
-  flag: string;
-  title: string;
-  label: string;
-};
-
-export const LANGUAGES: Lang[] = [
-  { flag: us, title: "english", label: "en" },
-  { flag: ksa, title: "arabic", label: "ar" },
-];
-
+import { LANGUAGES } from "../../../../../data/data";
+import type { Lang } from "../../../../../types/Lang";
 const LanguageOption = ({
   lang,
   onClick,

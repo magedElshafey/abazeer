@@ -1,58 +1,12 @@
 import Logo from "../../../../../../components/logo/Logo";
 import logo from "../../../../../../../assets/logo (1).png";
-import type { Nav } from "../../../../../../../types/Nav";
 import FooterLinkList from "./FooterLinkList";
 import NewsLetter from "../../newsletter/NewsLetter";
-const useflulLinks: Nav[] = [
-  {
-    name: "terms of use",
-    link: "/terms-of-use",
-  },
-  {
-    name: "terms & conditions",
-    link: "/terms-conditions",
-  },
-  {
-    name: "refund policy",
-    link: "/refund-policy",
-  },
-  {
-    name: "faq",
-    link: "/faq",
-  },
-];
-const helpCenterLinks: Nav[] = [
-  {
-    name: "About",
-    link: "/about",
-  },
-  {
-    name: "contact",
-    link: "/contact",
-  },
-  {
-    name: "blogs",
-    link: "/refund-policy",
-  },
-];
-const myAccount: Nav[] = [
-  {
-    name: "my cart",
-    link: "/my-cart",
-  },
-  {
-    name: "my whishlist",
-    link: "/my-whishlist",
-  },
-  {
-    name: "my addresses",
-    link: "/my-addresses",
-  },
-  {
-    name: "my profile",
-    link: "/my-profile",
-  },
-];
+import {
+  useflulLinks,
+  helpCenterLinks,
+  myAccount,
+} from "../../../../../../../data/data";
 const SiteMap = () => {
   return (
     <section

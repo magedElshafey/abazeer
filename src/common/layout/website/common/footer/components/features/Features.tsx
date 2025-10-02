@@ -1,47 +1,5 @@
 import FeatureCard from "./FeatureCard";
-import feat1 from "../../../../../../../assets/feat-01.png";
-import feat2 from "../../../../../../../assets/feat-02.png";
-import feat3 from "../../../../../../../assets/feat-03.png";
-import feat4 from "../../../../../../../assets/feat-04.png";
-import feat5 from "../../../../../../../assets/feat-05.png";
-export type Feature = {
-  image: string;
-  title: string;
-  description: string;
-  id: number;
-};
-const features: Feature[] = [
-  {
-    id: 1,
-    image: feat1,
-    title: "Free Shipping",
-    description: "For all orders over $200",
-  },
-  {
-    id: 2,
-    image: feat2,
-    title: "1 & 1 Returns",
-    description: "Cancellation after 1 day",
-  },
-  {
-    id: 3,
-    image: feat3,
-    title: "100% Secure Payment",
-    description: "Guarantee secure payments",
-  },
-  {
-    id: 4,
-    image: feat4,
-    title: "24/7 Dedicated Support",
-    description: "Anywhere & anytime",
-  },
-  {
-    id: 5,
-    image: feat5,
-    title: "Daily Offers",
-    description: "Discount up to 70% OFF",
-  },
-];
+import { features } from "../../../../../../../data/data";
 const Features = () => {
   return (
     <section

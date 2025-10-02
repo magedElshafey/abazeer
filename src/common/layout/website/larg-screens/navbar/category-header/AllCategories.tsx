@@ -1,43 +1,9 @@
 import { memo, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import type { IconType } from "react-icons";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { CiStar } from "react-icons/ci";
 import { IoIosArrowBack } from "react-icons/io";
-
-export type Categories = {
-  id: number;
-  icon: IconType;
-  mainCateogry: string;
-  sub?: {
-    id: number;
-    title: string;
-    subSub?: { id: number; title: string }[];
-  }[];
-};
-
-export const categories: Categories[] = [
-  {
-    id: 1,
-    icon: CiStar,
-    mainCateogry: "fruits & vegatbiles",
-    sub: [
-      { id: 2, title: "fruits", subSub: [{ id: 3, title: "mango" }] },
-      { id: 3, title: "vegatbles", subSub: [{ id: 4, title: "carrot" }] },
-    ],
-  },
-  {
-    id: 4,
-    icon: CiStar,
-    mainCateogry: "honey & nuts",
-    sub: [
-      { id: 5, title: "honey", subSub: [{ id: 6, title: "honey 1" }] },
-      { id: 7, title: "nuts", subSub: [{ id: 8, title: "nuts 1" }] },
-    ],
-  },
-];
-
+import { categories } from "../../../../../../data/data";
 const AllCategories = memo(() => {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();

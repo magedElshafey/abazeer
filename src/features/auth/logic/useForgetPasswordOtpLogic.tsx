@@ -1,40 +1,35 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import useRegister from "../api/useRegister";
-import {
-  type RegisterSchemaType,
-  registerSchema,
-} from "../schema/registerSchema";
 import { toast } from "sonner";
+import { type OtpSchemaType, otpSchema } from "../schema/otpSchema";
 import handlePromisError from "../../../utils/handlePromiseError";
-const useRegisterLogic = () => {
-  const { isPending, mutateAsync } = useRegister();
+import { useNavigate } from "react-router-dom";
+import useSendForgetPasswordOtp from "../api/useSendForgetPasswordOtp";
+const useForgetPasswordOtpLogic = () => {
+  const navigate = useNavigate();
+  const { isPending, mutateAsync } = useSendForgetPasswordOtp();
   const {
     register,
     handleSubmit,
     formState: { errors },
     control,
-  } = useForm<RegisterSchemaType>({
-    resolver: zodResolver(registerSchema),
+  } = useForm<OtpSchemaType>({
+    resolver: zodResolver(otpSchema),
     mode: "onBlur",
     reValidateMode: "onBlur",
     defaultValues: {
-      username: "",
-      password: "",
-      rememberMe: false,
+      otp: "",
     },
   });
-  const onSubmit = async (data: RegisterSchemaType) => {
+  const onSubmit = async (data: OtpSchemaType) => {
     const formData = new FormData();
-    formData.append("name", data?.username);
-    formData?.append("password", data?.password);
-    formData?.append("phone", data?.phone);
-    formData?.append("email", data?.email);
+    formData?.append("code", data?.otp);
 
     try {
       const response = await mutateAsync(formData);
       if (response?.status) {
         toast.success(response?.message);
+        navigate("/auth/reset-password");
       }
     } catch (error) {
       handlePromisError(error);
@@ -50,4 +45,4 @@ const useRegisterLogic = () => {
   };
 };
 
-export default useRegisterLogic;
+export default useForgetPasswordOtpLogic;

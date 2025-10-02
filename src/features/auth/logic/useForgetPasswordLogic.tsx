@@ -1,40 +1,38 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import useRegister from "../api/useRegister";
-import {
-  type RegisterSchemaType,
-  registerSchema,
-} from "../schema/registerSchema";
 import { toast } from "sonner";
+import {
+  type ForgetPasswordSchemaType,
+  forgetPasswordSchema,
+} from "../schema/forgetPasswordSchema";
 import handlePromisError from "../../../utils/handlePromiseError";
-const useRegisterLogic = () => {
-  const { isPending, mutateAsync } = useRegister();
+import useForgetPassword from "../api/useForgetPassword";
+import { useNavigate } from "react-router-dom";
+const useForgetPasswordLogic = () => {
+  const navigate = useNavigate();
+  const { isPending, mutateAsync } = useForgetPassword();
   const {
     register,
     handleSubmit,
     formState: { errors },
     control,
-  } = useForm<RegisterSchemaType>({
-    resolver: zodResolver(registerSchema),
+  } = useForm<ForgetPasswordSchemaType>({
+    resolver: zodResolver(forgetPasswordSchema),
     mode: "onBlur",
     reValidateMode: "onBlur",
     defaultValues: {
-      username: "",
-      password: "",
-      rememberMe: false,
+      email: "",
     },
   });
-  const onSubmit = async (data: RegisterSchemaType) => {
+  const onSubmit = async (data: ForgetPasswordSchemaType) => {
     const formData = new FormData();
-    formData.append("name", data?.username);
-    formData?.append("password", data?.password);
-    formData?.append("phone", data?.phone);
     formData?.append("email", data?.email);
 
     try {
       const response = await mutateAsync(formData);
       if (response?.status) {
         toast.success(response?.message);
+        navigate("/auth/forget-password-otp");
       }
     } catch (error) {
       handlePromisError(error);
@@ -50,4 +48,4 @@ const useRegisterLogic = () => {
   };
 };
 
-export default useRegisterLogic;
+export default useForgetPasswordLogic;

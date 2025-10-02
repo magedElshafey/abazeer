@@ -4,8 +4,8 @@ import { useTranslation } from "react-i18next";
 import SidebarIntro from "../../../mobile-navbar/common/SidebarIntro";
 import Backdrop from "../../../mobile-navbar/common/Backdrop";
 import { IoIosArrowBack } from "react-icons/io";
-import type { Categories } from "../../../../larg-screens/navbar/category-header/AllCategories";
-import { categories } from "../../../../larg-screens/navbar/category-header/AllCategories";
+import type { Categories } from "../../../../../../../features/categories/types/Categories";
+import { categories } from "../../../../../../../data/data";
 interface CategoriesSidebarProps {
   isOpen: boolean;
   onClose: () => void;

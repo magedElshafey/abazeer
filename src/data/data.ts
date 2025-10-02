@@ -1,8 +1,9 @@
 // types
-import type { Pricing } from "../features/home/website/types/Pricing";
 import type { Nav } from "../types/Nav";
 import type { Socials } from "../types/Socials";
-import type { AcademyServiceType } from "../features/home/website/types/AcademyServiceType";
+import type { Feature } from "../common/layout/website/common/footer/components/features/type/Feature";
+import type { Lang } from "../types/Lang";
+import type { Categories } from "../features/categories/types/Categories";
 // assets
 
 // react icons
@@ -12,12 +13,20 @@ import {
   FaSnapchatGhost,
   FaWhatsapp,
 } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
+import { CiStar } from "react-icons/ci";
+
 // images
-import serv1 from "../assets/serv-01.png";
-import serv2 from "../assets/serv-02.png";
-import serv3 from "../assets/serv-03.png";
-import serv4 from "../assets/serv-04.png";
+
+// features
+import feat1 from "../assets/feat-01.png";
+import feat2 from "../assets/feat-02.png";
+import feat3 from "../assets/feat-03.png";
+import feat4 from "../assets/feat-04.png";
+import feat5 from "../assets/feat-05.png";
+// lang
+import us from "../assets/us.png";
+import ksa from "../assets/ksa.png";
+
 export const navLinks: Nav[] = [
   {
     name: "offers",
@@ -90,11 +99,7 @@ export const socials: Socials[] = [
     url: "https://www.facebook.com/",
     icon: FaFacebook,
   },
-  {
-    name: "twitter",
-    url: "https://www.twitter.com/",
-    icon: FaXTwitter,
-  },
+
   {
     name: "instagram",
     url: "https://www.instagram.com/",
@@ -115,52 +120,110 @@ export const protectedRoutes: string[] = [
   "/my-addresses",
   "/dashboard",
 ];
-export const plans: Pricing[] = [
+
+export const features: Feature[] = [
   {
     id: 1,
-    title: "الخطة السنوية",
-    price: "$742",
-    period: "سنوياً",
-    description:
-      "هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف التى يولدها التطبيق.",
+    image: feat1,
+    title: "Free Shipping",
+    description: "For all orders over $200",
   },
   {
     id: 2,
-    title: "الخطة الشهرية",
-    price: "$98",
-    period: "شهرياً",
-    description:
-      "هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف التى يولدها التطبيق.",
-    highlight: true,
+    image: feat2,
+    title: "1 & 1 Returns",
+    description: "Cancellation after 1 day",
   },
   {
     id: 3,
-    title: "الخطة الأساسية",
-    price: "$0",
-    period: "دائماً",
-    description:
-      "هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف التى يولدها التطبيق.",
-  },
-];
-export const academyServices: AcademyServiceType[] = [
-  {
-    id: 1,
-    image: serv1,
-    title: "Download the training plan",
-  },
-  {
-    id: 2,
-    image: serv2,
-    title: "Training applications for companies and government agencies",
-  },
-  {
-    id: 3,
-    image: serv3,
-    title: "Subscribe as a trainer or expert",
+    image: feat3,
+    title: "100% Secure Payment",
+    description: "Guarantee secure payments",
   },
   {
     id: 4,
-    image: serv4,
-    title: "Remote training",
+    image: feat4,
+    title: "24/7 Dedicated Support",
+    description: "Anywhere & anytime",
+  },
+  {
+    id: 5,
+    image: feat5,
+    title: "Daily Offers",
+    description: "Discount up to 70% OFF",
+  },
+];
+export const useflulLinks: Nav[] = [
+  {
+    name: "terms of use",
+    link: "/terms-of-use",
+  },
+  {
+    name: "terms & conditions",
+    link: "/terms-conditions",
+  },
+  {
+    name: "refund policy",
+    link: "/refund-policy",
+  },
+  {
+    name: "faq",
+    link: "/faq",
+  },
+];
+export const helpCenterLinks: Nav[] = [
+  {
+    name: "About",
+    link: "/about",
+  },
+  {
+    name: "contact",
+    link: "/contact",
+  },
+  {
+    name: "blogs",
+    link: "/refund-policy",
+  },
+];
+export const myAccount: Nav[] = [
+  {
+    name: "my cart",
+    link: "/my-cart",
+  },
+  {
+    name: "my whishlist",
+    link: "/my-whishlist",
+  },
+  {
+    name: "my addresses",
+    link: "/my-addresses",
+  },
+  {
+    name: "my profile",
+    link: "/my-profile",
+  },
+];
+export const LANGUAGES: Lang[] = [
+  { flag: us, title: "english", label: "en" },
+  { flag: ksa, title: "arabic", label: "ar" },
+];
+export const categories: Categories[] = [
+  {
+    id: 1,
+    icon: CiStar,
+    mainCateogry: "fruits & vegatbiles",
+    sub: [
+      { id: 2, title: "fruits", subSub: [{ id: 3, title: "mango" }] },
+      { id: 3, title: "vegatbles", subSub: [{ id: 4, title: "carrot" }] },
+    ],
+  },
+  {
+    id: 4,
+    icon: CiStar,
+    mainCateogry: "honey & nuts",
+    sub: [
+      { id: 5, title: "honey", subSub: [{ id: 6, title: "honey 1" }] },
+      { id: 7, title: "nuts", subSub: [{ id: 8, title: "nuts 1" }] },
+    ],
   },
 ];

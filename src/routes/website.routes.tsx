@@ -7,59 +7,51 @@ export const websiteRoutes: RouteObject = {
   children: [
     {
       index: true,
-      element: lazyLoad(() => import("../features/home/website/Home")),
+      element: lazyLoad(() => import("../features/home/Home")),
       handle: {
         breadcrumb: "home",
       },
     },
     {
       path: "about",
-      element: lazyLoad(
-        () => import("../features/static-pages/website/pages/About")
-      ),
+      element: lazyLoad(() => import("../features/static-pages/pages/About")),
       handle: {
-        breadcrumb: "about"
-      }
+        breadcrumb: "about",
+      },
     },
     {
       path: "faq",
-      element: lazyLoad(
-        () => import("../features/static-pages/website/pages/Faq")
-      ),
+      element: lazyLoad(() => import("../features/static-pages/pages/Faq")),
       handle: {
-        breadcrumb: "faq"
-      }
+        breadcrumb: "faq",
+      },
     },
     {
       path: "team",
-      element: lazyLoad(
-        () => import("../features/static-pages/website/pages/Team")
-      ),
+      element: lazyLoad(() => import("../features/static-pages/pages/Team")),
       handle: {
-        breadcrumb: "team"
-      }
+        breadcrumb: "team",
+      },
     },
     {
       path: "branches",
       element: lazyLoad(
-        () => import("../features/static-pages/website/pages/Branches")
+        () => import("../features/static-pages/pages/Branches")
       ),
       handle: {
-        breadcrumb: "branches"
-      }
+        breadcrumb: "branches",
+      },
     },
     {
       path: "my-profile",
       element: (
         <Guard requireAuth={true}>
-          {lazyLoad(
-            () => import("../features/user/website/my-profile/MyProfile")
-          )}
+          {lazyLoad(() => import("../features/user/my-profile/MyProfile"))}
         </Guard>
       ),
       handle: {
-        breadcrumb: "my_profile"
-      }
+        breadcrumb: "my_profile",
+      },
     },
     {
       path: "products",
@@ -70,13 +62,13 @@ export const websiteRoutes: RouteObject = {
             () => import("../features/products/pages/ProductDetails")
           ),
           handle: {
-            breadcrumb: "product name"
-          }
-        }
+            breadcrumb: "product name",
+          },
+        },
       ],
       handle: {
-        breadcrumb: "products"
-      }
-    }
+        breadcrumb: "products",
+      },
+    },
   ],
 };

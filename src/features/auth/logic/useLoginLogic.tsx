@@ -1,36 +1,29 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import useRegister from "../api/useRegister";
-import {
-  type RegisterSchemaType,
-  registerSchema,
-} from "../schema/registerSchema";
-import { toast } from "sonner";
+import { type LoginSchemaType, loginSchema } from "../schema/loginSchema";
+import useLogin from "../api/useLogin";
 import handlePromisError from "../../../utils/handlePromiseError";
-const useRegisterLogic = () => {
-  const { isPending, mutateAsync } = useRegister();
+import { toast } from "sonner";
+const useLoginLogic = () => {
+  const { isPending, mutateAsync } = useLogin();
   const {
     register,
     handleSubmit,
     formState: { errors },
-    control,
-  } = useForm<RegisterSchemaType>({
-    resolver: zodResolver(registerSchema),
+  } = useForm<LoginSchemaType>({
+    resolver: zodResolver(loginSchema),
     mode: "onBlur",
     reValidateMode: "onBlur",
     defaultValues: {
-      username: "",
+      email: "",
       password: "",
       rememberMe: false,
     },
   });
-  const onSubmit = async (data: RegisterSchemaType) => {
+  const onSubmit = async (data: LoginSchemaType) => {
     const formData = new FormData();
-    formData.append("name", data?.username);
+    formData.append("email", data?.email);
     formData?.append("password", data?.password);
-    formData?.append("phone", data?.phone);
-    formData?.append("email", data?.email);
-
     try {
       const response = await mutateAsync(formData);
       if (response?.status) {
@@ -44,10 +37,9 @@ const useRegisterLogic = () => {
     register,
     handleSubmit,
     errors,
-    control,
-    isPending,
     onSubmit,
+    isPending,
   };
 };
 
-export default useRegisterLogic;
+export default useLoginLogic;

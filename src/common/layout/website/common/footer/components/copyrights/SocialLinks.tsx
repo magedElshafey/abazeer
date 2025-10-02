@@ -1,6 +1,5 @@
 import { memo } from "react";
-import type { Socials } from "../../../../../../types/Socials";
-
+import type { Socials } from "../../../../../../../types/Socials";
 interface SocialLinksProps {
   socials: Socials[];
 }
