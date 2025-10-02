@@ -12,7 +12,7 @@ type Lang = {
   label: string;
 };
 
-const LANGUAGES: Lang[] = [
+export const LANGUAGES: Lang[] = [
   { flag: us, title: "english", label: "en" },
   { flag: ksa, title: "arabic", label: "ar" },
 ];
