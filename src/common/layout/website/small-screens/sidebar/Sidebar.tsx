@@ -1,8 +1,11 @@
-import { IoCloseSharp } from "react-icons/io5";
-import { navLinks } from "../../../../../data/data";
-import { NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-// import LoginButton from "../navbar/icons/LoginButton";
+import { sidebarLinks } from "../../../../../data/data";
+import SidebarIntro from "../mobile-navbar/common/SidebarIntro";
+import { memo } from "react";
+import Backdrop from "../mobile-navbar/common/Backdrop";
+import { Link } from "react-router-dom";
+import LanguageDropdown from "../../common/lang-menu/LangMenu";
+
 interface SidebarProps {
   isOpen: boolean;
   onClose: () => void;
@@ -10,47 +13,47 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   const { t } = useTranslation();
-
   return (
-    <aside
-      className={`fixed top-0 right-0 z-50 h-screen w-[80%] max-w-sm bg-background-light dark:bg-background-dark transform duration-300 overflow-y-auto 
-      ${isOpen ? "translate-x-0" : "translate-x-full"}`}
-      aria-hidden={!isOpen}
-      aria-label="Sidebar Navigation"
-    >
-      {/* Header */}
-      <div className="flex justify-end p-3">
-        <button
-          aria-label="Close Sidebar"
-          onClick={onClose}
-          className="text-red-700 hover:scale-110 transition"
-        >
-          <IoCloseSharp size={28} />
-        </button>
-      </div>
+    <>
+      <Backdrop
+        isOpen={isOpen}
+        onClick={onClose}
+        aria="close sidebar navigation"
+      />
+      <aside
+        className={`fixed top-0 right-0 h-screen overflow-y-auto w-[85%] bg-white shadow-md border z-40 transform transition-transform duration-300 ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+        aria-hidden={!isOpen}
+        aria-label="Sidebar Navigation"
+      >
+        <SidebarIntro onClose={onClose} height="h-24">
+          <div className="flex-center">
+            <p className="text-white text-xl font-bold">{t("useful links")}</p>
+          </div>
+        </SidebarIntro>
 
-      {/* Links */}
-      <nav>
-        <ul className="flex flex-col gap-4 px-4">
-          {navLinks.map((item, idx) => (
-            <li key={idx}>
-              <NavLink
-                onClick={onClose}
-                to={item.link}
-                className="block text-lg font-medium hover:text-darkBlue transition"
-              >
-                {t(item.name)}
-              </NavLink>
+        <nav aria-label="Main Navigation" className="mt-2">
+          <ul className="flex flex-col">
+            {sidebarLinks.map((item, idx) => (
+              <li key={idx}>
+                <Link
+                  onClick={onClose}
+                  to={item.link}
+                  className="block text-lg font-medium text-transition py-2 border-b ms-2"
+                >
+                  {t(item.name)}
+                </Link>
+              </li>
+            ))}
+            <li className="py-2 border-b ms-2">
+              <LanguageDropdown />
             </li>
-          ))}
-        </ul>
-      </nav>
-
-      {/* <div className="p-4">
-        <LoginButton />
-      </div> */}
-    </aside>
+          </ul>
+        </nav>
+      </aside>
+    </>
   );
 };
 
-export default Sidebar;
+export default memo(Sidebar);

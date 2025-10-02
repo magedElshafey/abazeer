@@ -1,5 +1,8 @@
-import { RiCloseLine } from "react-icons/ri";
 import Search from "../../larg-screens/navbar/search/Search";
+import Backdrop from "../mobile-navbar/common/Backdrop";
+import SidebarIntro from "../mobile-navbar/common/SidebarIntro";
+import { memo } from "react";
+
 interface SearchSidebarProps {
   showSidebar: boolean;
   onClose: () => void;
@@ -12,28 +15,21 @@ const SearchSidebar: React.FC<SearchSidebarProps> = ({
   return (
     <>
       {/* Backdrop */}
-      {showSidebar && (
-        <div className="fixed inset-0 bg-black/40 z-30" onClick={onClose} />
-      )}
-
+      <Backdrop isOpen={showSidebar} onClick={onClose} aria="close search" />
       {/* Sidebar */}
-      <div
+      <aside
         className={`fixed top-0 left-0 h-screen w-[85%] bg-white shadow-md border z-40 transform transition-transform duration-300 ${
           showSidebar ? "translate-x-0" : "-translate-x-full"
         }`}
+        aria-hidden={!showSidebar}
+        aria-label="Search Sidebar"
       >
-        <div className="w-full h-36 bg-orangeColor p-3">
-          <button
-            onClick={onClose}
-            className="transition duration-200 hover:scale-105 hover:text-red-700 mb-3"
-          >
-            <RiCloseLine size={25} />
-          </button>
+        <SidebarIntro onClose={onClose}>
           <Search />
-        </div>
-      </div>
+        </SidebarIntro>
+      </aside>
     </>
   );
 };
 
-export default SearchSidebar;
+export default memo(SearchSidebar);

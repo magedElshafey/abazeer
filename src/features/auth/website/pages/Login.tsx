@@ -24,12 +24,13 @@ const Login = () => {
           <MainInput
             required={true}
             Icon={CiUser}
-            placeholder="user name"
-            label="user name"
+            placeholder="email"
+            label="email"
             enableAutocomplete
-            storageKey="user-name"
-            {...register("username")}
-            error={errors.username?.message}
+            storageKey="email"
+            {...register("email")}
+            error={errors.email?.message}
+            type="email"
           />
         </div>
         <div className="mb-4">
@@ -59,7 +60,7 @@ const Login = () => {
         </div>
         <div className="w-full flex-center text-sm gap-2">
           <span className="text-text-gray">{t("don't have an account ?")}</span>
-          <Link to="/auth/register-with" className="text-darkBlue underline">
+          <Link to="/auth/register" className="text-orangeColor underline">
             {t("create an account")}
           </Link>
         </div>

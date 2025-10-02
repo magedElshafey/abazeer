@@ -56,7 +56,7 @@ const MainInput = React.forwardRef<HTMLInputElement, MainInputProps>(
         setSuggestions(updated);
         localStorage.setItem(storageKey, JSON.stringify(updated));
       }
-      if (onBlur) onBlur(e); // مهم ل react-hook-form
+      if (onBlur) onBlur(e);
     };
 
     const togglePassword = () => setShowPassword((prev) => !prev);
@@ -74,12 +74,12 @@ const MainInput = React.forwardRef<HTMLInputElement, MainInputProps>(
         )}
 
         <div
-          className={`transition duration-150 rounded-lg w-full py-3 px-4 flex items-center gap-3 bg-background-babyBlue
+          className={`transition duration-150 rounded-lg w-full py-3 px-4 flex items-center gap-3 bg-background-gray
           ${disabled ? "opacity-50 cursor-not-allowed" : ""}
           ${
             error
-              ? "ring-2 ring-red-500" // 🔴 لو فيه خطأ
-              : "focus-within:ring-2 focus-within:ring-primary"
+              ? "ring-2 ring-red-500"
+              : "focus-within:ring-2 focus-within:ring-orangeColor"
           }`}
         >
           {Icon && (

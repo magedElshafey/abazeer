@@ -1,14 +1,14 @@
 import { GiHamburgerMenu } from "react-icons/gi";
+import { memo } from "react";
 
-interface SidebarIcon {
+interface SidebarIconProps {
   openSidebar: () => void;
 }
-const SidebarIcon: React.FC<SidebarIcon> = ({ openSidebar }) => {
-  return (
-    <button onClick={openSidebar} className="lg:hidden">
-      <GiHamburgerMenu size={20} className="text-transition" />
-    </button>
-  );
-};
 
-export default SidebarIcon;
+const SidebarIcon: React.FC<SidebarIconProps> = ({ openSidebar }) => (
+  <button onClick={openSidebar} className="md:hidden" aria-label="Open sidebar">
+    <GiHamburgerMenu size={20} className="text-transition" aria-hidden="true" />
+  </button>
+);
+
+export default memo(SidebarIcon);

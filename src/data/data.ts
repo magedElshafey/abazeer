@@ -9,8 +9,6 @@ import type { AcademyServiceType } from "../features/home/website/types/AcademyS
 import {
   FaFacebook,
   FaInstagram,
-  FaBehance,
-  FaLinkedin,
   FaSnapchatGhost,
   FaWhatsapp,
 } from "react-icons/fa";
@@ -47,7 +45,40 @@ export const navLinks: Nav[] = [
     link: "/contact",
   },
 ];
-
+export const sidebarLinks: Nav[] = [
+  {
+    name: "offers",
+    link: "/offers",
+  },
+  {
+    name: "About",
+    link: "/about",
+  },
+  {
+    name: "branches",
+    link: "/branches",
+  },
+  {
+    name: "blogs",
+    link: "/blogs",
+  },
+  {
+    name: "faq",
+    link: "/faq",
+  },
+  {
+    name: "contact",
+    link: "/contact",
+  },
+  {
+    name: "order tracking",
+    link: "/order-tracking",
+  },
+  {
+    name: "compare",
+    link: "/compare",
+  },
+];
 export const socials: Socials[] = [
   {
     name: "whatsapp",
@@ -68,16 +99,6 @@ export const socials: Socials[] = [
     name: "instagram",
     url: "https://www.instagram.com/",
     icon: FaInstagram,
-  },
-  {
-    name: "behance",
-    url: "https://www.behance.com/",
-    icon: FaBehance,
-  },
-  {
-    name: "linkedin",
-    url: "https://www.linkedin.com/",
-    icon: FaLinkedin,
   },
   {
     name: "snapchat",
