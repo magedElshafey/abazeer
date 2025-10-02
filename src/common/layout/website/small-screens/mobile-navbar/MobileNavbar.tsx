@@ -9,6 +9,7 @@ import Sidebar from "../sidebar/Sidebar";
 const MobileNavbar = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [showSearchSidebar, setShowSearchSidebar] = useState(false);
+  const [fadeIn, setFadeIn] = useState(false);
 
   // ✅ Stable callbacks
   const openSidebar = useCallback(() => setShowSidebar(true), []);
@@ -28,19 +29,35 @@ const MobileNavbar = () => {
 
   const logoMemo = useMemo(() => <Logo logo={logo} />, []);
 
+  // ✅ Trigger fade-in once on mount
+  useEffect(() => {
+    const timeout = setTimeout(() => setFadeIn(true), 50);
+    return () => clearTimeout(timeout);
+  }, []);
+
   return (
     <>
-      <div className="containerr py-3 flex-between">
-        <SidebarIcon openSidebar={openSidebar} />
-        {logoMemo}
-        <button
-          onClick={openSearch}
-          aria-label="Open search"
-          className="text-transition"
-        >
-          <TfiSearch size={20} aria-hidden="true" />
-        </button>
+      {/* ✅ Fixed Mobile Navbar */}
+      <div
+        className={`fixed top-0 left-0 w-full bg-white border-b shadow-sm z-40 
+        transition-all duration-700 ease-in-out 
+        ${fadeIn ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-5"}`}
+      >
+        <div className="containerr py-3 flex-between">
+          <SidebarIcon openSidebar={openSidebar} />
+          {logoMemo}
+          <button
+            onClick={openSearch}
+            aria-label="Open search"
+            className="text-transition"
+          >
+            <TfiSearch size={20} aria-hidden="true" />
+          </button>
+        </div>
       </div>
+
+      {/* ✅ Spacer to prevent content shift */}
+      <div className="h-[65px] md:hidden"></div>
 
       {/* ✅ Sidebars are lazy-rendered for performance */}
       {showSearchSidebar && (
