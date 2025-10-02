@@ -1,10 +1,11 @@
-import { Link } from "react-router-dom";
+import { useState, useMemo, useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "../../../../../store/AuthProvider";
+import { Link } from "react-router-dom";
 import us from "../../../../../assets/us.png";
 import ksa from "../../../../../assets/ksa.png";
 import { useLanguage } from "../../../../../store/LanguageProvider";
 import { IoIosArrowDown } from "react-icons/io";
-import { useState, useMemo, useCallback } from "react";
 import Border from "../../../../components/border/Border";
 
 type Lang = {
@@ -42,10 +43,11 @@ const LanguageOption = ({
     </button>
   );
 };
-
+const Divider = () => <Border />;
 const RightSide = () => {
   const { t } = useTranslation();
   const { language, changeLanguage } = useLanguage();
+  const { user } = useAuth();
   const [open, setOpen] = useState(false);
 
   const { currentLang, otherLangs } = useMemo(() => {
@@ -61,17 +63,35 @@ const RightSide = () => {
     },
     [changeLanguage]
   );
-
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
   return (
     <div className="flex gap-3 items-center">
-      <Link to="/auth/login" className="text-transition">
-        {t("login")}
-      </Link>
-      <Border />
-      <Link to="/auth/register" className="text-transition">
-        {t("register")}
-      </Link>
-      <Border />
+      {!user && (
+        <>
+          <Link to="/auth/login" className="text-transition">
+            {t("login")}
+          </Link>
+          <Divider />
+          <Link to="/auth/register" className="text-transition">
+            {t("register")}
+          </Link>
+          <Divider />
+        </>
+      )}
+      {user && (
+        <>
+          <Link to="/my-profile" className="text-transition">
+            {t("my profile")}
+          </Link>
+          <Divider />
+        </>
+      )}
       {/* Language Dropdown */}
       {currentLang && (
         <div
