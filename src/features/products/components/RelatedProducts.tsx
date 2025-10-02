@@ -1,6 +1,8 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
+import { useKeenSlider } from "keen-slider/react";
+import "keen-slider/keen-slider.min.css";
 
 type Product = {
     id: number;
@@ -63,20 +65,46 @@ const relatedProducts: Product[] = [
 
 const RelatedProducts: FC = () => {
     const { t } = useTranslation();
-    const [currentIndex, setCurrentIndex] = useState(0);
     
-    const itemsPerView = 4; // Number of items visible at once
-    const maxIndex = Math.max(0, relatedProducts.length - itemsPerView);
+    const [sliderRef, instanceRef] = useKeenSlider(
+        {
+            loop: false,
+            mode: "snap",
+            slides: {
+                perView: 4,
+                spacing: 16,
+            },
+            breakpoints: {
+                "(max-width: 1024px)": {
+                    slides: {
+                        perView: 3,
+                        spacing: 16,
+                    },
+                },
+                "(max-width: 768px)": {
+                    slides: {
+                        perView: 2,
+                        spacing: 16,
+                    },
+                },
+                "(max-width: 480px)": {
+                    slides: {
+                        perView: 1,
+                        spacing: 16,
+                    },
+                },
+            },
+        },
+        []
+    );
 
     const nextSlide = () => {
-        setCurrentIndex(prev => Math.min(prev + 1, maxIndex));
+        instanceRef.current?.next();
     };
 
     const prevSlide = () => {
-        setCurrentIndex(prev => Math.max(prev - 1, 0));
+        instanceRef.current?.prev();
     };
-
-    const visibleProducts = relatedProducts.slice(currentIndex, currentIndex + itemsPerView);
 
     return (
         <div className="mt-8">
@@ -84,86 +112,63 @@ const RelatedProducts: FC = () => {
                 {t("related-products") || "Related Products"}
             </h2>
             
-            {/* Slider container */}
+            {/* Keen Slider container */}
             <div className="relative">
                 {/* Navigation Buttons */}
                 <button
                     onClick={prevSlide}
-                    disabled={currentIndex === 0}
-                    className={`absolute left-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white shadow-lg border border-gray-200 flex items-center justify-center transition-all duration-200 ${
-                        currentIndex === 0 
-                            ? 'opacity-50 cursor-not-allowed' 
-                            : 'hover:bg-gray-50 hover:shadow-xl'
-                    }`}
+                    className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white shadow-lg border border-gray-200 flex items-center justify-center transition-all duration-200 hover:bg-gray-50 hover:shadow-xl"
                 >
                     <IoChevronBack className="w-6 h-6 text-gray-600" />
                 </button>
                 
                 <button
                     onClick={nextSlide}
-                    disabled={currentIndex >= maxIndex}
-                    className={`absolute right-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white shadow-lg border border-gray-200 flex items-center justify-center transition-all duration-200 ${
-                        currentIndex >= maxIndex 
-                            ? 'opacity-50 cursor-not-allowed' 
-                            : 'hover:bg-gray-50 hover:shadow-xl'
-                    }`}
+                    className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white shadow-lg border border-gray-200 flex items-center justify-center transition-all duration-200 hover:bg-gray-50 hover:shadow-xl"
                 >
                     <IoChevronForward className="w-6 h-6 text-gray-600" />
                 </button>
 
-                {/* Products Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 px-12">
-                    {visibleProducts.map((product) => (
+                {/* Keen Slider */}
+                <div ref={sliderRef} className="keen-slider px-12">
+                    {relatedProducts.map((product) => (
                         <div
                             key={product.id}
-                            className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-shadow duration-200"
+                            className="keen-slider__slide"
                         >
-                            {/* Product Image */}
-                            <div className="aspect-square w-full mb-4 overflow-hidden rounded-lg">
-                                <img
-                                    src={product.image}
-                                    alt={product.title}
-                                    className="w-full h-full object-cover object-center"
-                                />
-                            </div>
-                            
-                            {/* Product Title */}
-                            <h3 className="text-lg font-medium text-text-light mb-3 line-clamp-2 min-h-[3.5rem]">
-                                {product.title}
-                            </h3>
-                            
-                            {/* Price Section */}
-                            <div className="flex items-center gap-2 flex-wrap">
-                                <span className="text-xl font-bold text-orangeColor">
-                                    ${product.price.toFixed(2)}
-                                </span>
-                                {product.oldPrice && (
-                                    <del className="text-lg text-text-gray opacity-60 line-through">
-                                        ${product.oldPrice.toFixed(2)}
-                                    </del>
-                                )}
-                                {product.discount && (
-                                    <span className="bg-red-100 text-red-600 text-xs font-medium px-2 py-1 rounded">
-                                        -{product.discount}%
+                            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 h-full hover:shadow-md transition-shadow duration-200">
+                                {/* Product Image */}
+                                <div className="aspect-square w-full mb-4 overflow-hidden rounded-lg">
+                                    <img
+                                        src={product.image}
+                                        alt={product.title}
+                                        className="w-full h-full object-cover object-center"
+                                    />
+                                </div>
+                                
+                                {/* Product Title */}
+                                <h3 className="text-lg font-medium text-text-light mb-3 line-clamp-2 min-h-[3.5rem]">
+                                    {product.title}
+                                </h3>
+                                
+                                {/* Price Section */}
+                                <div className="flex items-center gap-2 flex-wrap">
+                                    <span className="text-xl font-bold text-orangeColor">
+                                        ${product.price.toFixed(2)}
                                     </span>
-                                )}
+                                    {product.oldPrice && (
+                                        <del className="text-lg text-text-gray opacity-60 line-through">
+                                            ${product.oldPrice.toFixed(2)}
+                                        </del>
+                                    )}
+                                    {product.discount && (
+                                        <span className="bg-red-100 text-red-600 text-xs font-medium px-2 py-1 rounded">
+                                            -{product.discount}%
+                                        </span>
+                                    )}
+                                </div>
                             </div>
                         </div>
-                    ))}
-                </div>
-
-                {/* Dots Indicator */}
-                <div className="flex justify-center mt-6 gap-2">
-                    {Array.from({ length: maxIndex + 1 }, (_, index) => (
-                        <button
-                            key={index}
-                            onClick={() => setCurrentIndex(index)}
-                            className={`w-2 h-2 rounded-full transition-all duration-200 ${
-                                index === currentIndex 
-                                    ? 'bg-orangeColor w-8' 
-                                    : 'bg-gray-300 hover:bg-gray-400'
-                            }`}
-                        />
                     ))}
                 </div>
             </div>
