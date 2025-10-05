@@ -14,12 +14,15 @@ const Guard: React.FC<GuardProps> = ({
   guestOnly = false,
   allowedRoles,
   redirectTo,
-  children, // 👈 استقبلناها
+  children,
 }) => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const location = useLocation();
 
-  // لو الصفحة للزوار فقط وهو مسجل دخول → Redirect
+  console.log(children);
+
+  if(loading) return undefined;
+
   if (guestOnly && user) {
     return (
       <Navigate
@@ -34,15 +37,15 @@ const Guard: React.FC<GuardProps> = ({
   if (requireAuth && !user) {
     return (
       <Navigate
-        to={redirectTo || "/login"}
+        to={redirectTo || "/auth/login"}
         state={{ from: location }}
         replace
       />
     );
   }
 
-  // لو في شرط role وهو مش متحقق → Redirect
-  if (allowedRoles && user && !allowedRoles.includes(user.role)) {
+  // !! handling the authorization was in the old logic in Rooa, but currently doesn't make sense
+  if (allowedRoles && user && !allowedRoles.includes("")) {
     return (
       <Navigate
         to={redirectTo || "/unauthorized"}

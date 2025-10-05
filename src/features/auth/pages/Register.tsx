@@ -25,8 +25,8 @@ const Register = () => {
             placeholder="user name"
             label="user name"
             enableAutocomplete
-            {...register("username")}
-            error={errors.username?.message}
+            {...register("name")}
+            error={errors.name?.message}
           />
         </div>
         <div className="mb-4">
@@ -63,6 +63,17 @@ const Register = () => {
             {...register("password")}
           />
         </div>
+        <div className="mb-4">
+          <MainInput
+            required={true}
+            Icon={GoKey}
+            type="password"
+            placeholder="password"
+            label="password_confirmation"
+            error={errors.password_confirmation?.message}
+            {...register("password_confirmation")}
+          />
+        </div>
         <div className="w-full mb-7 text-sm gap-2">
           <span className="text-text-gray">{t("have an account ?")}</span>
           <Link to="/auth/login" className="text-orangeColor underline">
@@ -73,6 +84,7 @@ const Register = () => {
           <div className="w-full md:w-[180px]">
             <MainBtn
               type="submit"
+              className="w-full flex-center"
               text="Create a new account"
               isPending={isPending}
             />

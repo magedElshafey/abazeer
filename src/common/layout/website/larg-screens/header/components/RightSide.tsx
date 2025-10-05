@@ -7,7 +7,7 @@ import LanguageDropdown from "../../../common/lang-menu/LangMenu";
 const Divider = () => <Border />;
 const RightSide = () => {
   const { t } = useTranslation();
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
 
   return (
     <div className="flex gap-3 items-center">
@@ -28,6 +28,11 @@ const RightSide = () => {
           <Link to="/my-profile" className="text-transition">
             {t("my profile")}
           </Link>
+          <div 
+            onClick={logout}
+          >
+            (<span className="hover:underline text-orangeColor cursor-pointer">{t("logout")}</span>)
+          </div>
           <Divider />
         </>
       )}

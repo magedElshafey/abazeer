@@ -6,9 +6,13 @@ import {
   registerSchema,
 } from "../schema/registerSchema";
 import { toast } from "sonner";
-import handlePromisError from "../../../utils/handlePromiseError";
+import toastErrorMessage from "../../../utils/toastApiError";
+import { useNavigate } from "react-router-dom";
+
 const useRegisterLogic = () => {
   const { isPending, mutateAsync } = useRegister();
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -19,25 +23,22 @@ const useRegisterLogic = () => {
     mode: "onBlur",
     reValidateMode: "onBlur",
     defaultValues: {
-      username: "",
+      name: "",
       password: "",
+      email: "",
+      password_confirmation: "",
       rememberMe: false,
     },
   });
   const onSubmit = async (data: RegisterSchemaType) => {
-    const formData = new FormData();
-    formData.append("name", data?.username);
-    formData?.append("password", data?.password);
-    formData?.append("phone", data?.phone);
-    formData?.append("email", data?.email);
-
     try {
-      const response = await mutateAsync(formData);
+      const response = await mutateAsync(data);
       if (response?.status) {
+        navigate("../login");
         toast.success(response?.message);
       }
     } catch (error) {
-      handlePromisError(error);
+      toastErrorMessage(error as Error);
     }
   };
   return {
