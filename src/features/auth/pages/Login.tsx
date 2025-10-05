@@ -1,16 +1,25 @@
 import { Link } from "react-router-dom";
 import MainInput from "../../../common/components/inputs/MainInput";
 import AuthCard from "../../../common/layout/auth/AuthCard";
-import { CiUser } from "react-icons/ci";
 import { GoKey } from "react-icons/go";
 import { useTranslation } from "react-i18next";
 import "../style/login-form.css";
 import MainBtn from "../../../common/components/buttons/MainBtn";
 import useLoginLogic from "../logic/useLoginLogic";
+import { MdOutlineEmail } from "react-icons/md";
+
+
 const Login = () => {
   const { t } = useTranslation();
-  const { errors, register, onSubmit, handleSubmit, isPending } =
-    useLoginLogic();
+  const {
+    errors,
+    register,
+    onSubmit,
+    handleSubmit,
+    isPending
+  } = useLoginLogic();
+
+
   return (
     <AuthCard
       title="login"
@@ -23,7 +32,7 @@ const Login = () => {
         <div className="mb-4">
           <MainInput
             required={true}
-            Icon={CiUser}
+            Icon={MdOutlineEmail}
             placeholder="email"
             label="email"
             enableAutocomplete
@@ -55,7 +64,7 @@ const Login = () => {
         </div>
         <div className="w-full flex-center mb-7 sm:mb-8 md:mb-9 lg:mb-10">
           <div className="w-full md:w-[150px]">
-            <MainBtn type="submit" text="login" isPending={isPending} />
+            <MainBtn type="submit" className="w-full flex-center" text="login" isPending={isPending} />
           </div>
         </div>
         <div className="w-full flex-center text-sm gap-2">

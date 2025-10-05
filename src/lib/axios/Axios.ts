@@ -5,6 +5,7 @@ import { apiUrl } from "../../services/api-routes/apiRoutes";
 import { useAuth } from "../../store/AuthProvider";
 import { toast } from "sonner";
 import { useLocation, useNavigate } from "react-router-dom";
+
 export const Axios = axios.create({
   baseURL: apiUrl,
   headers: {

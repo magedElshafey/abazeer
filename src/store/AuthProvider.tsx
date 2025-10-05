@@ -7,69 +7,60 @@ import React, {
 } from "react";
 import { useLocation } from "react-router-dom";
 import { isProtectedRoutes } from "../utils/isProtectedRoutes";
-import { User } from "../types/User";
-import { getCookie, removeCookie, setCookie } from "../utils/cookie";
+import type { User } from "@/features/auth/types/auth.types";
+
 interface AuthContextProps {
   user: User | null;
   login: (userData: User) => void;
   logout: () => void;
-  updateUser: (userData: User) => void;
   loading: boolean;
   lastPublicPage: React.MutableRefObject<string>;
 }
+
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 interface AuthProviderProps {
   children: React.ReactNode;
 }
+
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const lastPublicPage = useRef("/");
+  // global states
   const location = useLocation();
+  
+  // local states
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<User | null>(null);
+  const lastPublicPage = useRef("/");
+  
+  // effects
   useEffect(() => {
     if (!isProtectedRoutes(location?.pathname)) {
       lastPublicPage.current = location.pathname + location.search;
     }
   }, [location]);
 
-  const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState<User | null>(null);
   useEffect(() => {
-    const token = getCookie("auth_token");
-    if (token) {
-      const data = JSON.parse(token);
+    const user = localStorage.getItem("user");
+    if (user) {
+      const data = JSON.parse(user);
       setUser(data);
     }
     setLoading(false);
   }, []);
+
   const login = (userData: User) => {
     const data = JSON.stringify(userData);
-    setCookie("auth_token", data, {
-      path: "/",
-      expires: new Date("9999-12-31T23:59:59.999Z"),
-    });
+    localStorage.setItem("user", data);
     setUser(userData);
   };
+
   const logout = () => {
-    removeCookie("auth_token");
+    localStorage.removeItem("user");
     setUser(null);
   };
-  const updateUser = (userData: User) => {
-    removeCookie("auth_token");
-    setUser((prev) => {
-      if (prev === null) {
-        return null;
-      }
-      const updatedUser = { ...prev, ...userData };
-      const data = JSON.stringify(updatedUser);
-      setCookie("auth_token", data, {
-        path: "/",
-        expires: new Date("9999-12-31T23:59:59.999Z"),
-      });
-      return updatedUser;
-    });
-  };
+
   return (
     <AuthContext.Provider
-      value={{ loading, user, login, logout, updateUser, lastPublicPage }}
+      value={{ loading, user, login, logout, lastPublicPage }}
     >
       {children}
     </AuthContext.Provider>

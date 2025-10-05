@@ -11,24 +11,6 @@ const Divider = () => <Border />;
 const RightSide = () => {
   const { t } = useTranslation();
   const { user, logout } = useAuth();
-  const { isFetching, refetch, isLoading } = useLogOut();
-  const handleClick = () => {
-    toast.warning(t("Are you sure you want to log out?"), {
-      description: t("Please confirm your action."),
-      duration: 5000,
-      action: {
-        label: t("Confirm"),
-        onClick: async () => {
-          const response = await refetch();
-          console.log("respnse from logout", response);
-        },
-      },
-      cancel: {
-        label: t("Cancel"),
-        onClick: () => toast.dismiss(),
-      },
-    });
-  };
   return (
     <div className="flex gap-3 items-center">
       {!user && (
@@ -48,6 +30,13 @@ const RightSide = () => {
           <Link to="/my-profile" className="text-transition">
             {t("my profile")}
           </Link>
+          <div onClick={logout}>
+            (
+            <span className="hover:underline text-orangeColor cursor-pointer">
+              {t("logout")}
+            </span>
+            )
+          </div>
           <Divider />
           <button
             disabled={isLoading || isFetching}
