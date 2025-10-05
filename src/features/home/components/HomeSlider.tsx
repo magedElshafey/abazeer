@@ -2,9 +2,11 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useKeenSlider } from 'keen-slider/react';
 import 'keen-slider/keen-slider.min.css';
 import { IoChevronBack, IoChevronForward } from 'react-icons/io5';
+import { useTranslation } from 'react-i18next';
 
 const HomeSlider: React.FC = () => {
   const [loaded, setLoaded] = useState(false);
+  const { i18n: {language} } = useTranslation();
   const autoplayRef = useRef<NodeJS.Timeout | null>(null);
 
   // Banner images array - you can add more images here
@@ -88,7 +90,7 @@ const HomeSlider: React.FC = () => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <div ref={sliderRef} className="keen-slider h-full">
+      <div dir='ltr' ref={sliderRef} className="keen-slider h-full">
         {bannerImages.map((image, index) => (
           <div key={index} className="keen-slider__slide">
             <div className="relative w-full h-full">
@@ -108,22 +110,22 @@ const HomeSlider: React.FC = () => {
           <button
             className="bg-white hover:bg-orangeColor rounded flex-center p-1 text-text-gray hover:text-black transition-colors duration-300"
             onClick={() => {
-              instanceRef.current?.prev();
-              handleManualNavigation();
+                instanceRef.current?.[language === "ar" ? "next" : "prev"]();
+                handleManualNavigation();
             }}
             aria-label="Previous slide"
           >
-            <IoChevronBack />
+            <IoChevronBack className={language === "ar" ? "rotate-180" : undefined} />
           </button>
           <button
             className="bg-white hover:bg-orangeColor rounded flex-center p-1 text-text-gray hover:text-black transition-colors duration-300"
             onClick={() => {
-              instanceRef.current?.next();
+              instanceRef.current?.[language === "ar" ? "prev" : "next"]();
               handleManualNavigation();
             }}
             aria-label="Next slide"
           >
-            <IoChevronForward />
+            <IoChevronForward className={language === "ar" ? "rotate-180" : undefined} />
           </button>
         </div>
       )}
