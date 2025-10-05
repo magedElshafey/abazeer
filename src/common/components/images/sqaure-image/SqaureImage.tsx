@@ -7,7 +7,7 @@ interface SquareImageProps {
 
 const SquareImage: React.FC<SquareImageProps> = memo(({ src, alt }) => {
   return (
-    <div className="w-full aspect-square flex items-center justify-center overflow-hidden rounded-lg">
+    <div className="w-full aspect-square flex items-center justify-center overflow-hidden">
       <img
         alt={alt}
         src={src}
