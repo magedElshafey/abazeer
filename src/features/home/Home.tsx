@@ -1,7 +1,11 @@
-import Hero from "./components/hero/Hero";
+import CategoryCard from "../categories/components/card/CategoryCard";
 
 const Home = () => {
-  return <></>;
+  return (
+    <>
+      <CategoryCard />
+    </>
+  );
 };
 
 export default Home;

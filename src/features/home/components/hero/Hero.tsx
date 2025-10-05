@@ -1,8 +1,10 @@
 import React from "react";
 import Slider from "../../../../common/components/slider/Slider";
 import { useTranslation } from "react-i18next";
+import { useId } from "react";
 const Hero: React.FC = () => {
   const { i18n } = useTranslation();
+  const uniqueId = useId();
   // i18n.language => 'ar' | 'en' ...  نحرص على تحويلها ل rtl/ltr
   const dir = i18n.language === "ar" ? "rtl" : "ltr";
 
@@ -20,7 +22,7 @@ const Hero: React.FC = () => {
   return (
     <div className="containerr">
       <Slider
-        key={dir}
+        key={i18n.language}
         dir={dir}
         spacing={16}
         loop
@@ -29,16 +31,16 @@ const Hero: React.FC = () => {
         keyboard
         breakpoints={{
           "(min-width: 640px)": {
-            slides: { origin: "auto", perView: 2, spacing: 16 },
+            slides: { perView: 2, spacing: 16 },
           },
           "(min-width: 768px)": {
-            slides: { origin: "auto", perView: 3, spacing: 16 },
+            slides: { perView: 3, spacing: 16 },
           },
           "(min-width: 1024px)": {
-            slides: { origin: "auto", perView: 4, spacing: 16 },
+            slides: { perView: 4, spacing: 16 },
           },
           "(min-width: 1280px)": {
-            slides: { origin: "auto", perView: 5, spacing: 16 },
+            slides: { perView: 5, spacing: 16 },
           },
         }}
       >
