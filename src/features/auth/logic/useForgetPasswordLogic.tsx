@@ -5,9 +5,10 @@ import {
   type ForgetPasswordSchemaType,
   forgetPasswordSchema,
 } from "../schema/forgetPasswordSchema";
-import handlePromisError from "../../../utils/handlePromiseError";
 import useForgetPassword from "../api/useForgetPassword";
 import { useNavigate } from "react-router-dom";
+import toastErrorMessage from "@/utils/toastApiError";
+
 const useForgetPasswordLogic = () => {
   const navigate = useNavigate();
   const { isPending, mutateAsync } = useForgetPassword();
@@ -25,17 +26,14 @@ const useForgetPasswordLogic = () => {
     },
   });
   const onSubmit = async (data: ForgetPasswordSchemaType) => {
-    const formData = new FormData();
-    formData?.append("email", data?.email);
-
     try {
-      const response = await mutateAsync(formData);
+      const response = await mutateAsync(data);
       if (response?.status) {
         toast.success(response?.message);
         navigate("/auth/forget-password-otp");
       }
     } catch (error) {
-      handlePromisError(error);
+      toastErrorMessage(error as Error);
     }
   };
   return {

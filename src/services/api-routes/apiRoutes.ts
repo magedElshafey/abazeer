@@ -3,5 +3,7 @@ export const baseUrl: string = "https://appadvertisements.almasader.net";
 export const apiRoutes = {
   login: "/auth/login",
   register: "auth/register",
-  logout: "auth/logout",
+  sendOtp: "auth/send_otp",
+  forgetPasswordOtp: "forget_password/verfication",
+  resetPassword: "auth/reset-password",
 };
