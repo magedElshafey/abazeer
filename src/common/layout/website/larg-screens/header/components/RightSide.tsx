@@ -1,11 +1,8 @@
 import { useTranslation } from "react-i18next";
-import useLogOut from "../api/useLogOut";
 import { useAuth } from "../../../../../../store/AuthProvider";
 import { Link } from "react-router-dom";
 import Border from "../../../../../components/border/Border";
 import LanguageDropdown from "../../../common/lang-menu/LangMenu";
-import { toast } from "sonner";
-import handlePromisError from "../../../../../../utils/handlePromiseError";
 
 const Divider = () => <Border />;
 const RightSide = () => {
@@ -38,11 +35,7 @@ const RightSide = () => {
             )
           </div>
           <Divider />
-          <button
-            disabled={isLoading || isFetching}
-            onClick={handleClick}
-            className="text-transition cursor-pointer disabled:cursor-not-allowed"
-          >
+          <button className="text-transition cursor-pointer disabled:cursor-not-allowed">
             {t("log out")}
           </button>
           <Divider />
