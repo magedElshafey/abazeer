@@ -51,8 +51,7 @@ const Register = () => {
             error={errors.phone?.message}
           />
         </div>
-        <div className="mb-4 grid-2 gap-4"></div>
-        <div className="mb-4">
+        <div className="mb-4 grid-2 gap-4">
           <MainInput
             required={true}
             Icon={GoKey}
@@ -62,7 +61,17 @@ const Register = () => {
             error={errors.password?.message}
             {...register("password")}
           />
+          <MainInput
+            required={true}
+            Icon={GoKey}
+            type="password"
+            placeholder="password confirmation"
+            label="password confirmation"
+            error={errors.password_confirmation?.message}
+            {...register("password_confirmation")}
+          />
         </div>
+
         <div className="w-full mb-7 text-sm gap-2">
           <span className="text-text-gray">{t("have an account ?")}</span>
           <Link to="/auth/login" className="text-orangeColor underline">

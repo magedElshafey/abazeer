@@ -17,7 +17,6 @@ const useLoginLogic = () => {
     defaultValues: {
       email: "",
       password: "",
-      rememberMe: false,
     },
   });
   const onSubmit = async (data: LoginSchemaType) => {

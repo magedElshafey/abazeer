@@ -101,5 +101,11 @@
   "categories": "الأقسام",
   "my account": "حسابي",
   "sold": "مباع",
-  "add to cart": "الإضافة الي العربة"
+  "add to cart": "الإضافة الي العربة",
+  "password confirmation": "تأكيد كلمة المرور",
+  "log out": "تسحيل الخروج",
+  "Are you sure you want to log out?": "هل أنت متأكد من تسجيل الخروج ؟",
+  "Please confirm your action.": "يرجي تأكيد طلبك",
+  "Confirm": "تأكيد",
+  "Cancel": "إلغاء"
 }

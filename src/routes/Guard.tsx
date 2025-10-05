@@ -34,7 +34,7 @@ const Guard: React.FC<GuardProps> = ({
   if (requireAuth && !user) {
     return (
       <Navigate
-        to={redirectTo || "/login"}
+        to={redirectTo || "/auth/login"}
         state={{ from: location }}
         replace
       />

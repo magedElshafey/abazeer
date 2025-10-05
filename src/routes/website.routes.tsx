@@ -17,6 +17,13 @@ export const websiteRoutes: RouteObject = {
       },
     },
     {
+      path: "offers",
+      element: lazyLoad(() => import("../features/offers/pages/Offers")),
+      handle: {
+        breadcrumb: "offers",
+      },
+    },
+    {
       path: "faq",
       element: lazyLoad(() => import("../features/static-pages/pages/Faq")),
       handle: {
@@ -51,6 +58,14 @@ export const websiteRoutes: RouteObject = {
       },
     },
     {
+      path: "contact",
+      element: lazyLoad(() => import("../features/contact/pages/Contact")),
+
+      handle: {
+        breadcrumb: "contact",
+      },
+    },
+    {
       path: "products",
       children: [
         {
@@ -65,6 +80,22 @@ export const websiteRoutes: RouteObject = {
       ],
       handle: {
         breadcrumb: "products",
+      },
+    },
+    {
+      path: "blogs",
+      element: lazyLoad(() => import("../features/blogs/pages/Blogs")),
+      children: [
+        {
+          path: ":id",
+          element: lazyLoad(() => import("../features/blogs/pages/Blog")),
+          handle: {
+            breadcrumb: "blog name",
+          },
+        },
+      ],
+      handle: {
+        breadcrumb: "blogs",
       },
     },
   ],

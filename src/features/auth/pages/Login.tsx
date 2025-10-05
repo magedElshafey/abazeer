@@ -48,10 +48,10 @@ const Login = () => {
           <Link className="text-sm text-text-red" to="/auth/forget-password">
             {t("forget password?")}
           </Link>
-          <label className="flex items-center gap-1 text-sm text-text-gray custom-checkbox">
+          {/* <label className="flex items-center gap-1 text-sm text-text-gray custom-checkbox">
             <input type="checkbox" {...register("rememberMe")} />
             {t("remember me")}
-          </label>
+          </label> */}
         </div>
         <div className="w-full flex-center mb-7 sm:mb-8 md:mb-9 lg:mb-10">
           <div className="w-full md:w-[150px]">

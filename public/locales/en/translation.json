@@ -98,5 +98,11 @@
   "categories": "categories",
   "my account": "my account",
   "sold": "sold",
-  "add to cart": "add to cart"
+  "add to cart": "add to cart",
+  "password confirmation": "password confirmation",
+  "log out": "log out",
+  "Are you sure you want to log out?": "Are you sure you want to log out?",
+  "Please confirm your action.": "Please confirm your action.",
+  "Confirm": "Confirm",
+  "Cancel": "Cancel"
 }

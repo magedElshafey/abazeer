@@ -41,7 +41,7 @@ const AxiosConfig = () => {
             action: {
               label: t("login"),
               onClick: () => {
-                navigate("/login", {
+                navigate("/auth/login", {
                   replace: true,
                   state: { from: location },
                 });

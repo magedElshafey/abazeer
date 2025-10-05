@@ -1,45 +1,57 @@
+import useRegister from "../api/useRegister";
+import { useAuth } from "../../../store/AuthProvider";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import useRegister from "../api/useRegister";
 import {
   type RegisterSchemaType,
   registerSchema,
 } from "../schema/registerSchema";
 import { toast } from "sonner";
 import handlePromisError from "../../../utils/handlePromiseError";
+
 const useRegisterLogic = () => {
   const { isPending, mutateAsync } = useRegister();
+  const { login } = useAuth();
   const {
     register,
     handleSubmit,
     formState: { errors },
     control,
+    reset,
   } = useForm<RegisterSchemaType>({
     resolver: zodResolver(registerSchema),
     mode: "onBlur",
     reValidateMode: "onBlur",
     defaultValues: {
       username: "",
+      email: "",
+      phone: "",
       password: "",
-      rememberMe: false,
+      password_confirmation: "",
     },
   });
+
   const onSubmit = async (data: RegisterSchemaType) => {
     const formData = new FormData();
-    formData.append("name", data?.username);
-    formData?.append("password", data?.password);
-    formData?.append("phone", data?.phone);
-    formData?.append("email", data?.email);
+    formData.append("name", data.username);
+    formData.append("email", data.email);
+    formData.append("phone", data.phone);
+    formData.append("password", data.password);
+    formData.append("password_confirmation", data.password_confirmation);
 
     try {
       const response = await mutateAsync(formData);
+
       if (response?.status) {
         toast.success(response?.message);
+        login(response?.data);
+        reset();
       }
     } catch (error) {
       handlePromisError(error);
     }
   };
+
   return {
     register,
     handleSubmit,
