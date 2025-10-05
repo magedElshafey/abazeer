@@ -33,8 +33,8 @@ const ResetPassword = () => {
           />
         </div>
         <div className="w-full flex-center">
-          <div className="w-full md:w-[150px]">
-            <MainBtn type="submit" text="login" isPending={isPending} />
+          <div className="w-full md:w-[180px]">
+            <MainBtn type="submit" className="flex-center w-full text-nowrap" text="reassign password" isPending={isPending} />
           </div>
         </div>
       </form>

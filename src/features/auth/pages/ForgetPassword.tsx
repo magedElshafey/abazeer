@@ -26,7 +26,7 @@ const ForgetPassword = () => {
         </div>
         <div className="w-full flex-center">
           <div className="w-full md:w-[180px]">
-            <MainBtn type="submit" text="next" isPending={isPending} />
+            <MainBtn type="submit" className="w-full flex-center" text="next" isPending={isPending} />
           </div>
         </div>
       </form>
