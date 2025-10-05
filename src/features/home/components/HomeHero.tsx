@@ -8,10 +8,10 @@ const HomeHero: FC = () => {
                 <div className="w-2/3 overflow-hidden">
                     <HomeSlider />
                 </div>
-                <div className="w-1/3 overflow-hidden">
+                <div className="w-1/3 overflow-hidden rounded-md">
                     <img 
                         src="/images/600x600.jpg"
-                        className="h-full w-full object-contain object-center rounded-lg"
+                        className="h-full w-full object-cover object-center"
                     />
                 </div>
             </div>
