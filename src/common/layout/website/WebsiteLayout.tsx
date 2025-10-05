@@ -21,7 +21,7 @@ const WebsiteLayout = () => {
       <StickyNavbar />
       <CategoriesHeader />
       <Breadcrumb />
-      <main className="flex-1 ">
+      <main className="flex-1 py-8">
         <Outlet />
       </main>
       <Footer />
