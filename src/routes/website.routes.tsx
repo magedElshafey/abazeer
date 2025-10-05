@@ -8,9 +8,6 @@ export const websiteRoutes: RouteObject = {
     {
       index: true,
       element: lazyLoad(() => import("../features/home/Home")),
-      handle: {
-        breadcrumb: "home",
-      },
     },
     {
       path: "about",

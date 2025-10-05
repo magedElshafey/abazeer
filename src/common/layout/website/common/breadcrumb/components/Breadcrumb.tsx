@@ -1,10 +1,11 @@
 import { useMemo } from "react";
-import { Link, useMatches } from "react-router-dom";
+import { Link, useLocation, useMatches } from "react-router-dom";
 import { BreadcrumbItem, RouteHandle } from "../types/breadcrumb.types";
 import { useTranslation } from "react-i18next";
 
 const Breadcrumb = () => {
     const matches = useMatches();
+    const { pathname } = useLocation();
     const { t } = useTranslation();
 
     const breadcrumbItems: BreadcrumbItem[] = useMemo(() => {
@@ -25,6 +26,8 @@ const Breadcrumb = () => {
 
         return [homeRoute, ...items];
     }, [matches]);
+
+    if(pathname === "/") return null;
 
     return (
         <div className="w-full bg-background-gray">
