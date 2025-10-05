@@ -21,9 +21,10 @@ interface ProductCardProps {
     price_afterDisccount: number;
     disccount_percentage: number;
   };
+  className?: string;
 }
 
-const ProductCard: React.FC<ProductCardProps> = memo(({ product }) => {
+const ProductCard: React.FC<ProductCardProps> = memo(({ product, className }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -53,7 +54,7 @@ const ProductCard: React.FC<ProductCardProps> = memo(({ product }) => {
   return (
     <button
       onClick={handleNavigate}
-      className="border relative p-6 group shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden  w-full bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-orangeColor text-start"
+      className={`border relative p-6 group shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden  w-full bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-orangeColor text-start ${className}`}
       aria-label={`${product.title} - ${product.category}`}
     >
       {/* ✅ Discount badge */}
