@@ -5,8 +5,8 @@ import { apiUrl } from "../../services/api-routes/apiRoutes";
 import { useAuth } from "../../store/AuthProvider";
 import { toast } from "sonner";
 import { useLocation, useNavigate } from "react-router-dom";
-import { User } from "@/features/auth/types/auth.types";
 import i18n from "../i18n/i18n";
+import { getUserFromAnyStorage } from "@/features/auth/utils";
 
 export const Axios = axios.create({
   baseURL: apiUrl,
@@ -16,9 +16,9 @@ export const Axios = axios.create({
 });
 
 Axios.interceptors.request.use((config) => {
-  const user = localStorage.getItem("user");
+  const user = getUserFromAnyStorage();
   if (user) {
-    const token = (JSON.parse(user) as User)?.token || undefined;
+    const token = user?.token || undefined;
     if (token) config.headers["Authorization"] = `Bearer ${token}`;
     config.headers["Accept-Language"] = i18n.language;
   }
