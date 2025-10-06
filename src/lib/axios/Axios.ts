@@ -5,6 +5,8 @@ import { apiUrl } from "../../services/api-routes/apiRoutes";
 import { useAuth } from "../../store/AuthProvider";
 import { toast } from "sonner";
 import { useLocation, useNavigate } from "react-router-dom";
+import { User } from "@/features/auth/types/auth.types";
+import i18n from "../i18n/i18n";
 
 export const Axios = axios.create({
   baseURL: apiUrl,
@@ -12,23 +14,23 @@ export const Axios = axios.create({
     "Content-Type": "application/json",
   },
 });
+
+Axios.interceptors.request.use((config) => {
+  const user = localStorage.getItem("user");
+  if(user) {
+    const token = (JSON.parse(user) as User)?.token || undefined;
+    if (token) config.headers["Authorization"] = `Bearer ${token}`;
+    config.headers["Accept-Language"] = i18n.language;
+  }
+  return config;
+})
+
 const AxiosConfig = () => {
   const { i18n, t } = useTranslation();
   const { user, logout, lastPublicPage } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   useEffect(() => {
-    const requestInterceptor = Axios.interceptors.request.use((config) => {
-      config.headers["lang"] = i18n.language;
-      config.headers["Accept-Language"] = i18n.language;
-      if (user) {
-        Axios.defaults.headers.common[
-          "Authorization"
-        ] = `Bearer ${user.access_token}`;
-      }
-      return config;
-    });
-
     const responseInterceptor = Axios.interceptors.response.use(
       (response) => {
         return response;
@@ -61,7 +63,6 @@ const AxiosConfig = () => {
     );
 
     return () => {
-      Axios.interceptors.request.eject(requestInterceptor);
       Axios.interceptors.response.eject(responseInterceptor);
     };
   }, [i18n.language, user]);

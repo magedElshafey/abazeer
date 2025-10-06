@@ -2,12 +2,23 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { type OtpSchemaType, otpSchema } from "../schema/otpSchema";
-import handlePromisError from "../../../utils/handlePromiseError";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useSendForgetPasswordOtp from "../api/useSendForgetPasswordOtp";
+import toastErrorMessage from "@/utils/toastApiError";
+
+interface LocationState {
+  email: string;
+}
+
 const useForgetPasswordOtpLogic = () => {
   const navigate = useNavigate();
   const { isPending, mutateAsync } = useSendForgetPasswordOtp();
+  const location = useLocation();
+
+  const { email } = (location.state || {} as LocationState);
+
+  if(!email) navigate("/auth/login");
+
   const {
     register,
     handleSubmit,
@@ -18,23 +29,25 @@ const useForgetPasswordOtpLogic = () => {
     mode: "onBlur",
     reValidateMode: "onBlur",
     defaultValues: {
-      otp: "",
+      code: "",
     },
   });
-  const onSubmit = async (data: OtpSchemaType) => {
-    const formData = new FormData();
-    formData?.append("code", data?.otp);
 
+  const onSubmit = async (data: OtpSchemaType) => {
     try {
-      const response = await mutateAsync(formData);
+      const response = await mutateAsync({
+        ...data,
+        email,
+      });
       if (response?.status) {
         toast.success(response?.message);
-        navigate("/auth/reset-password");
+        navigate("/auth/reset-password", {state: {email}});
       }
     } catch (error) {
-      handlePromisError(error);
+      toastErrorMessage(error as Error);
     }
   };
+
   return {
     register,
     handleSubmit,

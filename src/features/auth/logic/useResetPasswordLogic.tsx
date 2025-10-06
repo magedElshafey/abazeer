@@ -1,41 +1,51 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  type ResetPasswordSchemaType,
-  resetPasswordSchema,
-} from "../schema/resetPasswordSchema";
-import handlePromisError from "../../../utils/handlePromiseError";
 import useResetPassword from "../api/useResetPassword";
 import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { passwordWithConfirmSchema, PasswordWithConfirmSchemaType } from "../schema/passwordSchema";
+import toastErrorMessage from "@/utils/toastApiError";
+
+interface LocationState {
+  email: string;
+}
+
 const useResetPasswordLogic = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const { email } = (location.state as LocationState || {} );
+
+  if(!email) navigate("../login");
+
   const { isPending, mutateAsync } = useResetPassword();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ResetPasswordSchemaType>({
-    resolver: zodResolver(resetPasswordSchema),
+  } = useForm<PasswordWithConfirmSchemaType>({
+    resolver: zodResolver(passwordWithConfirmSchema),
     mode: "onBlur",
     reValidateMode: "onBlur",
     defaultValues: {
-      newPassword: "",
-      confirmNewPassword: "",
+      password: "",
+      password_confirmation: "",
     },
   });
-  const onSubmit = async (data: ResetPasswordSchemaType) => {
-    const formData = new FormData();
-    formData.append("confirm_password", data?.confirmNewPassword);
-    formData?.append("password", data?.newPassword);
+
+  const onSubmit = async (data: PasswordWithConfirmSchemaType) => {
     try {
-      const response = await mutateAsync(formData);
+      const response = await mutateAsync({
+        ...data,
+        email,
+      });
       if (response?.status) {
         toast.success(response?.message);
         navigate("/auth/reset-password-success");
       }
     } catch (error) {
-      handlePromisError(error);
+      toastErrorMessage(error as Error);
     }
   };
   return {

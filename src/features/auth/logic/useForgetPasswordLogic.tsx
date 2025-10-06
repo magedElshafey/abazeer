@@ -30,7 +30,7 @@ const useForgetPasswordLogic = () => {
       const response = await mutateAsync(data);
       if (response?.status) {
         toast.success(response?.message);
-        navigate("/auth/forget-password-otp");
+        navigate("/auth/forget-password-otp", {state: {email: data.email}});
       }
     } catch (error) {
       toastErrorMessage(error as Error);
