@@ -1,89 +1,73 @@
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
-import { Axios } from "@/lib/axios/Axios";
-import { apiRoutes } from "@/services/api-routes/apiRoutes";
-import { toast } from "sonner";
-import handlePromisError from "@/utils/handlePromiseError";
+import useNewsLetterLogic from "./logic/useNewsLetterLogic";
 import Loader from "@/common/components/loader/spinner/Loader";
-const validateEmail = (email: string): boolean => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
-};
+
 const NewsLetter = () => {
   const { t } = useTranslation();
-  const [email, setEmail] = useState<string>("");
-  const [isValid, setIsValid] = useState<boolean>(true);
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setEmail(value);
-    setIsValid(!value || validateEmail(value));
-  };
-  const { isPending, mutateAsync } = useMutation({
-    mutationFn: async (email: string) => {
-      const { data } = await Axios.post(apiRoutes.news_letter, { email });
-      return data;
-    },
-  });
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      const response = await mutateAsync(email);
-      if (response?.status) {
-        toast.success(response?.message);
-        setEmail("");
-      }
-    } catch (error) {
-      handlePromisError(error);
-    }
-  };
+  const {
+    states: { isValid, isTouched, email, isPending },
+    handlers: { handleBlur, handleInputChange, handleSubmit },
+  } = useNewsLetterLogic();
+
+  const showError = !isValid && isTouched;
+
   return (
-    <section aria-labelledby="newsletter-heading">
+    <section aria-labelledby="newsletter-heading" className="w-full">
       <h3
         id="newsletter-heading"
         className="font-semibold mb-4 text-md lg:text-lg xl:text-xl"
       >
         {t("Newsletter")}
       </h3>
+
       <p className="mb-4 text-xs text-gray-500 leading-relaxed">
         {t("Subscribe to our newsletter for latest offers and updates.")}
       </p>
 
       <form
-        className="flex items-center w-full"
-        aria-label="Newsletter subscription"
         onSubmit={handleSubmit}
+        className="flex items-start flex-col sm:flex-row gap-2 w-full"
+        aria-label={t("Newsletter subscription")}
+        noValidate
       >
-        <div className="relative flex-1 h-12">
+        <div className="relative flex-1 w-full">
           <label htmlFor="newsletter-email" className="sr-only">
             {t("email")}
           </label>
+
           <input
             id="newsletter-email"
             type="email"
             value={email}
             onChange={handleInputChange}
+            onBlur={handleBlur}
             placeholder={t("email", { defaultValue: "Enter your email" })}
-            className={`border w-full h-full bg-white text-darkColor px-2 focus:outline-none rounded-md ${
-              isValid ? "" : "border-red-500"
+            className={`border w-full h-12 bg-white text-darkColor px-3 focus:outline-none rounded-md transition-colors duration-200 ${
+              showError
+                ? "border-red-500"
+                : "border-gray-300 focus:border-orangeColor"
             }`}
-            aria-invalid={!isValid}
-            aria-describedby={!isValid ? "email-error" : undefined}
+            aria-invalid={showError}
+            aria-describedby={showError ? "email-error" : undefined}
+            autoComplete="email"
           />
-          {!isValid && (
+
+          {showError && (
             <span
               id="email-error"
               role="alert"
-              className="text-xs text-red-600"
+              className="text-xs text-red-600 mt-1 block"
             >
               {t("Please enter a valid email")}
             </span>
           )}
         </div>
+
         <button
-          disabled={isPending || !email?.trim()}
           type="submit"
-          className="h-12 px-3 bg-orangeColor hover:bg-opacity-90 font-medium border-2 border-orangeColor focus:outline-none focus:ring-2 focus:ring-orangeColor disabled:cursor-not-allowed disabled:bg-orangeColor/15 transition-all duration-200 text-sm rounded-md"
+          aria-busy={isPending}
+          disabled={isPending || !email.trim() || !isValid}
+          className="h-12 px-4 bg-orangeColor hover:bg-opacity-90 text-white font-medium border-2 border-orangeColor focus:outline-none focus:ring-2 focus:ring-orangeColor/50 disabled:cursor-not-allowed disabled:bg-orangeColor/20 transition-all duration-200 text-sm rounded-md w-full sm:w-auto"
         >
           {isPending ? (
             <Loader />
