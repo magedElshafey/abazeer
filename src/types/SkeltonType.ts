@@ -12,4 +12,5 @@ export type SkeletonType =
   | "faq"
   | "profile"
   | "cart-table"
-  | "custome";
+  | "custome"
+  | "about";

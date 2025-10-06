@@ -66,16 +66,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
           // Load from API
           const data = await getCart();
           setItems(data?.items || []);
-        } else {
-          // When user logs out: save cart back to local
-          try {
-            const data = await getCart();
-            if (data?.items)
-              localStorage.setItem(LOCAL_KEY, JSON.stringify(data.items));
-          } catch {
-            /* ignore errors */
-          }
-        }
+        } else return;
       } catch (err) {
         console.error("Cart sync error:", err);
       }

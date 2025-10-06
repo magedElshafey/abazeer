@@ -13,6 +13,7 @@ import FAQSkeleton from "./FAQSkeleton";
 import CustomSkeleton from "./CustomSkeleton";
 import EditProfileSkeleton from "./EditProfileSkeleton";
 import CartTableSkeleton from "./CartTableSkeleton";
+import AboutSklelton from "./AboutSkelton";
 interface SkeltonProps {
   type: SkeletonType;
 }
@@ -46,6 +47,8 @@ const Skeleton: React.FC<SkeltonProps> = ({ type }) => {
       return <CartTableSkeleton />;
     case "custome":
       return <CustomSkeleton />;
+    case "about":
+      return <AboutSklelton />;
     default:
       return null;
   }

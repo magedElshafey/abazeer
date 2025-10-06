@@ -122,5 +122,6 @@
   "Confirm": "تأكيد",
   "Cancel": "إلغاء",
   "products": "المنتجات",
-  "Please enter a valid email": "البريد الإلكتروني غير صالح"
+  "Please enter a valid email": "البريد الإلكتروني غير صالح",
+  "No data found": "لا يوجد بيانات"
 }

@@ -1,5 +1,5 @@
-import Skeleton from "../loader/skeltons/Skeleton";
-import Loader from "../loader/spinner/Loader";
+import Skeleton from "@/common/components/loader/skeltons/Skeleton";
+import Loader from "@/common/components/loader/spinner/Loader";
 import { useTranslation } from "react-i18next";
 import { SkeletonType } from "../../../types/SkeltonType";
 interface FetchHandlerProps {

@@ -121,5 +121,6 @@
   "Confirm": "Confirm",
   "Cancel": "Cancel",
   "products": "products",
-  "Please enter a valid email": "Please enter a valid email"
+  "Please enter a valid email": "Please enter a valid email",
+  "No data found": "No data found"
 }

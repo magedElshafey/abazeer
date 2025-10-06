@@ -17,13 +17,13 @@ export const Axios = axios.create({
 
 Axios.interceptors.request.use((config) => {
   const user = localStorage.getItem("user");
-  if(user) {
+  if (user) {
     const token = (JSON.parse(user) as User)?.token || undefined;
     if (token) config.headers["Authorization"] = `Bearer ${token}`;
     config.headers["Accept-Language"] = i18n.language;
   }
   return config;
-})
+});
 
 const AxiosConfig = () => {
   const { i18n, t } = useTranslation();
@@ -36,7 +36,7 @@ const AxiosConfig = () => {
         return response;
       },
       (error) => {
-        if (error?.response?.status === 401) {
+        if (error?.response?.status === 401 && user) {
           logout();
           toast.dismiss();
           toast.error(t("session expired"), {

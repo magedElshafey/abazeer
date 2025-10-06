@@ -4,75 +4,57 @@ import { useNavigate } from "react-router-dom";
 import Border from "../../../../../components/border/Border";
 import { IoIosArrowDown } from "react-icons/io";
 import { TfiSearch } from "react-icons/tfi";
-
-type Category = {
-  id: number;
-  title: string;
-  subCategories: { id: number; title: string }[];
-};
-
-const categories: Category[] = [
-  {
-    id: 1,
-    title: "fruites",
-    subCategories: [
-      { id: 2, title: "apples" },
-      { id: 3, title: "banana" },
-      { id: 4, title: "mango" },
-      { id: 5, title: "strawbarry" },
-      { id: 6, title: "oranges" },
-    ],
-  },
-  {
-    id: 2,
-    title: "vegatbles",
-    subCategories: [
-      { id: 7, title: "tomatoes" },
-      { id: 8, title: "botatoes" },
-      { id: 9, title: "beans" },
-      { id: 10, title: "onions" },
-      { id: 11, title: "carrots" },
-    ],
-  },
-];
+import useGetAllCategories from "@/features/categories/api/useGetAllCategories";
+import { CategoriesListType } from "@/features/categories/types/categoriesList.types";
+import Loader from "@/common/components/loader/spinner/Loader";
+import EmptyData from "@/common/components/empty-data/EmptyData";
 
 interface DropdownProps {
-  categories: Category[];
-  onSelect: (opt: { id: number; title: string }) => void;
+  onSelect: (opt: CategoriesListType) => void;
 }
 
-const Dropdown = memo(({ categories, onSelect }: DropdownProps) => {
-  console.log("resss");
+const Dropdown = memo(({ onSelect }: DropdownProps) => {
+  const { isLoading, data } = useGetAllCategories();
   return (
     <ul
       role="menu"
       aria-label="categories"
       className="absolute top-full right-0  w-[180px] bg-white shadow-lg p-2 border z-[100000] text-start max-h-56 overflow-y-auto"
     >
-      {categories.map((category) => (
-        <li key={category.id} className="mb-3">
-          <button
-            type="button"
-            role="menuitem"
-            className="cursor-pointer w-full text-start hover:bg-gray-100 p-1 rounded"
-            onClick={() => onSelect(category)}
-          >
-            {category.title}
-          </button>
-          {category.subCategories.map((sub) => (
-            <div key={sub.id} className="mt-2 mb-1">
-              <button
-                type="button"
-                role="menuitem"
-                className="ms-2 cursor-pointer w-full text-start hover:bg-gray-100 p-1 rounded"
-                onClick={() => onSelect(sub)}
-              >
-                {sub.title}
-              </button>
-            </div>
-          ))}
-        </li>
-      ))}
+      {isLoading ? (
+        <div className="flex-center py-3">
+          <Loader />
+        </div>
+      ) : data && data?.length ? (
+        data?.map((category) => (
+          <li key={category.id} className="mb-3">
+            <button
+              type="button"
+              role="menuitem"
+              className="cursor-pointer w-full text-start hover:bg-gray-100 p-1 rounded"
+              onClick={() => onSelect(category)}
+            >
+              {category.name}
+            </button>
+            {category?.children && category?.children?.length
+              ? category.children.map((sub) => (
+                  <div key={sub.id} className="mt-2 mb-1">
+                    <button
+                      type="button"
+                      role="menuitem"
+                      className="ms-2 cursor-pointer w-full text-start hover:bg-gray-100 p-1 rounded"
+                      onClick={() => onSelect(sub)}
+                    >
+                      {sub.name}
+                    </button>
+                  </div>
+                ))
+              : null}
+          </li>
+        ))
+      ) : (
+        <EmptyData />
+      )}
     </ul>
   );
 });
@@ -83,10 +65,9 @@ const Search = () => {
   const navigate = useNavigate();
   const [showDropDown, setShowDropDown] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedOpt, setSelectedOpt] = useState<{
-    id: number;
-    title: string;
-  } | null>(null);
+  const [selectedOpt, setSelectedOpt] = useState<CategoriesListType | null>(
+    null
+  );
 
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -94,13 +75,10 @@ const Search = () => {
     setShowDropDown((prev) => !prev);
   }, []);
 
-  const handleSelectedOption = useCallback(
-    (opt: { id: number; title: string }) => {
-      setSelectedOpt(opt);
-      setShowDropDown(false);
-    },
-    []
-  );
+  const handleSelectedOption = useCallback((opt: CategoriesListType) => {
+    setSelectedOpt(opt);
+    setShowDropDown(false);
+  }, []);
 
   const handleSearchTermChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -133,7 +111,6 @@ const Search = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-  console.log(showDropDown);
   return (
     <div className="flex-1 bg-background-gray p-3 flex items-center gap-3 min-w-0 ">
       {/* Dropdown */}
@@ -150,14 +127,12 @@ const Search = () => {
           className="flex items-center gap-2 w-full truncate"
         >
           <span className="truncate">
-            {selectedOpt ? selectedOpt.title : t("all categories")}
+            {selectedOpt ? selectedOpt.name : t("all categories")}
           </span>
           <IoIosArrowDown size={15} aria-hidden="true" />
           <Border />
         </button>
-        {showDropDown && (
-          <Dropdown categories={categories} onSelect={handleSelectedOption} />
-        )}
+        {showDropDown && <Dropdown onSelect={handleSelectedOption} />}
       </div>
 
       {/* Input */}
@@ -184,3 +159,12 @@ const Search = () => {
 };
 
 export default Search;
+/**
+ *  {data?.length ? (
+        <div>
+          {data.map((category) => (
+            
+          ))}
+        </div>
+      ) : null}
+ */
