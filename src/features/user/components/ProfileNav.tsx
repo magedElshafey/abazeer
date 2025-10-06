@@ -25,12 +25,14 @@ const ProfileNav: FC<ProfileNavProps> = ({ onNavigate }) => {
             <NavLink
               key={item.id}
               to={item.path}
-              className={({ isActive: linkActive }) =>
-                `flex items-center gap-3 text-left px-4 py-3 rounded transition-colors ${
-                  linkActive || isActive(item.path)
+              className={({ isActive: linkActive }) => {
+                return `flex items-center gap-3 text-left px-4 py-3 rounded transition-colors ${
+                  linkActive && isActive(item.path)
                     ? "bg-orangeColor text-white"
                     : "hover:bg-gray-200 text-text-light"
                 }`
+              }
+                
               }
               onClick={() => onNavigate?.(item)}
             >

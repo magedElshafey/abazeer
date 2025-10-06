@@ -1,5 +1,5 @@
 import { FC } from "react"
-import Avatar from "../components/Avatar";
+import Avatar from "@/common/components/avatar/Avatar";
 import ProfileCard from "../components/ProfileCard";
 import { FiPackage, FiMapPin, FiSettings, FiShoppingCart } from "react-icons/fi";
 import MainBtn from "@/common/components/buttons/MainBtn";
@@ -69,7 +69,7 @@ const Overview: FC = () => {
                 </div>
                 <div className="shrink-0">
                     <Link to="/" className="block">
-                        <MainBtn className="bg-cyan-400 text-black">
+                        <MainBtn className="!bg-cyan-400 !text-black">
                             {t("orders_banner_cta")}
                         </MainBtn>
                     </Link>

@@ -75,8 +75,18 @@ export const websiteRoutes: RouteObject = {
         },
         {
           path: "addresses",
-          element: lazyLoad(() => import("../features/user/pages/Addresses")),
           handle: { breadcrumb: "my addresses" },
+          children: [
+            {
+              index: true,
+              element: lazyLoad(() => import("../features/user/pages/addresses/Addresses")),
+            },
+            {
+              path: "create",
+              element: lazyLoad(() => import("../features/user/pages/addresses/CreateAddress")),
+              handle: { breadcrumb: "create_address" },
+            }
+          ]
         },
         {
           path: "reviews",

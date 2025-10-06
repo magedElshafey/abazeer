@@ -7,12 +7,14 @@ import {
   FiSettings, 
   FiLogOut 
 } from "react-icons/fi";
+import { FiBookOpen } from "react-icons/fi";
 
 export type ProfileRouteKey =
   | "overview"
   | "orders"
   | "favorites"
   | "reviews"
+  | "addresses"
   | "account-settings"
   | "logout";
 
@@ -28,6 +30,7 @@ export const PROFILE_ROUTES: ProfileRouteItem[] = [
   { id: "orders", label: "orders", path: "orders", icon: FiShoppingBag },
   { id: "favorites", label: "favorites", path: "favorites", icon: FiHeart },
   { id: "reviews", label: "reviews", path: "reviews", icon: FiStar },
-  { id: "account-settings", label: "account_settings", path: "account", icon: FiSettings },
+  { id: "addresses", label: "addresses", path: "addresses", icon: FiBookOpen },
+  { id: "account-settings", label: "account_settings", path: "settings", icon: FiSettings },
   { id: "logout", label: "logout", path: "/logout", icon: FiLogOut },
 ];
