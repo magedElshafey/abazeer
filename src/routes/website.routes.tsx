@@ -1,6 +1,7 @@
 import Guard from "./Guard";
 import { lazyLoad } from "../utils/LazyLoad";
 import type { RouteObject } from "react-router-dom";
+import Logout from "@/features/user/pages/Logout";
 
 export const websiteRoutes: RouteObject = {
   element: lazyLoad(() => import("../common/layout/website/WebsiteLayout")),
@@ -8,6 +9,10 @@ export const websiteRoutes: RouteObject = {
     {
       index: true,
       element: lazyLoad(() => import("../features/home/Home")),
+    },
+    {
+      path: "logout",
+      element: <Logout />,
     },
     {
       path: "about",
@@ -50,9 +55,40 @@ export const websiteRoutes: RouteObject = {
       path: "my-profile",
       element: (
         <Guard requireAuth={true}>
-          {lazyLoad(() => import("../features/user/my-profile/MyProfile"))}
+          {lazyLoad(() => import("../features/user/layouts/profile-layout"))}
         </Guard>
       ),
+      children: [
+        {
+          index: true,
+          element: lazyLoad(() => import("../features/user/pages/Overview")),
+        },
+        {
+          path: "orders",
+          element: lazyLoad(() => import("../features/user/pages/Orders")),
+          handle: { breadcrumb: "orders" },
+        },
+        {
+          path: "settings",
+          element: lazyLoad(() => import("../features/user/pages/Settings")),
+          handle: { breadcrumb: "account_settings" },
+        },
+        {
+          path: "addresses",
+          element: lazyLoad(() => import("../features/user/pages/Addresses")),
+          handle: { breadcrumb: "my addresses" },
+        },
+        {
+          path: "reviews",
+          element: lazyLoad(() => import("../features/user/pages/Reviews")),
+          handle: { breadcrumb: "reviews" },
+        },
+        {
+          path: "favorites",
+          element: lazyLoad(() => import("../features/user/pages/Favorites")),
+          handle: { breadcrumb: "favorites" },
+        },
+      ],
       handle: {
         breadcrumb: "my_profile",
       },
