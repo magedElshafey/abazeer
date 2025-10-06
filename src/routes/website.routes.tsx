@@ -13,7 +13,7 @@ export const websiteRoutes: RouteObject = {
       path: "about",
       element: lazyLoad(() => import("../features/static-pages/pages/About")),
       handle: {
-        breadcrumb: "about",
+        breadcrumb: "About",
       },
     },
     {
