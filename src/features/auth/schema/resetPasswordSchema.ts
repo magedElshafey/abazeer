@@ -1,14 +1,10 @@
 import { z } from "zod";
-import { passwordSchema } from "./passwordSchema";
+import { passwordWithConfirmSchema } from "./passwordSchema";
+import { emailSchema } from "./emailSchema";
 
-export const resetPasswordSchema = z
-  .object({
-    newPassword: passwordSchema,
-    confirmNewPassword: passwordSchema,
+export const resetPasswordSchema = passwordWithConfirmSchema
+  .extend({
+    email: emailSchema,
   })
-  .refine((data) => data.newPassword === data.confirmNewPassword, {
-    path: ["confirmNewPassword"],
-    error: "passwords_do_not_match",
-  });
 
 export type ResetPasswordSchemaType = z.infer<typeof resetPasswordSchema>;

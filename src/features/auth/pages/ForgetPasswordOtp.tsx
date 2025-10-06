@@ -18,8 +18,8 @@ const ForgetPasswordOtp = () => {
             placeholder="code"
             label="code"
             enableAutocomplete
-            {...register("otp")}
-            error={errors.otp?.message}
+            {...register("code")}
+            error={errors.code?.message}
           />
         </div>
         <div className="w-full flex-center">

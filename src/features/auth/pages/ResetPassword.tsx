@@ -17,8 +17,8 @@ const ResetPassword = () => {
             type="password"
             placeholder="password"
             label="password"
-            error={errors.newPassword?.message}
-            {...register("newPassword")}
+            error={errors.password?.message}
+            {...register("password")}
           />
         </div>
         <div className="mb-4">
@@ -27,9 +27,9 @@ const ResetPassword = () => {
             Icon={GoKey}
             type="password"
             placeholder="confirm new password"
-            label="confirm new password"
-            error={errors.confirmNewPassword?.message}
-            {...register("confirmNewPassword")}
+            label="password_confirmation"
+            error={errors.password_confirmation?.message}
+            {...register("password_confirmation")}
           />
         </div>
         <div className="w-full flex-center">

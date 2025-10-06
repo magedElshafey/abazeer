@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const otpSchema = z.object({
-  otp: z
+  code: z
     .string()
     .min(6, "OTP must be exactly 6 digits")
     .max(6, "OTP must be exactly 6 digits")
