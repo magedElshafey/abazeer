@@ -7,11 +7,12 @@ import React, {
 } from "react";
 import { useLocation } from "react-router-dom";
 import { isProtectedRoutes } from "../utils/isProtectedRoutes";
+import { getUserFromAnyStorage, saveUserToStorage, removeUserFromStorage, StorageType } from "@/features/auth/utils";
 import type { User } from "@/features/auth/types/auth.types";
 
 interface AuthContextProps {
   user: User | null;
-  login: (userData: User) => void;
+  login: (userData: User, rememberUser?: boolean) => void;
   logout: () => void;
   loading: boolean;
   lastPublicPage: React.MutableRefObject<string>;
@@ -39,22 +40,21 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, [location]);
 
   useEffect(() => {
-    const user = localStorage.getItem("user");
+    const user = getUserFromAnyStorage();
     if (user) {
-      const data = JSON.parse(user);
-      setUser(data);
+      setUser(user);
     }
     setLoading(false);
   }, []);
 
-  const login = (userData: User) => {
-    const data = JSON.stringify(userData);
-    localStorage.setItem("user", data);
+  const login = (userData: User, rememberUser: boolean = false) => {
+    const storageType = rememberUser ? StorageType.LOCAL : StorageType.SESSION;
+    saveUserToStorage(userData, storageType);
     setUser(userData);
   };
 
   const logout = () => {
-    localStorage.removeItem("user");
+    removeUserFromStorage();
     setUser(null);
   };
 

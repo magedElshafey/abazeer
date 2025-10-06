@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import MainInput from "../../../common/components/inputs/MainInput";
+import MainCheckInput from "../../../common/components/inputs/MainCheckInput";
 import AuthCard from "../../../common/layout/auth/AuthCard";
 import { GoKey } from "react-icons/go";
 import { useTranslation } from "react-i18next";
@@ -16,7 +17,8 @@ const Login = () => {
     register,
     onSubmit,
     handleSubmit,
-    isPending
+    isPending,
+    control
   } = useLoginLogic();
 
 
@@ -53,14 +55,15 @@ const Login = () => {
             {...register("password")}
           />
         </div>
-        <div className="mb-4 flex-between">
+        <div className="mb-4 flex-between w-full">
           <Link className="text-sm text-text-red" to="/auth/forget-password">
             {t("forget password?")}
           </Link>
-          {/* <label className="flex items-center gap-1 text-sm text-text-gray custom-checkbox">
-            <input type="checkbox" {...register("rememberMe")} />
-            {t("remember me")}
-          </label> */}
+          <MainCheckInput
+            label="remember me"
+            control={control}
+            name="rememberMe"
+          />
         </div>
         <div className="w-full flex-center mb-7 sm:mb-8 md:mb-9 lg:mb-10">
           <div className="w-full md:w-[150px]">
