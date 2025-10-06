@@ -1,18 +1,22 @@
 import { memo, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import useGetAllCategories from "@/features/categories/api/useGetAllCategories";
 import SidebarIntro from "../../../mobile-navbar/common/SidebarIntro";
 import Backdrop from "../../../mobile-navbar/common/Backdrop";
 import { IoIosArrowBack } from "react-icons/io";
 import type { Categories } from "../../../../../../../features/categories/types/Categories";
-import { categories } from "../../../../../../../data/data";
+import Loader from "@/common/components/loader/spinner/Loader";
+import EmptyData from "@/common/components/empty-data/EmptyData";
+import { CategoriesListType } from "@/features/categories/types/categoriesList.types";
+
 interface CategoriesSidebarProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
 interface CategoryItemProps {
-  category: Categories | Categories["sub"][0] | { id: number; title: string };
+  category: CategoriesListType | CategoriesListType["children"][0];
   level?: number;
   dir: "ltr" | "rtl";
   onNavigate: (id: number) => void;
@@ -28,10 +32,10 @@ const CategoryItem: React.FC<CategoryItemProps> = ({
 
   // check لو فيه sub أو subSub
   const hasChildren =
-    "sub" in category
-      ? !!category.sub
-      : "subSub" in category
-      ? !!category.subSub
+    "children" in category
+      ? !!category.children
+      : "children" in category
+      ? !!category.children
       : false;
 
   const toggleOpen = useCallback(() => {
@@ -47,24 +51,16 @@ const CategoryItem: React.FC<CategoryItemProps> = ({
           role="menuitem"
         >
           {"icon" in category && category.icon ? (
-            <category.icon size={20} />
+            <img alt={category?.name} src={category?.icon} />
           ) : null}
-          <span className={`pl-${level * 2}`}>
-            {"mainCateogry" in category
-              ? category.mainCateogry
-              : category.title}
-          </span>
+          <span className={`pl-${level * 2}`}>{category.name}</span>
         </button>
 
         {hasChildren && (
           <button
             onClick={toggleOpen}
             aria-expanded={open}
-            aria-label={`Toggle ${
-              "mainCateogry" in category
-                ? category.mainCateogry
-                : category.title
-            }`}
+            aria-label={`Toggle ${category.name}`}
             className="p-1"
           >
             <IoIosArrowBack
@@ -85,8 +81,8 @@ const CategoryItem: React.FC<CategoryItemProps> = ({
           }`}
           role="menu"
         >
-          {"sub" in category &&
-            category.sub?.map((child: Categories) => (
+          {"children" in category &&
+            category.children?.map((child: Categories) => (
               <CategoryItem
                 key={child.id}
                 category={child}
@@ -96,8 +92,8 @@ const CategoryItem: React.FC<CategoryItemProps> = ({
               />
             ))}
 
-          {"subSub" in category &&
-            category.subSub?.map((child: Categories) => (
+          {"children" in category &&
+            category.children?.map((child: Categories) => (
               <CategoryItem
                 key={child.id}
                 category={child}
@@ -119,7 +115,7 @@ const CategoriesSidebar: React.FC<CategoriesSidebarProps> = ({
   const { i18n, t } = useTranslation();
   const dir = i18n.dir();
   const navigate = useNavigate();
-
+  const { isLoading, data } = useGetAllCategories();
   const handleNavigate = useCallback(
     (id: number) => {
       navigate(`/product-category/${id}`);
@@ -149,14 +145,22 @@ const CategoriesSidebar: React.FC<CategoriesSidebarProps> = ({
         </SidebarIntro>
 
         <ul aria-label="categories Navigation" role="menu" className="mt-2">
-          {categories?.map((cat) => (
-            <CategoryItem
-              key={cat.id}
-              category={cat}
-              dir={dir}
-              onNavigate={handleNavigate}
-            />
-          ))}
+          {isLoading ? (
+            <div className="flex-center my-4">
+              <Loader color="white" />
+            </div>
+          ) : data && data?.length ? (
+            data?.map((cat) => (
+              <CategoryItem
+                key={cat.id}
+                category={cat}
+                dir={dir}
+                onNavigate={handleNavigate}
+              />
+            ))
+          ) : (
+            <EmptyData />
+          )}
         </ul>
       </aside>
     </>
