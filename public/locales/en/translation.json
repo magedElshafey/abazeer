@@ -112,5 +112,7 @@
   "Are you sure you want to log out?": "Are you sure you want to log out?",
   "Please confirm your action.": "Please confirm your action.",
   "Confirm": "Confirm",
-  "Cancel": "Cancel"
+  "Cancel": "Cancel",
+  "products": "products",
+  "Please enter a valid email": "Please enter a valid email"
 }

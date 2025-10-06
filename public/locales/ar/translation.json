@@ -113,5 +113,7 @@
   "Are you sure you want to log out?": "هل أنت متأكد من تسجيل الخروج ؟",
   "Please confirm your action.": "يرجي تأكيد طلبك",
   "Confirm": "تأكيد",
-  "Cancel": "إلغاء"
+  "Cancel": "إلغاء",
+  "products": "المنتجات",
+  "Please enter a valid email": "البريد الإلكتروني غير صالح"
 }

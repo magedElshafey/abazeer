@@ -23,7 +23,7 @@ export default {
           red: "#FF0000",
           subHeader: "#8593A3",
           link: "#09c",
-          darkRed: "#cb4321"
+          darkRed: "#cb4321",
         },
         darkBlue: "#0642BC",
         lightBlue: "#3274FF",

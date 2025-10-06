@@ -1,5 +1,11 @@
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { Axios } from "@/lib/axios/Axios";
+import { apiRoutes } from "@/services/api-routes/apiRoutes";
+import { toast } from "sonner";
+import handlePromisError from "@/utils/handlePromiseError";
+import Loader from "@/common/components/loader/spinner/Loader";
 const validateEmail = (email: string): boolean => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
@@ -12,6 +18,24 @@ const NewsLetter = () => {
     const value = e.target.value;
     setEmail(value);
     setIsValid(!value || validateEmail(value));
+  };
+  const { isPending, mutateAsync } = useMutation({
+    mutationFn: async (email: string) => {
+      const { data } = await Axios.post(apiRoutes.news_letter, { email });
+      return data;
+    },
+  });
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const response = await mutateAsync(email);
+      if (response?.status) {
+        toast.success(response?.message);
+        setEmail("");
+      }
+    } catch (error) {
+      handlePromisError(error);
+    }
   };
   return (
     <section aria-labelledby="newsletter-heading">
@@ -28,6 +52,7 @@ const NewsLetter = () => {
       <form
         className="flex items-center w-full"
         aria-label="Newsletter subscription"
+        onSubmit={handleSubmit}
       >
         <div className="relative flex-1 h-12">
           <label htmlFor="newsletter-email" className="sr-only">
@@ -56,10 +81,15 @@ const NewsLetter = () => {
           )}
         </div>
         <button
+          disabled={isPending || !email?.trim()}
           type="submit"
           className="h-12 px-3 bg-orangeColor hover:bg-opacity-90 font-medium border-2 border-orangeColor focus:outline-none focus:ring-2 focus:ring-orangeColor disabled:cursor-not-allowed disabled:bg-orangeColor/15 transition-all duration-200 text-sm rounded-md"
         >
-          {t("subscribe", { defaultValue: "Subscribe" })}
+          {isPending ? (
+            <Loader />
+          ) : (
+            t("subscribe", { defaultValue: "Subscribe" })
+          )}
         </button>
       </form>
     </section>
