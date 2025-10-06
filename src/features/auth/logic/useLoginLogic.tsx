@@ -15,6 +15,7 @@ const useLoginLogic = () => {
     register,
     handleSubmit,
     formState: { errors },
+    control
   } = useForm<LoginSchemaType>({
     resolver: zodResolver(loginSchema),
     mode: "onBlur",
@@ -30,7 +31,7 @@ const useLoginLogic = () => {
       const response = await mutateAsync(data);
       if (response?.status) {
         toast.success(response?.message);
-        login(response.data);
+        login(response.data, data.rememberMe);
       }
     } catch (error) {
       toastErrorMessage(error as Error);
@@ -42,6 +43,7 @@ const useLoginLogic = () => {
     errors,
     onSubmit,
     isPending,
+    control
   };
 };
 

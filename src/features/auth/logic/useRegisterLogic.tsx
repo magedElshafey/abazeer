@@ -1,5 +1,4 @@
 import useRegister from "../api/useRegister";
-import { useAuth } from "../../../store/AuthProvider";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -14,7 +13,6 @@ const useRegisterLogic = () => {
   const { isPending, mutateAsync } = useRegister();
   const navigate = useNavigate();
 
-  const { login } = useAuth();
   const {
     register,
     handleSubmit,
@@ -40,7 +38,6 @@ const useRegisterLogic = () => {
       if (response?.status) {
         navigate("../login");
         toast.success(response?.message);
-        login(response?.data);
         reset();
       }
     } catch (error) {

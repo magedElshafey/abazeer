@@ -19,8 +19,6 @@ const Guard: React.FC<GuardProps> = ({
   const { user, loading } = useAuth();
   const location = useLocation();
 
-  console.log(children);
-
   if(loading) return undefined;
 
   if (guestOnly && user) {
