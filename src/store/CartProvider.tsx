@@ -5,13 +5,13 @@ import React, {
   useState,
   useCallback,
 } from "react";
+import { useTranslation } from "react-i18next";
 import { useAuth } from "./AuthProvider";
 import { useCartApi } from "@/features/cart/api/useCartApi";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { CartItem } from "@/features/cart/types/Cart.types";
-import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
-
+import { apiRoutes } from "@/services/api-routes/apiRoutes";
 interface CartContextProps {
   items: CartItem[];
   total: number;
@@ -93,7 +93,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
       addCartAPI(products),
     onSuccess: () =>
       queryClient.invalidateQueries({
-        queryKey: ["cart"],
+        queryKey: [apiRoutes?.cart],
       }),
   });
 
@@ -101,7 +101,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     mutationFn: (item_id: number) => removeCartAPI(item_id),
     onSuccess: () =>
       queryClient.invalidateQueries({
-        queryKey: ["cart"],
+        queryKey: [apiRoutes?.cart],
       }),
   });
 
@@ -115,7 +115,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     }) => updateQuantityAPI(item_id, quantity),
     onSuccess: () =>
       queryClient.invalidateQueries({
-        queryKey: ["cart"],
+        queryKey: [apiRoutes?.cart],
       }),
   });
 
@@ -123,7 +123,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     mutationFn: clearCartAPI,
     onSuccess: () =>
       queryClient.invalidateQueries({
-        queryKey: ["cart"],
+        queryKey: [apiRoutes?.cart],
       }),
   });
 

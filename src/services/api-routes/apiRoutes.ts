@@ -8,4 +8,5 @@ export const apiRoutes = {
   resetPassword: "auth/reset-password",
   cart: "cart",
   news_letter: "news_letter",
+  categories_list: "categories/list",
 };
