@@ -29,7 +29,7 @@ const ScrollToTopButton = () => {
     <button
       onClick={scrollToTop}
       aria-label="Scroll to top"
-      className={`fixed bottom-24 md:bottom-6 right-4 z-50 p-3 rounded-full shadow-lg bg-orangeColor text-white transition-opacity duration-300  focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2
+      className={`fixed bottom-24 md:bottom-6 right-4 z-30 p-3 rounded-full shadow-lg bg-orangeColor text-white transition-opacity duration-300  focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2
         ${isVisible ? "opacity-100" : "opacity-0 pointer-events-none"}`}
     >
       <FaArrowUp className="h-5 w-5" />

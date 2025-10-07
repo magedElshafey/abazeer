@@ -14,7 +14,7 @@ const CartDetails = () => {
   const itemCount = cartItems.length || 0;
   const totalAmount = total ?? "0.00";
   const handleGoToCart = useCallback(() => {
-    navigate("/cart");
+    navigate("/checkout");
   }, [navigate]);
 
   const handleClearCart = useCallback(() => {

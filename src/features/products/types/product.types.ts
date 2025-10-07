@@ -25,7 +25,7 @@ export interface Dimensions {
   height: number;
 }
 
-export interface ProductDetails {
+export interface ProductDetails extends Omit<Product, "category"> {
   id: number;
   name: string;
   description: string;
@@ -43,7 +43,6 @@ export interface ProductDetails {
   stock_status: string;
   weight: string;
   dimensions: Dimensions;
-  sale_price: string;
   meta_title: string;
   meta_description: string;
   average_rate: number;

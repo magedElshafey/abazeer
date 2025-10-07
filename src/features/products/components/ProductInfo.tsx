@@ -12,6 +12,9 @@ import HtmlConverter from "../../../common/components/htmlConverter/HtmlConverte
 import useAddFavorite from "../api/useAddFavorite";
 import Loader from "@/common/components/loader/spinner/Loader";
 
+import { useState, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
+import { useCart } from "@/store/CartProvider";
 type Props = {
   product: ProductDetails;
 };
@@ -19,7 +22,29 @@ type Props = {
 const ProductInfo: FC<Props> = ({ product }) => {
   const { t } = useTranslation();
   const { mutate: toggleFavorite, isPending } = useAddFavorite();
+  const [quantity, setQuantity] = useState<number>(1);
+  const { addToCart } = useCart();
+  const navigate = useNavigate();
+  const handleBuyNow = useCallback(() => {
+    addToCart({
+      id: product.id,
+      name: product.name,
+      image: product.image || "",
+      price: product.price,
+      quantity: 1,
+      category: product.category?.name,
+      has_discount: product.has_discount,
+      discount_percentage: product.discount_percentage,
+      average_rate: product.average_rate,
+      ratings_count: product.ratings_count,
+      stock_quantity: product.stock_quantity,
+      sold_quantity: product.sold_quantity,
+      sale_price: product.sale_price,
+      is_in_wishlist: product.is_in_wishlist
+    });
 
+    navigate("/checkout");
+  }, [addToCart, navigate, product]);
   return (
     <div className="px-2 flex flex-col gap-4">
       <div className="border-b pb-4">
@@ -64,9 +89,20 @@ const ProductInfo: FC<Props> = ({ product }) => {
       <div>
         <p>{t("quantity")}</p>
         <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-2 mt-1">
-          <ProductQuantity className="w-full" />
-          <AddToCartButton product={product} />
-          <MainBtn className="w-full py-1" theme="secondary">
+          <ProductQuantity
+            className="w-full"
+            maxQuantity={product?.stock_quantity}
+            onQuantityChange={setQuantity}
+          />
+          <AddToCartButton
+            product={{ ...product, category: product?.category?.name }}
+            quantity={quantity}
+          />
+          <MainBtn
+            onClick={handleBuyNow}
+            className="w-full py-1"
+            theme="secondary"
+          >
             {t("buy_now")}
           </MainBtn>
         </div>

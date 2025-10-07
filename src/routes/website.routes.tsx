@@ -79,14 +79,16 @@ export const websiteRoutes: RouteObject = {
           children: [
             {
               index: true,
-              element: lazyLoad(() => import("../features/user/pages/addresses/Addresses")),
+              element: lazyLoad(
+                () => import("../features/user/pages/addresses/Addresses")
+              ),
             },
             {
               path: "create",
               element: lazyLoad(() => import("../features/user/pages/addresses/AddressForm")),
               handle: { breadcrumb: "create_address" },
-            }
-          ]
+            },
+          ],
         },
         {
           path: "reviews",
@@ -142,6 +144,14 @@ export const websiteRoutes: RouteObject = {
       ],
       handle: {
         breadcrumb: "blogs",
+      },
+    },
+    {
+      path: "checkout",
+      element: lazyLoad(() => import("../features/checkout/pages/Checkout")),
+
+      handle: {
+        breadcrumb: "checkout",
       },
     },
   ],

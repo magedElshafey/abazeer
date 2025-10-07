@@ -2,6 +2,7 @@ import { memo } from "react";
 import { useTranslation } from "react-i18next";
 import SidebarIntro from "../../../mobile-navbar/common/SidebarIntro";
 import Backdrop from "../../../mobile-navbar/common/Backdrop";
+import CartDetails from "@/features/cart/components/details/CartDetails";
 interface CartSidebarProps {
   isOpen: boolean;
   onClose: () => void;
@@ -28,7 +29,9 @@ const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => {
           </div>
         </SidebarIntro>
 
-        <div aria-label="cart Navigation" className="mt-2"></div>
+        <div aria-label="cart Navigation" className="mt-2 px-1">
+          <CartDetails />
+        </div>
       </aside>
     </>
   );
