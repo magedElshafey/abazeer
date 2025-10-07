@@ -118,10 +118,7 @@ import { useCartApi } from "../api/useCartApi";
 import { useTranslation } from "react-i18next";
 import type { CartItem } from "../types/Cart.types";
 import { useCallback } from "react";
-/**
- * ✅ Helper to show toast messages
- * - يسهل تغيير الرسائل أو التصميم في المستقبل
- */
+
 const showToast = (type: "success" | "error", message: string) => {
   if (type === "success") toast.success(message);
   else toast.error(message);
@@ -135,10 +132,6 @@ export const useCartMutations = (
   const queryClient = useQueryClient();
   const { addToCart, removeFromCart, updateQuantity, clearCart } = useCartApi();
 
-  /**
-   * ✅ بدل الـ onSuccess inline — استخدم callback ثابت
-   * ده يقلل إعادة تعريف الدوال عند كل render
-   */
   const invalidateCart = useCallback(() => {
     queryClient.invalidateQueries({ queryKey: [apiRoutes.cart] });
   }, [queryClient]);
@@ -168,7 +161,6 @@ export const useCartMutations = (
         sold_quantity: 0,
       };
 
-      // ✅ استخدم functional update دايمًا (أكفأ)
       setItems((prev) => [...prev, newItem]);
 
       return { previous };

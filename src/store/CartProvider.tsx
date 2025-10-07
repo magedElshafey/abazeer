@@ -14,8 +14,8 @@ import type { CartItem } from "@/features/cart/types/Cart.types";
 import { apiRoutes } from "@/services/api-routes/apiRoutes";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
-const playAddSound = () => {
-  const audio = new Audio("/sounds/cart.mp3");
+const playAddSound = (path: string) => {
+  const audio = new Audio(path);
   audio.volume = 0.5;
   audio.play().catch(() => {});
 };
@@ -45,8 +45,8 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 
   // Load local cart for guest
   useEffect(() => {
+    const localData = localStorage.getItem(LOCAL_KEY);
     if (!user) {
-      const localData = localStorage.getItem(LOCAL_KEY);
       if (localData) setItems(JSON.parse(localData));
     }
   }, [user]);
@@ -58,14 +58,39 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     enabled: !!user,
     staleTime: 1000 * 60 * 5,
   });
+
   useEffect(() => {
     if (cartData?.items && user) setItems(cartData.items);
   }, [cartData, user]);
 
+  // 🧩 Sync guest cart with server cart on login
+  useEffect(() => {
+    if (user) {
+      const localData = localStorage.getItem(LOCAL_KEY);
+      if (localData) {
+        const guestItems: CartItem[] = JSON.parse(localData);
+
+        if (guestItems.length > 0) {
+          const formatted = guestItems.map((i) => ({
+            product_id: i.id,
+            quantity: i.quantity,
+          }));
+
+          addMutation.mutate(formatted, {
+            onSuccess: () => {
+              localStorage.removeItem(LOCAL_KEY);
+              // toast.success(t("Your cart has been synced"));
+            },
+          });
+        }
+      }
+    }
+  }, [user]);
+
   // Persist local cart for guests
-  const persistLocal = (updated: CartItem[]) => {
+  const persistLocal = useCallback((updated: CartItem[]) => {
     localStorage.setItem(LOCAL_KEY, JSON.stringify(updated));
-  };
+  }, []);
 
   // Fetch total from API for logged-in user
   const { data: totalData } = useQuery({
@@ -75,66 +100,84 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
   });
 
   // Methods
-  const addToCart = (item: CartItem) => {
-    if (!user) {
-      if (items.some((i) => i.id === item.id)) {
-        return toast.info(t("Item already in cart"));
+
+  // 🧩 Add item
+  const addToCart = useCallback(
+    (item: CartItem) => {
+      if (!user) {
+        if (items.some((i) => i.id === item.id)) {
+          return toast.info(t("Item already in cart"));
+        }
+        const updated = [...items, item];
+        setItems(updated);
+        persistLocal(updated);
+        toast.success(t("Added to cart"));
+        playAddSound("/sounds/cart.mp3");
+      } else {
+        addMutation.mutate([{ product_id: item.id, quantity: item.quantity }], {
+          onSuccess: () => playAddSound("/sounds/cart.mp3"),
+        });
       }
-      const updated = [...items, item];
-      setItems(updated);
-      persistLocal(updated);
-      toast.success(t("Added to cart"));
-      playAddSound();
-    } else {
-      addMutation.mutate([{ product_id: item.id, quantity: item.quantity }], {
-        onSuccess: () => playAddSound(),
-      });
-    }
-  };
+    },
+    [user, items, addMutation, persistLocal, t]
+  );
 
-  const removeFromCart = (id: number) => {
-    if (!user) {
-      const updated = items.filter((i) => i.id !== id);
-      setItems(updated);
-      persistLocal(updated);
-      toast.success(t("Removed from cart"));
-    } else {
-      removeMutation.mutate(id);
-    }
-  };
+  // 🧩 Remove item
+  const removeFromCart = useCallback(
+    (id: number) => {
+      if (!user) {
+        const updated = items.filter((i) => i.id !== id);
+        setItems(updated);
+        persistLocal(updated);
+        playAddSound("/sounds/remove.mp3");
 
-  const updateQuantity = (id: number, quantity: number) => {
-    if (!user) {
-      const updated = items.map((i) => (i.id === id ? { ...i, quantity } : i));
-      setItems(updated);
-      persistLocal(updated);
-    } else {
-      updateMutation.mutate({ item_id: id, quantity });
-    }
-  };
+        // toast.success(t("Removed from cart"));
+      } else {
+        removeMutation.mutate(id, {
+          onSuccess: () => playAddSound("/sounds/remove.mp3"),
+        });
+      }
+    },
+    [user, items, removeMutation, persistLocal, t]
+  );
 
-  const clearCart = () => {
+  // 🧩 Update quantity
+  const updateQuantity = useCallback(
+    (id: number, quantity: number) => {
+      if (!user) {
+        const updated = items.map((i) =>
+          i.id === id ? { ...i, quantity } : i
+        );
+        setItems(updated);
+        persistLocal(updated);
+      } else {
+        updateMutation.mutate({ item_id: id, quantity });
+      }
+    },
+    [user, items, updateMutation, persistLocal]
+  );
+
+  // 🧩 Clear cart
+  const clearCart = useCallback(() => {
     if (!user) {
       setItems([]);
       localStorage.removeItem(LOCAL_KEY);
     } else {
       clearMutation.mutate();
     }
-  };
+  }, [user, clearMutation]);
 
   const itemIds = useMemo(() => new Set(items.map((i) => i.id)), [items]);
   const isInCart = useCallback((id: number) => itemIds.has(id), [itemIds]);
 
   const localTotal = useMemo(
     () =>
-      items.reduce(
-        (sum, item) =>
-          sum +
-          (item.has_discount && item.sale_price
-            ? item.sale_price
-            : +item.price * item.quantity),
-        0
-      ),
+      items.reduce((sum, item) => {
+        const price =
+          item.has_discount && item.sale_price ? +item.sale_price : +item.price;
+
+        return sum + price * item.quantity;
+      }, 0),
     [items]
   );
 
@@ -159,21 +202,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
       isInCart,
     ]
   );
-  return (
-    <CartContext.Provider
-      value={{
-        items,
-        total,
-        addToCart,
-        removeFromCart,
-        updateQuantity,
-        clearCart,
-        isInCart,
-      }}
-    >
-      {children}
-    </CartContext.Provider>
-  );
+  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };
 
 export const useCart = () => {

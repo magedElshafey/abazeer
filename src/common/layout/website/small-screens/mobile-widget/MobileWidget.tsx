@@ -7,9 +7,10 @@ import { TbCategoryPlus } from "react-icons/tb";
 import { FaRegUser } from "react-icons/fa6";
 import CartSidebar from "./components/cart-sidebar/CartSidebar";
 import CategoriesSidebar from "./components/categories-sidebar/CategoriesSidebar";
-
+import { useCart } from "@/store/CartProvider";
 const MobileWidget = () => {
   const navigate = useNavigate();
+  const { items } = useCart();
   const { user } = useAuth();
   const [showCategoriesSidebar, setShowCategoriesSidebar] = useState(false);
   const [showCartSidebar, setShowCartSidebar] = useState(false);
@@ -42,7 +43,12 @@ const MobileWidget = () => {
         title: "categories",
         onClick: openCategoriesSidebar,
       },
-      { Icon: IoCartOutline, title: "cart", onClick: openCartSidebar },
+      {
+        Icon: IoCartOutline,
+        title: "cart",
+        onClick: openCartSidebar,
+        type: "cart",
+      },
       { Icon: IoHeartOutline, title: "wishlist", onClick: wishlistAction },
       { Icon: FaRegUser, title: "my account", onClick: accountAction },
     ],
@@ -64,9 +70,14 @@ const MobileWidget = () => {
       >
         <div className="containerr">
           <ul className="flex justify-between flex-nowrap text-nowrap items-center gap-5 overflow-x-auto">
-            {actions.map(({ Icon, title, onClick }) => (
-              <li key={title}>
+            {actions.map(({ Icon, title, onClick, type }) => (
+              <li key={title} className="relative">
                 <IconBadge Icon={Icon} title={title} onClick={onClick} />
+                {type && type === "cart" && (
+                  <div className="absolute top-full left-0 w-4 h-4 bg-orangeColor rounded-[50%]">
+                    <p>{items?.length}</p>
+                  </div>
+                )}
               </li>
             ))}
           </ul>
