@@ -14,6 +14,8 @@ export interface Product {
   ratings_count: number;
   stock_quantity: number;
   sold_quantity: number | null;
+  sale_price: number;
+  quantity: number;
 }
 
 export interface Dimensions {
