@@ -27,15 +27,8 @@ const RightSide = () => {
           <Link to="/my-profile" className="text-transition">
             {t("my profile")}
           </Link>
-          <div onClick={logout}>
-            (
-            <span className="hover:underline text-orangeColor cursor-pointer">
-              {t("logout")}
-            </span>
-            )
-          </div>
           <Divider />
-          <button className="text-transition cursor-pointer disabled:cursor-not-allowed">
+          <button onClick={logout} className="text-transition cursor-pointer disabled:cursor-not-allowed">
             {t("log out")}
           </button>
           <Divider />

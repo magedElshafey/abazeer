@@ -6,6 +6,7 @@ export const apiRoutes = {
   sendOtp: "auth/send_otp",
   forgetPasswordOtp: "forget_password/verfication",
   cart: "cart",
+  addresses: "addresses",
   news_letter: "news_letter",
   categories_list: "categories/list",
   checkOTP: "/auth/check_otp",

@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import React, { PropsWithChildren } from "react";
 import { cv } from "css-variants";
+import { twMerge } from "tailwind-merge";
 
 const themes = {
   main: "bg-orangeColor text-black",
@@ -58,7 +59,7 @@ const MainBtn: React.FC<PropsWithChildren<MainBtnProps>> = ({
       onClick={handleClick}
       aria-busy={isPending}
       aria-label={isPending ? t("Submitting, please wait") : t(text || "")}
-      className={`${buttonVariants({ theme })} ${className}`}
+      className={`${twMerge(buttonVariants({ theme, className }))}`}
     >
       {isPending ? (
         <div
