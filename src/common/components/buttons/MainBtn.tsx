@@ -7,7 +7,8 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 const themes = {
   main: "bg-orangeColor text-black",
   secondary: "bg-black text-white",
-  outline: "border border-gray-300 text-gray-700 hover:bg-gray-50"
+  outline: "border border-gray-300 text-gray-700 hover:bg-gray-50",
+  danger: "bg-red-600 text-white hover:bg-red-700"
 }
 
 const buttonVariants = cv({

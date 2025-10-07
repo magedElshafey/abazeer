@@ -1,20 +1,19 @@
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { MdOutlineEdit, MdOutlineDelete } from "react-icons/md";
+import { MdOutlineEdit } from "react-icons/md";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { Address } from "../../types/addresses.types";
 import MainBtn from "@/common/components/buttons/MainBtn";
 import useMakeDefaultAddress from "../../api/addresses/useMakeDefaultAddress";
+import DeleteAddressButton from "../DeleteAddressButton";
 
 interface AddressCardProps {
   address: Address;
-  onRemove?: (id: number) => void;
 }
 
 const AddressCard: FC<AddressCardProps> = ({
   address,
-  onRemove,
 }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -76,13 +75,10 @@ const AddressCard: FC<AddressCardProps> = ({
             <MdOutlineEdit size={16} />
             {t("edit")}
           </button>
-          <button
-            onClick={() => onRemove?.(address.id)}
-            className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
-          >
-            <MdOutlineDelete size={16} />
-            {t("remove")}
-          </button>
+          <DeleteAddressButton
+            addressId={address.id}
+            addressName={address.name}
+          />
         </div>
       </div>
     </div>

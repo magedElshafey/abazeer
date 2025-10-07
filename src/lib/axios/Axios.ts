@@ -20,8 +20,8 @@ Axios.interceptors.request.use((config) => {
   if (user) {
     const token = user?.token || undefined;
     if (token) config.headers["Authorization"] = `Bearer ${token}`;
-    config.headers["Accept-Language"] = i18n.language;
   }
+  config.headers["Accept-Language"] = i18n.language;
   return config;
 });
 

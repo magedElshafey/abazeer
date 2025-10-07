@@ -1,0 +1,138 @@
+import { useState, type FC, type PropsWithChildren, type ReactNode } from "react"
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/shadcn/ui/dialog";
+import { useTranslation } from "react-i18next";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
+import toastErrorMessage from "@/utils/toastApiError";
+import MainBtn from "../buttons/MainBtn";
+
+interface ActionType {
+    action?: (() => void) | (() => Promise<void>);
+    text?: string;
+}
+
+interface Props {
+    header?: {
+        title?: string;
+        description?: string;
+    },
+    content?: ReactNode;
+    action?: ActionType;
+    cancel?: ActionType;
+    queryKey?: string[];
+    type?: "regular" | "danger";
+    onSuccess?: () => void
+}
+
+const defaultCancelText = "cancel";
+const defaultOkText = "ok";
+
+const DialogComponent: FC<PropsWithChildren<Props>> = ({ 
+    header, 
+    content, 
+    children, 
+    action, 
+    cancel,
+    queryKey,
+    type="regular",
+    onSuccess
+}) => {
+    const {t} = useTranslation();
+    const queryClient = useQueryClient();
+    
+    const [opened, setOpened] = useState(false);
+
+    const {
+        mutate,
+        isPending
+    } = useMutation({
+        mutationKey: [queryKey],
+        mutationFn: async () => {
+            const response = await action?.action?.();
+            return response;
+        },
+        onSuccess: async (response: unknown) => {
+            if(response && typeof response === "object" && "data" in response && response.data && typeof response.data === "object"  && "message" in response.data) {
+                toast.success(response.data.message as string);
+            }
+            await queryClient.invalidateQueries({ queryKey: queryKey });
+            setOpened(false);
+            onSuccess?.();
+        },
+        onError: (error: unknown) => {
+            toastErrorMessage(error as Error);
+        }
+    })
+
+    return (
+        <Dialog 
+            open={opened}
+            onOpenChange={(e) => {
+                setOpened(e);
+                if(!e) {
+                    cancel?.action?.();
+                }
+            }}
+        >
+            <DialogTrigger
+                onClick={() => setOpened(true)}
+            >
+                {children}
+            </DialogTrigger>
+            <DialogContent
+                className="min-w-lg"
+            >
+                {
+                    header && (
+                        <DialogHeader autoFocus tabIndex={1}>
+                            {
+                                header.title && (
+                                    <DialogTitle>
+                                        {t(header.title)}
+                                    </DialogTitle>
+                                )
+                            }
+                            {
+                                header.description && (
+                                    <DialogDescription>
+                                        {t(header.description)}
+                                    </DialogDescription>
+                                )
+                            }
+                        </DialogHeader>
+                    )
+                }
+                
+                {content}
+
+                <DialogFooter className="flex flex-col">
+                    {
+                        action && (
+                            <MainBtn
+                                onClick={() => mutate()}
+                                isPending={isPending}
+                                theme={type === "danger" ? "danger" : "main"}
+                            >
+                                {t(action.text || defaultOkText)}
+                            </MainBtn>
+                        )
+                    }
+
+                    <DialogClose
+                        className="w-full sm:w-auto"
+                        onClick={cancel?.action}
+                    >
+                        <MainBtn
+                            className="w-full"
+                            theme="outline"
+                        >
+                            {t(cancel?.text || defaultCancelText)}
+                        </MainBtn>
+                    </DialogClose>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
+    )
+}
+
+export default DialogComponent;

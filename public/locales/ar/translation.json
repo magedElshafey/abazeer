@@ -210,5 +210,7 @@
   "need_another_address": "هل تحتاج إلى عنوان آخر؟",
   "add_another_address": "أضف عنوانًا آخر",
   "make_default": "اجعله الافتراضي",
-  "update_address": "تحديث العنوان"
+  "update_address": "تحديث العنوان",
+  "delete_address_confirmation": "هل أنت متأكد من حذف هذا العنوان؟",
+  "delete_address_named_confirmation": "هل أنت متأكد من حذف \"{{name}}\"؟"
 }
