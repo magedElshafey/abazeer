@@ -71,17 +71,6 @@ const Register = () => {
             {...register("password_confirmation")}
           />
         </div>
-        <div className="mb-4">
-          <MainInput
-            required={true}
-            Icon={GoKey}
-            type="password"
-            placeholder="password"
-            label="password_confirmation"
-            error={errors.password_confirmation?.message}
-            {...register("password_confirmation")}
-          />
-        </div>
         <div className="w-full mb-7 text-sm gap-2">
           <span className="text-text-gray">{t("have an account ?")}</span>
           <Link to="/auth/login" className="text-orangeColor underline">
