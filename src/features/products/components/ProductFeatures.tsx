@@ -1,6 +1,9 @@
 import { FC } from "react";
+import { useTranslation } from "react-i18next";
 
 const ProductFeatures: FC = () => {
+    const { t } = useTranslation();
+    
     return (
         <div className="flex flex-col gap-4">
             <div className="bg-background-gray rounded-md flex flex-col px-4 gap-4">
@@ -9,16 +12,15 @@ const ProductFeatures: FC = () => {
                         <img
                             className="h-full w-full object-center object-contain aspect-square"
                             src="/images/feat-01.png"
+                            alt={t("Free Shipping")}
                         />
                     </div>
                     <div>
                         <p className="text-xl text-text-light">
-                            Free Shipping
-
+                            {t("Free Shipping")}
                         </p>
                         <p>
-                            For all orders over $200
-
+                            {t("For all orders over $200")}
                         </p>
                     </div>
                 </div>
@@ -27,16 +29,15 @@ const ProductFeatures: FC = () => {
                         <img
                             className="h-full w-full object-center object-contain aspect-square"
                             src="/images/feat-02.png"
+                            alt={t("1 & 1 Returns")}
                         />
                     </div>
                     <div>
                         <p className="text-xl text-text-light">
-                            1 & 1 Returns
-
+                            {t("1 & 1 Returns")}
                         </p>
                         <p>
-                            Cancellation after 1 day
-
+                            {t("Cancellation after 1 day")}
                         </p>
                     </div>
                 </div>
@@ -45,29 +46,28 @@ const ProductFeatures: FC = () => {
                         <img
                             className="h-full w-full object-center object-contain aspect-square"
                             src="/images/feat-03.png"
+                            alt={t("Secure Payment")}
                         />
                     </div>
                     <div>
                         <p className="text-xl text-text-light">
-                            Secure Payment
-
+                            {t("Secure Payment")}
                         </p>
                         <p>
-                            Guarantee secure payments
-
+                            {t("Guarantee secure payments")}
                         </p>
                     </div>
                 </div>
             </div>
             <div className="bg-background-gray rounded-md flex flex-col gap-2 p-4">
                 <p className="text-lg">
-                    Hotline Order:
+                    {t("Hotline Order")}:
                 </p>
                 <p className="text-sm">
-                    Mon - Fri: 07AM - 06PM
+                    {t("Hotline Hours")}
                 </p>
                 <p className="text-xl font-bold">
-                    (+965) 7492-4277
+                    {t("Hotline Number")}
                 </p>
             </div>
         </div>

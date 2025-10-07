@@ -10,8 +10,8 @@ interface ProductRateProps {
 }
 
 const ProductRate: FC<ProductRateProps> = ({
-  rating = 4.5,
-  reviewCount = 128,
+  rating = 0,
+  reviewCount = 0,
   showReviewCount = true,
   size = 'md',
   showRatingNumber = true

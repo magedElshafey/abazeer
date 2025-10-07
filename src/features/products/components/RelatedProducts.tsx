@@ -1,70 +1,40 @@
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 import { useKeenSlider } from "keen-slider/react";
+import { MdProductionQuantityLimits } from "react-icons/md";
 import "keen-slider/keen-slider.min.css";
+import type { Product } from "../types/product.types";
+import ProductCard from "./card/ProductCard";
+import EmptyData from "../../../common/components/empty-data/EmptyData";
 
-type Product = {
-    id: number;
-    title: string;
-    image: string;
-    price: number;
-    oldPrice?: number;
-    discount?: number;
-};
+interface RelatedProductsProps {
+    products: Product[];
+}
 
-// Sample data - in a real app, this would come from props or API
-const relatedProducts: Product[] = [
-        {
-            id: 1,
-            title: "Wireless Bluetooth Headphones",
-            image: "/images/600x600.jpg",
-            price: 299.99,
-            oldPrice: 399.99,
-            discount: 25
-        },
-        {
-            id: 2,
-            title: "Smart Watch Series 5",
-            image: "/images/600x600.jpg",
-            price: 199.50,
-            oldPrice: 249.99,
-            discount: 20
-        },
-        {
-            id: 3,
-            title: "Portable Power Bank 10000mAh",
-            image: "/images/600x600.jpg",
-            price: 49.99,
-            oldPrice: 69.99,
-            discount: 29
-        },
-        {
-            id: 4,
-            title: "USB-C Fast Charging Cable",
-            image: "/images/600x600.jpg",
-            price: 19.99
-        },
-        {
-            id: 5,
-            title: "Wireless Gaming Mouse",
-            image: "/images/600x600.jpg",
-            price: 79.99,
-            oldPrice: 99.99,
-            discount: 20
-        },
-        {
-            id: 6,
-            title: "Bluetooth Speaker Pro",
-            image: "/images/600x600.jpg",
-            price: 129.99,
-            oldPrice: 159.99,
-            discount: 19
-        }
-    ];
-
-const RelatedProducts: FC = () => {
+const RelatedProducts: FC<RelatedProductsProps> = ({ products }) => {
     const { t } = useTranslation();
+    
+    // Transform Product type to match ProductCard expected props
+    const transformedProducts = useMemo(() => {
+        return (products || []).map(product => ({
+            id: product.id,
+            title: product.name,
+            category: product.category,
+            image: product.image || "/images/600x600.jpg",
+            reviews: {
+                avg: product.average_rate,
+                total: product.ratings_count
+            },
+            quantity: product.stock_quantity,
+            remaining: product.sold_quantity || 0,
+            price_before_disccount: product.has_discount 
+                ? parseFloat(product.price) / (1 - product.discount_percentage / 100)
+                : parseFloat(product.price),
+            price_afterDisccount: parseFloat(product.price),
+            disccount_percentage: product.discount_percentage
+        }));
+    }, [products]);
     
     const [sliderRef, instanceRef] = useKeenSlider(
         {
@@ -106,6 +76,21 @@ const RelatedProducts: FC = () => {
         instanceRef.current?.prev();
     };
 
+    // If no products, show empty state
+    if (!products || products.length === 0) {
+        return (
+            <div className="mt-8">
+                <h2 className="text-2xl font-bold text-text-light mb-6">
+                    {t("related-products") || "Related Products"}
+                </h2>
+                <div className="flex flex-col items-center justify-center py-12 bg-gray-50 rounded-lg border border-gray-200">
+                    <MdProductionQuantityLimits className="w-20 h-20 text-gray-400 mb-4" />
+                    <EmptyData title="No related products found" />
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="mt-8">
             <h2 className="text-2xl font-bold text-text-light mb-6">
@@ -131,43 +116,12 @@ const RelatedProducts: FC = () => {
 
                 {/* Keen Slider */}
                 <div ref={sliderRef} className="keen-slider px-12">
-                    {relatedProducts.map((product) => (
+                    {transformedProducts.map((product) => (
                         <div
                             key={product.id}
                             className="keen-slider__slide"
                         >
-                            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 h-full hover:shadow-md transition-shadow duration-200">
-                                {/* Product Image */}
-                                <div className="aspect-square w-full mb-4 overflow-hidden rounded-lg">
-                                    <img
-                                        src={product.image}
-                                        alt={product.title}
-                                        className="w-full h-full object-cover object-center"
-                                    />
-                                </div>
-                                
-                                {/* Product Title */}
-                                <h3 className="text-lg font-medium text-text-light mb-3 line-clamp-2 min-h-[3.5rem]">
-                                    {product.title}
-                                </h3>
-                                
-                                {/* Price Section */}
-                                <div className="flex items-center gap-2 flex-wrap">
-                                    <span className="text-xl font-bold text-orangeColor">
-                                        ${product.price.toFixed(2)}
-                                    </span>
-                                    {product.oldPrice && (
-                                        <del className="text-lg text-text-gray opacity-60 line-through">
-                                            ${product.oldPrice.toFixed(2)}
-                                        </del>
-                                    )}
-                                    {product.discount && (
-                                        <span className="bg-red-100 text-red-600 text-xs font-medium px-2 py-1 rounded">
-                                            -{product.discount}%
-                                        </span>
-                                    )}
-                                </div>
-                            </div>
+                            <ProductCard product={product} />
                         </div>
                     ))}
                 </div>

@@ -1,4 +1,5 @@
 import { FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 type MenuItem = {
     id: string;
@@ -6,13 +7,14 @@ type MenuItem = {
 };
 
 const ProductFooter: FC = () => {
+    const { t } = useTranslation();
     const [activeSection, setActiveSection] = useState("description");
 
     const menuItems: MenuItem[] = [
-        { id: "description", label: "Description" },
-        { id: "specifications", label: "Specifications" },
-        { id: "reviews", label: "Reviews" },
-        { id: "questions-answers", label: "Questions & Answers" }
+        { id: "description", label: "description" },
+        { id: "specifications", label: "specifications" },
+        { id: "reviews", label: "reviews" },
+        { id: "questions-answers", label: "questions_answers" }
     ];
 
     const renderContent = () => {
@@ -20,7 +22,7 @@ const ProductFooter: FC = () => {
             case "description":
                 return (
                     <div className="space-y-4">
-                        <h3 className="text-xl font-semibold text-text-light">Product Description</h3>
+                        <h3 className="text-xl font-semibold text-text-light pb-3 border-b-2 border-orangeColor">{t("product_description")}</h3>
                         <p className="text-gray-600 leading-relaxed">
                             This is a high-quality wireless speaker that delivers exceptional sound quality. 
                             Perfect for both indoor and outdoor use, it features advanced Bluetooth connectivity 
@@ -39,7 +41,7 @@ const ProductFooter: FC = () => {
             case "specifications":
                 return (
                     <div className="space-y-4">
-                        <h3 className="text-xl font-semibold text-text-light">Technical Specifications</h3>
+                        <h3 className="text-xl font-semibold text-text-light pb-3 border-b-2 border-orangeColor">{t("technical_specifications")}</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="space-y-2">
                                 <div className="flex justify-between border-b pb-1">
@@ -83,7 +85,7 @@ const ProductFooter: FC = () => {
             case "reviews":
                 return (
                     <div className="space-y-4">
-                        <h3 className="text-xl font-semibold text-text-light">Customer Reviews</h3>
+                        <h3 className="text-xl font-semibold text-text-light pb-3 border-b-2 border-orangeColor">{t("customer_reviews")}</h3>
                         <div className="space-y-4">
                             <div className="border rounded-lg p-4">
                                 <div className="flex items-center gap-2 mb-2">
@@ -115,7 +117,7 @@ const ProductFooter: FC = () => {
             case "questions-answers":
                 return (
                     <div className="space-y-4">
-                        <h3 className="text-xl font-semibold text-text-light">Questions & Answers</h3>
+                        <h3 className="text-xl font-semibold text-text-light pb-3 border-b-2 border-orangeColor">{t("questions_answers")}</h3>
                         <div className="space-y-4">
                             <div className="border rounded-lg p-4">
                                 <h4 className="font-medium mb-2">Is this speaker waterproof?</h4>
@@ -161,7 +163,7 @@ const ProductFooter: FC = () => {
                                             : "hover:bg-gray-200 text-text-light"
                                     }`}
                                 >
-                                    {item.label}
+                                    {t(item.label)}
                                 </button>
                             ))}
                         </div>
@@ -190,7 +192,7 @@ const ProductFooter: FC = () => {
                                             : "hover:bg-gray-200 text-text-light"
                                     }`}
                                 >
-                                    {item.label}
+                                    {t(item.label)}
                                 </button>
                             ))}
                         </div>
