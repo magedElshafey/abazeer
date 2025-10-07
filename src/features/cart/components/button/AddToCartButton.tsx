@@ -3,19 +3,38 @@ import { CiShoppingCart } from "react-icons/ci";
 import { FaTrashAlt } from "react-icons/fa";
 import { memo, useCallback } from "react";
 import { useCart } from "@/store/CartProvider";
-import { ProductType } from "@/features/products/types/product.types";
+import { Product } from "@/features/products/types/product.types";
 
 interface AddToCartButtonProps {
-  product: ProductType;
+  product: Product;
   tabIndex?: number;
+  quantity?: number;
 }
 
 const AddToCartButton: React.FC<AddToCartButtonProps> = memo(
-  ({ product, tabIndex = 0 }) => {
+  ({ product, quantity = 1, tabIndex = 0 }) => {
     const { t } = useTranslation();
     const { addToCart, removeFromCart, isInCart } = useCart();
 
     const inCart = isInCart(product.id);
+
+    // const handleAddToCart = useCallback(() => {
+    //   addToCart({
+    //     id: product.id,
+    //     name: product.name,
+    //     image: product.image || "",
+    //     price: product.price,
+    //     quantity: 1,
+    //     category: product.category,
+    //     has_discount: product.has_discount,
+    //     discount_percentage: product.discount_percentage,
+    //     average_rate: product.average_rate,
+    //     ratings_count: product.ratings_count,
+    //     stock_quantity: product?.stock_quantity,
+    //     sold_quantity: product?.sold_quantity,
+    //     sale_price: product?.sale_price,
+    //   });
+    // }, [product, addToCart]);
 
     const handleAddToCart = useCallback(() => {
       addToCart({
@@ -23,7 +42,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = memo(
         name: product.name,
         image: product.image || "",
         price: product.price,
-        quantity: 1,
+        quantity,
         category: product.category,
         has_discount: product.has_discount,
         discount_percentage: product.discount_percentage,
@@ -33,8 +52,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = memo(
         sold_quantity: product?.sold_quantity,
         sale_price: product?.sale_price,
       });
-    }, [product, addToCart]);
-
+    }, [product, quantity, addToCart]);
     const handleRemoveFromCart = useCallback(() => {
       removeFromCart(product.id);
     }, [product, removeFromCart]);
