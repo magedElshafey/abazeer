@@ -3,23 +3,10 @@ import { CiShoppingCart } from "react-icons/ci";
 import { FaTrashAlt } from "react-icons/fa";
 import { memo, useCallback } from "react";
 import { useCart } from "@/store/CartProvider";
+import { ProductType } from "@/features/products/types/product.types";
 
 interface AddToCartButtonProps {
-  product: {
-    id: number;
-    title: string;
-    category: string;
-    image: string;
-    reviews: {
-      avg: number;
-      total: number;
-    };
-    quantity: number;
-    remaining: number;
-    price_before_disccount: number;
-    price_afterDisccount: number;
-    disccount_percentage: number;
-  };
+  product: ProductType;
   tabIndex?: number;
 }
 
@@ -33,10 +20,18 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = memo(
     const handleAddToCart = useCallback(() => {
       addToCart({
         id: product.id,
-        title: product.title,
-        image: product.image,
-        price: product.price_afterDisccount,
-        quantity: product.quantity || 1,
+        name: product.name,
+        image: product.image || "",
+        price: product.price,
+        quantity: 1,
+        category: product.category,
+        has_discount: product.has_discount,
+        discount_percentage: product.discount_percentage,
+        average_rate: product.average_rate,
+        ratings_count: product.ratings_count,
+        stock_quantity: product?.stock_quantity,
+        sold_quantity: product?.sold_quantity,
+        sale_price: product?.sale_price,
       });
     }, [product, addToCart]);
 
@@ -56,8 +51,8 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = memo(
             : "bg-orangeColor hover:bg-orange-300"
         } 
         text-white py-2 px-4 
-        flex items-center justify-center gap-2 
-        rounded-2xl
+        flex-center gap-1
+        rounded-md
         transition-all duration-300
         active:scale-[0.98]
         focus-visible:outline-none focus-visible:ring-2 
@@ -66,17 +61,19 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = memo(
       `}
         aria-label={
           inCart
-            ? `${t("remove from cart")} ${product.title}`
-            : `${t("add to cart")} ${product.title}`
+            ? `${t("remove from cart")} ${product.name}`
+            : `${t("add to cart")} ${product.name}`
         }
         title={inCart ? t("remove from cart") : t("add to cart")}
         type="button"
       >
-        <span>{inCart ? t("remove from cart") : t("add to cart")}</span>
+        <span className="text-sm">
+          {inCart ? t("remove from cart") : t("add to cart")}
+        </span>
         {inCart ? (
-          <FaTrashAlt size={18} aria-hidden="true" focusable="false" />
+          <FaTrashAlt size={15} aria-hidden="true" focusable="false" />
         ) : (
-          <CiShoppingCart size={18} aria-hidden="true" focusable="false" />
+          <CiShoppingCart size={15} aria-hidden="true" focusable="false" />
         )}
       </button>
     );

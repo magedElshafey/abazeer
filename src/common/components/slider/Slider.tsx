@@ -1,8 +1,15 @@
-import React, { useEffect, useRef, PropsWithChildren, useState, useCallback } from "react";
+import React, {
+  useEffect,
+  useRef,
+  PropsWithChildren,
+  useState,
+  useCallback,
+} from "react";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 import { useTranslation } from "react-i18next";
+import SectionTitle from "../titles/SectionTitle";
 
 type Breakpoints = {
   [mediaQuery: string]: {
@@ -13,26 +20,27 @@ type Breakpoints = {
 interface Props {
   sliderPerView?: number;
   title?: string;
-  showControls?: boolean
+  showControls?: boolean;
   loop?: boolean;
   spacing?: number;
   autoplay?: boolean;
-  breakPoints?: Breakpoints
+  breakPoints?: Breakpoints;
 }
-
 
 const Slider: React.FC<PropsWithChildren<Props>> = ({
   children,
   sliderPerView = 5,
   title,
   showControls = true,
-  loop=true,
-  spacing=0,
+  loop = true,
+  spacing = 0,
   autoplay = false,
-  breakPoints = {}
+  breakPoints = {},
 }) => {
   // global states
-  const { t, i18n: { language } } = useTranslation();
+  const {
+    i18n: { language },
+  } = useTranslation();
   const [loaded, setLoaded] = useState(false);
   const autoplayRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -48,7 +56,7 @@ const Slider: React.FC<PropsWithChildren<Props>> = ({
       perView: sliderPerView,
       spacing: spacing,
     },
-    breakpoints: breakPoints
+    breakpoints: breakPoints,
   });
 
   // Reusable autoplay function
@@ -93,7 +101,7 @@ const Slider: React.FC<PropsWithChildren<Props>> = ({
 
   const handleManualNavigation = () => {
     if (!autoplay) return;
-    
+
     // Clear existing interval and restart autoplay
     clearAutoplay();
     startAutoplay();
@@ -103,7 +111,7 @@ const Slider: React.FC<PropsWithChildren<Props>> = ({
     instanceRef.current?.[language === "ar" ? "next" : "prev"]();
     handleManualNavigation();
   };
-  
+
   const handleNext = () => {
     instanceRef.current?.[language === "ar" ? "prev" : "next"]();
     handleManualNavigation();
@@ -119,9 +127,8 @@ const Slider: React.FC<PropsWithChildren<Props>> = ({
     >
       <div className="containerr relative flex flex-col gap-4">
         <div className="w-full flex-between">
-          <p className="text-xl font-bold ">
-            {t(title || "")}
-          </p>
+          <SectionTitle title={title || ""} />
+
           {showControls && (
             <div className="flex gap-2">
               <button
@@ -129,14 +136,18 @@ const Slider: React.FC<PropsWithChildren<Props>> = ({
                 onClick={handlePrev}
                 aria-label="Previous slide"
               >
-                <IoChevronBack className={language === "ar" ? "rotate-180" : undefined} />
+                <IoChevronBack
+                  className={language === "ar" ? "rotate-180" : undefined}
+                />
               </button>
               <button
                 className="bg-white hover:bg-orangeColor rounded border flex-center p-1 text-text-gray hover:text-black transition-colors duration-300"
                 onClick={handleNext}
                 aria-label="Next slide"
               >
-                <IoChevronForward className={language === "ar" ? "rotate-180" : undefined} />
+                <IoChevronForward
+                  className={language === "ar" ? "rotate-180" : undefined}
+                />
               </button>
             </div>
           )}

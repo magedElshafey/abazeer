@@ -5,7 +5,7 @@ const AboutSklelton: React.FC = () => {
   const skeletonItems = Array.from({ length: 6 });
 
   return (
-    <div className=" grid grid-cols-1 lg:grid-cols-2 gap-10">
+    <>
       {skeletonItems.map((_, index) => {
         const isReversed = index % 2 !== 0;
 
@@ -29,7 +29,7 @@ const AboutSklelton: React.FC = () => {
           </div>
         );
       })}
-    </div>
+    </>
   );
 };
 

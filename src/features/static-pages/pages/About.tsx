@@ -1,29 +1,46 @@
+import { memo } from "react";
 import SectionTitle from "@/common/components/titles/SectionTitle";
 import useAboutApi from "../api/about/useAboutApi";
 import FetchHandler from "@/common/api/fetchHandler/FetchHandler";
 import AboutCard from "../components/about/AboutCard";
-const About = () => {
+import EmptyData from "@/common/components/empty-data/EmptyData";
+
+const About: React.FC = () => {
   const queryResult = useAboutApi();
+
   return (
-    <div className="containerr">
-      <div className="w-full flex-center">
-        <SectionTitle title="About" />
+    <section
+      className="containerr py-8"
+      role="main"
+      aria-labelledby="about-section-title"
+    >
+      {/* Section Title */}
+      <div className="w-full flex-center mb-6">
+        <SectionTitle id="about-section-title" title="About" />
       </div>
-      <div className="my-4">
+
+      {/* Content */}
+      <section aria-live="polite">
         <FetchHandler queryResult={queryResult} skeletonType="about">
           {queryResult?.data?.length ? (
-            <div>
-              {queryResult?.data?.map((item) => (
-                <AboutCard key={item?.id} data={item} />
+            <ul
+              className="flex flex-col gap-10"
+              role="list"
+              aria-label="About information list"
+            >
+              {queryResult?.data.map((item, index) => (
+                <li key={item.id} role="listitem">
+                  <AboutCard data={item} index={index} />
+                </li>
               ))}
-            </div>
+            </ul>
           ) : (
-            <p></p>
+            <EmptyData />
           )}
         </FetchHandler>
-      </div>
-    </div>
+      </section>
+    </section>
   );
 };
 
-export default About;
+export default memo(About);

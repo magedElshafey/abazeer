@@ -11,4 +11,5 @@ export const apiRoutes = {
   checkOTP: "/auth/check_otp",
   resetPassword: "auth/rest_password",
   about: "about",
+  products: "products",
 };

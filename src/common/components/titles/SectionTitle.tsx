@@ -2,6 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 interface SectionTitleProps {
   title: string;
+  id?: string;
 }
 const SectionTitle: React.FC<SectionTitleProps> = ({ title }) => {
   const { t } = useTranslation();

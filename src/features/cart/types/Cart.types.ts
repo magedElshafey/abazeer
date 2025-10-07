@@ -1,12 +1,11 @@
-export interface CartItem {
-  id: number;
-  title: string;
-  image: string;
-  price: number;
+import { ProductType } from "@/features/products/types/product.types";
+
+export interface CartItem extends ProductType {
   quantity: number;
 }
 
 export interface CartResponse {
-  items: CartItem[];
-  total: number;
+  id: number;
+  items: ProductType[];
+  total: string;
 }
