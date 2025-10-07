@@ -31,7 +31,7 @@ interface CartContextProps {
 }
 
 const CartContext = createContext<CartContextProps | undefined>(undefined);
-const LOCAL_KEY = "cart_items";
+export const LOCAL_KEY = "cart_items";
 
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
   children,

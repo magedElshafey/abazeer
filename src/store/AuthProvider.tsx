@@ -7,9 +7,14 @@ import React, {
 } from "react";
 import { useLocation } from "react-router-dom";
 import { isProtectedRoutes } from "../utils/isProtectedRoutes";
-import { getUserFromAnyStorage, saveUserToStorage, removeUserFromStorage, StorageType } from "@/features/auth/utils";
+import {
+  getUserFromAnyStorage,
+  saveUserToStorage,
+  removeUserFromStorage,
+  StorageType,
+} from "@/features/auth/utils";
 import type { User } from "@/features/auth/types/auth.types";
-
+import { LOCAL_KEY } from "./CartProvider";
 interface AuthContextProps {
   user: User | null;
   login: (userData: User, rememberUser?: boolean) => void;
@@ -26,12 +31,12 @@ interface AuthProviderProps {
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   // global states
   const location = useLocation();
-  
+
   // local states
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<User | null>(null);
   const lastPublicPage = useRef("/");
-  
+
   // effects
   useEffect(() => {
     if (!isProtectedRoutes(location?.pathname)) {
@@ -56,6 +61,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const logout = () => {
     removeUserFromStorage();
     setUser(null);
+    localStorage.removeItem(LOCAL_KEY);
   };
 
   return (
