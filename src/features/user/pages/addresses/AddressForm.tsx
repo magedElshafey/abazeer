@@ -1,6 +1,6 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { MdOutlineDriveFileRenameOutline, MdLocationOn } from "react-icons/md";
 import { FaMapMarkedAlt, FaCity } from "react-icons/fa";
 import { BsMailbox } from "react-icons/bs";
@@ -20,6 +20,7 @@ interface AddressFormProps {
 const AddressForm: FC<AddressFormProps> = ({ readonly = false }) => {
     const { t } = useTranslation();
     const navigate = useNavigate();
+    const { id } = useParams<{ id: string }>();
     const {
         errors,
         register,
@@ -28,6 +29,7 @@ const AddressForm: FC<AddressFormProps> = ({ readonly = false }) => {
         isPending,
         watch,
         setValue,
+        isLoadingAddress,
     } = useCreateAddressLogic();
 
     // Fetch countries
@@ -42,18 +44,30 @@ const AddressForm: FC<AddressFormProps> = ({ readonly = false }) => {
         countryId: selectedCountryId,
     });
 
-    // Reset city when country changes
-    useEffect(() => {
-        if (selectedCountryId) {
-            setValue("city_id", 0);
-        }
-    }, [selectedCountryId, setValue]);
+    // Show loading state while fetching address data
+    if (isLoadingAddress) {
+        return (
+            <div className="w-full">
+                <div className="bg-white border rounded-lg shadow-md p-6 md:p-8">
+                    <div className="animate-pulse">
+                        <div className="h-8 bg-gray-200 rounded w-1/3 mb-6"></div>
+                        <div className="space-y-4">
+                            <div className="h-12 bg-gray-200 rounded"></div>
+                            <div className="h-12 bg-gray-200 rounded"></div>
+                            <div className="h-12 bg-gray-200 rounded"></div>
+                            <div className="h-12 bg-gray-200 rounded"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="w-full">
             <div className="bg-white border rounded-lg shadow-md p-6 md:p-8">
                 <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">
-                    {t("create_address")}
+                    {t(id ? "update_address" : "create_address")}
                 </h2>
 
                 <form onSubmit={handleSubmit(onSubmit)}>
@@ -96,7 +110,10 @@ const AddressForm: FC<AddressFormProps> = ({ readonly = false }) => {
                                 placeholder="country"
                                 options={countries}
                                 value={watch("country_id") || null}
-                                onChange={(value) => setValue("country_id", value || 0)}
+                                onChange={(value) => {
+                                    setValue("country_id", value || 0);
+                                    setValue("city_id", 0);
+                                }}
                                 loading={isLoadingCountries}
                                 error={errors.country_id?.message}
                                 disabled={readonly}

@@ -208,5 +208,6 @@
   "add_multiple_addresses_description": "Add multiple addresses for different shipping locations or billing purposes.",
   "need_another_address": "Need another address?",
   "add_another_address": "Add another address",
-  "make_default": "Make default"
+  "make_default": "Make default",
+  "update_address": "Update Address"
 }

@@ -209,5 +209,6 @@
   "add_multiple_addresses_description": "أضف عدة عناوين لمواقع شحن مختلفة أو لأغراض الفوترة.",
   "need_another_address": "هل تحتاج إلى عنوان آخر؟",
   "add_another_address": "أضف عنوانًا آخر",
-  "make_default": "اجعله الافتراضي"
+  "make_default": "اجعله الافتراضي",
+  "update_address": "تحديث العنوان"
 }

@@ -9,4 +9,5 @@ export interface Address {
   is_active: boolean;
   is_default: boolean;
   postcode: string;
+  type: number;
 }

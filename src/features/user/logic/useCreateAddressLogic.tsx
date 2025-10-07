@@ -4,13 +4,18 @@ import {
   type AddressSchemaType,
   addressSchema,
 } from "../schemas/addresses";
-import useCreateAddress from "../api/addresses/useCreateAddress";
+import useCreateUpdateAddress from "../api/addresses/useCreateUpdateAddress";
+import useGetAddress from "../api/addresses/useGetAddress";
 import { toast } from "sonner";
 import toastErrorMessage from "@/utils/toastApiError";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 const useCreateAddressLogic = () => {
-  const { isPending, mutateAsync } = useCreateAddress();
+  const { id } = useParams();
+
+  const { isPending, mutateAsync } = useCreateUpdateAddress({ id });
+  const { data: addressData, isLoading: isLoadingAddress } = useGetAddress({ id });
   const navigate = useNavigate();
 
   const {
@@ -35,6 +40,17 @@ const useCreateAddressLogic = () => {
     },
   });
 
+  useEffect(() => {
+    if (addressData && id) {
+      setValue("name", addressData.name || "");
+      setValue("type_id", addressData.type);
+      setValue("postcode", addressData.postcode || "");
+      setValue("address", addressData.address || "");
+      setValue("city_id", addressData.city_id?.id || 0);
+      setValue("country_id", addressData.country_id?.id || 0);
+    }
+  }, [addressData, id, setValue]);
+
   const onSubmit = async (data: AddressSchemaType) => {
     try {
       const response = await mutateAsync(data);
@@ -58,6 +74,7 @@ const useCreateAddressLogic = () => {
     watch,
     setValue,
     reset,
+    isLoadingAddress,
   };
 };
 

@@ -84,6 +84,11 @@ export const websiteRoutes: RouteObject = {
               ),
             },
             {
+              path: ":id/edit",
+              element: lazyLoad(() => import("../features/user/pages/addresses/AddressForm")),
+              handle: {breadcrumb: "update_address"}
+            },
+            {
               path: "create",
               element: lazyLoad(() => import("../features/user/pages/addresses/AddressForm")),
               handle: { breadcrumb: "create_address" },
