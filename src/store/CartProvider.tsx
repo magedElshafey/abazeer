@@ -58,7 +58,6 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     enabled: !!user,
     staleTime: 1000 * 60 * 5,
   });
-  console.log("cart data", cartData);
   useEffect(() => {
     if (cartData?.items && user) setItems(cartData.items);
   }, [cartData, user]);

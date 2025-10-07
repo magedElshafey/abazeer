@@ -21,7 +21,7 @@ export const useCartApi = () => {
   };
 
   const updateQuantity = async (item_id: number, quantity: number) => {
-    const { data } = await Axios.patch(`${apiRoutes.cart}/update`, {
+    const { data } = await Axios.put(`${apiRoutes.cart}/update`, {
       item_id,
       quantity,
     });
