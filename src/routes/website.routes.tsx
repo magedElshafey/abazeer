@@ -83,7 +83,7 @@ export const websiteRoutes: RouteObject = {
             },
             {
               path: "create",
-              element: lazyLoad(() => import("../features/user/pages/addresses/CreateAddress")),
+              element: lazyLoad(() => import("../features/user/pages/addresses/AddressForm")),
               handle: { breadcrumb: "create_address" },
             }
           ]

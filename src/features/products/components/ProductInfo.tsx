@@ -9,6 +9,8 @@ import { GoGitCompare } from "react-icons/go";
 import AddToCartButton from "@/features/cart/components/button/AddToCartButton";
 import { ProductDetails } from "../types/product.types";
 import HtmlConverter from "../../../common/components/htmlConverter/HtmlConverter";
+import useAddFavorite from "../api/useAddFavorite";
+import Loader from "@/common/components/loader/spinner/Loader";
 
 type Props = {
   product: ProductDetails;
@@ -16,6 +18,7 @@ type Props = {
 
 const ProductInfo: FC<Props> = ({ product }) => {
   const { t } = useTranslation();
+  const { mutate: toggleFavorite, isPending } = useAddFavorite();
 
   return (
     <div className="px-2 flex flex-col gap-4">
@@ -69,10 +72,16 @@ const ProductInfo: FC<Props> = ({ product }) => {
         </div>
       </div>
       <div className="flex items-center gap-5 pb-4 border-b">
-        <div className="flex items-center gap-2">
-          <FaRegHeart />
-          <p className="text-lg pb-1">{t("wishlist")}</p>
-        </div>
+        <button
+          className="flex items-center gap-2"
+          onClick={() => toggleFavorite(product.id)}
+          disabled={isPending}
+        >
+          {isPending ? <Loader /> : <FaRegHeart />}
+          <p className={`text-lg pb-1 ${product.is_in_wishlist ? "text-orangeColor" : ""}`}>
+            {t("wishlist")}
+          </p>
+        </button>
         <div className="flex items-center gap-2">
           <GoGitCompare />
           <p className="text-lg pb-1">{t("compare")}</p>

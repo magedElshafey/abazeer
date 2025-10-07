@@ -5,7 +5,8 @@ import { twMerge } from "tailwind-merge";
 
 const themes = {
   main: "bg-orangeColor text-black",
-  secondary: "bg-black text-white"
+  secondary: "bg-black text-white",
+  outline: "border border-gray-300 text-gray-700 hover:bg-gray-50"
 }
 
 const buttonVariants = cv({
