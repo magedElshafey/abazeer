@@ -139,7 +139,26 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
   );
 
   const total = user ? totalData?.total ?? 0 : localTotal;
-
+  const value = useMemo(
+    () => ({
+      items,
+      total,
+      addToCart,
+      removeFromCart,
+      updateQuantity,
+      clearCart,
+      isInCart,
+    }),
+    [
+      items,
+      total,
+      addToCart,
+      removeFromCart,
+      updateQuantity,
+      clearCart,
+      isInCart,
+    ]
+  );
   return (
     <CartContext.Provider
       value={{

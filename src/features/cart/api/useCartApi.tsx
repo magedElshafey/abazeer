@@ -4,8 +4,8 @@ import type { CartResponse } from "../types/Cart.types";
 
 export const useCartApi = () => {
   const getCart = async (): Promise<CartResponse> => {
-    const { data } = await Axios.get(apiRoutes.cart);
-    return data?.data;
+    const { data } = await Axios.get<{ data: CartResponse }>(apiRoutes.cart);
+    return data.data;
   };
 
   const addToCart = async (

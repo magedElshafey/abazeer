@@ -6,6 +6,7 @@ import { CiShoppingCart } from "react-icons/ci";
 import ProductQuantity from "./ProductQuantity";
 import { FaRegHeart } from "react-icons/fa";
 import { GoGitCompare } from "react-icons/go";
+import AddToCartButton from "@/features/cart/components/button/AddToCartButton";
 
 const ProductInfo: FC = () => {
   const { t } = useTranslation();
@@ -44,12 +45,7 @@ const ProductInfo: FC = () => {
         <p>{t("quantity")}</p>
         <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-2 mt-1">
           <ProductQuantity className="w-full" />
-          <MainBtn className="w-full">
-            <div className="flex-center gap-2">
-              <CiShoppingCart />
-              <p>{t("add-to-cart")}</p>
-            </div>
-          </MainBtn>
+          <AddToCartButton />
           <MainBtn className="w-full py-1" theme="secondary">
             Buy Now
           </MainBtn>
