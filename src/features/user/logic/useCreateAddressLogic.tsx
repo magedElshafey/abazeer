@@ -30,7 +30,6 @@ const useCreateAddressLogic = () => {
       type_id: 0,
       postcode: "",
       address: "",
-      address2: "",
       city_id: 0,
       country_id: 0,
     },

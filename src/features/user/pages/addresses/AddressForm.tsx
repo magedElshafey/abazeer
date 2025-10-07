@@ -133,19 +133,6 @@ const AddressForm: FC<AddressFormProps> = ({ readonly = false }) => {
                             />
                         </div>
 
-                        {/* Address Line 2 - Full Width */}
-                        <div className="lg:col-span-2">
-                            <MainInput
-                                required={!readonly}
-                                Icon={MdLocationOn}
-                                placeholder="address line 2"
-                                label="address line 2"
-                                {...register("address2")}
-                                error={errors.address2?.message}
-                                type="text"
-                                disabled={readonly}
-                            />
-                        </div>
 
                         {/* Postal Code */}
                         <div>

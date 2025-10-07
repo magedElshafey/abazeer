@@ -198,13 +198,15 @@
   "Postal code must be exactly 5 digits": "Postal code must be exactly 5 digits",
   "address": "Address",
   "Address is required": "Address is required",
-  "address line 2": "Address Line 2",
-  "Address line 2 is required": "Address line 2 is required",
   "City is required": "City is required",
   "Country is required": "Country is required",
   "save address": "Save Address",
   "default": "Default",
   "edit": "Edit",
   "remove": "Remove",
-  "back": "Back"
+  "back": "Back",
+  "add_multiple_addresses_description": "Add multiple addresses for different shipping locations or billing purposes.",
+  "need_another_address": "Need another address?",
+  "add_another_address": "Add another address",
+  "make_default": "Make default"
 }

@@ -1,10 +1,12 @@
+import { NameAndId } from "@/types/global.types";
+
 export interface Address {
   id: number;
   name: string;
-  city: string;
-  country: string;
   address: string;
-  phone?: string;
-  postal_code?: string;
-  is_default?: boolean;
+  city_id: NameAndId;
+  country_id: NameAndId;
+  is_active: boolean;
+  is_default: boolean;
+  postcode: string;
 }
