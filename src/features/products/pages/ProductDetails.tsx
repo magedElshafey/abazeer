@@ -1,36 +1,70 @@
 import { FC } from "react";
+import { useParams } from "react-router-dom";
 import ProductPhotos from "../components/ProductPhotos";
 import ProductInfo from "../components/ProductInfo";
 import ProductFeatures from "../components/ProductFeatures";
 import ProductFooter from "../components/ProductFooter";
 import RelatedProducts from "../components/RelatedProducts";
+import useGetProductDetails from "../api/useGetProductDetails";
+import ProductDetailsSkeleton from "@/common/components/loader/skeltons/ProductDetailsSkeleton";
 
 const ProductDetails: FC = () => {
+    const { id } = useParams<{ id: string }>();
+    const {
+        data: product,
+        isLoading
+    } = useGetProductDetails({
+        productId: id || ""
+    });
+
+    if (isLoading) {
+        return (
+            <div className="bg-background-gray min-h-screen pb-10">
+                <div className="containerr pt-10">
+                    <div className="bg-white p-6 lg:p-10 rounded-lg">
+                        <ProductDetailsSkeleton />
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="bg-background-gray min-h-screen pb-10">
             <div className="containerr pt-10">
                 <div className="bg-white p-6 lg:p-10 flex flex-col lg:flex-row gap-2 rounded-lg">
-                    {/* Product Photos Section */}
                     <div className="flex-1">
-                        <ProductPhotos />
+                        <ProductPhotos media={product?.images || []} />
                     </div>
-                    
-                    {/* Product Information Section */}
+
                     <div className="w-full lg:w-1/3">
-                        <ProductInfo />
+                        {product && (
+                            <ProductInfo 
+                                name={product.name}
+                                price={product.price}
+                                sale_price={product.sale_price}
+                                description={product.description}
+                                stock_status={product.stock_status}
+                                stock_quantity={product.stock_quantity}
+                                brand={product.brand}
+                                category={product.category}
+                                average_rate={product.average_rate}
+                                reviews={product.reviews}
+                                has_discount={product.has_discount}
+                            />
+                        )}
                     </div>
                     <div className="w-full lg:w-1/5">
                         <ProductFeatures />
                     </div>
                 </div>
-                
+
                 <div className="mt-8 bg-white p-2 rounded-lg">
                     <ProductFooter />
                 </div>
-                
-                {/* Related Products Section */}
+
                 <div className="mt-8 bg-white p-6 rounded-lg">
-                    <RelatedProducts />
+                    <RelatedProducts products={product?.related_products_data || []} />
                 </div>
             </div>
         </div>
