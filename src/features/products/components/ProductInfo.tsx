@@ -129,9 +129,9 @@ const ProductInfo: FC<Props> = ({
                         </Link>
                     </div>
                 )}
-            </div>
-        </div>
-    )
-}
+      </div>
+    </div>
+  );
+};
 
 export default ProductInfo;

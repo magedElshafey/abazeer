@@ -170,5 +170,21 @@
   "technical_specifications": "المواصفات التقنية",
   "customer_reviews": "تقييمات العملاء",
   "related-products": "منتجات ذات صلة",
-  "No related products found": "لا توجد منتجات ذات صلة"
+  "No related products found": "لا توجد منتجات ذات صلة",
+  "total": "السعر الكلي",
+  "Clear": "تفريغ",
+  "clear cart": "تفريغ العربة",
+  "checkout": "إكمال الطلب",
+  "Are you sure you want to clear the cart?": "هل أنت متأكد أنك تريد مسح العربة؟",
+  "This action cannot be undone.": "لا يمكن التراجع عن هذا الإجراء.",
+  "Cart cleared successfully": "تم مسح العربة بنجاح",
+  "Item already in cart": "المنتج موجود بالفعل في سلة التسوق",
+  "Added to cart": "تمت الإضافة إلى سلة التسوق",
+  "Removed from cart": "تم الحذف من سلة التسوق",
+  "Failed to add item": "فشل في إضافة المنتج",
+  "Failed to remove item": "فشل في حذف المنتج",
+  "Failed to update quantity": "فشل تحديث الكمية",
+  "Failed to clear cart": "فشل في مسح العربة",
+  "Cart cleared": "تم تفريغ العربة",
+  "remove from cart": "حذف من العربة"
 }

@@ -4,23 +4,10 @@ import { memo, useCallback, useMemo } from "react";
 import { FaStar } from "react-icons/fa";
 import SquareImage from "../../../../common/components/images/sqaure-image/SqaureImage";
 import AddToCartButton from "../../../cart/components/button/AddToCartButton";
+import { ProductType } from "../../types/product.types";
 
 interface ProductCardProps {
-  product: {
-    id: number;
-    title: string;
-    category: string;
-    image: string;
-    reviews: {
-      avg: number;
-      total: number;
-    };
-    quantity: number;
-    remaining: number;
-    price_before_disccount: number;
-    price_afterDisccount: number;
-    disccount_percentage: number;
-  };
+  product: ProductType;
   className?: string;
 }
 
@@ -34,7 +21,7 @@ const ProductCard: React.FC<ProductCardProps> = memo(({ product }) => {
 
   const reviewStars = useMemo(() => {
     return Array.from({ length: 5 }, (_, index) => {
-      const filled = index < Math.round(product?.reviews?.avg || 0);
+      const filled = index < Math.round(product?.average_rate || 0);
       return (
         <FaStar
           key={index}
@@ -45,30 +32,37 @@ const ProductCard: React.FC<ProductCardProps> = memo(({ product }) => {
         />
       );
     });
-  }, [product?.reviews?.avg]);
+  }, [product?.average_rate]);
 
-  const progressPercent = product.quantity
-    ? Math.min((product.remaining / product.quantity) * 100, 100)
+  const progressPercent = product.stock_quantity
+    ? Math.min(
+        (product.sold_quantity
+          ? product?.sold_quantity
+          : 0 / product.stock_quantity) * 100,
+        100
+      )
     : 0;
 
   return (
-    <button
-      onClick={handleNavigate}
+    <div
       className="border relative px-6 pt-6 pb-3 group shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden  w-full bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-orangeColor text-start"
-      aria-label={`${product.title} - ${product.category}`}
+      aria-label={`${product.name} - ${product.category}`}
     >
       {/* ✅ Discount badge */}
-      {product.disccount_percentage > 0 && (
+      {product?.has_discount && product.discount_percentage > 0 && (
         <div
           className="w-16 absolute top-0 left-0 p-1 flex-center bg-orangeColor text-white font-bold z-40 rounded-br-lg"
-          aria-label={`${product.disccount_percentage}% ${t("discount")}`}
+          aria-label={`${product.discount_percentage}% ${t("discount")}`}
         >
-          <p>{product.disccount_percentage}%</p>
+          <p>{product.discount_percentage}%</p>
         </div>
       )}
 
       {/* ✅ Product image */}
-      <SquareImage src={product.image} alt={product.title} />
+      <SquareImage
+        src={product.image || "/images/600x600.jpg"}
+        alt={product.name}
+      />
 
       {/* ✅ Content */}
       <div className="mt-3 relative">
@@ -76,33 +70,38 @@ const ProductCard: React.FC<ProductCardProps> = memo(({ product }) => {
           {product.category}
         </p>
 
-        <p className="mb-1 font-semibold text-blue-400 text-base line-clamp-1 text-balance">
-          {product.title}
-        </p>
+        <button
+          onClick={handleNavigate}
+          className="mb-1 font-medium text-blue-400 text-base  line-clamp-1 cursor-pointer duration-200 hover:underline text-start"
+        >
+          {product.name}
+        </button>
 
         {/* ✅ Reviews */}
         <div
           className="flex items-center gap-1 mb-1"
-          aria-label={`${product.reviews.avg} out of 5 stars`}
+          aria-label={`${product.average_rate} out of 5 stars`}
         >
           {reviewStars}
           <span className="text-sm text-gray-500 ml-1">
-            ({product.reviews.total || 0})
+            ({product.ratings_count || 0})
           </span>
         </div>
 
         {/* ✅ Price */}
         <div className="flex items-center gap-3 mb-2">
           <p
-            aria-label={`${product.price_afterDisccount} ${t("Saudi Riyal")}`}
+            aria-label={`${product.sale_price || product?.price} ${t(
+              "Saudi Riyal"
+            )}`}
             className="text-orangeColor text-lg font-bold"
           >
-            {product.price_afterDisccount} {t("SAR")}
+            {product.sale_price || +product?.price} {t("SAR")}
           </p>
 
-          {product.price_before_disccount > product.price_afterDisccount && (
+          {product?.has_discount && product?.sale_price && (
             <p className="text-gray-500 line-through text-sm">
-              {product.price_before_disccount} {t("SAR")}
+              {product.sale_price} {t("SAR")}
             </p>
           )}
         </div>
@@ -110,7 +109,7 @@ const ProductCard: React.FC<ProductCardProps> = memo(({ product }) => {
         {/* ✅ Progress bar */}
         <div
           className="w-full h-3 bg-gray-200 overflow-hidden mb-1"
-          aria-label={`Stock remaining: ${product.remaining} of ${product.quantity}`}
+          aria-label={`Stock remaining: ${product.sold_quantity} of ${product.stock_quantity}`}
         >
           <div
             className="h-full bg-orangeColor transition-all duration-500"
@@ -119,7 +118,7 @@ const ProductCard: React.FC<ProductCardProps> = memo(({ product }) => {
         </div>
 
         <p className="font-medium text-sm mb-2 text-end" aria-live="polite">
-          {t("sold")} : {product.remaining} / {product.quantity}
+          {t("sold")} : {product.sold_quantity || 0} / {product.stock_quantity}
         </p>
 
         {/* ✅ Add to cart button with smooth animation */}
@@ -137,7 +136,7 @@ const ProductCard: React.FC<ProductCardProps> = memo(({ product }) => {
           <AddToCartButton product={product} tabIndex={0} />
         </div>
       </div>
-    </button>
+    </div>
   );
 });
 

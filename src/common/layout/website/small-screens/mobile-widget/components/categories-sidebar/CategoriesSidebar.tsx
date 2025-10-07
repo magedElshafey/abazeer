@@ -134,7 +134,7 @@ const CategoriesSidebar = memo(
           <ul role="menu" className="mt-2" aria-label="categories list">
             {isLoading ? (
               <div className="flex-center my-4">
-                <Loader color="white" />
+                <Loader />
               </div>
             ) : data?.length ? (
               data.map((cat) => (

@@ -6,23 +6,22 @@ interface FetchHandlerProps {
   children: React.ReactNode;
   queryResult: any;
   skeletonType: SkeletonType;
-  loadingType?: "skeleton" | "loader"; // إضافة نوع التحميل (skeleton أو loader)
+  loadingType?: "skeleton" | "loader";
 }
 
 const FetchHandler: React.FC<FetchHandlerProps> = ({
   children,
   queryResult,
   skeletonType,
-  loadingType = "skeleton", // الافتراضي هو 'skeleton'
+  loadingType = "skeleton",
 }) => {
   const { isLoading, isError, isSuccess, error } = queryResult;
   const { t } = useTranslation();
 
   return (
-    <div className="relative">
+    <>
       {isLoading && (
-        <div className="fixed top-0 left-0 w-screen h-screen z-50 flex items-center justify-center bg-white">
-          {/* عرض Skeleton أو Loader بناءً على loadingType */}
+        <div className="">
           {loadingType === "skeleton" ? (
             <Skeleton type={skeletonType} />
           ) : (
@@ -31,15 +30,14 @@ const FetchHandler: React.FC<FetchHandlerProps> = ({
         </div>
       )}
 
-      {/* عرض رسالة الخطأ داخل المكون بدلاً من Popup */}
       {isError && (
-        <div className="absolute top-0 left-0 w-full bg-red-500 text-white p-4 text-center z-50">
+        <div className="w-full bg-red-500 text-white p-4 text-center z-50">
           <p>{t(error?.message || "Something went wrong")}</p>
         </div>
       )}
 
       {isSuccess && children}
-    </div>
+    </>
   );
 };
 

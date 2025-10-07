@@ -53,4 +53,5 @@ export interface ProductDetails {
   reviews: Review[];
   images: string[];
   has_discount: boolean;
+  quantity: number;
 }

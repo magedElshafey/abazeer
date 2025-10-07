@@ -169,5 +169,21 @@
   "technical_specifications": "Technical Specifications",
   "customer_reviews": "Customer Reviews",
   "related-products": "Related Products",
-  "No related products found": "No related products found"
+  "No related products found": "No related products found",
+  "total": "total",
+  "Clear": "Clear",
+  "clear cart": "clear cart",
+  "checkout": "checkout",
+  "Are you sure you want to clear the cart?": "Are you sure you want to clear the cart?",
+  "This action cannot be undone.": "This action cannot be undone.",
+  "Cart cleared successfully": "Cart cleared successfully",
+  "Item already in cart": "Item already in cart",
+  "Added to cart": "Added to cart",
+  "Removed from cart": "Removed from cart",
+  "Failed to add item": "Failed to add item",
+  "Failed to remove item": "Failed to remove item",
+  "Failed to update quantity": "Failed to update quantity",
+  "Failed to clear cart": "Failed to clear cart",
+  "Cart cleared": "Cart cleared",
+  "remove from cart": "remove from cart"
 }
