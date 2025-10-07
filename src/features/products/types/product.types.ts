@@ -16,6 +16,7 @@ export interface Product {
   sold_quantity: number | null;
   sale_price: number;
   quantity: number;
+  is_in_wishlist: boolean;
 }
 
 export interface Dimensions {
@@ -48,6 +49,7 @@ export interface ProductDetails extends Omit<Product, "category"> {
   is_best_seller: boolean;
   sold_number: number;
   related_products_data: Product[];
+  is_in_wishlist: boolean;
   created_at: string;
   brand: Brand;
   category: Category;

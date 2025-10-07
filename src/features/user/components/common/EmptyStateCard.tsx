@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { twMerge } from "tailwind-merge";
 import { IconType } from "react-icons";
 import { Link } from "react-router-dom";
 import MainBtn from "@/common/components/buttons/MainBtn";
@@ -9,6 +10,7 @@ interface EmptyStateCardProps {
   buttonText: string;
   title: string;
   description: string;
+  className?: string;
 }
 
 const EmptyStateCard: FC<EmptyStateCardProps> = ({
@@ -17,9 +19,10 @@ const EmptyStateCard: FC<EmptyStateCardProps> = ({
   buttonText,
   title,
   description,
+  className=""
 }) => {
   return (
-    <div className="flex items-center justify-center py-12 border rounded-md">
+    <div className={twMerge("flex items-center justify-center py-12 border rounded-md", className)}>
       <div className="text-center max-w-md">
         <div className="mb-6">
           <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">

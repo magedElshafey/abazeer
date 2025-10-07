@@ -2,10 +2,12 @@ import { useTranslation } from "react-i18next";
 import React, { PropsWithChildren } from "react";
 import { cv } from "css-variants";
 import { twMerge } from "tailwind-merge";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const themes = {
   main: "bg-orangeColor text-black",
-  secondary: "bg-black text-white"
+  secondary: "bg-black text-white",
+  outline: "border border-gray-300 text-gray-700 hover:bg-gray-50"
 }
 
 const buttonVariants = cv({
@@ -62,12 +64,7 @@ const MainBtn: React.FC<PropsWithChildren<MainBtnProps>> = ({
       className={`${twMerge(buttonVariants({ theme, className }))}`}
     >
       {isPending ? (
-        <div
-          className="w-6 h-6 border-4 border-white border-t-transparent rounded-full animate-spin"
-          role="status"
-          aria-live="polite"
-          aria-label={t("Loading")}
-        ></div>
+        <AiOutlineLoading3Quarters className="animate-spin" size={20} aria-hidden="true" />
       ) : (
         children ||
         t(text || "")

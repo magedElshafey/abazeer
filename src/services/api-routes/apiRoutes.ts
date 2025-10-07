@@ -15,4 +15,5 @@ export const apiRoutes = {
   countries: "countries",
   cities: "cities",
   products: "products",
+  wishlist: "wishlist/toggle",
 };
