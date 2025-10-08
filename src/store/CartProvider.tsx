@@ -58,34 +58,31 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     enabled: !!user,
     staleTime: 1000 * 60 * 5,
   });
-
   useEffect(() => {
-    if (cartData?.items && user) setItems(cartData.items);
-  }, [cartData, user]);
+    if (!user) return;
+    const localData = localStorage.getItem(LOCAL_KEY);
+    if (localData) {
+      const guestItems: CartItem[] = JSON.parse(localData);
 
-  // 🧩 Sync guest cart with server cart on login
-  useEffect(() => {
-    if (user) {
-      const localData = localStorage.getItem(LOCAL_KEY);
-      if (localData) {
-        const guestItems: CartItem[] = JSON.parse(localData);
+      if (guestItems.length > 0) {
+        const formatted = guestItems.map((i) => ({
+          product_id: i.id,
+          quantity: i.quantity,
+        }));
 
-        if (guestItems.length > 0) {
-          const formatted = guestItems.map((i) => ({
-            product_id: i.id,
-            quantity: i.quantity,
-          }));
-
-          addMutation.mutate(formatted, {
-            onSuccess: () => {
-              localStorage.removeItem(LOCAL_KEY);
-              // toast.success(t("Your cart has been synced"));
-            },
-          });
-        }
+        addMutation.mutate(formatted, {
+          onSuccess: () => {
+            localStorage.removeItem(LOCAL_KEY);
+            // toast.success(t("Your cart has been synced"));
+          },
+        });
       }
     }
-  }, [user]);
+
+    if (cartData?.items) {
+      setItems(cartData.items);
+    }
+  }, [user, cartData]);
 
   // Persist local cart for guests
   const persistLocal = useCallback((updated: CartItem[]) => {
@@ -111,7 +108,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
         const updated = [...items, item];
         setItems(updated);
         persistLocal(updated);
-        toast.success(t("Added to cart"));
+        // toast.success(t("Added to cart"));
         playAddSound("/sounds/cart.mp3");
       } else {
         addMutation.mutate([{ product_id: item.id, quantity: item.quantity }], {

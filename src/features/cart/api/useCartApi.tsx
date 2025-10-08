@@ -35,7 +35,6 @@ export const useCartApi = () => {
 
   const getCartTotal = async () => {
     const { data } = await Axios.get(`${apiRoutes.cart}/total`);
-    console.log("get cart total", data);
     return data?.data;
   };
 
