@@ -4,9 +4,9 @@ import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 import { useKeenSlider } from "keen-slider/react";
 import { MdProductionQuantityLimits } from "react-icons/md";
 import "keen-slider/keen-slider.min.css";
-import type { Product } from "../types/product.types";
-import ProductCard from "./card/ProductCard";
-import EmptyData from "../../../common/components/empty-data/EmptyData";
+import type { Product } from "../../types/product.types";
+import ProductCard from "../card/ProductCard";
+import EmptyData from "@/common/components/empty-data/EmptyData";
 
 interface RelatedProductsProps {
     products: Product[];

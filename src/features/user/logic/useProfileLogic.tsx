@@ -29,12 +29,11 @@ const useProfileLogic = () => {
 
     const onSubmit = async (data: ProfileSchemaType) => {
         try {
-            console.log(data);
-            //   const response = await mutateAsync(data);
-            //   if (response?.status) {
-            //     toast.success(response?.message || "Profile updated successfully");
-            //     reset();
-            //   }
+              const response = await mutateAsync(data);
+              if (response?.status) {
+                toast.success(response?.message || "Profile updated successfully");
+                reset();
+              }
         } catch (error) {
             toastErrorMessage(error as Error);
         }
