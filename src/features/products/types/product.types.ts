@@ -1,6 +1,7 @@
 import type { Category } from "@/features/categories/types/category.types";
 import type { Brand } from "@/features/brands/types/brand.types";
 import type { Review } from "./review.types";
+import { sortableKeys } from "../constants/products.constants";
 
 export interface Product {
   id: number;
@@ -57,4 +58,17 @@ export interface ProductDetails extends Omit<Product, "category"> {
   images: string[];
   has_discount: boolean;
   quantity: number;
+}
+
+type SortByKey<T> = T extends string ? `${T}-asc` | `${T}-desc` : never;
+
+// TODO: implement the filter type later.
+export interface ProductsContext {
+  view: "list" | "cards",
+  sortBy?: SortByKey<typeof sortableKeys[number]>;
+  filters?: never;
+  isDrawerOpen: boolean;
+  setView: (view: ProductsContext["view"]) => void;
+  setSortBy: (sortBy: ProductsContext["sortBy"]) => void;
+  setIsDrawerOpen: (isOpen: boolean) => void;
 }

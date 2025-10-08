@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import Loader from "@/common/components/loader/spinner/Loader";
 import LoginPrompt from "@/common/components/login-prompt/LoginPrompt";
-import useAddFavorite from "../api/useAddFavorite";
+import useAddFavorite from "../../api/useAddFavorite";
 
 interface FavoriteButtonProps {
   productId: number;

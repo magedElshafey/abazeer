@@ -1,0 +1,1 @@
+export const sortableKeys = ["name", "price", "date", "rating"] as const;

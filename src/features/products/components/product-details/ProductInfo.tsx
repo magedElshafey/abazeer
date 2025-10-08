@@ -2,12 +2,12 @@ import { FC } from "react";
 import { Link } from "react-router-dom";
 import ProductRate from "./ProductRate";
 import { useTranslation } from "react-i18next";
-import MainBtn from "../../../common/components/buttons/MainBtn";
+import MainBtn from "../../../../common/components/buttons/MainBtn";
 import ProductQuantity from "./ProductQuantity";
 import { GoGitCompare } from "react-icons/go";
 import AddToCartButton from "@/features/cart/components/button/AddToCartButton";
-import { ProductDetails } from "../types/product.types";
-import HtmlConverter from "../../../common/components/htmlConverter/HtmlConverter";
+import { ProductDetails } from "../../types/product.types";
+import HtmlConverter from "../../../../common/components/htmlConverter/HtmlConverter";
 import FavoriteButton from "./FavoriteButton";
 
 import { useState, useCallback } from "react";

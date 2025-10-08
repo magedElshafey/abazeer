@@ -1,10 +1,10 @@
 import { FC } from "react";
 import { useParams } from "react-router-dom";
-import ProductPhotos from "../components/ProductPhotos";
-import ProductInfo from "../components/ProductInfo";
-import ProductFeatures from "../components/ProductFeatures";
-import ProductFooter from "../components/ProductFooter";
-import RelatedProducts from "../components/RelatedProducts";
+import ProductPhotos from "../components/product-details/ProductPhotos";
+import ProductInfo from "../components/product-details/ProductInfo";
+import ProductFeatures from "../components/product-details/ProductFeatures";
+import ProductFooter from "../components/product-details/ProductFooter";
+import RelatedProducts from "../components/product-details/RelatedProducts";
 import useGetProductDetails from "../api/useGetProductDetails";
 import ProductDetailsSkeleton from "@/common/components/loader/skeltons/ProductDetailsSkeleton";
 

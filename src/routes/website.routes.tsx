@@ -2,6 +2,7 @@ import Guard from "./Guard";
 import { lazyLoad } from "../utils/LazyLoad";
 import type { RouteObject } from "react-router-dom";
 import Logout from "@/features/user/pages/Logout";
+import AllProducts from "@/features/products/pages/AllProducts";
 
 export const websiteRoutes: RouteObject = {
   element: lazyLoad(() => import("../common/layout/website/WebsiteLayout")),
@@ -130,6 +131,10 @@ export const websiteRoutes: RouteObject = {
     {
       path: "products",
       children: [
+        {
+          index: true,
+          element: <AllProducts />
+        },
         {
           path: ":id",
           element: lazyLoad(
