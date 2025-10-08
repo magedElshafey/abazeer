@@ -42,3 +42,7 @@
 .grid-5 {
     @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6;
 }
+
+.space-between-sections {
+    @apply my-4 md:my-6 lg:my-8 xl:my-10 2xl:my-12
+}

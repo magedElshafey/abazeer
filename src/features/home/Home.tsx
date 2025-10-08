@@ -65,7 +65,7 @@ const Home = () => {
           )}
         </FetchHandler>
 
-        <div className="my-4">
+        <div className="space-between-sections">
           <FetchHandler queryResult={queryResult} skeletonType="product">
             <Slider
               title="products"
