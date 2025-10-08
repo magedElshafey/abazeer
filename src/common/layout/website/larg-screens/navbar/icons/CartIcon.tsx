@@ -52,7 +52,7 @@ const CartIcon = memo(() => {
           {itemCount > 0 && (
             <span
               aria-label={t("cart items count")}
-              className="absolute -right-2 -top-2 bg-orangeColor flex-center w-5 h-5 text-xs "
+              className="absolute -left-3 -top-3 bg-orangeColor flex-center w-5 h-5 text-xs "
             >
               {itemCount}
             </span>
