@@ -6,5 +6,10 @@ export interface Brand {
   image: string | null;
   created_at: string;
   updated_at: string;
+  slug: string;
+  category: {
+    id: number;
+    name: string;
+    slug: string;
+  };
 }
-

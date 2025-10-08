@@ -14,4 +14,5 @@ export type SkeletonType =
   | "cart-table"
   | "table"
   | "custome"
-  | "about";
+  | "about"
+  | "brand";

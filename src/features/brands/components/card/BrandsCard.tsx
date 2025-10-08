@@ -1,26 +1,37 @@
-import { useNavigate } from "react-router-dom";
 import { memo, useCallback } from "react";
-
-interface Brand {
-  id: number;
-  title: string;
-  category: string;
-  image: string;
-}
+import { useNavigate } from "react-router-dom";
+import clsx from "clsx";
+import { Brand } from "../../types/brand.types";
 
 interface BrandsCardProps {
   brand: Brand;
 }
 
-const BrandsCard: React.FC<BrandsCardProps> = memo(({ brand }) => {
+const BrandsCard = memo(({ brand }: BrandsCardProps) => {
   const navigate = useNavigate();
+  const { id, slug, image, name, category } = brand || {};
+  const { id: catId, slug: catSlug, name: catName } = category || {};
+
+  const imageSrc = image || "/images/card-big-image.png";
+  const brandName = name || "Unnamed Brand";
+  const categoryName = catName || "Uncategorized";
 
   const handleNavigate = useCallback(() => {
-    navigate(`/brand/${brand.id}`);
-  }, [navigate, brand.id]);
+    if (!id) return;
+    navigate(`/brand/${id}${slug ? `-${slug}` : ""}`);
+  }, [navigate, id, slug]);
 
-  const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent<HTMLElement>) => {
+  const handleCategoryNavigate = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
+      if (!catId) return;
+      navigate(`/category/${catId}-${catSlug}`);
+    },
+    [navigate, catId, catSlug]
+  );
+
+  const handleKeyPress = useCallback(
+    (e: React.KeyboardEvent) => {
       if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
         handleNavigate();
@@ -33,33 +44,46 @@ const BrandsCard: React.FC<BrandsCardProps> = memo(({ brand }) => {
     <article
       role="link"
       tabIndex={0}
-      aria-label={`Go to brand page: ${brand.title}`}
-      aria-describedby={`brand-${brand.id}-desc`}
+      aria-label={`Go to brand page: ${brandName}`}
+      aria-describedby={`brand-${id}-desc`}
       onClick={handleNavigate}
-      onKeyDown={handleKeyDown}
-      className="bg-background-gray cursor-pointer transition-colors duration-200 hover:bg-white shadow-lg pb-3 rounded-xl group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+      onKeyDown={handleKeyPress}
+      className={clsx(
+        "flex flex-col justify-between bg-background-gray cursor-pointer transition-colors duration-200 hover:bg-white shadow-lg rounded-xl group focus:outline-none focus-visible:ring-2 focus-visible:ring-primary h-full"
+      )}
     >
-      {/* Image Section */}
-      <div className="w-full aspect-[1.56] overflow-hidden rounded-lg">
+      <figure className="w-full aspect-[1.56] overflow-hidden rounded-t-xl bg-gray-50 flex items-center justify-center">
         <img
-          src={brand.image}
-          alt={`Brand logo: ${brand.title}`}
+          src={imageSrc}
+          alt={`Brand logo: ${brandName}`}
           loading="lazy"
-          className="w-full h-full object-contain"
+          decoding="async"
+          className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
         />
-      </div>
+      </figure>
 
-      {/* Text Section */}
-      <div id={`brand-${brand.id}-desc`} className="px-4 mt-5">
-        <p className="uppercase mb-1 font-semibold text-slate-500">
-          {brand.category}
-        </p>
-        <p
-          className="text-md md:text-lg lg:text-xl font-bold truncate text-foreground transition-colors duration-200 group-hover:text-orangeColor"
-          title={brand.title}
+      <div
+        id={`brand-${id}-desc`}
+        className="flex flex-col flex-grow justify-between px-4 py-4"
+      >
+        <button
+          type="button"
+          onClick={handleCategoryNavigate}
+          className="uppercase mb-1 font-semibold text-slate-500 focus:outline-none hover:underline focus-visible:underline truncate"
+          aria-label={`Go to category: ${categoryName}`}
         >
-          {brand.title}
-        </p>
+          {categoryName}
+        </button>
+
+        <button
+          type="button"
+          onClick={handleNavigate}
+          className="text-md md:text-lg lg:text-xl font-bold text-foreground transition-colors duration-200 group-hover:text-orangeColor hover:underline focus:underline focus:outline-none truncate"
+          title={brandName}
+          aria-label={`View details for ${brandName}`}
+        >
+          {brandName}
+        </button>
       </div>
     </article>
   );

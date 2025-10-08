@@ -223,5 +223,11 @@
   "out-of-stock": "غير متوفر",
   "browse_products": "تصفح المنتجات",
   "no_favorites_title": "لا توجد مفضلات بعد",
-  "no_favorites_description": "ابدأ بإضافة المنتجات إلى مفضلاتك لتراها هنا"
+  "no_favorites_description": "ابدأ بإضافة المنتجات إلى مفضلاتك لتراها هنا",
+  "shop by brands": "تسوق من خلال العلامات التجارية",
+  "just landing": "وصل حديثا",
+  "featured brands": "العلامات التجارية المميزة",
+  "featured products": "المنتجات المميزة",
+  "essential products": "المنتجات الأساسية",
+  "Retry": "إعادة المحاولة"
 }

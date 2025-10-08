@@ -222,5 +222,11 @@
   "out-of-stock": "Out of Stock",
   "browse_products": "Browse Products",
   "no_favorites_title": "No Favorites Yet",
-  "no_favorites_description": "Start adding products to your favorites to see them here"
+  "no_favorites_description": "Start adding products to your favorites to see them here",
+  "shop by brands": "shop by brands",
+  "just landing": "just landing",
+  "featured brands": "featured brands",
+  "featured products": "featured products",
+  "essential products": "essential products",
+  "Retry": "Retry"
 }
