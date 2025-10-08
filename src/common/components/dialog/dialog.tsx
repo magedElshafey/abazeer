@@ -27,19 +27,19 @@ interface Props {
 const defaultCancelText = "cancel";
 const defaultOkText = "ok";
 
-const DialogComponent: FC<PropsWithChildren<Props>> = ({ 
-    header, 
-    content, 
-    children, 
-    action, 
+const DialogComponent: FC<PropsWithChildren<Props>> = ({
+    header,
+    content,
+    children,
+    action,
     cancel,
     queryKey,
-    type="regular",
+    type = "regular",
     onSuccess
 }) => {
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const queryClient = useQueryClient();
-    
+
     const [opened, setOpened] = useState(false);
 
     const {
@@ -52,7 +52,7 @@ const DialogComponent: FC<PropsWithChildren<Props>> = ({
             return response;
         },
         onSuccess: async (response: unknown) => {
-            if(response && typeof response === "object" && "data" in response && response.data && typeof response.data === "object"  && "message" in response.data) {
+            if (response && typeof response === "object" && "data" in response && response.data && typeof response.data === "object" && "message" in response.data) {
                 toast.success(response.data.message as string);
             }
             await queryClient.invalidateQueries({ queryKey: queryKey });
@@ -65,11 +65,11 @@ const DialogComponent: FC<PropsWithChildren<Props>> = ({
     })
 
     return (
-        <Dialog 
+        <Dialog
             open={opened}
             onOpenChange={(e) => {
                 setOpened(e);
-                if(!e) {
+                if (!e) {
                     cancel?.action?.();
                 }
             }}
@@ -80,11 +80,11 @@ const DialogComponent: FC<PropsWithChildren<Props>> = ({
                 {children}
             </DialogTrigger>
             <DialogContent
-                className="min-w-lg"
+                className="min-w-96 w-fit"
             >
                 {
                     header && (
-                        <DialogHeader autoFocus tabIndex={1}>
+                        <DialogHeader className={!content ? "border-b-0" : ""} autoFocus tabIndex={1}>
                             {
                                 header.title && (
                                     <DialogTitle>
@@ -102,10 +102,21 @@ const DialogComponent: FC<PropsWithChildren<Props>> = ({
                         </DialogHeader>
                     )
                 }
-                
+
                 {content}
 
-                <DialogFooter className="flex flex-col">
+                <DialogFooter className={content ? "" : "border-t-0"}>
+                    <DialogClose
+                        className="w-full sm:w-auto"
+                        onClick={cancel?.action}
+                    >
+                        <MainBtn
+                            className="w-full"
+                            theme="outline"
+                        >
+                            {t(cancel?.text || defaultCancelText)}
+                        </MainBtn>
+                    </DialogClose>
                     {
                         action && (
                             <MainBtn
@@ -118,17 +129,6 @@ const DialogComponent: FC<PropsWithChildren<Props>> = ({
                         )
                     }
 
-                    <DialogClose
-                        className="w-full sm:w-auto"
-                        onClick={cancel?.action}
-                    >
-                        <MainBtn
-                            className="w-full"
-                            theme="outline"
-                        >
-                            {t(cancel?.text || defaultCancelText)}
-                        </MainBtn>
-                    </DialogClose>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

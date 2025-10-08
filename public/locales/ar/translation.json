@@ -212,5 +212,16 @@
   "make_default": "اجعله الافتراضي",
   "update_address": "تحديث العنوان",
   "delete_address_confirmation": "هل أنت متأكد من حذف هذا العنوان؟",
-  "delete_address_named_confirmation": "هل أنت متأكد من حذف \"{{name}}\"؟"
+  "delete_address_named_confirmation": "هل أنت متأكد من حذف \"{{name}}\"؟",
+  "login_required": "تسجيل الدخول مطلوب",
+  "login_required_description": "يجب عليك تسجيل الدخول لإتمام هذا الإجراء. الرجاء تسجيل الدخول للمتابعة.",
+  "cancel": "إلغاء",
+  "product": "المنتج",
+  "price": "السعر",
+  "action": "الإجراء",
+  "in-stock": "متوفر",
+  "out-of-stock": "غير متوفر",
+  "browse_products": "تصفح المنتجات",
+  "no_favorites_title": "لا توجد مفضلات بعد",
+  "no_favorites_description": "ابدأ بإضافة المنتجات إلى مفضلاتك لتراها هنا"
 }

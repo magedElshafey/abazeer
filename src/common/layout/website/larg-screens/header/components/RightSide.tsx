@@ -3,11 +3,12 @@ import { useAuth } from "../../../../../../store/AuthProvider";
 import { Link } from "react-router-dom";
 import Border from "../../../../../components/border/Border";
 import LanguageDropdown from "../../../common/lang-menu/LangMenu";
+import LogoutButton from "@/features/auth/components/LogoutButton";
 
 const Divider = () => <Border />;
 const RightSide = () => {
   const { t } = useTranslation();
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   return (
     <div className="flex gap-3 items-center">
       {!user && (
@@ -28,9 +29,11 @@ const RightSide = () => {
             {t("my profile")}
           </Link>
           <Divider />
-          <button onClick={logout} className="text-transition cursor-pointer disabled:cursor-not-allowed">
-            {t("log out")}
-          </button>
+          <LogoutButton>
+            <button className="text-transition cursor-pointer">
+              {t("log out")}
+            </button>
+          </LogoutButton>
           <Divider />
         </>
       )}

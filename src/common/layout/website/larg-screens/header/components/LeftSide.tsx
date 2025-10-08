@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import Border from "../../../../../components/border/Border";
+import LoginPrompt from "@/common/components/login-prompt/LoginPrompt";
 const LeftSide = () => {
   const { t } = useTranslation();
   return (
@@ -9,13 +10,15 @@ const LeftSide = () => {
         {t("about us")}
       </Link>
       <Border />
-      <Link
-        to="/whishlist"
-        className="text-transition"
-        aria-label={t("whishlist")}
-      >
-        {t("whishlist")}
-      </Link>
+      <LoginPrompt>
+        <Link
+          to="/my-profile/favorites"
+          className="text-transition"
+          aria-label={t("whishlist")}
+        >
+          {t("whishlist")}
+        </Link>
+      </LoginPrompt>
       <Border />
       <Link
         to="/order-tracking"

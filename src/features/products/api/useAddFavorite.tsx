@@ -1,31 +1,27 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
 import { Axios } from "@/lib/axios/Axios";
 import { apiRoutes } from "@/services/api-routes/apiRoutes";
-import { useAuth } from "@/store/AuthProvider";
 import type { Response } from "@/types/Response";
+import { toast } from "sonner";
 
 const useAddFavorite = () => {
   const queryClient = useQueryClient();
-  const navigate = useNavigate();
-  const { user } = useAuth();
 
   return useMutation({
     mutationKey: ["addFavorite"],
     mutationFn: async (product_id: number) => {
-      if (!user) {
-        navigate("/auth/login");
-        return Promise.reject(new Error("User not authenticated"));
-      }
-
       const { data } = await Axios.post<Response<unknown>>(
         apiRoutes.wishlist,
         { product_id }
       );
       return data;
     },
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: [apiRoutes.products] });
+    onSuccess: async (response) => {
+      toast.success(response.message);
+      const promises = [];
+      promises.push(queryClient.invalidateQueries({ queryKey: [apiRoutes.products] }));
+      promises.push(queryClient.invalidateQueries({ queryKey: [apiRoutes.favorites] }));
+      await Promise.all(promises);
     },
   });
 };
