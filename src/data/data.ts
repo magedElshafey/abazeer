@@ -32,24 +32,24 @@ export const navLinks: Nav[] = [
   },
   {
     name: "About",
-    link: "/about",
+    link: "/about-us",
   },
 
-  {
-    name: "branches",
-    link: "/branches",
-  },
-  {
-    name: "blogs",
-    link: "/blogs",
-  },
+  // {
+  //   name: "branches",
+  //   link: "/branches",
+  // },
+  // {
+  //   name: "blogs",
+  //   link: "/blogs",
+  // },
   {
     name: "faq",
     link: "/faq",
   },
   {
     name: "contact",
-    link: "/contact",
+    link: "/contact-us",
   },
 ];
 export const sidebarLinks: Nav[] = [
@@ -59,23 +59,23 @@ export const sidebarLinks: Nav[] = [
   },
   {
     name: "About",
-    link: "/about",
+    link: "/about-us",
   },
-  {
-    name: "branches",
-    link: "/branches",
-  },
-  {
-    name: "blogs",
-    link: "/blogs",
-  },
+  // {
+  //   name: "branches",
+  //   link: "/branches",
+  // },
+  // {
+  //   name: "blogs",
+  //   link: "/blogs",
+  // },
   {
     name: "faq",
     link: "/faq",
   },
   {
     name: "contact",
-    link: "/contact",
+    link: "/contact-us",
   },
   {
     name: "order tracking",

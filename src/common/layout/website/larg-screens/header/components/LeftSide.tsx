@@ -6,7 +6,7 @@ const LeftSide = () => {
   const { t } = useTranslation();
   return (
     <div className="flex gap-3 items-center">
-      <Link to="/about" className="text-transition" aria-label={t("about")}>
+      <Link to="/about-us" className="text-transition" aria-label={t("about")}>
         {t("about us")}
       </Link>
       <Border />

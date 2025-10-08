@@ -15,7 +15,7 @@ export const websiteRoutes: RouteObject = {
       element: <Logout />,
     },
     {
-      path: "about",
+      path: "about-us",
       element: lazyLoad(() => import("../features/static-pages/pages/About")),
       handle: {
         breadcrumb: "About",
@@ -36,21 +36,15 @@ export const websiteRoutes: RouteObject = {
       },
     },
     {
-      path: "team",
-      element: lazyLoad(() => import("../features/static-pages/pages/Team")),
-      handle: {
-        breadcrumb: "team",
-      },
-    },
-    {
-      path: "branches",
+      path: "static/:slug",
       element: lazyLoad(
-        () => import("../features/static-pages/pages/Branches")
+        () => import("../features/static-pages/pages/ShowPage")
       ),
       handle: {
-        breadcrumb: "branches",
+        breadcrumb: "static page name",
       },
     },
+
     {
       path: "my-profile",
       element: (
@@ -115,7 +109,7 @@ export const websiteRoutes: RouteObject = {
       },
     },
     {
-      path: "contact",
+      path: "contact-us",
       element: lazyLoad(() => import("../features/contact/pages/Contact")),
 
       handle: {

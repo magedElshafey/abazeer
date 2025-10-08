@@ -21,4 +21,6 @@ export const apiRoutes = {
   simpleCategories: "simpleCategories",
   favorites: "wishlist/list",
   brands: "brands",
+  static_pages: "static-pages/list",
+  static_page: "static-pages",
 };
