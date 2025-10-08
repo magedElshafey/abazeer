@@ -8,8 +8,8 @@ import React, {
 } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useAuth } from "./AuthProvider";
-import { useCartApi } from "@/features/cart/api/useCartApi";
-import { useCartMutations } from "@/features/cart/api/useCartMutations";
+import { useCartApi } from "./hooks/useCartApi";
+import { useCartMutations } from "./hooks/useCartMutations";
 import type { CartItem } from "@/features/cart/types/Cart.types";
 import { apiRoutes } from "@/services/api-routes/apiRoutes";
 import { toast } from "sonner";

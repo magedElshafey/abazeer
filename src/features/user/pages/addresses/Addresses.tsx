@@ -10,12 +10,6 @@ const Addresses: FC = () => {
     const { t } = useTranslation();
     const { data: addresses, isLoading } = useGetUserAddresses();
 
-    const handleRemove = (id: number) => {
-        // Handle address removal
-        console.log("Remove address:", id);
-        // TODO: Implement address removal logic
-    };
-
     if (isLoading) {
         return (
             <div className="flex items-center justify-center py-12">
@@ -55,7 +49,6 @@ const Addresses: FC = () => {
                     <AddressCard
                         key={address.id}
                         address={address}
-                        onRemove={handleRemove}
                     />
                 ))}
             </div>

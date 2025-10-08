@@ -1,4 +1,4 @@
-import { FC, useMemo } from "react";
+import { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 import { useKeenSlider } from "keen-slider/react";
@@ -14,27 +14,6 @@ interface RelatedProductsProps {
 
 const RelatedProducts: FC<RelatedProductsProps> = ({ products }) => {
     const { t } = useTranslation();
-    
-    // Transform Product type to match ProductCard expected props
-    const transformedProducts = useMemo(() => {
-        return (products || []).map(product => ({
-            id: product.id,
-            title: product.name,
-            category: product.category,
-            image: product.image || "/images/600x600.jpg",
-            reviews: {
-                avg: product.average_rate,
-                total: product.ratings_count
-            },
-            quantity: product.stock_quantity,
-            remaining: product.sold_quantity || 0,
-            price_before_disccount: product.has_discount 
-                ? parseFloat(product.price) / (1 - product.discount_percentage / 100)
-                : parseFloat(product.price),
-            price_afterDisccount: parseFloat(product.price),
-            disccount_percentage: product.discount_percentage
-        }));
-    }, [products]);
     
     const [sliderRef, instanceRef] = useKeenSlider(
         {
@@ -116,7 +95,7 @@ const RelatedProducts: FC<RelatedProductsProps> = ({ products }) => {
 
                 {/* Keen Slider */}
                 <div ref={sliderRef} className="keen-slider px-12">
-                    {transformedProducts.map((product) => (
+                    {products.map((product) => (
                         <div
                             key={product.id}
                             className="keen-slider__slide"

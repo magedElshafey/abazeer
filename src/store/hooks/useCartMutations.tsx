@@ -114,9 +114,9 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { apiRoutes } from "@/services/api-routes/apiRoutes";
-import { useCartApi } from "../api/useCartApi";
+import { useCartApi } from "./useCartApi";
 import { useTranslation } from "react-i18next";
-import type { CartItem } from "../types/Cart.types";
+import { CartItem } from "@/features/cart/types/Cart.types";
 import { useCallback } from "react";
 
 const showToast = (type: "success" | "error", message: string) => {

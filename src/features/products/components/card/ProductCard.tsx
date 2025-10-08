@@ -4,10 +4,10 @@ import { memo, useCallback, useMemo } from "react";
 import { FaStar } from "react-icons/fa";
 import SquareImage from "../../../../common/components/images/sqaure-image/SqaureImage";
 import AddToCartButton from "../../../cart/components/button/AddToCartButton";
-import { ProductType } from "../../types/product.types";
+import { Product } from "../../types/product.types";
 
 interface ProductCardProps {
-  product: ProductType;
+  product: Product;
   className?: string;
 }
 

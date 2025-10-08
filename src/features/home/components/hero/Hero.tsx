@@ -1,12 +1,8 @@
 import React from "react";
 import Slider from "../../../../common/components/slider/Slider";
 import { useTranslation } from "react-i18next";
-import { useId } from "react";
 const Hero: React.FC = () => {
   const { i18n } = useTranslation();
-  const uniqueId = useId();
-  // i18n.language => 'ar' | 'en' ...  نحرص على تحويلها ل rtl/ltr
-  const dir = i18n.language === "ar" ? "rtl" : "ltr";
 
   // أمثلة بسيطة لSlides (يمكن تستبدل بأي محتوى)
   const slides = Array.from({ length: 10 }).map((_, i) => (
@@ -23,13 +19,10 @@ const Hero: React.FC = () => {
     <div className="containerr">
       <Slider
         key={i18n.language}
-        dir={dir}
         spacing={16}
         loop
-        autoplay={4000}
-        pauseOnHover
-        keyboard
-        breakpoints={{
+        autoplay
+        breakPoints={{
           "(min-width: 640px)": {
             slides: { perView: 2, spacing: 16 },
           },

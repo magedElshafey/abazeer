@@ -1,5 +1,5 @@
 import { memo } from "react";
-import type { Feature } from "./Features";
+import type { Feature } from "./type/Feature";
 import { useTranslation } from "react-i18next";
 
 interface FeatureCardProps {
