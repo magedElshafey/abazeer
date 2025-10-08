@@ -8,8 +8,10 @@ import FetchHandler from "@/common/api/fetchHandler/FetchHandler";
 
 const AllProductsContent: FC = () => {
     const { t } = useTranslation();
-    const { isDrawerOpen, setIsDrawerOpen, view } = useProductsContext();
-    const queryResult = useGetAllProducts();
+    const { isDrawerOpen, setIsDrawerOpen, view, sortBy } = useProductsContext();
+    const queryResult = useGetAllProducts({
+        sort: sortBy
+    });
     const products = queryResult.data;
 
     // Disable scroll on body when drawer is open (mobile/tablet only)

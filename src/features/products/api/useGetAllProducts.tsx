@@ -1,13 +1,14 @@
 import { useQuery, UseQueryOptions } from "@tanstack/react-query";
 import { Axios } from "@/lib/axios/Axios";
 import { apiRoutes } from "@/services/api-routes/apiRoutes";
-import type { Product } from "../types/product.types";
+import type { Product, ProductsContext } from "../types/product.types";
 
 interface UseGetProductsOptions {
   featured?: boolean;
   landing?: boolean;
   essential?: boolean;
   delay?: Partial<UseQueryOptions<Product[]>>;
+  sort?: ProductsContext["sortBy"]
 }
 
 const useGetAllProducts = ({
@@ -15,18 +16,19 @@ const useGetAllProducts = ({
   landing,
   delay,
   essential,
+  sort
 }: UseGetProductsOptions = {}) => {
   return useQuery<Product[]>({
-    queryKey: [apiRoutes.products, { featured, landing, essential }],
+    queryKey: [apiRoutes.products, { featured, landing, essential, sort }],
     queryFn: async () => {
-      const params = new URLSearchParams();
-      if (featured !== undefined) params.append("featured", String(featured));
-      if (landing !== undefined) params.append("landing", String(landing));
-      if (essential !== undefined)
-        params.append("essential", String(essential));
-
-      const queryString = params.toString() ? `?${params.toString()}` : "";
-      const { data } = await Axios.get(`${apiRoutes.products}${queryString}`);
+      const { data } = await Axios.get(`${apiRoutes.products}`, {
+        params: {
+          featured,
+          landing,
+          essential,
+          sort,
+        }
+      });
 
       return data?.data as Product[];
     },
