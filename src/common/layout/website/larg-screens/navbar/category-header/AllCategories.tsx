@@ -6,6 +6,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { IoIosArrowBack } from "react-icons/io";
 import Loader from "@/common/components/loader/spinner/Loader";
 import EmptyData from "@/common/components/empty-data/EmptyData";
+import { CategoriesListType } from "@/features/categories/types/category.types";
 const AllCategories = memo(() => {
   const { isLoading, data } = useGetAllCategories();
   const navigate = useNavigate();
@@ -102,7 +103,7 @@ const AllCategories = memo(() => {
                   transition-all duration-300 ease-out w-[400px] text-nowrap`}
                 >
                   <div className="grid grid-cols-2 gap-6">
-                    {item.children.map((subItem) => (
+                    {item.children.map((subItem: CategoriesListType) => (
                       <div key={subItem.id} className="space-y-2">
                         <button
                           onClick={() => handleNavigate(subItem.id)}
@@ -141,6 +142,3 @@ const AllCategories = memo(() => {
 
 AllCategories.displayName = "AllCategories";
 export default AllCategories;
-/**
- *  {}
- */

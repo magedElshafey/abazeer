@@ -3,7 +3,6 @@ import type { Nav } from "../types/Nav";
 import type { Socials } from "../types/Socials";
 import type { Feature } from "../common/layout/website/common/footer/components/features/type/Feature";
 import type { Lang } from "../types/Lang";
-import type { Categories } from "../features/categories/types/Categories";
 // assets
 
 // react icons
@@ -13,7 +12,6 @@ import {
   FaSnapchatGhost,
   FaWhatsapp,
 } from "react-icons/fa";
-import { CiStar } from "react-icons/ci";
 
 // images
 
@@ -206,24 +204,4 @@ export const myAccount: Nav[] = [
 export const LANGUAGES: Lang[] = [
   { flag: us, title: "english", label: "en" },
   { flag: ksa, title: "arabic", label: "ar" },
-];
-export const categories: Categories[] = [
-  {
-    id: 1,
-    icon: CiStar,
-    mainCateogry: "fruits & vegatbiles",
-    sub: [
-      { id: 2, title: "fruits", subSub: [{ id: 3, title: "mango" }] },
-      { id: 3, title: "vegatbles", subSub: [{ id: 4, title: "carrot" }] },
-    ],
-  },
-  {
-    id: 4,
-    icon: CiStar,
-    mainCateogry: "honey & nuts",
-    sub: [
-      { id: 5, title: "honey", subSub: [{ id: 6, title: "honey 1" }] },
-      { id: 7, title: "nuts", subSub: [{ id: 8, title: "nuts 1" }] },
-    ],
-  },
 ];

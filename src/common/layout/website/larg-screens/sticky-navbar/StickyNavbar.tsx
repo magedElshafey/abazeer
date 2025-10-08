@@ -28,7 +28,6 @@ const StickyNavbar = () => {
     <>
       <div ref={navRef}>
         <Navbar />
-        {/* <CategoriesHeader /> */}
       </div>
 
       <div

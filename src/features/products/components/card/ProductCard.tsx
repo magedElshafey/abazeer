@@ -45,7 +45,7 @@ const ProductCard: React.FC<ProductCardProps> = memo(({ product }) => {
 
   return (
     <div
-      className="border relative px-6 pt-6 pb-3 group shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden  w-full bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-orangeColor text-start"
+      className="border relative px-6 pt-6 pb-3 group shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden w-full bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-orangeColor text-start flex flex-col justify-between h-full min-h-[400px]"
       aria-label={`${product.name} - ${product.category}`}
     >
       {/* ✅ Discount badge */}

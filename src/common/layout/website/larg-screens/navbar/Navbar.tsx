@@ -5,7 +5,7 @@ import Search from "./search/Search";
 import HotLine from "./hot-line/HotLine";
 const Navbar = () => {
   return (
-    <header className="hidden md:block bg-white shadow-sm py-3 border-b">
+    <header className="hidden md:block bg-white shadow-sm py-6 border-b">
       <div className="containerr flex-between gap-4 xl:gap-6 ">
         <Logo logo={logo} />
         <Search />

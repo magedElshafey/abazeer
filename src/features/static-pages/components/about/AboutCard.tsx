@@ -21,7 +21,7 @@ const AboutCard: React.FC<AboutCardProps> = ({ data, index }) => {
     >
       <figure className="w-full lg:w-1/2">
         <img
-          src={image || "/placeholder-image.jpg"}
+          src={image || "/images/card-big-image.png"}
           alt={name || "About image"}
           loading="lazy"
           decoding="async"
@@ -30,7 +30,7 @@ const AboutCard: React.FC<AboutCardProps> = ({ data, index }) => {
       </figure>
 
       {/* Text Content */}
-      <section className="w-full lg:w-1/2 space-y-4 text-center lg:text-start">
+      <section className="w-full lg:w-1/2 space-y-4 text-center  flex-col items-center">
         <h2
           id={`about-title-${index}`}
           className="text-lg lg:text-xl font-semibold text-gray-900"

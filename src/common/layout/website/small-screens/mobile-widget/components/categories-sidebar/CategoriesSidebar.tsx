@@ -7,8 +7,7 @@ import Backdrop from "../../../mobile-navbar/common/Backdrop";
 import { IoIosArrowBack } from "react-icons/io";
 import Loader from "@/common/components/loader/spinner/Loader";
 import EmptyData from "@/common/components/empty-data/EmptyData";
-import type { CategoriesListType } from "@/features/categories/types/categoriesList.types";
-
+import type { CategoriesListType } from "@/features/categories/types/category.types";
 interface CategoriesSidebarProps {
   isOpen: boolean;
   onClose: () => void;

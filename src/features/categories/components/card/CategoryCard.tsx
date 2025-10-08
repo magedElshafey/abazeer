@@ -1,23 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import { memo, useCallback } from "react";
-import SqaureImage from "../../../../common/components/images/sqaure-image/SqaureImage";
-
-interface Category {
-  id: number;
-  image: string;
-  title: string;
-}
-
+import SquareImage from "@/common/components/images/sqaure-image/SqaureImage";
+import type { BaseCategory } from "../../types/category.types";
 interface CategoryCardProps {
-  category: Category;
+  category: BaseCategory;
 }
 
 const CategoryCard: React.FC<CategoryCardProps> = memo(({ category }) => {
   const navigate = useNavigate();
 
   const handleNavigate = useCallback(() => {
-    navigate(`/category/${category.id}`);
-  }, [navigate, category.id]);
+    navigate(`/category/${category.id}-${category?.slug}`);
+  }, [navigate, category.id, category.slug]);
 
   return (
     <article
@@ -25,18 +19,24 @@ const CategoryCard: React.FC<CategoryCardProps> = memo(({ category }) => {
       tabIndex={0}
       onClick={handleNavigate}
       onKeyDown={(e) => e.key === "Enter" && handleNavigate()}
-      className="bg-background-gray cursor-pointer duration-300 hover:bg-white shadow-lg p-5 rounded-xl flex flex-col items-center gap-4 focus:outline-none focus:ring-2 focus:ring-primary"
-      aria-label={`View category: ${category.title}`}
+      className="bg-background-gray cursor-pointer duration-300 hover:bg-white 
+                 shadow-md rounded-2xl flex flex-col items-center justify-start
+                 p-4 sm:p-5 transition-all hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary 
+                 w-full h-full min-h-[240px]"
+      aria-label={`View category: ${category.name}`}
     >
-      <SqaureImage
-        alt={category.title || "Category image"}
-        src={category.image}
-      />
+      <div className="mb-3 sm:mb-4">
+        <SquareImage
+          alt={category.name || "Category image"}
+          src={category.image || "/images/400x400.png"}
+        />
+      </div>
+
       <p
-        className="text-md md:text-lg lg:text-xl font-bold truncate text-center text-foreground"
-        title={category.title}
+        className="text-sm sm:text-base font-semibold text-center text-gray-800 line-clamp-2 leading-tight px-2"
+        title={category.name}
       >
-        {category.title}
+        {category.name}
       </p>
     </article>
   );

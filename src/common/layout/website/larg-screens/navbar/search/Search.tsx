@@ -5,7 +5,7 @@ import Border from "../../../../../components/border/Border";
 import { IoIosArrowDown } from "react-icons/io";
 import { TfiSearch } from "react-icons/tfi";
 import useGetAllCategories from "@/features/categories/api/useGetAllCategories";
-import { CategoriesListType } from "@/features/categories/types/categoriesList.types";
+import type { CategoriesListType } from "@/features/categories/types/category.types";
 import Loader from "@/common/components/loader/spinner/Loader";
 import EmptyData from "@/common/components/empty-data/EmptyData";
 
@@ -37,7 +37,7 @@ const Dropdown = memo(({ onSelect }: DropdownProps) => {
               {category.name}
             </button>
             {category?.children && category?.children?.length
-              ? category.children.map((sub) => (
+              ? category.children.map((sub: CategoriesListType) => (
                   <div key={sub.id} className="mt-2 mb-1">
                     <button
                       type="button"

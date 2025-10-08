@@ -85,12 +85,16 @@ export const websiteRoutes: RouteObject = {
             },
             {
               path: ":id/edit",
-              element: lazyLoad(() => import("../features/user/pages/addresses/AddressForm")),
-              handle: {breadcrumb: "update_address"}
+              element: lazyLoad(
+                () => import("../features/user/pages/addresses/AddressForm")
+              ),
+              handle: { breadcrumb: "update_address" },
             },
             {
               path: "create",
-              element: lazyLoad(() => import("../features/user/pages/addresses/AddressForm")),
+              element: lazyLoad(
+                () => import("../features/user/pages/addresses/AddressForm")
+              ),
               handle: { breadcrumb: "create_address" },
             },
           ],
@@ -116,6 +120,17 @@ export const websiteRoutes: RouteObject = {
 
       handle: {
         breadcrumb: "contact",
+      },
+    },
+    {
+      path: "category/:slugAndId",
+
+      element: lazyLoad(
+        () => import("../features/categories/pages/CategoryDetails")
+      ),
+
+      handle: {
+        breadcrumb: "category name",
       },
     },
     {
