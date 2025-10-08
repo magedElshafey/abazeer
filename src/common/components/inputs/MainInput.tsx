@@ -65,6 +65,7 @@ const MainInput = React.forwardRef<HTMLInputElement, MainInputProps>(
       <div className="w-full">
         {label && (
           <label
+            tabIndex={-1}
             htmlFor={inputId}
             className="text-sm md:text-base block mb-2 font-medium text-gray-700"
           >
@@ -88,6 +89,7 @@ const MainInput = React.forwardRef<HTMLInputElement, MainInputProps>(
 
           <input
             id={inputId}
+            tabIndex={0}
             ref={ref}
             type={isPassword && showPassword ? "text" : type}
             value={value}
@@ -106,6 +108,7 @@ const MainInput = React.forwardRef<HTMLInputElement, MainInputProps>(
           {isPassword && (
             <button
               type="button"
+              tabIndex={-1}
               onClick={togglePassword}
               aria-label={
                 showPassword ? t("hide password") : t("show password")

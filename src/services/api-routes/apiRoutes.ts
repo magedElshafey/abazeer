@@ -11,6 +11,7 @@ export const apiRoutes = {
   categories_list: "categories/list",
   checkOTP: "/auth/check_otp",
   resetPassword: "auth/rest_password",
+  changePassword: "auth/changePassword",
   about: "about",
   countries: "countries",
   cities: "cities",
