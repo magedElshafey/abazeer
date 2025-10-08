@@ -2,6 +2,7 @@ import { FC } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { PROFILE_ROUTES, ProfileRouteItem } from "../constants/profileRoutes";
+import LogoutButton from "@/features/auth/components/LogoutButton";
 
 interface ProfileNavProps {
   onNavigate?: (route: ProfileRouteItem) => void;
@@ -21,7 +22,9 @@ const ProfileNav: FC<ProfileNavProps> = ({ onNavigate }) => {
       <div className="flex flex-col gap-2">
         {PROFILE_ROUTES.map((item) => {
           const Icon = item.icon;
-          return (
+          const isLogout = item.id === "logout";
+
+          const navContent = (
             <NavLink
               key={item.id}
               to={item.path}
@@ -31,14 +34,21 @@ const ProfileNav: FC<ProfileNavProps> = ({ onNavigate }) => {
                     ? "bg-orangeColor text-white"
                     : "hover:bg-gray-200 text-text-light"
                 }`
-              }
-                
-              }
-              onClick={() => onNavigate?.(item)}
+              }}
+              onClick={(e) => {
+                if(isLogout) return e.preventDefault();
+                onNavigate?.(item);
+              }}
             >
               <Icon size={20} />
               {t(item.label)}
             </NavLink>
+          );
+
+          return isLogout ? (
+            <LogoutButton key={item.id}>{navContent}</LogoutButton>
+          ) : (
+            navContent
           );
         })}
       </div>

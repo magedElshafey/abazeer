@@ -4,13 +4,11 @@ import ProductRate from "./ProductRate";
 import { useTranslation } from "react-i18next";
 import MainBtn from "../../../common/components/buttons/MainBtn";
 import ProductQuantity from "./ProductQuantity";
-import { FaRegHeart } from "react-icons/fa";
 import { GoGitCompare } from "react-icons/go";
 import AddToCartButton from "@/features/cart/components/button/AddToCartButton";
 import { ProductDetails } from "../types/product.types";
 import HtmlConverter from "../../../common/components/htmlConverter/HtmlConverter";
-import useAddFavorite from "../api/useAddFavorite";
-import Loader from "@/common/components/loader/spinner/Loader";
+import FavoriteButton from "./FavoriteButton";
 
 import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
@@ -21,7 +19,6 @@ type Props = {
 
 const ProductInfo: FC<Props> = ({ product }) => {
   const { t } = useTranslation();
-  const { mutate: toggleFavorite, isPending } = useAddFavorite();
   const [quantity, setQuantity] = useState<number>(1);
   const { addToCart } = useCart();
   const navigate = useNavigate();
@@ -108,16 +105,10 @@ const ProductInfo: FC<Props> = ({ product }) => {
         </div>
       </div>
       <div className="flex items-center gap-5 pb-4 border-b">
-        <button
-          className="flex items-center gap-2"
-          onClick={() => toggleFavorite(product.id)}
-          disabled={isPending}
-        >
-          {isPending ? <Loader /> : <FaRegHeart />}
-          <p className={`text-lg pb-1 ${product.is_in_wishlist ? "text-orangeColor" : ""}`}>
-            {t("wishlist")}
-          </p>
-        </button>
+        <FavoriteButton
+          productId={product.id}
+          isInWishlist={product.is_in_wishlist}
+        />
         <div className="flex items-center gap-2">
           <GoGitCompare />
           <p className="text-lg pb-1">{t("compare")}</p>

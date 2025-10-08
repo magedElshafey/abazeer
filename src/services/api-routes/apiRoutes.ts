@@ -18,4 +18,5 @@ export const apiRoutes = {
   wishlist: "wishlist/toggle",
   faqs: "faqs",
   simpleCategories: "simpleCategories",
+  favorites: "wishlist/list",
 };
