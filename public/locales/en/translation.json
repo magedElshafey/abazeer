@@ -24,6 +24,7 @@
   "forget password?": "forget password?",
   "remember me": "remember me",
   "user name is required": "user name is required",
+  "password is required": "password is required",
   "password must be at least 6 characters": "password must be at least 6 characters",
   "Password must be at least 8 characters long": "password must be at least 8 characters long",
   "Password must contain at least one number": "password must contain at least one number",
@@ -222,5 +223,18 @@
   "out-of-stock": "Out of Stock",
   "browse_products": "Browse Products",
   "no_favorites_title": "No Favorites Yet",
-  "no_favorites_description": "Start adding products to your favorites to see them here"
+  "no_favorites_description": "Start adding products to your favorites to see them here",
+  "change-password": "Change Password",
+  "change-password-description": "Ensure your account is using a long, random password to stay secure.",
+  "current-password": "Current password",
+  "new-password": "New password",
+  "password-confirmation": "Password confirmation",
+  "confirm-password": "Confirm password",
+  "profile information": "Profile Information",
+  "update profile description": "Update your account profile information and email address.",
+  "full name": "Full Name",
+  "full name is required": "Full name is required",
+  "full name must be at least 2 characters": "Full name must be at least 2 characters",
+  "date of birth is required": "Date of birth is required",
+  "update": "Update"
 }

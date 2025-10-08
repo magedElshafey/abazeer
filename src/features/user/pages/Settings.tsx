@@ -1,9 +1,12 @@
 import { FC } from "react";
+import ChangePasswordCard from "../components/settings/ChangePasswordCard";
+import ProfileForm from "../components/settings/ProfileForm";
 
 const Settings: FC = () => {
     return (
-        <div>
-            
+        <div className="flex flex-col gap-4">
+            <ProfileForm />
+            <ChangePasswordCard />
         </div>
     );
 };

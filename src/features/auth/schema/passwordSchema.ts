@@ -23,3 +23,16 @@ export const passwordWithConfirmSchema = z
 export type PasswordWithConfirmSchemaType = z.infer<
   typeof passwordWithConfirmSchema
 >;
+
+export const changePasswordSchema = z
+  .object({
+    current_password: z.string().min(1, "password is required"),
+    new_password: singlePasswordSchema,
+    new_password_confirmation: z.string().min(1, "Please confirm your password"),
+  })
+  .refine((data) => data.new_password === data.new_password_confirmation, {
+    message: "Passwords do not match",
+    path: ["new_password_confirmation"],
+  });
+
+export type ChangePasswordSchemaType = z.infer<typeof changePasswordSchema>;
