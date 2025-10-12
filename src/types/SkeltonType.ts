@@ -15,4 +15,5 @@ export type SkeletonType =
   | "table"
   | "custome"
   | "about"
-  | "brand";
+  | "brand"
+  | "list";

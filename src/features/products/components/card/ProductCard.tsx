@@ -102,7 +102,7 @@ const ProductCard: React.FC<ProductCardProps> = memo(({ product, className }) =>
 
           {product?.has_discount && product?.sale_price && (
             <p className="text-gray-500 line-through text-sm">
-              {product.sale_price} {t("SAR")}
+              {product.price} {t("SAR")}
             </p>
           )}
         </div>

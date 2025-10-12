@@ -1,0 +1,47 @@
+import { FC, memo } from "react";
+import { useTranslation } from "react-i18next";
+import useGetAllProducts from "../../api/useGetAllProducts";
+import ProductCard from "../card/ProductCard";
+import ProductListCard from "../card/ProductListCard";
+import FetchHandler from "@/common/api/fetchHandler/FetchHandler";
+import { useProductsView } from "../../providers/ProductsViewProvider";
+
+const ProductsList: FC = () => {
+    const { t } = useTranslation();
+    
+    const {view} = useProductsView();
+    const queryResult = useGetAllProducts();
+    const products = queryResult.data;
+
+    return (
+        <div className="w-full flex-1">
+            <div className="bg-white rounded-lg">
+                <FetchHandler queryResult={queryResult} skeletonType="product">
+                    {products && products.length > 0 ? (
+                        <div className={`
+                            ${view === "cards" 
+                                ? "grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 sm:gap-4" 
+                                : "flex flex-col gap-4"
+                            }
+                        `}>
+                        {products.map((product) => (
+                            view === "cards" ? (
+                                <ProductCard className="p-2" key={product.id} product={product} />
+                            ) : (
+                                <ProductListCard key={product.id} product={product} />
+                            )
+                        ))}
+                        </div>
+                    ) : (
+                        <div className="flex justify-center items-center py-12">
+                            <div className="text-gray-500">{t("No data found")}</div>
+                        </div>
+                    )}
+                </FetchHandler>
+            </div>
+        </div>
+    );
+};
+
+export default memo(ProductsList);
+

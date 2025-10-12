@@ -44,6 +44,10 @@ export const navLinks: Nav[] = [
   //   link: "/blogs",
   // },
   {
+    name: "products",
+    link: "/products"
+  },
+  {
     name: "faq",
     link: "/faq",
   },

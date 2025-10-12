@@ -62,13 +62,28 @@ export interface ProductDetails extends Omit<Product, "category"> {
 
 type SortByKey<T> = T extends string ? `${T}-asc` | `${T}-desc` : never;
 
-// TODO: implement the filter type later.
-export interface ProductsContext {
-  view: "list" | "cards",
-  sortBy?: SortByKey<typeof sortableKeys[number]>;
-  filters?: never;
-  isDrawerOpen: boolean;
-  setView: (view: ProductsContext["view"]) => void;
-  setSortBy: (sortBy: ProductsContext["sortBy"]) => void;
-  setIsDrawerOpen: (isOpen: boolean) => void;
+export interface Filters {
+  priceFrom?: string;
+  priceTo?: string;
+  category?: string;
+  brand?: string[];
+  has_discount?: string;
 }
+
+export interface ProductsFiltersContext {
+  sortBy?: SortByKey<typeof sortableKeys[number]>;
+  filters: Filters;
+  isDrawerOpen: boolean;
+  setSortBy: (sortBy: ProductsFiltersContext["sortBy"]) => void;
+  setIsDrawerOpen: (isOpen: boolean) => void;
+  handleChangeFilters: (key: keyof Filters, value: Filters[typeof key], debounce?: boolean) => void;
+  appliedFilters: Record<string, string | []>;
+}
+
+export interface ProductsViewContext {
+  view: "list" | "cards";
+  setView: (view: ProductsViewContext["view"]) => void;
+}
+
+// Legacy interface for backward compatibility if needed
+export interface ProductsContext extends ProductsFiltersContext, ProductsViewContext {}

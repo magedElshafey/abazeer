@@ -1,10 +1,10 @@
 import { FC, memo } from "react";
 import { useTranslation } from "react-i18next";
 import { HiViewGrid, HiViewList } from "react-icons/hi";
-import { useProductsContext } from "../../providers/ProductsProvider";
+import { useProductsView } from "../../providers/ProductsViewProvider";
 
 const ViewToggle: FC = () => {
-    const {view, setView} = useProductsContext();
+    const {view, setView} = useProductsView();
     const { t } = useTranslation();
 
     return (

@@ -9,7 +9,6 @@ const CartDetails = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { items, total, clearCart } = useCart();
-  console.log("total", typeof total);
   const cartItems = useMemo(() => items || [], [items]);
   const itemCount = cartItems.length || 0;
   const totalAmount = total ?? "0.00";

@@ -1,7 +1,9 @@
 import { FC } from "react";
 import AllProductsHeader from "../components/all-products/AllProductsHeader";
-import AllProductsContent from "../components/all-products/AllProductsContent";
-import ProductsContextProvider from "../providers/ProductsProvider";
+import ProductsFilters from "../components/all-products/ProductsFilters";
+import ProductsList from "../components/all-products/ProductsList";
+import ProductsFiltersProvider from "../providers/ProductsFiltersProvider";
+import ProductsViewProvider from "../providers/ProductsViewProvider";
 
 const AllProducts: FC = () => {
     return (
@@ -15,10 +17,15 @@ const AllProducts: FC = () => {
                 </div>
             </div>
             <div className="containerr">
-                <ProductsContextProvider>
-                    <AllProductsHeader />
-                    <AllProductsContent />
-                </ProductsContextProvider>
+                <ProductsFiltersProvider>
+                    <ProductsViewProvider>
+                        <AllProductsHeader />
+                        <div className="flex flex-col lg:flex-row gap-4">
+                            <ProductsFilters />
+                            <ProductsList />
+                        </div>
+                    </ProductsViewProvider>
+                </ProductsFiltersProvider>
             </div>
         </div>
     );

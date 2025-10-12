@@ -1,13 +1,13 @@
 import { FC, useState, useRef, useCallback, useEffect, memo } from "react";
 import { useTranslation } from "react-i18next";
 import { IoIosArrowDown } from "react-icons/io";
-import type { ProductsContext } from "../../types/product.types";
+import type { ProductsFiltersContext } from "../../types/product.types";
 import { sortableKeys } from "../../constants/products.constants";
-import { useProductsContext } from "../../providers/ProductsProvider";
+import { useProductsFilters } from "../../providers/ProductsFiltersProvider";
 
 const SortDropdown: FC = () => {
     const { t } = useTranslation();
-    const { setSortBy, sortBy } = useProductsContext();
+    const { setSortBy, sortBy } = useProductsFilters();
 
     const [showDropdown, setShowDropdown] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
@@ -28,11 +28,11 @@ const SortDropdown: FC = () => {
         ...sortableKeys.flatMap(option => [
             {
                 label: labels[`${option}-asc`] || `${option} Ascending`,
-                value: `${option}-asc` as ProductsContext["sortBy"]
+                value: `${option}-asc` as ProductsFiltersContext["sortBy"]
             },
             {
                 label: labels[`${option}-desc`] || `${option} Descending`,
-                value: `${option}-desc` as ProductsContext["sortBy"]
+                value: `${option}-desc` as ProductsFiltersContext["sortBy"]
             }
         ])
     ];
@@ -44,7 +44,7 @@ const SortDropdown: FC = () => {
         setShowDropdown(prev => !prev);
     }, []);
 
-    const handleOptionSelect = useCallback((value: ProductsContext["sortBy"]) => {
+    const handleOptionSelect = useCallback((value: ProductsFiltersContext["sortBy"]) => {
         setSortBy?.(value);
         setShowDropdown(false);
     }, [setSortBy]);
@@ -89,7 +89,7 @@ const SortDropdown: FC = () => {
                                 role="menuitem"
                                 className={`w-full text-start text-nowrap px-3 py-2 text-sm hover:bg-gray-100 transition-colors ${option.value === sortBy ? 'bg-orange-50 text-orangeColor font-medium' : 'text-gray-700'
                                     }`}
-                                onClick={() => handleOptionSelect(option.value as ProductsContext["sortBy"])}
+                                onClick={() => handleOptionSelect(option.value as ProductsFiltersContext["sortBy"])}
                             >
                                 {option.label}
                             </button>

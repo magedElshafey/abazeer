@@ -1,13 +1,13 @@
 import { FC, memo } from "react";
 import { useTranslation } from "react-i18next";
-import { useProductsContext } from "../../providers/ProductsProvider";
+import { useProductsFilters } from "../../providers/ProductsFiltersProvider";
 import SortDropdown from "./SortDropdown";
 import ViewToggle from "./ViewToggle";
 import { HiFilter } from "react-icons/hi";
 
 const AllProductsHeader: FC = () => {
     const { t } = useTranslation();
-    const { isDrawerOpen, setIsDrawerOpen } = useProductsContext();
+    const { isDrawerOpen, setIsDrawerOpen } = useProductsFilters();
 
     const toggleDrawer = () => {
         setIsDrawerOpen(!isDrawerOpen);

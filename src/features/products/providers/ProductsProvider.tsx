@@ -1,58 +1,34 @@
-import { createContext, FC, PropsWithChildren, useContext, useState, useCallback } from "react";
-import { useSearchParams } from "react-router-dom";
-import type { ProductsContext as IProductsContext } from "../types/product.types";
-import { sortableKeys } from "../constants/products.constants";
+import { FC, PropsWithChildren } from "react";
+import ProductsFiltersProvider, { useProductsFilters } from "./ProductsFiltersProvider";
+import ProductsViewProvider, { useProductsView } from "./ProductsViewProvider";
 
-const ProductsContext = createContext<IProductsContext>({
-    view: "cards",
-    setView: () => null,
-    sortBy: undefined,
-    setSortBy: () => null,
-    isDrawerOpen: false,
-    setIsDrawerOpen: () => null,
-});
-
+/**
+ * Combined ProductsProvider for backward compatibility
+ * This provider wraps both ProductsFiltersProvider and ProductsViewProvider
+ * 
+ * @deprecated Use ProductsFiltersProvider and ProductsViewProvider separately instead
+ */
 const ProductsContextProvider: FC<PropsWithChildren> = ({ children }) => {
-    const [searchParams, setSearchParams] = useSearchParams();
-    const [view, setView] = useState<IProductsContext["view"]>("cards");
-    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-    const [sortBy, setSortBy] = useState<IProductsContext["sortBy"]>(() => {
-        const sortParam = searchParams.get("sort_by");
-        const sortKey = sortParam?.split("-")[0];
-        if (sortParam && sortableKeys.some(key => sortKey === key || sortKey === key)) {
-            return sortParam as IProductsContext["sortBy"];
-        }
-        return undefined;
-    });
-
-    const handleSortChange = useCallback((newSortBy: IProductsContext["sortBy"]) => {
-        setSortBy(newSortBy);        
-        setSearchParams(searchParams => {
-            if (newSortBy) {
-                searchParams.set("sort_by", newSortBy);
-            } else {
-                searchParams.delete("sort_by");
-            }
-            return searchParams;
-        });
-    }, [setSearchParams]);
-
     return (
-        <ProductsContext.Provider
-            value={{
-                view,
-                setView,
-                sortBy,
-                setSortBy: handleSortChange,
-                isDrawerOpen,
-                setIsDrawerOpen
-            }}
-        >
-            {children}
-        </ProductsContext.Provider>
+        <ProductsFiltersProvider>
+            <ProductsViewProvider>
+                {children}
+            </ProductsViewProvider>
+        </ProductsFiltersProvider>
     );
 }
 
-export const useProductsContext = () => useContext(ProductsContext);
+/**
+ * @deprecated Use useProductsFilters() and useProductsView() separately instead
+ */
+export const useProductsContext = () => {
+    const filtersContext = useProductsFilters();
+    const viewContext = useProductsView();
+    
+    return {
+        ...filtersContext,
+        ...viewContext,
+    };
+};
 
 export default ProductsContextProvider;
