@@ -24,9 +24,11 @@ const WebsiteLayout = () => {
       <StickyNavbar logo={data?.site_logo || "/images/logo.png"} />
       <CategoriesHeader />
       <Breadcrumb />
-      <main className="flex-1 py-8">
+
+      <main className="grow py-2 flex flex-col">
         <Outlet />
       </main>
+
       <Footer
         site_logo={data?.site_logo || "/images/logo.png"}
         contact_phone={data?.contact_phone || ""}

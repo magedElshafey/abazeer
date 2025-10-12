@@ -26,7 +26,7 @@ const AllCategories = memo(() => {
 
   return (
     <div
-      className="relative cursor-pointer text-nowrap"
+      className="relative cursor-pointer text-nowrap "
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -43,19 +43,21 @@ const AllCategories = memo(() => {
       </button>
 
       {/* Main Dropdown */}
+
       <div
         id="categories-menu"
         role="menu"
         aria-label={t("categories")}
-        className={`absolute top-full z-50 ${
+        className={`absolute top-full z-30 ${
           dir === "rtl" ? "right-0" : "left-0"
         } 
-        bg-white shadow-lg p-3 border rounded-md transform transition-all duration-300 ease-out 
+        bg-white  shadow-lg p-3 border rounded-md transform transition-all duration-300 ease-out 
         ${
           open
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 translate-y-4 pointer-events-none"
-        }`}
+            ? "opacity-100 translate-y-0 visible block"
+            : "opacity-0 translate-y-4 invisible hidden"
+        }
+`}
       >
         {isLoading ? (
           <div className="flex-center my-4">
