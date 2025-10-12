@@ -1,12 +1,12 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import Logo from "../../../../components/logo/Logo";
-import logo from "../../../../../assets/logo (1).png";
+// import logo from "../../../../../assets/logo (1).png";
 import SidebarIcon from "../sidebar/SidebarIcon";
 import { TfiSearch } from "react-icons/tfi";
 import SearchSidebar from "../search/SearchSidebar";
 import Sidebar from "../sidebar/Sidebar";
-
-const MobileNavbar = () => {
+import type { NavbarType } from "@/types/navbar.types";
+const MobileNavbar: React.FC<NavbarType> = ({ logo }) => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [showSearchSidebar, setShowSearchSidebar] = useState(false);
   const [fadeIn, setFadeIn] = useState(false);

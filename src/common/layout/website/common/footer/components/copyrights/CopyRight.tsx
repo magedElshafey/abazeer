@@ -1,7 +1,17 @@
 import { useTranslation } from "react-i18next";
 import SocialLinks from "./SocialLinks";
-import { socials } from "../../../../../../../data/data";
-const CopyRight = () => {
+export interface SocialProps {
+  social_facebook: string | null;
+  social_twitter: string | null;
+  social_instagram: string | null;
+  phone: string;
+}
+const CopyRight: React.FC<SocialProps> = ({
+  social_facebook,
+  social_twitter,
+  social_instagram,
+  phone,
+}) => {
   const { t } = useTranslation();
 
   return (
@@ -21,7 +31,12 @@ const CopyRight = () => {
             {t("qutell")}
           </a>
         </div>
-        <SocialLinks socials={socials} />
+        <SocialLinks
+          social_facebook={social_facebook}
+          social_twitter={social_twitter}
+          social_instagram={social_instagram}
+          phone={phone}
+        />
       </div>
     </div>
   );

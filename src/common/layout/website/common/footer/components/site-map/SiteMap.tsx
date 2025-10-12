@@ -1,13 +1,22 @@
 import { useMemo } from "react";
 import Logo from "../../../../../../components/logo/Logo";
-import logo from "../../../../../../../assets/logo (1).png";
 import FooterLinkList from "./FooterLinkList";
 import NewsLetter from "../../newsletter/NewsLetter";
 import useGetAllStaticPages from "@/features/static-pages/api/all/useGetAllStaticPages";
 import { myAccount } from "../../../../../../../data/data";
 import type { Nav } from "@/types/Nav";
-
-const SiteMap = () => {
+import type { NavbarType } from "@/types/navbar.types";
+interface SiteMapProps extends NavbarType {
+  contact_address: string;
+  contact_email: string;
+  contact_phone: string;
+}
+const SiteMap: React.FC<SiteMapProps> = ({
+  logo,
+  contact_address,
+  contact_email,
+  contact_phone,
+}) => {
   const { data } = useGetAllStaticPages();
 
   const allowedSlugs = ["contact-us", "about-us", "faq"];
@@ -46,11 +55,39 @@ const SiteMap = () => {
           {/* ✅ Logo + Description */}
           <div>
             <Logo logo={logo} />
-            <p className="mt-4 text-xs text-gray-500 leading-relaxed">
+            <p className="my-4 text-xs text-gray-500 leading-relaxed">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
               finibus viverra iaculis. Etiam vulputate et justo eget
               scelerisque.
             </p>
+            <ul>
+              {contact_address && (
+                <li className="text-transition mb-3">{contact_address}</li>
+              )}
+              {contact_phone && (
+                <li className="text-transition mb-3">
+                  <a
+                    href={`tel:${contact_phone}`}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    dir="ltr"
+                  >
+                    {contact_phone}
+                  </a>
+                </li>
+              )}
+              {contact_email && (
+                <li className="text-transition lowercase">
+                  <a
+                    href={`mailto:${contact_email}`}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    {contact_email}
+                  </a>
+                </li>
+              )}
+            </ul>
           </div>
 
           {/* ✅ Useful links (من API باستثناء contact-us, about-us, faq) */}
