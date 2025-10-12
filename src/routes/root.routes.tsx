@@ -5,6 +5,7 @@ import AuthProvider from "../store/AuthProvider";
 import AxiosConfig from "../lib/axios/Axios";
 import RootLayout from "../common/layout/root/RootLayout";
 import { CartProvider } from "@/store/CartProvider";
+import NotFound from "@/features/app-status/pages/not-found/NotFound";
 export const rootRoutes = {
   path: "/",
   element: (
@@ -15,5 +16,12 @@ export const rootRoutes = {
       </CartProvider>
     </AuthProvider>
   ),
-  children: [websiteRoutes, authRoutes],
+  children: [
+    websiteRoutes,
+    authRoutes,
+    {
+      path: "*",
+      element: <NotFound />,
+    },
+  ],
 };

@@ -249,5 +249,10 @@
   "full name is required": "Full name is required",
   "full name must be at least 2 characters": "Full name must be at least 2 characters",
   "date of birth is required": "Date of birth is required",
-  "update": "Update"
+  "update": "Update",
+  "title": "We'll be back soon!",
+  "message": "Sorry for the inconvenience but we’re performing some maintenance at the moment. We’ll be back online shortly!",
+  "button": "Refresh",
+  "Oops! The page you are looking for doesn’t exist.": "Oops! The page you are looking for doesn’t exist.",
+  "Back to Home": "Back to Home"
 }
