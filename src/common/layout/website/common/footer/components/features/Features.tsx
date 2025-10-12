@@ -3,7 +3,7 @@ import { features } from "../../../../../../../data/data";
 const Features = () => {
   return (
     <section
-      className="py-6 border-b border-t"
+      className="py-4 border-b border-t"
       aria-labelledby="features-heading"
     >
       <div className="containerr">

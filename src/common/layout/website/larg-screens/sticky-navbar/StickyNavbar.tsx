@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import Navbar from "../navbar/Navbar";
+import type { NavbarType } from "@/types/navbar.types";
 // import CategoriesHeader from "../navbar/category-header/CategoriesHeader";
-const StickyNavbar = () => {
+const StickyNavbar: React.FC<NavbarType> = ({ logo }) => {
   const navRef = useRef<HTMLDivElement | null>(null);
   const [isSticky, setIsSticky] = useState(false);
 
@@ -27,7 +28,7 @@ const StickyNavbar = () => {
   return (
     <>
       <div ref={navRef}>
-        <Navbar />
+        <Navbar logo={logo} />
       </div>
 
       <div
@@ -39,8 +40,7 @@ const StickyNavbar = () => {
           }
         `}
       >
-        <Navbar />
-        {/* <CategoriesHeader /> */}
+        <Navbar logo={logo} />
       </div>
     </>
   );

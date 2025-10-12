@@ -1,13 +1,14 @@
 import { Outlet } from "react-router-dom";
 import BgImg from "./BgImg";
 import Logo from "../../components/logo/Logo";
-import logo from "../../../assets/logo (1).png";
 import { useLocation } from "react-router-dom";
 import successLogo from "../../../assets/Vector.png";
 import gifaya from "../../../assets/gifaya.gif";
 import LangBtn from "./LangBtn";
+import useGetWebsiteSettings from "@/features/settings/api/useGetWebsiteSettings";
 const AuthLayout = () => {
   const { pathname } = useLocation();
+  const { data } = useGetWebsiteSettings();
   const isPasswordSuccess = pathname === "/auth/reset-password-success";
   const isForgetPages =
     pathname === "/auth/forget-password" ||
@@ -34,7 +35,7 @@ const AuthLayout = () => {
                   className="w-[144px] h-[144px] object-contain"
                 />
               ) : (
-                <Logo logo={logo} />
+                <Logo logo={data?.site_logo || "/images/logo.png"} />
               )}
             </div>
             <Outlet />

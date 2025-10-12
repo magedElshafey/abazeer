@@ -261,5 +261,18 @@
   "full name is required": "الاسم الكامل مطلوب",
   "full name must be at least 2 characters": "يجب أن يتكون الاسم الكامل من حرفين على الأقل",
   "date of birth is required": "تاريخ الميلاد مطلوب",
-  "update": "تحديث"
+  "update": "تحديث",
+  "title": "سنعود قريبًا!",
+  "message": "نعتذر عن الإزعاج، نحن نقوم ببعض أعمال الصيانة حاليًا. سنعود للعمل قريبًا!",
+  "button": "تحديث",
+  "Oops! The page you are looking for doesn’t exist.": "عفواً! الصفحة التي تبحث عنها غير موجودة.",
+  "Back to Home": "العودة للرئيسية",
+  "show more": "مشاهدة المزيد",
+  "latest blogs": "أحدث المقالات",
+  "created at": "تم النشر في",
+  "Flash Sale": "سارع قبل انتهاء العرض",
+  "Days": "يوم",
+  "Hours": "ساعة",
+  "Minutes": "دقيقة",
+  "Seconds": "ثانية"
 }

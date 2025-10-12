@@ -17,6 +17,7 @@ import TableSkeleton from "./TableSkeleton";
 import AboutSklelton from "./AboutSkelton";
 import BrandsCardSkeleton from "./BrandSkelton";
 import ListSkeleton from "./ListSkeleton";
+import BlogDetailsSkeleton from "./BlogDetailsSkeleton";
 interface SkeltonProps {
   type: SkeletonType;
 }
@@ -58,6 +59,8 @@ const Skeleton: React.FC<SkeltonProps> = ({ type }) => {
       return <BrandsCardSkeleton />;
     case "list":
       return <ListSkeleton />;
+    case "blogDetails":
+      return <BlogDetailsSkeleton />;
     default:
       return null;
   }

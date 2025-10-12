@@ -17,11 +17,11 @@ const SEO = ({
   canonical,
   ogImage = "/default-og-image.jpg",
 }: SEOProps) => {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
 
   const siteName = i18n.language === "ar" ? "أبازير" : "Abazeer";
 
-  const pageTitle = title ? `${siteName} | ${title}` : siteName;
+  const pageTitle = title ? `${siteName} | ${t(title)}` : siteName;
 
   return (
     <Helmet>

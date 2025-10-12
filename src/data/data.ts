@@ -1,19 +1,8 @@
 // types
 import type { Nav } from "../types/Nav";
-import type { Socials } from "../types/Socials";
 import type { Feature } from "../common/layout/website/common/footer/components/features/type/Feature";
 import type { Lang } from "../types/Lang";
 // assets
-
-// react icons
-import {
-  FaFacebook,
-  FaInstagram,
-  FaSnapchatGhost,
-  FaWhatsapp,
-} from "react-icons/fa";
-
-// images
 
 // features
 import feat1 from "../assets/feat-01.png";
@@ -39,10 +28,10 @@ export const navLinks: Nav[] = [
   //   name: "branches",
   //   link: "/branches",
   // },
-  // {
-  //   name: "blogs",
-  //   link: "/blogs",
-  // },
+  {
+    name: "blogs",
+    link: "/blogs",
+  },
   {
     name: "products",
     link: "/products"
@@ -69,10 +58,10 @@ export const sidebarLinks: Nav[] = [
   //   name: "branches",
   //   link: "/branches",
   // },
-  // {
-  //   name: "blogs",
-  //   link: "/blogs",
-  // },
+  {
+    name: "blogs",
+    link: "/blogs",
+  },
   {
     name: "faq",
     link: "/faq",
@@ -90,29 +79,7 @@ export const sidebarLinks: Nav[] = [
     link: "/compare",
   },
 ];
-export const socials: Socials[] = [
-  {
-    name: "whatsapp",
-    url: "https://wa.me/+201022153359",
-    icon: FaWhatsapp,
-  },
-  {
-    name: "facebook",
-    url: "https://www.facebook.com/",
-    icon: FaFacebook,
-  },
 
-  {
-    name: "instagram",
-    url: "https://www.instagram.com/",
-    icon: FaInstagram,
-  },
-  {
-    name: "snapchat",
-    url: "https://www.snapchat.com/",
-    icon: FaSnapchatGhost,
-  },
-];
 export const protectedRoutes: string[] = [
   "/cart",
   "/checkout",

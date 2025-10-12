@@ -16,4 +16,5 @@ export type SkeletonType =
   | "custome"
   | "about"
   | "brand"
-  | "list";
+  | "list"
+  | "blogDetails"

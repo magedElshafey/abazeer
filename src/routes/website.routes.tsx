@@ -17,7 +17,9 @@ export const websiteRoutes: RouteObject = {
     },
     {
       path: "about-us",
-      element: lazyLoad(() => import("../features/static-pages/pages/About")),
+      element: lazyLoad(
+        () => import("../features/static-pages/pages/about/About")
+      ),
       handle: {
         breadcrumb: "About",
       },
@@ -31,7 +33,7 @@ export const websiteRoutes: RouteObject = {
     },
     {
       path: "faq",
-      element: lazyLoad(() => import("../features/static-pages/pages/Faq")),
+      element: lazyLoad(() => import("../features/static-pages/pages/faq/Faq")),
       handle: {
         breadcrumb: "faq",
       },
@@ -39,7 +41,7 @@ export const websiteRoutes: RouteObject = {
     {
       path: "static/:slug",
       element: lazyLoad(
-        () => import("../features/static-pages/pages/ShowPage")
+        () => import("../features/static-pages/pages/static-pages/ShowPage")
       ),
       handle: {
         breadcrumb: "static page name",
@@ -133,7 +135,7 @@ export const websiteRoutes: RouteObject = {
       children: [
         {
           index: true,
-          element: <AllProducts />
+          element: <AllProducts />,
         },
         {
           path: ":id",
@@ -151,18 +153,20 @@ export const websiteRoutes: RouteObject = {
     },
     {
       path: "blogs",
-      element: lazyLoad(() => import("../features/blogs/pages/Blogs")),
-      children: [
-        {
-          path: ":id",
-          element: lazyLoad(() => import("../features/blogs/pages/Blog")),
-          handle: {
-            breadcrumb: "blog name",
-          },
-        },
-      ],
+      element: lazyLoad(
+        () => import("../features/static-pages/pages/blogs/Blogs")
+      ),
       handle: {
         breadcrumb: "blogs",
+      },
+    },
+    {
+      path: "blogs/:slugAndId",
+      element: lazyLoad(
+        () => import("../features/static-pages/pages/blog/Blog")
+      ),
+      handle: {
+        breadcrumb: "blog name",
       },
     },
     {

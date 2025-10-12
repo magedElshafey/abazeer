@@ -127,7 +127,7 @@ const Slider: React.FC<PropsWithChildren<Props>> = ({
     >
       <div className="containerr relative flex flex-col gap-4">
         <div className="w-full flex-between">
-          <SectionTitle title={title || ""} />
+          {title && <SectionTitle title={title || ""} />}
 
           {showControls && (
             <div className="flex gap-2">
