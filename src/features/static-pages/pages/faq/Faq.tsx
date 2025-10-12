@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import useFaq from "../api/faq/useFaq";
+import useFaq from "../../api/faq/useFaq";
 import SEO from "@/common/components/seo/Seo";
 import { tabTitle } from "@/utils/tabTitle";
 import FetchHandler from "@/common/api/fetchHandler/FetchHandler";
 import EmptyData from "@/common/components/empty-data/EmptyData";
 import SectionTitle from "@/common/components/titles/SectionTitle";
-import type { Faq } from "../types/Faq.type";
+import type { Faq } from "../../types/Faq.type";
 
 const Faq = () => {
   const { t } = useTranslation();

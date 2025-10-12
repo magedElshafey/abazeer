@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import useStaticPageDetails from "../api/details/useStaticPageDetails";
+import useStaticPageDetails from "../../api/details/useStaticPageDetails";
 import FetchHandler from "@/common/api/fetchHandler/FetchHandler";
 import SEO from "@/common/components/seo/Seo";
 import SectionTitle from "@/common/components/titles/SectionTitle";

@@ -24,4 +24,7 @@ export const apiRoutes = {
   static_pages: "static-pages/list",
   static_page: "static-pages",
   setting: "setting",
+  blogs: "blogs",
+  blog: "blog",
+  flash_sale: "products/flash-sale",
 };

@@ -4,8 +4,6 @@ import type { Feature } from "../common/layout/website/common/footer/components/
 import type { Lang } from "../types/Lang";
 // assets
 
-// images
-
 // features
 import feat1 from "../assets/feat-01.png";
 import feat2 from "../assets/feat-02.png";
@@ -30,10 +28,10 @@ export const navLinks: Nav[] = [
   //   name: "branches",
   //   link: "/branches",
   // },
-  // {
-  //   name: "blogs",
-  //   link: "/blogs",
-  // },
+  {
+    name: "blogs",
+    link: "/blogs",
+  },
   {
     name: "faq",
     link: "/faq",
@@ -56,10 +54,10 @@ export const sidebarLinks: Nav[] = [
   //   name: "branches",
   //   link: "/branches",
   // },
-  // {
-  //   name: "blogs",
-  //   link: "/blogs",
-  // },
+  {
+    name: "blogs",
+    link: "/blogs",
+  },
   {
     name: "faq",
     link: "/faq",
