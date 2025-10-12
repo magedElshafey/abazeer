@@ -21,6 +21,7 @@ interface AuthContextProps {
   logout: () => void;
   loading: boolean;
   lastPublicPage: React.MutableRefObject<string>;
+  updateUser: (userData: Partial<User>) => void;
 }
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
@@ -52,6 +53,20 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setLoading(false);
   }, []);
 
+  const updateUser = (userData: Partial<User>) => {
+    const newUser: User = {
+      ...user!,
+      ...userData,
+    }
+    
+    setUser(old => (old ? {
+      ...newUser
+    } : null));
+
+    const storage = localStorage.getItem("user") ? localStorage : sessionStorage;
+    storage.setItem("user", JSON.stringify(newUser));
+  }
+
   const login = (userData: User, rememberUser: boolean = false) => {
     const storageType = rememberUser ? StorageType.LOCAL : StorageType.SESSION;
     saveUserToStorage(userData, storageType);
@@ -66,7 +81,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ loading, user, login, logout, lastPublicPage }}
+      value={{ loading, user, login, logout, lastPublicPage, updateUser }}
     >
       {children}
     </AuthContext.Provider>

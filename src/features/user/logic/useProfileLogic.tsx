@@ -7,7 +7,7 @@ import { profileSchema, type ProfileSchemaType } from "@/features/auth/schema/pr
 import useUpdateProfile from "../api/settings/useUpdateProfile";
 
 const useProfileLogic = () => {
-    const { user } = useAuth();
+    const { user, updateUser } = useAuth();
     const { isPending, mutateAsync } = useUpdateProfile();
 
     const {
@@ -31,8 +31,8 @@ const useProfileLogic = () => {
         try {
               const response = await mutateAsync(data);
               if (response?.status) {
+                updateUser(data);
                 toast.success(response?.message || "Profile updated successfully");
-                reset();
               }
         } catch (error) {
             toastErrorMessage(error as Error);
