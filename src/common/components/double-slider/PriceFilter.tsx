@@ -17,15 +17,15 @@ const PriceFilter: React.FC<PriceFilterProps> = ({
   const { t, i18n } = useTranslation();
   const {
     filters: {
-      priceFrom,
-      priceTo
+      price_from,
+      price_to
     },
     handleChangeFilters
   } = useProductsFilters();
 
 
-  const minPrice = parseInt(priceFrom || "") || initialMin;
-  const maxPrice = parseInt(priceTo || "") || initialMax;
+  const minPrice = parseInt(price_from || "") || initialMin;
+  const maxPrice = parseInt(price_to || "") || initialMax;
 
   const minValRef = useRef(minPrice || 0);
   const maxValRef = useRef(maxPrice || 25000);
@@ -73,7 +73,7 @@ const PriceFilter: React.FC<PriceFilterProps> = ({
           value={minPrice}
           onChange={(event) => {
             const value = Math.min(Number(event.target.value), maxPrice);
-            handleChangeFilters("priceFrom", value.toString(), true);
+            handleChangeFilters("price_from", value.toString(), true);
             minValRef.current = value;
           }}
           className={`thumb thumbLeft`}
@@ -88,7 +88,7 @@ const PriceFilter: React.FC<PriceFilterProps> = ({
           step={step}
           onChange={(event) => {
             const value = Math.max(Number(event.target.value), minPrice);
-            handleChangeFilters("priceTo", value.toString(), true);
+            handleChangeFilters("price_to", value.toString(), true);
             maxValRef.current = value;
           }}
           className={`thumb thumbRight`}

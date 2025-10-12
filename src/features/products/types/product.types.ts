@@ -63,8 +63,8 @@ export interface ProductDetails extends Omit<Product, "category"> {
 type SortByKey<T> = T extends string ? `${T}-asc` | `${T}-desc` : never;
 
 export interface Filters {
-  priceFrom?: string;
-  priceTo?: string;
+  price_from?: string;
+  price_to?: string;
   category?: string;
   brand?: string[];
   has_discount?: string;
