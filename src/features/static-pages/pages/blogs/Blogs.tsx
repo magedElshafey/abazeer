@@ -11,8 +11,8 @@ const Blogs = () => {
       <div className="containerr space-between-sections">
         <FetchHandler queryResult={queryResult} skeletonType="blog">
           {queryResult?.data && queryResult?.data?.length > 1 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  gap-5">
-              {queryResult?.data?.slice(0, 4)?.map((blog) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5  gap-5">
+              {queryResult?.data.map((blog) => (
                 <BlogCard key={blog?.id} data={blog} />
               ))}
             </div>

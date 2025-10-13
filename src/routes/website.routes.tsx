@@ -10,7 +10,7 @@ export const websiteRoutes: RouteObject = {
   children: [
     {
       index: true,
-      element: lazyLoad(() => import("../features/home/Home")),
+      element: lazyLoad(() => import("../features/home/pages/Home")),
     },
     {
       path: "logout",

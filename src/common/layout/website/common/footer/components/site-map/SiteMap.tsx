@@ -6,16 +6,19 @@ import useGetAllStaticPages from "@/features/static-pages/api/all/useGetAllStati
 import { myAccount } from "../../../../../../../data/data";
 import type { Nav } from "@/types/Nav";
 import type { NavbarType } from "@/types/navbar.types";
+// to do  : fav icon and slogan
 interface SiteMapProps extends NavbarType {
   contact_address: string;
   contact_email: string;
   contact_phone: string;
+  slogan?: string;
 }
 const SiteMap: React.FC<SiteMapProps> = ({
   logo,
   contact_address,
   contact_email,
   contact_phone,
+  slogan,
 }) => {
   const { data } = useGetAllStaticPages();
 
@@ -56,9 +59,9 @@ const SiteMap: React.FC<SiteMapProps> = ({
           <div>
             <Logo logo={logo} />
             <p className="my-4 text-xs text-gray-500 leading-relaxed">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-              finibus viverra iaculis. Etiam vulputate et justo eget
-              scelerisque.
+              {slogan
+                ? slogan
+                : " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sedfinibus viverra iaculis. Etiam vulputate et justo eget  scelerisque."}
             </p>
             <ul>
               {contact_address && (
@@ -90,20 +93,22 @@ const SiteMap: React.FC<SiteMapProps> = ({
             </ul>
           </div>
 
-          {/* ✅ Useful links (من API باستثناء contact-us, about-us, faq) */}
           {usefulLinks.length > 0 && (
             <FooterLinkList links={usefulLinks} title="useful links" />
           )}
 
-          {/* ✅ Help center (contact-us, about-us, faq) */}
           {helpCenterLinks.length > 0 && (
-            <FooterLinkList links={helpCenterLinks} title="help center" />
+            <FooterLinkList
+              links={[
+                ...helpCenterLinks,
+                { name: "latest blogs", link: "blogs" },
+              ]}
+              title="help center"
+            />
           )}
 
-          {/* ✅ My Account */}
           <FooterLinkList links={myAccount} title="my account" />
 
-          {/* ✅ Newsletter */}
           <NewsLetter />
         </div>
       </div>

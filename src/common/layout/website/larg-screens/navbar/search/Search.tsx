@@ -1,130 +1,138 @@
-import { useState, useCallback, memo, useRef, useEffect } from "react";
+import { useState, useCallback, useRef, useEffect, memo } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import Border from "../../../../../components/border/Border";
-import { IoIosArrowDown } from "react-icons/io";
+import { useQuery } from "@tanstack/react-query";
 import { TfiSearch } from "react-icons/tfi";
-import useGetAllCategories from "@/features/categories/api/useGetAllCategories";
-import type { CategoriesListType } from "@/features/categories/types/category.types";
-import Loader from "@/common/components/loader/spinner/Loader";
-import EmptyData from "@/common/components/empty-data/EmptyData";
-
-interface DropdownProps {
-  onSelect: (opt: CategoriesListType) => void;
+import { IoIosArrowDown } from "react-icons/io";
+import Border from "../../../../../components/border/Border";
+import SearchResults from "./components/SearchResult";
+import DropdownMenu from "./components/DropdownMenu";
+import { CategoriesListType } from "@/features/categories/types/category.types";
+import { Axios } from "@/lib/axios/Axios";
+import { apiRoutes } from "@/services/api-routes/apiRoutes";
+interface SearchProps {
+  onClose?: () => void;
 }
-
-const Dropdown = memo(({ onSelect }: DropdownProps) => {
-  const { isLoading, data } = useGetAllCategories();
-  return (
-    <ul
-      role="menu"
-      aria-label="categories"
-      className="absolute top-full right-0  w-[180px] bg-white shadow-lg p-2 border z-[100000] text-start max-h-56 overflow-y-auto"
-    >
-      {isLoading ? (
-        <div className="flex-center py-3">
-          <Loader />
-        </div>
-      ) : data && data?.length ? (
-        data?.map((category) => (
-          <li key={category.id} className="mb-3">
-            <button
-              type="button"
-              role="menuitem"
-              className="cursor-pointer w-full text-start hover:bg-gray-100 p-1 rounded"
-              onClick={() => onSelect(category)}
-            >
-              {category.name}
-            </button>
-            {category?.children && category?.children?.length
-              ? category.children.map((sub: CategoriesListType) => (
-                  <div key={sub.id} className="mt-2 mb-1">
-                    <button
-                      type="button"
-                      role="menuitem"
-                      className="ms-2 cursor-pointer w-full text-start hover:bg-gray-100 p-1 rounded"
-                      onClick={() => onSelect(sub)}
-                    >
-                      {sub.name}
-                    </button>
-                  </div>
-                ))
-              : null}
-          </li>
-        ))
-      ) : (
-        <EmptyData />
-      )}
-    </ul>
-  );
-});
-Dropdown.displayName = "Dropdown";
-
-const Search = () => {
+const Search: React.FC<SearchProps> = memo(({ onClose }) => {
+  const DEBOUNCE_INTERVAL = 400;
   const { t } = useTranslation();
   const navigate = useNavigate();
+
   const [showDropDown, setShowDropDown] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
   const [selectedOpt, setSelectedOpt] = useState<CategoriesListType | null>(
     null
   );
+  const [isFocused, setIsFocused] = useState(false);
+  const [search, setSearch] = useState({ value: "", deferred: "" });
 
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const handleShowDropDown = useCallback(() => {
+  /** 🧠 Dropdown handlers */
+  const toggleDropdown = useCallback(() => {
     setShowDropDown((prev) => !prev);
   }, []);
 
-  const handleSelectedOption = useCallback((opt: CategoriesListType) => {
+  const handleSelectCategory = useCallback((opt: CategoriesListType) => {
     setSelectedOpt(opt);
     setShowDropDown(false);
   }, []);
 
-  const handleSearchTermChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setSearchTerm(e.target.value);
-    },
-    []
-  );
+  /** 🔍 Search logic with debounce */
+  const handleInputChange = useCallback((val: string) => {
+    // update immediate value
+    setSearch((prev) => ({ ...prev, value: val }));
 
-  const handleSearchButtonClick = useCallback(() => {
+    // if empty input, clear deferred immediately (avoid stale queries)
+    if (!val.trim()) {
+      // clear any scheduled deferred update
+      if (debounceRef.current) {
+        clearTimeout(debounceRef.current);
+        debounceRef.current = null;
+      }
+      // clear deferred so enabled becomes false
+      setSearch({ value: "", deferred: "" });
+      return;
+    }
+
+    // otherwise debounce updating deferred
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => {
+      setSearch((prev) => ({ ...prev, deferred: val }));
+      debounceRef.current = null;
+    }, DEBOUNCE_INTERVAL);
+  }, []);
+
+  const clearSearch = useCallback(() => {
+    // clear both value & deferred and any pending timeout
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
+      debounceRef.current = null;
+    }
+    setSearch({ value: "", deferred: "" });
+  }, []);
+
+  /** 🧭 Navigate on search button click */
+  const handleSearch = useCallback(() => {
     const params: Record<string, string> = {};
     if (selectedOpt?.id) params.category = String(selectedOpt.id);
-    if (searchTerm.trim()) params.q = searchTerm.trim();
+    if (search.value.trim()) params.q = search.value.trim();
+    navigate(`/products?${new URLSearchParams(params)}`);
+  }, [navigate, search.value, selectedOpt]);
 
-    const queryString = new URLSearchParams(params).toString();
-    navigate(`/products?${queryString}`);
-  }, [navigate, searchTerm, selectedOpt]);
-
+  /** 🧩 Outside click handler */
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
+    const handleClickOutside = (e: MouseEvent) => {
       if (
         dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
+        !dropdownRef.current.contains(e.target as Node)
       ) {
         setShowDropDown(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const { data: products, isFetching } = useQuery({
+    queryKey: [apiRoutes.search, search.deferred],
+    enabled: !!search.deferred,
+    queryFn: async ({ queryKey, signal }) => {
+      const [, term] = queryKey as [string, string];
+      const response = await Axios.get(apiRoutes.search, {
+        params: { name: term },
+        signal,
+      });
+      return response.data.data;
+    },
+    staleTime: 1000 * 30,
+  });
+
+  useEffect(() => {
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      if (debounceRef.current) {
+        clearTimeout(debounceRef.current);
+        debounceRef.current = null;
+      }
     };
   }, []);
+
+  const hasSearchValue = !!search.value;
+  const showResults = isFocused;
+
   return (
-    <div className="flex-1 bg-background-gray p-3 flex items-center gap-3 min-w-0 ">
+    <div className="flex-1 bg-background-gray p-3 flex items-center gap-3 min-w-0 relative">
       {/* Dropdown */}
       <div
-        className="relative flex-shrink-0 min-w-[120px] max-w-[160px] "
+        className="relative flex-shrink-0 min-w-[120px] max-w-[160px]"
         ref={dropdownRef}
       >
         <button
           type="button"
+          onClick={toggleDropdown}
           aria-haspopup="menu"
           aria-expanded={showDropDown}
-          aria-controls="categories-menu"
-          onClick={handleShowDropDown}
-          className="flex items-center gap-2 w-full truncate"
+          className="flex items-center gap-2 w-full truncate focus:outline-none focus:ring-2 focus:ring-orangeColor"
         >
           <span className="truncate">
             {selectedOpt ? selectedOpt.name : t("all categories")}
@@ -132,39 +140,46 @@ const Search = () => {
           <IoIosArrowDown size={15} aria-hidden="true" />
           <Border />
         </button>
-        {showDropDown && <Dropdown onSelect={handleSelectedOption} />}
+        {showDropDown && <DropdownMenu onSelect={handleSelectCategory} />}
       </div>
 
       {/* Input */}
       <input
         type="text"
         aria-label={t("search")}
-        className="flex-1 min-w-0 border-none outline-none bg-transparent caret-orangeColor truncate"
+        className="flex-1 border-none outline-none bg-transparent caret-orangeColor truncate"
         placeholder={t("search")}
-        value={searchTerm}
-        onChange={handleSearchTermChange}
+        value={search.value}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setTimeout(() => setIsFocused(false), 200)}
+        onChange={(e) => handleInputChange(e.target.value)}
       />
 
-      {/* Search button */}
+      {/* Button */}
       <button
-        onClick={handleSearchButtonClick}
-        disabled={!selectedOpt && !searchTerm.trim()}
-        className="text-transition flex-shrink-0 disabled:cursor-not-allowed disabled:opacity-40"
+        onClick={handleSearch}
+        disabled={!selectedOpt && !search.value.trim()}
         aria-label={t("search")}
+        className="text-transition flex-shrink-0 disabled:cursor-not-allowed disabled:opacity-40"
       >
         <TfiSearch size={20} />
       </button>
+
+      {/* Search Results */}
+      {showResults && (
+        <div className="absolute top-full left-0 w-full bg-white border rounded shadow-lg z-[1000] overflow-y-auto max-h-[300px]">
+          <SearchResults
+            products={products}
+            isLoading={isFetching}
+            hasSearchValue={hasSearchValue}
+            onClear={clearSearch}
+            onClose={onClose}
+          />
+        </div>
+      )}
     </div>
   );
-};
+});
 
+Search.displayName = "Search";
 export default Search;
-/**
- *  {data?.length ? (
-        <div>
-          {data.map((category) => (
-            
-          ))}
-        </div>
-      ) : null}
- */

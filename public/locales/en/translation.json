@@ -282,5 +282,10 @@
   "Days": "Days",
   "Hours": "Hours",
   "Minutes": "Minutes",
-  "Seconds": "Seconds"
+  "Seconds": "Seconds",
+  "Something went wrong": "Something went wrong",
+  "tryAdjustingSearchTerms": "Try adjusting your search terms",
+  "searchForProductsCategoriesOrBrands": "Search for products, categories, or brands",
+  "startTypingToSearch": "Start typing to search",
+  "noProductsFound": "No products found"
 }
