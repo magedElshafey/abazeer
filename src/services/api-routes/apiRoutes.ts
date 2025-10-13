@@ -18,7 +18,7 @@ export const apiRoutes = {
   products: "products",
   wishlist: "wishlist/toggle",
   faqs: "faqs",
-  simpleCategories: "simpleCategories",
+  simpleCategories: "/categories/simple",
   favorites: "wishlist/list",
   brands: "brands",
   static_pages: "static-pages/list",
