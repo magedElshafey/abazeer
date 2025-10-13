@@ -1,27 +1,34 @@
-import { delayOptions } from "@/lib/tanstack-react-query/delayOptions";
-import useGetAllProducts from "../products/api/useGetAllProducts";
-import useGetSampleCategories from "./api/categories/useGetSampleCategories";
-import useGetBrands from "../brands/api/useGetBrands";
-import useGetBlogs from "../static-pages/api/blogs/useGetBlogs";
-import HomeHero from "./components/HomeHero";
-import CategoryCard from "../categories/components/card/CategoryCard";
-import ProductCard from "../products/components/card/ProductCard";
-import BrandsCard from "../brands/components/card/BrandsCard";
+// hooks
+import { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Brand } from "../brands/types/brand.types";
-import { Product } from "../products/types/product.types";
-import { CategoriesListType } from "../categories/types/category.types";
-import HomeSection from "./components/home-section/HomeSection";
+import useGetHomeSlider from "../api/hero/useGetHomeSlider";
+import useGetHomeBanner from "../api/hero/useGetHomeBanner";
+import useGetAllProducts from "../../products/api/useGetAllProducts";
+import useGetSampleCategories from "../api/categories/useGetSampleCategories";
+import useGetBrands from "../../brands/api/useGetBrands";
+import useGetBlogs from "../../static-pages/api/blogs/useGetBlogs";
+import useGetFlashsale from "../api/flash-sale/useGetFlashsale";
+// types
+import { Brand } from "../../brands/types/brand.types";
+import { Product } from "../../products/types/product.types";
+import { CategoriesListType } from "../../categories/types/category.types";
+// components
 import SEO from "@/common/components/seo/Seo";
 import FetchHandler from "@/common/api/fetchHandler/FetchHandler";
+import HomeHero from "../components/hero/HomeHero";
+import HomeSection from "../components/home-section/HomeSection";
+import CategoryCard from "../../categories/components/card/CategoryCard";
+import ProductCard from "../../products/components/card/ProductCard";
+import BrandsCard from "../../brands/components/card/BrandsCard";
+import BlogCard from "../../static-pages/components/blogs/card/BlogCard";
 import EmptyData from "@/common/components/empty-data/EmptyData";
-import BlogCard from "../static-pages/components/blogs/card/BlogCard";
 import SectionTitle from "@/common/components/titles/SectionTitle";
 import MainBtn from "@/common/components/buttons/MainBtn";
-import { useNavigate } from "react-router-dom";
-import { useCallback } from "react";
-import useGetFlashsale from "./api/flash-sale/useGetFlashsale";
-import FlashSaleSection from "./components/flash-sale/components/FlashSaleSection";
+import FlashSaleSection from "../components/flash-sale/components/FlashSaleSection";
+// constant
+import { delayOptions } from "@/lib/tanstack-react-query/delayOptions";
+
 const Home = () => {
   const { t } = useTranslation();
 
@@ -41,6 +48,8 @@ const Home = () => {
   const brands = useGetBrands({ featured: true, delay: delayOptions });
   const blogsQueryResult = useGetBlogs();
   const flashsaleQueryReuslt = useGetFlashsale();
+  const sliderQueryResult = useGetHomeSlider();
+  const bannerQueryResult = useGetHomeBanner();
   const navigate = useNavigate();
   const handleNavigate = useCallback(() => {
     navigate("/blogs");
@@ -48,7 +57,17 @@ const Home = () => {
   return (
     <>
       <SEO title={t("home")} />
-      <HomeHero />
+      <FetchHandler queryResult={sliderQueryResult} skeletonType="slider">
+        {sliderQueryResult &&
+          sliderQueryResult?.data &&
+          bannerQueryResult &&
+          bannerQueryResult?.data && (
+            <HomeHero
+              sliders={sliderQueryResult?.data}
+              banner={bannerQueryResult?.data}
+            />
+          )}
+      </FetchHandler>
 
       <div className="containerr">
         <div className="space-between-sections">

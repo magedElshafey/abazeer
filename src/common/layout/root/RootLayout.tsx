@@ -15,7 +15,11 @@ const RootLayout = () => {
   if (data?.site_maintenance) return <MaintenancePage />;
   return (
     <>
-      <SEO title={data?.site_name} description={data?.site_description} />
+      <SEO
+        title={data?.site_name}
+        description={data?.site_description}
+        favicon={data?.fav_icon || ""}
+      />
       <Outlet />
     </>
   );

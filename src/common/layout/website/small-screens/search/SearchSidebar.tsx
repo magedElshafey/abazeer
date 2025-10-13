@@ -25,7 +25,7 @@ const SearchSidebar: React.FC<SearchSidebarProps> = ({
         aria-label="Search Sidebar"
       >
         <SidebarIntro onClose={onClose}>
-          <Search />
+          <Search onClose={onClose} />
         </SidebarIntro>
       </aside>
     </>

@@ -9,4 +9,6 @@ export interface Setting {
   social_twitter: string | null;
   social_instagram: string | null;
   site_maintenance: boolean;
+  slogan?: string;
+  fav_icon: string | null;
 }

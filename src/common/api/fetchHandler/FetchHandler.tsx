@@ -18,7 +18,7 @@ const FetchHandler: React.FC<FetchHandlerProps> = ({
   skeletonType,
   loadingType = "skeleton",
 }) => {
-  const { isLoading, isError, isSuccess, error, refetch } = queryResult;
+  const { isLoading, isError, isSuccess, refetch } = queryResult;
   const { t } = useTranslation();
 
   return (
@@ -37,9 +37,7 @@ const FetchHandler: React.FC<FetchHandlerProps> = ({
       {isError && (
         <div className="flex flex-col items-center justify-center gap-3 p-6 rounded-xl bg-red-100 border border-red-300 text-red-800 shadow-md my-7">
           <IoAlertCircleOutline className="w-10 h-10 text-red-600" />
-          <p className="font-medium text-center">
-            {t(error?.message || "Something went wrong")}
-          </p>
+          <p className="font-medium text-center">{t("Something went wrong")}</p>
           <button
             onClick={() => refetch?.()}
             className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg shadow transition"

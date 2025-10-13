@@ -28,4 +28,7 @@ export const apiRoutes = {
   blogs: "blogs",
   blog: "blog",
   flash_sale: "products/flash-sale",
+  sliders: "sliders",
+  banner: "hero-section",
+  search: "products/search",
 };

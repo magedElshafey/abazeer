@@ -8,6 +8,7 @@ type SEOProps = {
   keywords?: string;
   canonical?: string;
   ogImage?: string;
+  favicon?: string;
 };
 
 const SEO = ({
@@ -16,6 +17,7 @@ const SEO = ({
   keywords = "default, keywords",
   canonical,
   ogImage = "/default-og-image.jpg",
+  favicon = "/favicon.ico",
 }: SEOProps) => {
   const { i18n, t } = useTranslation();
 
@@ -36,7 +38,8 @@ const SEO = ({
 
       {/* Canonical */}
       {canonical && <link rel="canonical" href={canonical} />}
-
+      {/* Favicon */}
+      <link rel="icon" type="image/x-icon" href={favicon} />
       {/* Open Graph */}
       <meta property="og:title" content={pageTitle} />
       <meta property="og:description" content={description} />
