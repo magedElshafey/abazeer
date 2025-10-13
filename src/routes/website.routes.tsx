@@ -3,6 +3,7 @@ import { lazyLoad } from "../utils/LazyLoad";
 import type { RouteObject } from "react-router-dom";
 import Logout from "@/features/user/pages/Logout";
 import AllProducts from "@/features/products/pages/AllProducts";
+import { apiRoutes } from "@/services/api-routes/apiRoutes";
 
 export const websiteRoutes: RouteObject = {
   element: lazyLoad(() => import("../common/layout/website/WebsiteLayout")),
@@ -144,6 +145,7 @@ export const websiteRoutes: RouteObject = {
           ),
           handle: {
             breadcrumb: "product name",
+            queryKey: [apiRoutes.products]
           },
         },
       ],

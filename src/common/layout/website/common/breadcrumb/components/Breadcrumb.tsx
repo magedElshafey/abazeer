@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { Link, useLocation, useMatches } from "react-router-dom";
 import { BreadcrumbItem, RouteHandle } from "../types/breadcrumb.types";
 import { useTranslation } from "react-i18next";
+import DynamicBreadcrumb from "./DynamicBreadcrumb";
 
 const Breadcrumb = () => {
     const matches = useMatches();
@@ -21,6 +22,9 @@ const Breadcrumb = () => {
                 label: (item.handle as RouteHandle).breadcrumb,
                 path: item.pathname,
                 isDynamic: !!parameters.length,
+                parameter: parameters[parameters.length - 1] as string,
+                queryKey: (item.handle as RouteHandle)?.queryKey || undefined,
+                
             }] as BreadcrumbItem[]
         });
 
@@ -35,6 +39,18 @@ const Breadcrumb = () => {
                 {
                     breadcrumbItems.map((item, index, arr) => {
                         const isLastItem = index === arr.length - 1;
+
+                        if (item.isDynamic !== undefined && item.queryKey) return (
+                            <>
+                                <DynamicBreadcrumb item={item as Required<BreadcrumbItem>} />
+                                {
+                                    !isLastItem && (
+                                        <span>/</span>
+                                    )
+                                }
+                            </>
+                        )
+
                         return (
                             <>
                                 <Link
