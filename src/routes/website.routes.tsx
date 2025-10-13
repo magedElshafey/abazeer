@@ -145,7 +145,7 @@ export const websiteRoutes: RouteObject = {
           ),
           handle: {
             breadcrumb: "product name",
-            queryKey: [apiRoutes.products]
+            queryKey: [apiRoutes.products],
           },
         },
       ],
@@ -172,12 +172,18 @@ export const websiteRoutes: RouteObject = {
       },
     },
     {
-      path: "checkout",
-      element: lazyLoad(() => import("../features/checkout/pages/Checkout")),
-
-      handle: {
-        breadcrumb: "checkout",
-      },
+      element: <Guard requireAuth={true} />,
+      children: [
+        {
+          path: "checkout",
+          element: lazyLoad(
+            () => import("../features/checkout/pages/Checkout")
+          ),
+          handle: {
+            breadcrumb: "checkout",
+          },
+        },
+      ],
     },
   ],
 };

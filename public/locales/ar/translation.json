@@ -280,5 +280,11 @@
   "searchForProductsCategoriesOrBrands": "ابحث عن المنتجات أو الفئات أو العلامات التجارية",
   "startTypingToSearch": "ابدأ بالكتابة للبحث",
   "loading": "جاري التحميل",
-  "noProductsFound": "لم يتم العثور على منتجات"
+  "noProductsFound": "لم يتم العثور على منتجات",
+  "Total": "السعر الكلي",
+  "Price": "السعر",
+  "shipping methods": "طرق الشحن",
+  "local pickup": "استلام محلي",
+  "flat rate": "سعر موحد",
+  "free shipping": "شحن مجاني"
 }

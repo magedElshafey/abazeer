@@ -1,47 +1,58 @@
 import { lazyLoad } from "../utils/LazyLoad";
 import Guard from "./Guard";
-
 export const authRoutes = {
-  element: <Guard guestOnly={true} />,
+  path: "auth",
+  element: lazyLoad(() => import("../common/layout/auth/AuthLayout")),
   children: [
     {
-      path: "auth",
-      element: lazyLoad(() => import("../common/layout/auth/AuthLayout")),
-      children: [
-        {
-          path: "login",
-          element: lazyLoad(() => import("../features/auth/pages/Login")),
-        },
-
-        {
-          path: "register",
-          element: lazyLoad(() => import("../features/auth/pages/Register")),
-        },
-        {
-          path: "forget-password",
-          element: lazyLoad(
-            () => import("../features/auth/pages/ForgetPassword")
-          ),
-        },
-        {
-          path: "forget-password-otp",
-          element: lazyLoad(
-            () => import("../features/auth/pages/ForgetPasswordOtp")
-          ),
-        },
-        {
-          path: "reset-password",
-          element: lazyLoad(
-            () => import("../features/auth/pages/ResetPassword")
-          ),
-        },
-        {
-          path: "reset-password-success",
-          element: lazyLoad(
+      path: "login",
+      element: (
+        <Guard guestOnly={true}>
+          {lazyLoad(() => import("../features/auth/pages/Login"))}
+        </Guard>
+      ),
+    },
+    {
+      path: "register",
+      element: (
+        <Guard guestOnly={true}>
+          {lazyLoad(() => import("../features/auth/pages/Register"))}
+        </Guard>
+      ),
+    },
+    {
+      path: "forget-password",
+      element: (
+        <Guard>
+          {lazyLoad(() => import("../features/auth/pages/ForgetPassword"))}
+        </Guard>
+      ),
+    },
+    {
+      path: "forget-password-otp",
+      element: (
+        <Guard>
+          {lazyLoad(() => import("../features/auth/pages/ForgetPasswordOtp"))}
+        </Guard>
+      ),
+    },
+    {
+      path: "reset-password",
+      element: (
+        <Guard>
+          {lazyLoad(() => import("../features/auth/pages/ResetPassword"))}
+        </Guard>
+      ),
+    },
+    {
+      path: "reset-password-success",
+      element: (
+        <Guard>
+          {lazyLoad(
             () => import("../features/auth/pages/ResetPasswordSuccess")
-          ),
-        },
-      ],
+          )}
+        </Guard>
+      ),
     },
   ],
 };

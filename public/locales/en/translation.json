@@ -272,5 +272,11 @@
   "tryAdjustingSearchTerms": "Try adjusting your search terms",
   "searchForProductsCategoriesOrBrands": "Search for products, categories, or brands",
   "startTypingToSearch": "Start typing to search",
-  "noProductsFound": "No products found"
+  "noProductsFound": "No products found",
+  "Total": "Total",
+  "Price": "Price",
+  "shipping methods": "shipping methods",
+  "local pickup": "local pickup",
+  "flat rate": "flat rate",
+  "free shipping": "free shipping"
 }

@@ -47,7 +47,9 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
   useEffect(() => {
     const localData = localStorage.getItem(LOCAL_KEY);
     if (!user) {
-      if (localData) setItems(JSON.parse(localData));
+      if (localData) {
+        setItems(JSON.parse(localData));
+      } else setItems([]);
     }
   }, [user]);
 

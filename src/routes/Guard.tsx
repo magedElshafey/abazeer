@@ -6,7 +6,7 @@ type GuardProps = {
   guestOnly?: boolean;
   allowedRoles?: string[];
   redirectTo?: string;
-  children?: React.ReactNode; // 👈 أضفناها
+  children?: React.ReactNode;
 };
 
 const Guard: React.FC<GuardProps> = ({
@@ -19,40 +19,22 @@ const Guard: React.FC<GuardProps> = ({
   const { user, loading } = useAuth();
   const location = useLocation();
 
-  if(loading) return undefined;
-
+  if (loading) return null;
   if (guestOnly && user) {
-    return (
-      <Navigate
-        to={redirectTo || "/my-profile"}
-        state={{ from: location }}
-        replace
-      />
-    );
+    const from = (location.state as any)?.from;
+    return <Navigate to={from || redirectTo || "/my-profile"} replace />;
   }
 
-  // لو الصفحة عايزة تسجيل دخول وهو مش مسجل → Redirect
   if (requireAuth && !user) {
-    return (
-      <Navigate
-        to={redirectTo || "/auth/login"}
-        state={{ from: location }}
-        replace
-      />
-    );
+    return <Navigate to="/auth/login" state={{ from: location }} replace />;
   }
 
-  // !! handling the authorization was in the old logic in Rooa, but currently doesn't make sense
+  // 🔸 لو فيه صلاحيات محددة والمستخدم مش مسموح له
   if (allowedRoles && user && !allowedRoles.includes("")) {
-    return (
-      <Navigate
-        to={redirectTo || "/unauthorized"}
-        state={{ from: location }}
-        replace
-      />
-    );
+    return <Navigate to={redirectTo || "/unauthorized"} replace />;
   }
 
+  // ✅ نعرض المحتوى المطلوب
   return <>{children || <Outlet />}</>;
 };
 

@@ -13,6 +13,7 @@ import feat5 from "../assets/feat-05.png";
 // lang
 import us from "../assets/us.png";
 import ksa from "../assets/ksa.png";
+import { Shippings } from "@/features/checkout/types/shipping.types";
 
 export const navLinks: Nav[] = [
   {
@@ -34,7 +35,7 @@ export const navLinks: Nav[] = [
   },
   {
     name: "products",
-    link: "/products"
+    link: "/products",
   },
   {
     name: "faq",
@@ -175,4 +176,16 @@ export const myAccount: Nav[] = [
 export const LANGUAGES: Lang[] = [
   { flag: us, title: "english", label: "en" },
   { flag: ksa, title: "arabic", label: "ar" },
+];
+export const shippingMethods: Shippings[] = [
+  {
+    id: 1,
+    name: "local pickup",
+    coast: "free shipping",
+  },
+  {
+    id: 2,
+    name: "flat rate",
+    coast: "30",
+  },
 ];

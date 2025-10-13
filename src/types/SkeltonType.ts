@@ -18,3 +18,4 @@ export type SkeletonType =
   | "brand"
   | "list"
   | "blogDetails"
+  | "order-card";
