@@ -63,6 +63,10 @@ const Skeleton: React.FC<SkeltonProps> = ({ type }) => {
       return <ListSkeleton />;
     case "blogDetails":
       return <BlogDetailsSkeleton />;
+    case "order-card":
+      return <OrderCardSkeleton />;
+    case "productDetails":
+      return <ProductDetailsSkeleton />;
     default:
       return null;
   }
