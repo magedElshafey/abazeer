@@ -2,12 +2,15 @@ import { FC } from "react";
 import { Review } from "../../types/review.types";
 import { FaStar } from "react-icons/fa";
 import Avatar from "@/common/components/avatar/Avatar";
+import { apiRoutes } from "@/services/api-routes/apiRoutes";
+import DeleteReviewButton from "@/features/user/components/reviews/DeleteReviewButton";
 
 interface ReviewItemProps {
     review: Review;
 }
 
 const ReviewItem: FC<ReviewItemProps> = ({ review }) => {
+
     // Generate star rating based on rate
     const renderStars = (rating: number) => {
         const stars = [];
@@ -35,18 +38,29 @@ const ReviewItem: FC<ReviewItemProps> = ({ review }) => {
                 <div className="w-16 flex-shrink-0">
                     <Avatar 
                         url="/images/600x600.jpg" 
-                        alt={review.user}
+                        alt={review.user.name}
                         size={60}
                     />
                 </div>
                 
                 {/* Review Content */}
                 <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-2">
-                        <span className="font-medium text-gray-800">{review.user}</span>
-                        <span className="text-sm text-gray-500">
-                            {review.created_at}
-                        </span>
+                    <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-2">
+                            <span className="font-medium text-gray-800">{review.user.name}</span>
+                            <span className="text-sm text-gray-500">
+                                {review.created_at}
+                            </span>
+                        </div>
+                        
+                        {/* Delete Button - Only show if user owns the review */}
+                        {review.is_owner && (
+                            <DeleteReviewButton
+                                reviewId={review.id}
+                                queryKey={[apiRoutes.products]}
+                                variant="default"
+                            />
+                        )}
                     </div>
                     <div className="flex text-yellow-400 mb-2">
                         {renderStars(review.rate)}

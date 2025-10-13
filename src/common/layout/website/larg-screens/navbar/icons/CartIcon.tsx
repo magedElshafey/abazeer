@@ -68,20 +68,19 @@ const CartIcon = memo(() => {
       </button>
 
       {/* Dropdown */}
-      <div
-        ref={dropdownRef}
-        role="menu"
-        aria-label={t("cart dropdown")}
-        className={`absolute top-full ${
-          i18n.language === "ar" ? "-right-[280px]" : "-left-[280px]"
-        } min-w-[340px] bg-white shadow-xl rounded-xl p-4 mt-3 z-40 border border-gray-100
-        transition-all duration-300 ease-out transform origin-top ${
-          open
-            ? "opacity-100 scale-100"
-            : "opacity-0 scale-95 pointer-events-none"
-        }`}
-      >
-        <CartDetails />
+      <div className={`border-t-transparent top-full ${i18n.language === "ar" ? "-right-[280px]" : "-left-[280px]"} transition-all duration-300 ease-out transform origin-top absolute border-t-[10px] ${open
+        ? "opacity-100 scale-100"
+        : "opacity-0 scale-95 pointer-events-none"
+        }`} ref={dropdownRef}>
+        <div
+          // ref={dropdownRef}
+          role="menu"
+          aria-label={t("cart dropdown")}
+          className={`min-w-[340px] bg-white shadow-xl rounded-xl p-4 z-40 border border-gray-100
+         `}
+        >
+          <CartDetails />
+        </div>
       </div>
     </div>
   );

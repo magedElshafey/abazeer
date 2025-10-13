@@ -29,6 +29,7 @@ export const apiRoutes = {
   blog: "blog",
   flash_sale: "products/flash-sale",
   reviews: "reviews",
+  myReviews: "reviews/my-reviews",
   sliders: "sliders",
   banner: "hero-section",
   search: "products/search",
