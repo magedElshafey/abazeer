@@ -18,7 +18,7 @@ const BrandsCard = memo(({ brand }: BrandsCardProps) => {
 
   const handleNavigate = useCallback(() => {
     if (!id) return;
-    navigate(`/brand/${id}${slug ? `-${slug}` : ""}`);
+    navigate(`/products?filter-brand=${id}`);
   }, [navigate, id, slug]);
 
   const handleCategoryNavigate = useCallback(
