@@ -3,6 +3,7 @@ import { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ProductDetails } from "../../types/product.types";
 import Reviews from "./Reviews";
+import ProductSpecifications from "./ProductSpecifications";
 
 type MenuItem = {
     id: string;
@@ -33,49 +34,7 @@ const ProductFooter: FC<Props> = ({ product }) => {
                     </div>
                 );
             case "specifications":
-                return (
-                    <div className="space-y-4">
-                        <h3 className="text-xl font-semibold text-text-light pb-3 border-b-2 border-orangeColor">{t("technical_specifications")}</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div className="space-y-2">
-                                <div className="flex justify-between border-b pb-1">
-                                    <span className="font-medium">Brand</span>
-                                    <span className="text-gray-600">AudioTech</span>
-                                </div>
-                                <div className="flex justify-between border-b pb-1">
-                                    <span className="font-medium">Model</span>
-                                    <span className="text-gray-600">AT-2024</span>
-                                </div>
-                                <div className="flex justify-between border-b pb-1">
-                                    <span className="font-medium">Connectivity</span>
-                                    <span className="text-gray-600">Bluetooth 5.0</span>
-                                </div>
-                                <div className="flex justify-between border-b pb-1">
-                                    <span className="font-medium">Battery Life</span>
-                                    <span className="text-gray-600">20 hours</span>
-                                </div>
-                            </div>
-                            <div className="space-y-2">
-                                <div className="flex justify-between border-b pb-1">
-                                    <span className="font-medium">Dimensions</span>
-                                    <span className="text-gray-600">15 x 8 x 5 cm</span>
-                                </div>
-                                <div className="flex justify-between border-b pb-1">
-                                    <span className="font-medium">Weight</span>
-                                    <span className="text-gray-600">450g</span>
-                                </div>
-                                <div className="flex justify-between border-b pb-1">
-                                    <span className="font-medium">Water Resistance</span>
-                                    <span className="text-gray-600">IPX4</span>
-                                </div>
-                                <div className="flex justify-between border-b pb-1">
-                                    <span className="font-medium">Warranty</span>
-                                    <span className="text-gray-600">2 years</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                );
+                return <ProductSpecifications product={product} />;
             case "reviews":
                 return <Reviews product={product!} />;
             default:

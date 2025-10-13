@@ -160,7 +160,7 @@ const Search: React.FC<SearchProps> = memo(({ onClose }) => {
         onClick={handleSearch}
         disabled={!selectedOpt && !search.value.trim()}
         aria-label={t("search")}
-        className="text-transition flex-shrink-0 disabled:cursor-not-allowed disabled:opacity-40"
+        className="text-transition hidden lg:block flex-shrink-0 disabled:cursor-not-allowed disabled:opacity-40"
       >
         <TfiSearch size={20} />
       </button>
