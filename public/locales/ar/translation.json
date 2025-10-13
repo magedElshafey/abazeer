@@ -275,5 +275,10 @@
   "Hours": "ساعة",
   "Minutes": "دقيقة",
   "Seconds": "ثانية",
-  "Something went wrong": "حدث خطأ اثناء جلب البيانات"
+  "Something went wrong": "حدث خطأ اثناء جلب البيانات",
+  "tryAdjustingSearchTerms": "حاول تعديل مصطلحات البحث",
+  "searchForProductsCategoriesOrBrands": "ابحث عن المنتجات أو الفئات أو العلامات التجارية",
+  "startTypingToSearch": "ابدأ بالكتابة للبحث",
+  "loading": "جاري التحميل",
+  "noProductsFound": "لم يتم العثور على منتجات"
 }
