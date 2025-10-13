@@ -26,6 +26,14 @@ export interface Dimensions {
   height: number;
 }
 
+export interface ProductProperty {
+  id: number;
+  name: string;
+  image: string | null;
+  is_active: boolean;
+  created_at: string;
+}
+
 export interface ProductDetails extends Omit<Product, "category"> {
   id: number;
   name: string;
@@ -58,6 +66,8 @@ export interface ProductDetails extends Omit<Product, "category"> {
   images: string[];
   has_discount: boolean;
   quantity: number;
+  long_description: string;
+  properties: ProductProperty[];
 }
 
 type SortByKey<T> = T extends string ? `${T}-asc` | `${T}-desc` : never;

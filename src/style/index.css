@@ -198,3 +198,8 @@ html {
 .animate-float {
     animation: float 3s ease-in-out infinite;
 }
+
+textarea {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(250 181 40) #f1f5f9;
+}
