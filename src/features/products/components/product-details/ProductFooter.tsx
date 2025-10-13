@@ -1,12 +1,19 @@
+import HtmlConverter from "@/common/components/htmlConverter/HtmlConverter";
 import { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { ProductDetails } from "../../types/product.types";
+import Reviews from "./Reviews";
 
 type MenuItem = {
     id: string;
     label: string;
 };
 
-const ProductFooter: FC = () => {
+interface Props {
+    product: ProductDetails;
+}
+
+const ProductFooter: FC<Props> = ({ product }) => {
     const { t } = useTranslation();
     const [activeSection, setActiveSection] = useState("description");
 
@@ -14,7 +21,6 @@ const ProductFooter: FC = () => {
         { id: "description", label: "description" },
         { id: "specifications", label: "specifications" },
         { id: "reviews", label: "reviews" },
-        { id: "questions-answers", label: "questions_answers" }
     ];
 
     const renderContent = () => {
@@ -23,19 +29,7 @@ const ProductFooter: FC = () => {
                 return (
                     <div className="space-y-4">
                         <h3 className="text-xl font-semibold text-text-light pb-3 border-b-2 border-orangeColor">{t("product_description")}</h3>
-                        <p className="text-gray-600 leading-relaxed">
-                            This is a high-quality wireless speaker that delivers exceptional sound quality. 
-                            Perfect for both indoor and outdoor use, it features advanced Bluetooth connectivity 
-                            and a long-lasting battery life. The speaker is designed with portability in mind, 
-                            making it ideal for travel, parties, or everyday listening.
-                        </p>
-                        <ul className="list-disc list-inside space-y-2 text-gray-600">
-                            <li>Wireless Bluetooth 5.0 connectivity</li>
-                            <li>20-hour battery life</li>
-                            <li>Water-resistant design</li>
-                            <li>Compact and portable</li>
-                            <li>Premium sound quality</li>
-                        </ul>
+                        <HtmlConverter html={product?.long_description} />
                     </div>
                 );
             case "specifications":
@@ -83,63 +77,7 @@ const ProductFooter: FC = () => {
                     </div>
                 );
             case "reviews":
-                return (
-                    <div className="space-y-4">
-                        <h3 className="text-xl font-semibold text-text-light pb-3 border-b-2 border-orangeColor">{t("customer_reviews")}</h3>
-                        <div className="space-y-4">
-                            <div className="border rounded-lg p-4">
-                                <div className="flex items-center gap-2 mb-2">
-                                    <div className="flex text-yellow-400">
-                                        ★★★★★
-                                    </div>
-                                    <span className="font-medium">John D.</span>
-                                    <span className="text-sm text-gray-500">2 days ago</span>
-                                </div>
-                                <p className="text-gray-600">
-                                    Excellent sound quality and great battery life. Perfect for outdoor activities!
-                                </p>
-                            </div>
-                            <div className="border rounded-lg p-4">
-                                <div className="flex items-center gap-2 mb-2">
-                                    <div className="flex text-yellow-400">
-                                        ★★★★☆
-                                    </div>
-                                    <span className="font-medium">Sarah M.</span>
-                                    <span className="text-sm text-gray-500">1 week ago</span>
-                                </div>
-                                <p className="text-gray-600">
-                                    Good speaker overall, but the volume could be a bit louder for outdoor use.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                );
-            case "questions-answers":
-                return (
-                    <div className="space-y-4">
-                        <h3 className="text-xl font-semibold text-text-light pb-3 border-b-2 border-orangeColor">{t("questions_answers")}</h3>
-                        <div className="space-y-4">
-                            <div className="border rounded-lg p-4">
-                                <h4 className="font-medium mb-2">Is this speaker waterproof?</h4>
-                                <p className="text-gray-600 text-sm">
-                                    Yes, this speaker has IPX4 water resistance rating, making it splash-proof and suitable for outdoor use.
-                                </p>
-                            </div>
-                            <div className="border rounded-lg p-4">
-                                <h4 className="font-medium mb-2">How long does the battery last?</h4>
-                                <p className="text-gray-600 text-sm">
-                                    The speaker provides up to 20 hours of continuous playback on a single charge, depending on volume level.
-                                </p>
-                            </div>
-                            <div className="border rounded-lg p-4">
-                                <h4 className="font-medium mb-2">What's the Bluetooth range?</h4>
-                                <p className="text-gray-600 text-sm">
-                                    The Bluetooth range is up to 30 meters (100 feet) in open space without obstacles.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                );
+                return <Reviews product={product!} />;
             default:
                 return null;
         }
@@ -180,7 +118,7 @@ const ProductFooter: FC = () => {
             <div className="hidden lg:grid lg:grid-cols-4 lg:gap-6">
                 {/* Menu Items - 1/4 width */}
                 <div className="lg:col-span-1">
-                    <div className="bg-background-gray rounded-md p-4 sticky top-4">
+                    <div className="bg-background-gray rounded-md p-4 top-4">
                         <div className="flex flex-col gap-2">
                             {menuItems.map((item) => (
                                 <button
@@ -201,7 +139,7 @@ const ProductFooter: FC = () => {
                 
                 {/* Content - 3/4 width */}
                 <div className="lg:col-span-3">
-                    <div className="p-4">
+                    <div>
                         {renderContent()}
                     </div>
                 </div>

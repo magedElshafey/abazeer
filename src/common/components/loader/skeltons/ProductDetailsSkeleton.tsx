@@ -11,13 +11,13 @@ const ProductDetailsSkeleton = () => {
         </div>
 
         {/* Thumbnails */}
-        <div className="flex justify-center space-x-4">
+        <div className="flex justify-center gap-4">
           {[...Array(4)].map((_, i) => (
             <div
               key={i}
               className="bg-gray-200 h-16 w-16 rounded-md flex items-center justify-center"
             >
-              <FaImage size={20} className=" text-gray-400" />
+              <FaImage size={20} className="text-gray-400" />
             </div>
           ))}
         </div>

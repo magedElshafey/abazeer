@@ -58,6 +58,7 @@ export interface ProductDetails extends Omit<Product, "category"> {
   images: string[];
   has_discount: boolean;
   quantity: number;
+  long_description: string;
 }
 
 type SortByKey<T> = T extends string ? `${T}-asc` | `${T}-desc` : never;
