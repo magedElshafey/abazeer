@@ -189,7 +189,7 @@ export const websiteRoutes: RouteObject = {
             () => import("../features/checkout/pages/OrderSuccess")
           ),
           handle: {
-            breadcrumb: "order-success",
+            breadcrumb: "Your request has been completed successfully",
           },
         },
         {
@@ -198,7 +198,7 @@ export const websiteRoutes: RouteObject = {
             () => import("../features/checkout/pages/OrderFailed")
           ),
           handle: {
-            breadcrumb: "order-failed",
+            breadcrumb: "The order could not be completed",
           },
         },
       ],
