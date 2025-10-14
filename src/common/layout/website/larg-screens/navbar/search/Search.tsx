@@ -123,10 +123,7 @@ const Search: React.FC<SearchProps> = memo(({ onClose }) => {
   return (
     <div className="flex-1 bg-background-gray p-3 flex items-center gap-3 min-w-0 relative">
       {/* Dropdown */}
-      <div
-        className="relative flex-shrink-0 min-w-[120px] max-w-[160px]"
-        ref={dropdownRef}
-      >
+      <div className="relative flex-shrink-0 w-[200px]" ref={dropdownRef}>
         <button
           type="button"
           onClick={toggleDropdown}
@@ -167,7 +164,7 @@ const Search: React.FC<SearchProps> = memo(({ onClose }) => {
 
       {/* Search Results */}
       {showResults && (
-        <div className="absolute top-full left-0 w-full bg-white border rounded shadow-lg z-[1000] overflow-y-auto max-h-[300px]">
+        <div className="absolute top-full left-0 w-full bg-white border rounded shadow-lg z-[1000] overflow-y-auto max-h-[350px]">
           <SearchResults
             products={products}
             isLoading={isFetching}

@@ -1,10 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useCart } from "@/store/CartProvider";
 import { Axios } from "@/lib/axios/Axios";
 import { apiRoutes } from "@/services/api-routes/apiRoutes";
 import { useNavigate } from "react-router-dom";
 const useCheckout = () => {
-  const { clearCart } = useCart();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   type CheckoutPayload = {

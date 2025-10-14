@@ -15,7 +15,7 @@ const DropdownMenu = memo(({ onSelect }: DropdownMenuProps) => {
     <ul
       role="menu"
       aria-label="Categories"
-      className="absolute top-full right-0 w-[180px] bg-white shadow-lg p-2 border z-[100000] max-h-56 overflow-y-auto rounded-md"
+      className="absolute top-full right-0 overflow-x-hidden bg-white shadow-lg p-2 border z-[100000] max-h-56 overflow-y-auto rounded-md"
     >
       {isLoading && (
         <div className="flex justify-center py-3">
