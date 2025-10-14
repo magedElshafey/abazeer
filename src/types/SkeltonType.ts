@@ -19,4 +19,5 @@ export type SkeletonType =
   | "list"
   | "blogDetails"
   | "order-card"
-  | "productDetails";
+  | "productDetails"
+  | "footer";

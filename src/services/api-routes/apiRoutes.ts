@@ -32,4 +32,5 @@ export const apiRoutes = {
   sliders: "sliders",
   banner: "hero-section",
   search: "products/search",
+  features: "/features/list",
 };
