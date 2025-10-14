@@ -40,7 +40,7 @@ const DeleteReviewButton: FC<DeleteReviewButtonProps> = ({
       className={`px-3 py-1 text-xs border border-red-500 text-red-500 rounded hover:bg-red-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${className}`}
       aria-label={t("delete")}
     >
-      {t("delete")}
+      {t("remove")}
     </button>
   );
 

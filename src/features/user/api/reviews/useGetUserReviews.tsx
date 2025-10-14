@@ -2,17 +2,17 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { Axios } from "@/lib/axios/Axios";
 import { apiRoutes } from "@/services/api-routes/apiRoutes";
 import type { PaginatedResponse } from "@/types/Response";
-import type { Review } from "@/features/products/types/review.types";
+import type { MyReview } from "@/features/products/types/review.types";
 import { useAuth } from "@/store/AuthProvider";
 import { getNextPage } from "@/utils/getNextPage";
 
 const useGetUserReviews = () => {
     const { user } = useAuth();
 
-    return useInfiniteQuery<PaginatedResponse<Review[]>>({
+    return useInfiniteQuery<PaginatedResponse<MyReview[]>>({
         queryKey: [apiRoutes.myReviews, user?.id],
         queryFn: async ({ pageParam = 1 }) => {
-            const { data } = await Axios.get<PaginatedResponse<Review[]>>(
+            const { data } = await Axios.get<PaginatedResponse<MyReview[]>>(
                 `${apiRoutes.myReviews}?page=${pageParam}`
             );
             return data;

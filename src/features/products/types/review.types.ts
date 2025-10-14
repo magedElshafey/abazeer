@@ -16,3 +16,10 @@ export interface Review {
   created_at: string;
 }
 
+export interface MyReview extends Omit<Review, "product"> {
+  product: {
+    id: number;
+    image: null | string;
+    name: string;
+  }
+}
