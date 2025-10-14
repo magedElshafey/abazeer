@@ -311,6 +311,13 @@
   "flat rate": "سعر موحد",
   "free shipping": "شحن مجاني",
   "subtotal": "المجموع الفرعي",
-  "Tax (VAT - 10%, Import Tax - 15%)": "الضريبة (ضريبة القيمة المضافة - 10٪، ضريبة الاستيراد - 15٪)",
-  "shipping fee": "رسوم الشحن"
+  "Tax (VAT - 15%)": "(ضريبة القيمة المضافة - 10٪، ضريبة الاستيراد - 15٪)",
+  "shipping fee": "رسوم الشحن",
+  "coupon codes": "رموز القسيمة",
+  "apply": "تطبيق",
+  "You have a coupon code?": "هل لديك رمز قسيمة؟",
+  "enter your coupon code": "ادخل رمز القسيمة الخاص بك",
+  "cash on delivery (COD)": "الدفع عند الاستلام (COD)",
+  "Please pay money directly to the postman, if you choose cash on delivery method (COD).": "يرجى دفع الأموال مباشرة إلى ساعي البريد، إذا اخترت طريقة الدفع عند الاستلام (COD).",
+  "change address": "تغيير العنوان"
 }

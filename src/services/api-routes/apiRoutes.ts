@@ -33,4 +33,7 @@ export const apiRoutes = {
   sliders: "sliders",
   banner: "hero-section",
   search: "products/search",
+  allCopouns: "coupons/list",
+  applyCoupon: "coupons/check",
+  orders: "orders",
 };

@@ -8,20 +8,20 @@ const themes = {
   main: "bg-orangeColor text-black",
   secondary: "bg-black text-white",
   outline: "border border-gray-300 text-gray-700 hover:bg-gray-50",
-  danger: "bg-red-600 text-white hover:bg-red-700"
-}
+  danger: "bg-red-600 text-white hover:bg-red-700",
+};
 
 const buttonVariants = cv({
-  base: "px-2 py-2 rounded font-bold",
+  base: "px-2 py-2 rounded font-bold disabled:cursor-not-allowed transition-all",
   variants: {
     theme: {
-      ...themes
-    }
+      ...themes,
+    },
   },
   defaultVariants: {
-    theme: "main"
-  }
-})
+    theme: "main",
+  },
+});
 
 interface MainBtnProps {
   text?: string;
@@ -33,10 +33,9 @@ interface MainBtnProps {
   isPending?: boolean;
   bg?: string;
   className?: string;
-  theme?: keyof typeof themes,
+  theme?: keyof typeof themes;
+  disabled?: boolean;
 }
-
-
 
 const MainBtn: React.FC<PropsWithChildren<MainBtnProps>> = ({
   text,
@@ -45,7 +44,8 @@ const MainBtn: React.FC<PropsWithChildren<MainBtnProps>> = ({
   isPending = false,
   className,
   children,
-  theme
+  theme,
+  disabled = false,
 }) => {
   const { t } = useTranslation();
 
@@ -57,7 +57,7 @@ const MainBtn: React.FC<PropsWithChildren<MainBtnProps>> = ({
 
   return (
     <button
-      disabled={isPending}
+      disabled={isPending || disabled}
       type={type}
       onClick={handleClick}
       aria-busy={isPending}
@@ -65,10 +65,13 @@ const MainBtn: React.FC<PropsWithChildren<MainBtnProps>> = ({
       className={`${twMerge(buttonVariants({ theme, className }))}`}
     >
       {isPending ? (
-        <AiOutlineLoading3Quarters className="animate-spin" size={20} aria-hidden="true" />
+        <AiOutlineLoading3Quarters
+          className="animate-spin"
+          size={20}
+          aria-hidden="true"
+        />
       ) : (
-        children ||
-        t(text || "")
+        children || t(text || "")
       )}
     </button>
   );

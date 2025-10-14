@@ -7,17 +7,22 @@ import { Address } from "../../types/addresses.types";
 import MainBtn from "@/common/components/buttons/MainBtn";
 import useMakeDefaultAddress from "../../api/addresses/useMakeDefaultAddress";
 import DeleteAddressButton from "../DeleteAddressButton";
-
+import { useLocation } from "react-router-dom";
 interface AddressCardProps {
   address: Address;
+  hasEdit?: boolean;
+  hasDelete?: boolean;
 }
 
 const AddressCard: FC<AddressCardProps> = ({
   address,
+  hasDelete = true,
+  hasEdit = true,
 }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { mutateAsync, isPending } = useMakeDefaultAddress();
+  const { pathname } = useLocation();
 
   const getFullAddress = () => {
     const parts = [address.address];
@@ -57,28 +62,38 @@ const AddressCard: FC<AddressCardProps> = ({
       <div className="px-6 py-4 space-y-3">
         {/* Address */}
         <div className="flex items-start gap-3">
-          <HiOutlineLocationMarker className="text-gray-500 mt-0.5 flex-shrink-0" size={18} />
+          <HiOutlineLocationMarker
+            className="text-gray-500 mt-0.5 flex-shrink-0"
+            size={18}
+          />
           <div className="text-gray-700 text-sm">
             <p>{getFullAddress()}</p>
           </div>
         </div>
-
       </div>
 
       {/* Actions */}
       <div className="px-6 py-4 border-t border-gray-100">
         <div className="flex gap-3">
-          <button
-            onClick={() => navigate(`${address.id}/edit`)}
-            className="flex items-center gap-2 bg-orangeColor hover:bg-orangeColor/90 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
-          >
-            <MdOutlineEdit size={16} />
-            {t("edit")}
-          </button>
-          <DeleteAddressButton
-            addressId={address.id}
-            addressName={address.name}
-          />
+          {hasEdit && (
+            <button
+              onClick={() =>
+                navigate(
+                  `/my-profile/addresses/${address.id}/edit?to=${pathname}`
+                )
+              }
+              className="flex items-center gap-2 bg-orangeColor hover:bg-orangeColor/90 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+            >
+              <MdOutlineEdit size={16} />
+              {t("edit")}
+            </button>
+          )}
+          {hasDelete && (
+            <DeleteAddressButton
+              addressId={address.id}
+              addressName={address.name}
+            />
+          )}
         </div>
       </div>
     </div>

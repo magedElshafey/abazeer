@@ -68,10 +68,16 @@ const CartIcon = memo(() => {
       </button>
 
       {/* Dropdown */}
-      <div className={`border-t-transparent top-full ${i18n.language === "ar" ? "-right-[280px]" : "-left-[280px]"} transition-all duration-300 ease-out transform origin-top absolute border-t-[10px] ${open
-        ? "opacity-100 scale-100"
-        : "opacity-0 scale-95 pointer-events-none"
-        }`} ref={dropdownRef}>
+      <div
+        className={`border-t-transparent top-full ${
+          i18n.language === "ar" ? "-right-[280px]" : "-left-[280px]"
+        } transition-all duration-300 ease-out transform origin-top absolute border-t-[10px] ${
+          open
+            ? "opacity-100 scale-100"
+            : "opacity-0 scale-95 pointer-events-none"
+        }`}
+        ref={dropdownRef}
+      >
         <div
           // ref={dropdownRef}
           role="menu"

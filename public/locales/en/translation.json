@@ -304,6 +304,13 @@
   "flat rate": "flat rate",
   "free shipping": "free shipping",
   "subtotal": "subtotal",
-  "Tax (VAT - 10%, Import Tax - 15%)": "Tax (VAT - 10%, Import Tax - 15%)",
-  "shipping fee": "shipping fee"
+  "Tax (VAT - 15%)": "Tax (VAT - 15%)",
+  "shipping fee": "shipping fee",
+  "coupon codes": "coupon codes",
+  "apply": "apply",
+  "You have a coupon code?": "You have a coupon code?",
+  "enter your coupon code": "enter your coupon code",
+  "cash on delivery (COD)": "cash on delivery (COD)",
+  "Please pay money directly to the postman, if you choose cash on delivery method (COD).": "Please pay money directly to the postman, if you choose cash on delivery method (COD).",
+  "change address": "change address"
 }

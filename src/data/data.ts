@@ -14,6 +14,7 @@ import feat5 from "../assets/feat-05.png";
 import us from "../assets/us.png";
 import ksa from "../assets/ksa.png";
 import { Shippings } from "@/features/checkout/types/shipping.types";
+import { Payment } from "@/features/checkout/types/payment.type";
 
 export const navLinks: Nav[] = [
   {
@@ -189,5 +190,15 @@ export const shippingMethods: Shippings[] = [
     name: "flat rate",
     coastLabel: "30",
     value: 30,
+  },
+];
+export const paymentMethods: Payment[] = [
+  {
+    id: 1,
+    title: "cash on delivery (COD)",
+    descreption:
+      "Please pay money directly to the postman, if you choose cash on delivery method (COD).",
+    image: "/images/code.png",
+    type: "cash_on_delivery",
   },
 ];
