@@ -325,5 +325,8 @@
   "change address": "تغيير العنوان",
   "Your request has been completed successfully": "تم إتمام طلبك بنجاح",
   "Thank you for your trust! You can track your order status from the Orders page, or return to the Home page.": "شكراً لثقتك بنا! يمكنك متابعة حالة طلبك من صفحة الطلبات، أو العودة إلى الصفحة الرئيسية.",
-  "Back to main page": "العودة إلى الرئيسية"
+  "Back to main page": "العودة إلى الرئيسية",
+  "The order could not be completed": "لم نتمكن من إكمال الطلب",
+  "Something went wrong while processing your order. Please try again or contact support if the issue persists.": "حدث خطأ أثناء معالجة طلبك. يُرجى المحاولة مرة أخرى أو التواصل مع الدعم الفني إذا استمرت المشكلة.",
+  "Try Again": "أعد المحاولة"
 }

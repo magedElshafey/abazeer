@@ -192,6 +192,15 @@ export const websiteRoutes: RouteObject = {
             breadcrumb: "order-success",
           },
         },
+        {
+          path: "order-failed",
+          element: lazyLoad(
+            () => import("../features/checkout/pages/OrderFailed")
+          ),
+          handle: {
+            breadcrumb: "order-failed",
+          },
+        },
       ],
     },
   ],
