@@ -25,7 +25,7 @@ const BrandsCard = memo(({ brand }: BrandsCardProps) => {
     (e: React.MouseEvent) => {
       e.stopPropagation();
       if (!catId) return;
-      navigate(`/category/${catId}-${catSlug}`);
+      navigate(`/products?filter-category=${catId}`);
     },
     [navigate, catId, catSlug]
   );

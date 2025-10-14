@@ -59,9 +59,7 @@ const SiteMap: React.FC<SiteMapProps> = ({
           <div>
             <Logo logo={logo} />
             <p className="my-4 text-xs text-gray-500 leading-relaxed">
-              {slogan
-                ? slogan
-                : " Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sedfinibus viverra iaculis. Etiam vulputate et justo eget  scelerisque."}
+              {slogan || ""}
             </p>
             <ul>
               {contact_address && (

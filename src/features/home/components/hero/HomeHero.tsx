@@ -13,8 +13,10 @@ const HomeHero: FC<HomeHeroProps> = memo(({ sliders, banner }) => {
   const navigate = useNavigate();
 
   const handleNavigate = useCallback(() => {
-    navigate("/offers");
+    navigate("/products?filter-in_offer=true");
   }, [navigate]);
+
+  console.log(sliders);
 
   return (
     <section
@@ -22,7 +24,7 @@ const HomeHero: FC<HomeHeroProps> = memo(({ sliders, banner }) => {
       aria-label="Home hero section"
     >
       <div className="containerr flex flex-col lg:flex-row gap-4 lg:max-h-[500px] overflow-hidden">
-        <div className="w-full lg:w-2/3 overflow-hidden">
+        <div className="w-full lg:w-2/3 overflow-hidden min-h-[200px]">
           <HomeSlider sliders={sliders} />
         </div>
 

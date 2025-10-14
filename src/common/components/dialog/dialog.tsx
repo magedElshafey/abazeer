@@ -1,6 +1,7 @@
 import {
+  forwardRef,
+  useImperativeHandle,
   useState,
-  type FC,
   type PropsWithChildren,
   type ReactNode,
 } from "react";
@@ -25,6 +26,10 @@ interface ActionType {
   text?: string;
 }
 
+interface RefType {
+  close: () => void;
+}
+
 interface Props {
   header?: {
     title?: string;
@@ -41,93 +46,106 @@ interface Props {
 const defaultCancelText = "cancel";
 const defaultOkText = "ok";
 
-const DialogComponent: FC<PropsWithChildren<Props>> = ({
-  header,
-  content,
-  children,
-  action,
-  cancel,
-  queryKey,
-  type = "regular",
-  onSuccess,
-}) => {
-  const { t } = useTranslation();
-  const queryClient = useQueryClient();
-
-  const [opened, setOpened] = useState(false);
-
-  const { mutate, isPending } = useMutation({
-    mutationKey: [queryKey],
-    mutationFn: async () => {
-      const response = await action?.action?.();
-      return response;
+const DialogComponent = forwardRef<RefType, PropsWithChildren<Props>>(
+  (
+    {
+      header,
+      content,
+      children,
+      action,
+      cancel,
+      queryKey,
+      type = "regular",
+      onSuccess,
     },
-    onSuccess: async (response: unknown) => {
-      if (
-        response &&
-        typeof response === "object" &&
-        "data" in response &&
-        response.data &&
-        typeof response.data === "object" &&
-        "message" in response.data
-      ) {
-        toast.success(response.data.message as string);
-      }
-      await queryClient.invalidateQueries({ queryKey: queryKey });
-      setOpened(false);
-      onSuccess?.();
-    },
-    onError: (error: unknown) => {
-      toastErrorMessage(error as Error);
-    },
-  });
+    ref
+  ) => {
+    const { t } = useTranslation();
+    const queryClient = useQueryClient();
 
-  return (
-    <Dialog
-      open={opened}
-      onOpenChange={(e) => {
-        setOpened(e);
-        if (!e) {
-          cancel?.action?.();
+    const [opened, setOpened] = useState(false);
+
+    useImperativeHandle(ref, () => ({
+      close: () => {
+        setOpened(false);
+      },
+    }));
+
+    const { mutate, isPending } = useMutation({
+      mutationKey: [queryKey],
+      mutationFn: async () => {
+        const response = await action?.action?.();
+        return response;
+      },
+      onSuccess: async (response: unknown) => {
+        if (
+          response &&
+          typeof response === "object" &&
+          "data" in response &&
+          response.data &&
+          typeof response.data === "object" &&
+          "message" in response.data
+        ) {
+          toast.success(response.data.message as string);
         }
-      }}
-    >
-      <DialogTrigger onClick={() => setOpened(true)}>{children}</DialogTrigger>
-      <DialogContent className="min-w-96 w-fit">
-        {header && (
-          <DialogHeader
-            className={!content ? "border-b-0" : ""}
-            autoFocus
-            tabIndex={1}
-          >
-            {header.title && <DialogTitle>{t(header.title)}</DialogTitle>}
-            {header.description && (
-              <DialogDescription>{t(header.description)}</DialogDescription>
-            )}
-          </DialogHeader>
-        )}
+        await queryClient.invalidateQueries({ queryKey: queryKey });
+        setOpened(false);
+        onSuccess?.();
+      },
+      onError: (error: unknown) => {
+        toastErrorMessage(error as Error);
+      },
+    });
 
-        {content}
-
-        <DialogFooter className={content ? "" : "border-t-0"}>
-          <DialogClose className="w-full sm:w-auto" onClick={cancel?.action}>
-            <MainBtn className="w-full" theme="outline">
-              {t(cancel?.text || defaultCancelText)}
-            </MainBtn>
-          </DialogClose>
-          {action && (
-            <MainBtn
-              onClick={() => mutate()}
-              isPending={isPending}
-              theme={type === "danger" ? "danger" : "main"}
+    return (
+      <Dialog
+        open={opened}
+        onOpenChange={(e) => {
+          setOpened(e);
+          if (!e) {
+            cancel?.action?.();
+          }
+        }}
+      >
+        <DialogTrigger onClick={() => setOpened(true)}>
+          {children}
+        </DialogTrigger>
+        <DialogContent className="min-w-96 w-fit">
+          {header && (
+            <DialogHeader
+              className={!content ? "border-b-0" : ""}
+              autoFocus
+              tabIndex={1}
             >
-              {t(action.text || defaultOkText)}
-            </MainBtn>
+              {header.title && <DialogTitle>{t(header.title)}</DialogTitle>}
+              {header.description && (
+                <DialogDescription>{t(header.description)}</DialogDescription>
+              )}
+            </DialogHeader>
           )}
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  );
-};
+
+          {content}
+
+          <DialogFooter className={content ? "" : "border-t-0"}>
+            <DialogClose className="w-full sm:w-auto" onClick={cancel?.action}>
+              <MainBtn className="w-full" theme="outline">
+                {t(cancel?.text || defaultCancelText)}
+              </MainBtn>
+            </DialogClose>
+            {action && (
+              <MainBtn
+                onClick={() => mutate()}
+                isPending={isPending}
+                theme={type === "danger" ? "danger" : "main"}
+              >
+                {t(action.text || defaultOkText)}
+              </MainBtn>
+            )}
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    );
+  }
+);
 
 export default DialogComponent;

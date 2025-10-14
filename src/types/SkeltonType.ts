@@ -20,4 +20,5 @@ export type SkeletonType =
   | "blogDetails"
   | "order-card"
   | "productDetails"
-  | "coupon";
+  | "coupon"
+  | "footer";

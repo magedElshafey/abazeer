@@ -1,13 +1,15 @@
 import { FC } from "react";
 import { FaStar } from "react-icons/fa";
-import type { Review } from "@/features/products/types/review.types";
+import type { MyReview } from "@/features/products/types/review.types";
 import DeleteReviewButton from "./DeleteReviewButton";
+import { useNavigate } from "react-router-dom";
 
 interface ReviewCardProps {
-  review: Review;
+  review: MyReview;
 }
 
 const ReviewCard: FC<ReviewCardProps> = ({ review }) => {
+  const navigate = useNavigate();
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, index) => (
@@ -24,7 +26,7 @@ const ReviewCard: FC<ReviewCardProps> = ({ review }) => {
         {/* Product Image */}
         <div className="w-20 h-20 bg-gray-200 rounded flex items-center justify-center overflow-hidden flex-shrink-0">
           <img
-            src="/images/600x600.jpg"
+            src={review.product.image ? review.product.image : `/images/600x600.jpg`}
             alt="Product"
             className="w-full h-full object-cover"
           />
@@ -33,8 +35,11 @@ const ReviewCard: FC<ReviewCardProps> = ({ review }) => {
         {/* Product and Review Info */}
         <div className="flex-1 min-w-0">
           {/* Product Name */}
-          <h3 className="font-semibold text-gray-900 text-sm mb-1">
-            Mock Product Name
+          <h3 
+            className="font-semibold text-blue-400 text-sm mb-1 hover:underline hover:text-blue-500 cursor-pointer"
+            onClick={() => navigate(`/products/${review.product.id}`)}
+          >
+            {review.product.name} 
           </h3>
 
           {/* Star Rating */}

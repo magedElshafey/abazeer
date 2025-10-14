@@ -26,7 +26,6 @@ export const apiRoutes = {
   updateProfile: "auth/updateProfile",
   setting: "settings",
   blogs: "blogs",
-  blog: "blog",
   flash_sale: "products/flash-sale",
   reviews: "reviews",
   myReviews: "reviews/my-reviews",
@@ -36,4 +35,5 @@ export const apiRoutes = {
   allCopouns: "coupons/list",
   applyCoupon: "coupons/check",
   orders: "orders",
+  features: "/features/list",
 };

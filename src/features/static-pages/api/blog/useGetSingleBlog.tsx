@@ -5,9 +5,9 @@ import type { BlogType } from "../../types/blog.type";
 import { delayOptions } from "@/lib/tanstack-react-query/delayOptions";
 const useGetSingleBlog = (id: number) => {
   return useQuery({
-    queryKey: [`${apiRoutes?.blog}-${id}`],
+    queryKey: [`${apiRoutes?.blogs}-${id}`],
     queryFn: async () => {
-      const { data } = await Axios.get(`${apiRoutes?.blog}/${id}`);
+      const { data } = await Axios.get(`${apiRoutes?.blogs}/${id}`);
       return data?.data as BlogType;
     },
     enabled: !!id,

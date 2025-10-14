@@ -5,6 +5,7 @@ import PriceFilter from "@/common/components/double-slider/PriceFilter";
 import CategoryFilter from "./CategoryFilter";
 import BrandFilter from "./BrandFilter";
 import DiscountFilter from "./DiscountFilter";
+import OfferFilter from "./OfferFilter";
 
 const ProductsFilters: FC = () => {
     const { t } = useTranslation();
@@ -72,6 +73,11 @@ const ProductsFilters: FC = () => {
                     {/* Discount Filter */}
                     <div className="bg-background-gray px-2 py-4">
                         <DiscountFilter />
+                    </div>
+
+                    {/* Offer Filter */}
+                    <div className="bg-background-gray px-2 py-4">
+                        <OfferFilter />
                     </div>
                 </div>
             </div>

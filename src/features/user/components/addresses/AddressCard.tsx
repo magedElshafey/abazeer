@@ -12,12 +12,14 @@ interface AddressCardProps {
   address: Address;
   hasEdit?: boolean;
   hasDelete?: boolean;
+  hasDefault?: boolean;
 }
 
 const AddressCard: FC<AddressCardProps> = ({
   address,
   hasDelete = true,
   hasEdit = true,
+  hasDefault = true,
 }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -45,14 +47,16 @@ const AddressCard: FC<AddressCardProps> = ({
               {t("default")}
             </span>
           ) : (
-            <MainBtn
-              type="button"
-              theme="outline"
-              className="!px-3 !py-1 text-xs"
-              text="make_default"
-              onClick={handleMakeDefault}
-              isPending={isPending}
-            />
+            hasDefault && (
+              <MainBtn
+                type="button"
+                theme="outline"
+                className="!px-3 !py-1 text-xs"
+                text="make_default"
+                onClick={handleMakeDefault}
+                isPending={isPending}
+              />
+            )
           )}
         </div>
         <p className="text-sm text-gray-600 mt-1">{address.postcode}</p>

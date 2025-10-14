@@ -1,11 +1,9 @@
 import CartIcon from "../icons/CartIcon";
-import CompareIcon from "../icons/CompareIcon";
 import WhishListIcon from "../icons/WhishListIcon";
 
 const NavIcons = () => {
   return (
-    <div className="flex items-center gap-x-2 sm:gap-x-3 md:gap-x-7 shrink-0">
-      <CompareIcon />
+    <div className="flex items-center gap-x-2 sm:gap-x-3 md:gap-x-4 shrink-0">
       <WhishListIcon />
       <CartIcon />
     </div>

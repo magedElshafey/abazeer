@@ -12,6 +12,7 @@ export type FooterSettings = Pick<
   | "social_facebook"
   | "social_twitter"
   | "social_instagram"
+  | "site_description"
 >;
 const Footer: React.FC<FooterSettings> = ({
   site_logo,
@@ -21,6 +22,7 @@ const Footer: React.FC<FooterSettings> = ({
   contact_address,
   contact_email,
   contact_phone,
+  site_description
 }) => {
   return (
     <footer className="bg-white shadow-md" role="contentinfo">
@@ -30,6 +32,7 @@ const Footer: React.FC<FooterSettings> = ({
         contact_address={contact_address}
         contact_email={contact_email}
         contact_phone={contact_phone}
+        slogan={site_description}
       />
       <CopyRight
         social_facebook={social_facebook}

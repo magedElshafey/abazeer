@@ -21,7 +21,7 @@ const NewsLetter = () => {
       </h3>
 
       <p className="mb-4 text-xs text-gray-500 leading-relaxed">
-        {t("Subscribe to our newsletter for latest offers and updates.")}
+        {t("subscribe to our newsletter for latest offers and updates")}
       </p>
 
       <form

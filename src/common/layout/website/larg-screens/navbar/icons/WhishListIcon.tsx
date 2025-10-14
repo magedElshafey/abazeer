@@ -11,7 +11,7 @@ const WhishListIcon = () => {
     <LoginPrompt>
       <Link to="/my-profile/favorites" className="relative">
         <FaRegHeart size={20} className="text-transition" />
-        <div className="absolute -left-4 -top-3 bg-orangeColor flex items-center justify-center text-nowrap w-5 h-5 text-sm">
+        <div className="absolute -end-4 -top-3 bg-orangeColor flex items-center justify-center text-nowrap w-5 h-5 text-sm">
           <p>
             {
               isLoading ?

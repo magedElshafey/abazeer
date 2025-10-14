@@ -1,4 +1,11 @@
-import { lazy, Suspense, useState, useCallback, useEffect } from "react";
+import {
+  lazy,
+  Suspense,
+  useState,
+  useCallback,
+  useEffect,
+  useRef,
+} from "react";
 import { useTranslation } from "react-i18next";
 import SEO from "@/common/components/seo/Seo";
 import OrderDetails from "../components/order-details/OrderDetails";
@@ -15,16 +22,25 @@ import { Address } from "@/features/user/types/addresses.types";
 import EmptyStateCard from "@/features/user/components/common/EmptyStateCard";
 import { FiMapPin } from "react-icons/fi";
 import DialogComponent from "@/common/components/dialog/dialog";
+import useCheckout from "../api/checkout/useCheckout";
+import { useCart } from "@/store/CartProvider";
+import handlePromisError from "@/utils/handlePromiseError";
+import { toast } from "sonner";
+import MainTextArea from "@/common/components/inputs/MainTextArea";
 const Coupon = lazy(() => import("../components/copoun/Coupon"));
 
 const Checkout = () => {
+  const dialogRef = useRef<{
+    close: () => void;
+  }>(null);
   const { t } = useTranslation();
   const [code, setCode] = useState("");
   const [isCouponVisible, setCouponVisible] = useState(false);
+  const { items } = useCart();
   const [method, setMethod] = useState<Payment>(paymentMethods[0]);
   const addressQueryResult = useGetUserAddresses();
   const [localAddress, setLocalAddress] = useState<Address>();
-  console.log("address", addressQueryResult);
+  const [notes, setNotes] = useState("");
   useEffect(() => {
     if (
       addressQueryResult.isSuccess &&
@@ -48,15 +64,40 @@ const Checkout = () => {
     (e: React.ChangeEvent<HTMLInputElement>) => setCode(e.target.value),
     []
   );
-
+  const handleNotesChange = useCallback(
+    (e: React.ChangeEvent<HTMLTextAreaElement>) => setNotes(e.target.value),
+    []
+  );
   const toggleCouponInput = useCallback(
     () => setCouponVisible((prev) => !prev),
     []
   );
-  const handleLocalAddressChange = useCallback(
-    (value: Address) => setLocalAddress(value),
-    []
-  );
+  const handleLocalAddressChange = useCallback((value: Address) => {
+    setLocalAddress(value);
+    dialogRef?.current?.close();
+  }, []);
+  const { isPending, mutateAsync } = useCheckout();
+  const handleCheckoutClick = async () => {
+    try {
+      const payload = {
+        products: items.map((item) => ({
+          product_id: item.id,
+          quantity: item.quantity,
+        })),
+        payment_type: method?.type,
+        notes,
+        address_id: localAddress?.id ?? 0,
+        // coupon_code: code,
+      };
+      const response = await mutateAsync(payload);
+      if (response?.status) {
+        toast.success(response?.message);
+      }
+    } catch (error) {
+      handlePromisError(error);
+    }
+  };
+
   return (
     <>
       <SEO title={t("checkout")} />
@@ -116,6 +157,7 @@ const Checkout = () => {
                 <>
                   <AddressCard address={localAddress as Address} />
                   <DialogComponent
+                    ref={dialogRef}
                     header={{
                       title: "my addresses",
                     }}
@@ -137,6 +179,7 @@ const Checkout = () => {
                               address={address}
                               hasEdit={false}
                               hasDelete={false}
+                              hasDefault={false}
                             />
                           </button>
                         ))}
@@ -166,8 +209,22 @@ const Checkout = () => {
               paymentMethods={paymentMethods}
             />
           </div>
+          <div className="mt-4">
+            <MainTextArea
+              value={notes}
+              onChange={handleNotesChange}
+              label="order notes"
+              placeholder="note your order"
+            />
+          </div>
           <div className="flex-center mt-4">
-            <MainBtn text="checkout" theme="secondary" />
+            <MainBtn
+              text="checkout"
+              theme="secondary"
+              onClick={handleCheckoutClick}
+              disabled={isPending}
+              isPending={isPending}
+            />
           </div>
         </div>
       </main>
