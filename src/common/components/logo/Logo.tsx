@@ -1,20 +1,29 @@
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import type { NavbarType } from "@/types/navbar.types";
+import useGetWebsiteSettings from "@/features/settings/api/useGetWebsiteSettings";
+import Skeleton from "../loader/skeltons/Skeleton";
 
 const Logo: React.FC<NavbarType> = ({ logo }) => {
   const { pathname } = useLocation();
   const isAuthPages = pathname.startsWith("/auth");
-  console.log("logo from api", logo);
+  const { data, isLoading } = useGetWebsiteSettings();
   return (
     <Link to="/" className="shrink-0">
-      <img
-        alt="Abazeer logo"
-        src={logo || "/images/logo.png"}
-        className={`${
-          isAuthPages ? "h-[50px]" : "h-[44px]"
-        } w-auto object-contain`}
-      />
+      {
+        isLoading ?
+          <div className="h-[50px] w-20 overflow-hidden">
+
+            <Skeleton type="hero" />
+          </div>
+          :
+          <img
+            alt="Abazeer logo"
+            src={logo || data?.site_logo || "/images/logo.png"}
+            className={`${isAuthPages ? "h-[50px]" : "h-[44px]"
+              } w-auto object-contain`}
+          />
+      }
     </Link>
   );
 };

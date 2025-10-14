@@ -27,7 +27,7 @@ const MobileNavbar: React.FC<NavbarType> = ({ logo }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const logoMemo = useMemo(() => <Logo logo={logo} />, []);
+  const logoMemo = useMemo(() => <Logo logo={logo} />, [logo]);
 
   // ✅ Trigger fade-in once on mount
   useEffect(() => {

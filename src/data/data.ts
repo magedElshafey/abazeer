@@ -158,20 +158,20 @@ export const helpCenterLinks: Nav[] = [
 ];
 export const myAccount: Nav[] = [
   {
-    name: "my cart",
-    link: "/my-cart",
-  },
-  {
     name: "my whishlist",
-    link: "/my-whishlist",
+    link: "/my-profile/favorites",
   },
   {
     name: "my addresses",
-    link: "/my-addresses",
+    link: "my-profile/addresses",
   },
   {
     name: "my profile",
-    link: "/my-profile",
+    link: "/my-profile/settings",
+  },
+  {
+    name: "orders",
+    link: "/my-profile/orders",
   },
 ];
 export const LANGUAGES: Lang[] = [
