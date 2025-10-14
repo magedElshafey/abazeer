@@ -1,11 +1,15 @@
 import { FC } from "react";
 import FavoritesTable from "../components/FavoritesTable";
-import Hero from "@/common/components/hero/Hero";
+import { useTranslation } from "react-i18next";
 
 const Favorites: FC = () => {
+    const {t} = useTranslation();
+
     return (
         <div>
-            <Hero title="favorites" />
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6">
+                {t("favorites")}
+            </h1>
             <FavoritesTable />
         </div>
     );

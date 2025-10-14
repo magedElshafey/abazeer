@@ -12,6 +12,7 @@ export interface Setting {
   slogan?: string;
   fav_icon: string | null;
   site_description_ar: string | null;
+  hot_line: string;
 }
 
 export interface Feature {

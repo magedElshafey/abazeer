@@ -10,6 +10,7 @@ import { Outlet } from "react-router-dom";
 import Footer from "./common/footer/Footer";
 import { useTranslation } from "react-i18next";
 import FooterSkeleton from "@/common/components/loader/skeltons/FooterSkeleton";
+import NavbarSkeleton from "@/common/components/loader/skeltons/NavbarSkeleton";
 
 const WebsiteLayout = () => {
   const { i18n: { language } } = useTranslation();
@@ -23,9 +24,17 @@ const WebsiteLayout = () => {
       <div className="md:hidden">
         <MobileWidget />
       </div>
-      <Header />
-      <StickyNavbar logo={data?.site_logo || "/images/logo.png"} />
-      <CategoriesHeader />
+      
+      {isLoading ? (
+        <NavbarSkeleton />
+      ) : (
+        <>
+          <Header />
+          <StickyNavbar logo={data?.site_logo || "/images/logo.png"} hotline={data?.hot_line} />
+          <CategoriesHeader />
+        </>
+      )}
+      
       <Breadcrumb />
 
       <main className="grow py-2 flex flex-col">

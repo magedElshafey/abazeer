@@ -30,8 +30,6 @@ const FavoritesTable: FC = () => {
         return stockQuantity > 0 ? "text-green-600" : "text-red-600";
     };
 
-    console.log(favoritesQuery.data);
-
     return (
         <FetchHandler
             queryResult={favoritesQuery}
