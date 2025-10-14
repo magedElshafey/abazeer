@@ -123,13 +123,13 @@ const Search: React.FC<SearchProps> = memo(({ onClose }) => {
   return (
     <div className="flex-1 bg-background-gray p-3 flex items-center gap-3 min-w-0 relative">
       {/* Dropdown */}
-      <div className="relative flex-shrink-0 w-[200px]" ref={dropdownRef}>
+      <div className="relative flex-shrink-0" ref={dropdownRef}>
         <button
           type="button"
           onClick={toggleDropdown}
           aria-haspopup="menu"
           aria-expanded={showDropDown}
-          className="flex items-center gap-2 w-full truncate focus:outline-none focus:ring-2 focus:ring-orangeColor"
+          className="flex items-center gap-2 w-fit truncate focus:outline-none focus:ring-2 focus:ring-orangeColor"
         >
           <span className="truncate">
             {selectedOpt ? selectedOpt.name : t("all categories")}
