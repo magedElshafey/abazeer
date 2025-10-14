@@ -1,127 +1,140 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
-import { useKeenSlider } from "keen-slider/react";
-import { IoChevronBack, IoChevronForward } from "react-icons/io5";
-import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
-import "keen-slider/keen-slider.min.css";
-import { SliderHome } from "../../types/slider.types";
+import React, { useEffect, useState, useRef } from 'react';
+import { useKeenSlider } from 'keen-slider/react';
+import 'keen-slider/keen-slider.min.css';
+import { IoChevronBack, IoChevronForward } from 'react-icons/io5';
+import { useTranslation } from 'react-i18next';
+import { SliderHome } from '../../types/slider.types';
+import { FaImage } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
-interface HomeSliderProps {
-  sliders: SliderHome[];
+interface Props {
+  sliders: SliderHome[]
 }
 
-const AUTOPLAY_INTERVAL = 4000;
-
-const HomeSlider: React.FC<HomeSliderProps> = React.memo(({ sliders }) => {
+const HomeSlider: React.FC<Props> = ({ sliders }) => {
   const [loaded, setLoaded] = useState(false);
-  const autoplayRef = useRef<NodeJS.Timeout | null>(null);
+  const { i18n: {language} } = useTranslation();
   const navigate = useNavigate();
-
-  const {
-    i18n: { language },
-  } = useTranslation();
+  const autoplayRef = useRef<NodeJS.Timeout | null>(null);
 
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
+    initial: 0,
+    created() {
+      setLoaded(true);
+    },
     loop: true,
-    mode: "free-snap",
-    slides: { perView: 1 },
-    created: () => setLoaded(true),
+    mode: 'free-snap',
+    slides: {
+      perView: 1,
+      spacing: 0,
+    },
   });
 
-  // Autoplay logic
-  const startAutoplay = useCallback(() => {
-    if (autoplayRef.current) clearInterval(autoplayRef.current);
-    autoplayRef.current = setInterval(() => {
-      instanceRef.current?.next();
-    }, AUTOPLAY_INTERVAL);
-  }, [instanceRef]);
-
-  const stopAutoplay = useCallback(() => {
-    if (autoplayRef.current) clearInterval(autoplayRef.current);
-  }, []);
-
+  // Autoplay functionality
   useEffect(() => {
-    if (loaded) startAutoplay();
-    return stopAutoplay;
-  }, [loaded, startAutoplay, stopAutoplay]);
+    if (loaded && instanceRef.current && sliders.length > 1) {
+      const startAutoplay = () => {
+        autoplayRef.current = setInterval(() => {
+          if (instanceRef.current) {
+            instanceRef.current.next();
+          }
+        }, 4000);
+      };
 
-  const handleNavigate = useCallback(
-    (item: SliderHome) => {
-      if (item?.id) navigate(`/products/${item.id}`);
-    },
-    [navigate]
-  );
+      startAutoplay();
 
-  // Keyboard navigation
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "ArrowLeft") instanceRef.current?.prev();
-      if (e.key === "ArrowRight") instanceRef.current?.next();
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [instanceRef]);
+      return () => {
+        clearInterval(autoplayRef.current || "");
+      };
+    }
+  }, [loaded, instanceRef, sliders]);
+
+  const handleMouseEnter = () => {
+    if (autoplayRef.current) {
+      clearInterval(autoplayRef.current);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (loaded && instanceRef.current && sliders.length > 1) {
+      if(autoplayRef.current) clearInterval(autoplayRef.current);
+      autoplayRef.current = setInterval(() => {
+        if (instanceRef.current) {
+          instanceRef.current.next();
+        }
+      }, 4000);
+    }
+  };
+
+  const handleManualNavigation = () => {
+    // Clear existing interval
+    if (autoplayRef.current) {
+      clearInterval(autoplayRef.current);
+    }
+    
+    // Restart autoplay after manual navigation
+    if (loaded && instanceRef.current && sliders.length > 1) {
+      autoplayRef.current = setInterval(() => {
+        if (instanceRef.current) {
+          instanceRef.current.next();
+        }
+      }, 4000);
+    }
+  };
+
+  if(!sliders.length) return (
+    <div className='h-full w-full flex-center overflow-hidden py-10 rounded-md bg-background-gray'>
+      <FaImage className='text-text-gray' size={80} /> 
+    </div>
+  )
 
   return (
-    <div
-      className="relative w-full h-full rounded-md overflow-hidden group"
-      onMouseEnter={stopAutoplay}
-      onMouseLeave={startAutoplay}
+    <div 
+      className="relative w-full h-full rounded-md overflow-hidden"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
-      <div dir="ltr" ref={sliderRef} className="keen-slider h-full">
-        {sliders.map((item, index) => (
-          <button
-            onClick={() => handleNavigate(item)}
-            key={item?.id ?? index}
-            className="keen-slider__slide cursor-pointer focus:outline-none"
-            aria-label={`View product: ${
-              item?.description || "Slide " + (index + 1)
-            }`}
-          >
-            <img
-              src={item?.image || "/images/placeholder.jpg"}
-              alt={item?.description || `Slide ${index + 1}`}
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              loading="lazy"
-              decoding="async"
-              onError={(e) => {
-                (e.target as HTMLImageElement).src = "/images/placeholder.jpg";
-              }}
-            />
-          </button>
+      <div dir='ltr' ref={sliderRef} className="keen-slider h-full">
+        {sliders.map((slider, index) => (
+          <div key={index} className="keen-slider__slide">
+            <div onClick={() => navigate(`/products/${slider.product_id}`)} className="relative w-full h-full cursor-pointer">
+              <img
+                src={slider.image}
+                alt={`Banner ${index + 1}`}
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </div>
+          </div>
         ))}
       </div>
 
-      {loaded && instanceRef.current && (
-        <div className="absolute bottom-4 end-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+      {loaded && instanceRef.current && sliders.length > 1 && (
+        <div className="absolute bottom-4 end-4 flex gap-2">
           <button
+            className="bg-white hover:bg-orangeColor rounded flex-center p-1 text-text-gray hover:text-black transition-colors duration-300"
             onClick={() => {
-              instanceRef.current?.[language === "ar" ? "next" : "prev"]();
-              startAutoplay();
+                instanceRef.current?.[language === "ar" ? "next" : "prev"]();
+                handleManualNavigation();
             }}
             aria-label="Previous slide"
-            className="bg-white hover:bg-orangeColor rounded-full p-2 shadow-md text-gray-700 hover:text-black transition"
           >
-            <IoChevronBack
-              className={`text-lg ${language === "ar" ? "rotate-180" : ""}`}
-            />
+            <IoChevronBack className={language === "ar" ? "rotate-180" : undefined} />
           </button>
           <button
+            className="bg-white hover:bg-orangeColor rounded flex-center p-1 text-text-gray hover:text-black transition-colors duration-300"
             onClick={() => {
               instanceRef.current?.[language === "ar" ? "prev" : "next"]();
-              startAutoplay();
+              handleManualNavigation();
             }}
             aria-label="Next slide"
-            className="bg-white hover:bg-orangeColor rounded-full p-2 shadow-md text-gray-700 hover:text-black transition"
           >
-            <IoChevronForward
-              className={`text-lg ${language === "ar" ? "rotate-180" : ""}`}
-            />
+            <IoChevronForward className={language === "ar" ? "rotate-180" : undefined} />
           </button>
         </div>
       )}
     </div>
   );
-});
+};
 
 export default HomeSlider;
