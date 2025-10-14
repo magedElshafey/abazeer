@@ -11,4 +11,5 @@ export interface Setting {
   site_maintenance: boolean;
   slogan?: string;
   fav_icon: string | null;
+  site_description_ar: string | null;
 }

@@ -8,8 +8,10 @@ import CategoriesHeader from "./larg-screens/navbar/category-header/CategoriesHe
 import Breadcrumb from "./common/breadcrumb/components/Breadcrumb";
 import { Outlet } from "react-router-dom";
 import Footer from "./common/footer/Footer";
+import { useTranslation } from "react-i18next";
 
 const WebsiteLayout = () => {
+  const { i18n: { language } } = useTranslation();
   const { data } = useGetWebsiteSettings();
   return (
     <div className="flex flex-col min-h-screen">
@@ -37,6 +39,7 @@ const WebsiteLayout = () => {
         social_facebook={data?.social_facebook || null}
         social_twitter={data?.social_twitter || null}
         social_instagram={data?.social_instagram || null}
+        site_description={(language === "en" ? data?.site_description : data?.site_description_ar) || ""}
       />
     </div>
   );

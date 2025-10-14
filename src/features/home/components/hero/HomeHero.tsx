@@ -13,7 +13,7 @@ const HomeHero: FC<HomeHeroProps> = memo(({ sliders, banner }) => {
   const navigate = useNavigate();
 
   const handleNavigate = useCallback(() => {
-    navigate("/offers");
+    navigate("/products?filter-in_offer=true");
   }, [navigate]);
 
   return (

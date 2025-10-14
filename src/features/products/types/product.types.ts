@@ -78,6 +78,7 @@ export interface Filters {
   category?: string;
   brand?: string[];
   has_discount?: string;
+  in_offer?: string;
 }
 
 export interface ProductsFiltersContext {
