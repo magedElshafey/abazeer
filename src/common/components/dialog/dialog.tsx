@@ -1,4 +1,4 @@
-import { useState, type FC, type PropsWithChildren, type ReactNode } from "react"
+import { forwardRef, useImperativeHandle, useState, type PropsWithChildren, type ReactNode } from "react"
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/shadcn/ui/dialog";
 import { useTranslation } from "react-i18next";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -9,6 +9,10 @@ import MainBtn from "../buttons/MainBtn";
 interface ActionType {
     action?: (() => void) | (() => Promise<void>);
     text?: string;
+}
+
+interface RefType {
+    close: () => void;
 }
 
 interface Props {
@@ -27,7 +31,7 @@ interface Props {
 const defaultCancelText = "cancel";
 const defaultOkText = "ok";
 
-const DialogComponent: FC<PropsWithChildren<Props>> = ({
+const DialogComponent = forwardRef<RefType, PropsWithChildren<Props>>(({
     header,
     content,
     children,
@@ -36,11 +40,17 @@ const DialogComponent: FC<PropsWithChildren<Props>> = ({
     queryKey,
     type = "regular",
     onSuccess
-}) => {
+}, ref) => {
     const { t } = useTranslation();
     const queryClient = useQueryClient();
 
     const [opened, setOpened] = useState(false);
+
+    useImperativeHandle(ref, () => ({
+        close: () => {
+            setOpened(false);
+        }
+    }))
 
     const {
         mutate,
@@ -133,6 +143,6 @@ const DialogComponent: FC<PropsWithChildren<Props>> = ({
             </DialogContent>
         </Dialog>
     )
-}
+})
 
 export default DialogComponent;
