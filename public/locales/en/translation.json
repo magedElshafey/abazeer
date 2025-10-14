@@ -302,5 +302,8 @@
   "shipping methods": "shipping methods",
   "local pickup": "local pickup",
   "flat rate": "flat rate",
-  "free shipping": "free shipping"
+  "free shipping": "free shipping",
+  "subtotal": "subtotal",
+  "Tax (VAT - 10%, Import Tax - 15%)": "Tax (VAT - 10%, Import Tax - 15%)",
+  "shipping fee": "shipping fee"
 }

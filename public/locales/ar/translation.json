@@ -309,5 +309,8 @@
   "shipping methods": "طرق الشحن",
   "local pickup": "استلام محلي",
   "flat rate": "سعر موحد",
-  "free shipping": "شحن مجاني"
+  "free shipping": "شحن مجاني",
+  "subtotal": "المجموع الفرعي",
+  "Tax (VAT - 10%, Import Tax - 15%)": "الضريبة (ضريبة القيمة المضافة - 10٪، ضريبة الاستيراد - 15٪)",
+  "shipping fee": "رسوم الشحن"
 }

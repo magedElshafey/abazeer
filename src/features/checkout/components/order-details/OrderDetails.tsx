@@ -10,7 +10,7 @@ import { shippingMethods } from "@/data/data";
 import { Shippings } from "../../types/shipping.types";
 
 const OrderDetails = () => {
-  const { items } = useCart();
+  const { items, total } = useCart();
   const { t } = useTranslation();
   const queryClient = useQueryClient();
 
@@ -18,7 +18,7 @@ const OrderDetails = () => {
   const isLoading = cartQuery?.status === "pending";
   const showSkeleton = isLoading || !items || items.length === 0;
   const [method, setMethod] = useState<Shippings>(shippingMethods[0]);
-
+  const tax = 0.15 * total;
   return (
     <div className="w-full bg-slate-100 py-3 px-5">
       <div className="pb-3 border-b">
@@ -48,9 +48,35 @@ const OrderDetails = () => {
         </ul>
       </div>
 
-      <div className="py-3">
+      <div className="py-3 border-b">
         <h5 className="mb-4">{t("shipping methods")}</h5>
         <ShippingMethods method={method} setMethod={setMethod} />
+      </div>
+      <div className="py-3">
+        <div className="flex-between mb-3">
+          <p>{t("subtotal")}</p>
+          <p className="font-medium">
+            {total} {t("SAR")}
+          </p>
+        </div>
+        <div className="flex-between mb-3">
+          <p>{t("Tax (VAT - 10%, Import Tax - 15%)")}</p>
+          <p className="font-medium">
+            {tax} {t("SAR")}
+          </p>
+        </div>
+        <div className="flex-between mb-3">
+          <p>{t("shipping fee")}</p>
+          <p className="font-medium">
+            {method.value} {method?.value !== 0 ? t("SAR") : null}
+          </p>
+        </div>
+        <div className="flex-between">
+          <p>{t("Total")}</p>
+          <p className="font-medium">
+            {tax + total + method?.value} {t("SAR")}
+          </p>
+        </div>
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 export interface Shippings {
   id: number;
   name: string;
-  coast: string;
+  coastLabel: string;
+  value: number;
 }

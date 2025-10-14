@@ -181,11 +181,13 @@ export const shippingMethods: Shippings[] = [
   {
     id: 1,
     name: "local pickup",
-    coast: "free shipping",
+    coastLabel: "free shipping",
+    value: 0,
   },
   {
     id: 2,
     name: "flat rate",
-    coast: "30",
+    coastLabel: "30",
+    value: 30,
   },
 ];

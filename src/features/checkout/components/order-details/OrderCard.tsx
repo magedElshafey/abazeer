@@ -44,7 +44,7 @@ const OrderCard: React.FC<OrderCardProps> = memo(({ item }) => {
       {/* Product Image */}
       <div className="relative w-24 h-24 sm:w-28 sm:h-28 flex-shrink-0">
         <img
-          src={item?.image || "/images/placeholder.png"}
+          src={item?.image || "/images/400x400.png"}
           alt={item?.name}
           loading="lazy"
           className="w-full h-full object-contain rounded-xl border border-gray-100 bg-gray-50"

@@ -26,7 +26,8 @@ const ShippingMethods: React.FC<ShippingMethodsProps> = ({
             } `}
           ></div>
           <p>
-            {t(item?.name)} - {item?.id === 1 ? t(item.coast) : item.coast}{" "}
+            {t(item?.name)} -{" "}
+            {item?.id === 1 ? t(item.coastLabel) : item.coastLabel}{" "}
             {item?.id !== 1 ? t("SAR") : null}
           </p>
         </li>

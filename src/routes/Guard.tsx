@@ -22,7 +22,7 @@ const Guard: React.FC<GuardProps> = ({
   if (loading) return null;
   if (guestOnly && user) {
     const from = (location.state as any)?.from;
-    return <Navigate to={from || redirectTo || "/my-profile"} replace />;
+    return <Navigate to={from || redirectTo || "/"} replace />;
   }
 
   if (requireAuth && !user) {
