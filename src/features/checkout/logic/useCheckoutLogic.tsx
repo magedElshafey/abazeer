@@ -7,19 +7,26 @@ import useCheckout from "../api/checkout/useCheckout";
 import type { Payment } from "../types/payment.type";
 import type { Address } from "@/features/user/types/addresses.types";
 // data
-import { paymentMethods } from "@/data/data";
+import { paymentMethods, shippingMethods } from "@/data/data";
 // toast
 import { toast } from "sonner";
 // utils
 import handlePromisError from "@/utils/handlePromiseError";
+import { Shippings } from "../types/shipping.types";
 
 const useCheckoutLogic = () => {
   const dialogRef = useRef<{ close: () => void }>(null);
   const { items } = useCart();
 
   // ✅ Group related states logically
+  const [shiipingMethod, setShippingMethod] = useState<Shippings>(
+    shippingMethods[0]
+  );
+
   const [coupon, setCoupon] = useState({ code: "", visible: false });
-  const [method, setMethod] = useState<Payment>(paymentMethods[0]);
+  const [paymentMethod, setPaymentMethod] = useState<Payment>(
+    paymentMethods[0]
+  );
   const [localAddress, setLocalAddress] = useState<Address | undefined>();
   const [notes, setNotes] = useState("");
 
@@ -66,7 +73,7 @@ const useCheckoutLogic = () => {
           product_id: item.id,
           quantity: item.quantity,
         })),
-        payment_type: method.type,
+        payment_type: paymentMethod.type,
         notes,
         address_id: localAddress?.id ?? 0,
         coupon_code: coupon.code || undefined,
@@ -77,16 +84,17 @@ const useCheckoutLogic = () => {
     } catch (error) {
       handlePromisError(error);
     }
-  }, [items, method, notes, localAddress, coupon.code, mutateAsync]);
+  }, [items, paymentMethod, notes, localAddress, coupon.code, mutateAsync]);
 
   // ✅ Memoize returned object for better performance
   return useMemo(
     () => ({
       states: {
         coupon,
-        method,
+        paymentMethod,
         localAddress,
         notes,
+        shiipingMethod,
       },
       handlers: {
         toggleCouponInput,
@@ -95,16 +103,17 @@ const useCheckoutLogic = () => {
         handleLocalAddressChange,
         handleCheckoutClick,
         setCoupon,
-        setMethod,
+        setPaymentMethod,
+        setShippingMethod,
       },
-      data: { paymentMethods },
+      data: { paymentMethods, shippingMethods },
       queries: { addressQuery },
       refs: { dialogRef },
       isPending,
     }),
     [
       coupon,
-      method,
+      paymentMethod,
       localAddress,
       notes,
       toggleCouponInput,
@@ -114,6 +123,7 @@ const useCheckoutLogic = () => {
       handleCheckoutClick,
       addressQuery,
       isPending,
+      shiipingMethod,
     ]
   );
 };
