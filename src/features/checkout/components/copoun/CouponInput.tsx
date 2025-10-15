@@ -9,9 +9,9 @@ import MainBtn from "@/common/components/buttons/MainBtn";
 interface CouponInputProps {
   code: string;
   readOnly?: boolean;
-  handleCodeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  setCode: (value: string) => void;
-  setShowCouponInput: (value: boolean) => void;
+  handleCodeChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  setCode?: (value: string) => void;
+  setShowCouponInput?: (value: boolean) => void;
 }
 
 const CouponInput = memo(
@@ -33,9 +33,8 @@ const CouponInput = memo(
           if (response?.status) {
             toast.success(response.message);
             if (!readOnly) {
-              setCode("");
-              setShowCouponInput(false);
-              // Return focus to input after reset
+              setCode?.("");
+              setShowCouponInput?.(false);
               inputRef.current?.focus();
             }
           }
@@ -60,7 +59,7 @@ const CouponInput = memo(
             readOnly={readOnly}
             value={code}
             placeholder={t("enter your coupon code")}
-            onChange={handleCodeChange}
+            onChange={(e) => handleCodeChange?.(e)}
             aria-invalid={!readOnly && !code ? true : false}
             aria-label={t("enter your coupon code")}
             className="flex-1 bg-transparent border-none outline-none text-gray-800 placeholder:text-gray-500"

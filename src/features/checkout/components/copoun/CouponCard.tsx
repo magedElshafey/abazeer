@@ -1,25 +1,3 @@
-// import type { Copoun } from "../../types/copoun.type";
-// import { useTranslation } from "react-i18next";
-// import CouponInput from "./CouponInput";
-// interface CouponCardProps {
-//   data: Copoun;
-// }
-// const CouponCard: React.FC<CouponCardProps> = ({ data }) => {
-//   const { t } = useTranslation();
-
-//   return (
-//     <div className="w-full p-3 rounded-md shadow-md mb-3 border">
-//       <p className="text-md font-bold text-orangeColor mb-2">
-//         {Number(data?.value)?.toFixed()}{" "}
-//         {data?.type_option === "percentage" ? "%" : t("SAR")}
-//       </p>
-//       <p className="mb-2">{data?.description}</p>
-//       <CouponInput code={data?.code} readOnly={true} />
-//     </div>
-//   );
-// };
-
-// export default CouponCard;
 import { memo } from "react";
 import { useTranslation } from "react-i18next";
 import type { Copoun } from "../../types/copoun.type";
@@ -55,7 +33,7 @@ const CouponCard: React.FC<CouponCardProps> = memo(({ data }) => {
       >
         {data.description}
       </p>
-      <CouponInput code={data.code} readOnly />
+      <CouponInput code={data.code} readOnly={true} />
     </li>
   );
 });
