@@ -63,8 +63,22 @@ export const websiteRoutes: RouteObject = {
         },
         {
           path: "orders",
-          element: lazyLoad(() => import("../features/user/pages/Orders")),
           handle: { breadcrumb: "orders" },
+          children: [
+            {
+              index: true,
+              element: lazyLoad(() => import("../features/user/pages/orders/Orders")),
+            },
+            {
+              path: ":id",
+              element: lazyLoad(() => import("../features/user/pages/orders/OrderDetails")),
+              handle: {
+                breadcrumb: "order number",
+                queryKey: [apiRoutes.orders],
+                display_attribute: "order_number"
+              }
+            }
+          ]
         },
         {
           path: "settings",
@@ -169,6 +183,7 @@ export const websiteRoutes: RouteObject = {
       ),
       handle: {
         breadcrumb: "blog name",
+        queryKey: [apiRoutes.blogs],
       },
     },
     {
