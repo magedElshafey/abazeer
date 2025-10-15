@@ -315,5 +315,11 @@
   "enter your coupon code": "enter your coupon code",
   "cash on delivery (COD)": "cash on delivery (COD)",
   "Please pay money directly to the postman, if you choose cash on delivery method (COD).": "Please pay money directly to the postman, if you choose cash on delivery method (COD).",
-  "change address": "change address"
+  "change address": "change address",
+  "Your request has been completed successfully": "Your request has been completed successfully",
+  "Thank you for your trust! You can track your order status from the Orders page, or return to the Home page.": "Thank you for your trust! You can track your order status from the Orders page, or return to the Home page.",
+  "Back to main page": "Back to home page",
+  "The order could not be completed": "The order could not be completed",
+  "Something went wrong while processing your order. Please try again or contact support if the issue persists.": "Something went wrong while processing your order. Please try again or contact support if the issue persists.",
+  "Try Again": "Try Again"
 }
