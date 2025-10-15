@@ -59,7 +59,7 @@ const ProductCard: React.FC<ProductCardProps> = memo(
             className="w-16 absolute top-0 left-0 p-1 flex-center bg-orangeColor text-white font-bold z-40 rounded-br-lg"
             aria-label={`${product.discount_percentage}% ${t("discount")}`}
           >
-            <p>{product.discount_percentage}%</p>
+            <p>{Math.ceil(product.discount_percentage)}%</p>
           </div>
         )}
 

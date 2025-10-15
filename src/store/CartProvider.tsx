@@ -180,7 +180,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     [items]
   );
 
-  const total = user ? totalData?.total ?? 0 : localTotal;
+  const total = user ? totalData?.total ?? 0 : Math.floor(localTotal);
   const value = useMemo(
     () => ({
       items,
