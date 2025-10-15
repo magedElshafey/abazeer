@@ -9,7 +9,7 @@ interface Props {
     item: Required<BreadcrumbItem>
 }
 
-function hasDisplay(value: unknown, attribute: string): value is {name?: string, title?: string, [attribute]?: string} {
+function hasDisplay(value: unknown, attribute: string): value is Record<string, any> & {name?: string, title?: string} {
     if(value && typeof value === "object" && ("name" in value || "title" in value || attribute in value)) return true;
     return false;
 }
@@ -30,7 +30,7 @@ const DynamicBreadcrumb: FC<Props> = ({ item }) => {
     return (
         <Link to={item.path}>
             {
-                hasDisplay(data, item.display_attribute) ? data.name || data.title || data[item.display_attribute] : item.label
+                hasDisplay(data, item.display_attribute) ? data.name || data.title || data[item.display_attribute] as string : item.label
             }
         </Link>
     );
