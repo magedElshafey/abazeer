@@ -10,7 +10,7 @@ export const apiRoutes = {
   news_letter: "newsletter",
   categories_list: "categories/list",
   checkOTP: "/auth/check_otp",
-  resetPassword: "auth/rest_password",
+  resetPassword: "auth/reset_password",
   changePassword: "auth/changePassword",
   about: "about",
   countries: "countries",

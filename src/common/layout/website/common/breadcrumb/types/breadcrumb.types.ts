@@ -3,10 +3,12 @@ export interface BreadcrumbItem {
     path: string;
     isDynamic?: boolean;
     queryKey?: string[];
-    parameter?: string
+    parameter?: string;
+    display_attribute?: string;
 }
 
 export interface RouteHandle {
     breadcrumb: string;
     queryKey?: string[];
+    display_attribute?: string;
 }

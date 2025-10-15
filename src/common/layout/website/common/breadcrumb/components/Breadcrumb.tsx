@@ -24,6 +24,7 @@ const Breadcrumb = () => {
                 isDynamic: !!parameters.length,
                 parameter: parameters[parameters.length - 1] as string,
                 queryKey: (item.handle as RouteHandle)?.queryKey || undefined,
+                display_attribute: (item.handle as RouteHandle).display_attribute || undefined,
                 
             }] as BreadcrumbItem[]
         });
@@ -39,7 +40,6 @@ const Breadcrumb = () => {
                 {
                     breadcrumbItems.map((item, index, arr) => {
                         const isLastItem = index === arr.length - 1;
-
                         if (item.isDynamic !== undefined && item.queryKey) return (
                             <>
                                 <DynamicBreadcrumb item={item as Required<BreadcrumbItem>} />
