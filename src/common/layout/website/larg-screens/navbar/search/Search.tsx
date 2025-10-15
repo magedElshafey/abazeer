@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useEffect, memo } from "react";
+import { useState, useCallback, useRef, useEffect, memo, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
@@ -117,9 +117,19 @@ const Search: React.FC<SearchProps> = memo(({ onClose }) => {
     };
   }, []);
 
-  const hasSearchValue = !!search.value;
-  const showResults = isFocused;
+  const hasSearchValue = !!search.value.trim();
+  const hasDeferredValue = !!search.deferred.trim();
 
+  /** 🧠 Determine state for better UX */
+  const searchState = useMemo(() => {
+    if (!hasDeferredValue) return "idle";
+    if (isFetching) return "loading";
+    if (products?.length === 0) return "empty";
+    if (products?.length > 0) return "success";
+    return "idle";
+  }, [hasDeferredValue, isFetching, products]);
+
+  const showResults = isFocused && hasDeferredValue;
   return (
     <div className="flex-1 bg-background-gray p-3 flex items-center gap-3 min-w-0 relative">
       {/* Dropdown */}
@@ -150,6 +160,7 @@ const Search: React.FC<SearchProps> = memo(({ onClose }) => {
         onFocus={() => setIsFocused(true)}
         onBlur={() => setTimeout(() => setIsFocused(false), 200)}
         onChange={(e) => handleInputChange(e.target.value)}
+        aria-busy={isFetching}
       />
 
       {/* Button */}
@@ -164,10 +175,10 @@ const Search: React.FC<SearchProps> = memo(({ onClose }) => {
 
       {/* Search Results */}
       {showResults && (
-        <div className="absolute top-full left-0 w-full bg-white border rounded shadow-lg z-[1000] overflow-y-auto max-h-[350px]">
+        <div className="absolute top-full left-0 w-full bg-white border rounded shadow-lg z-[1000]  max-h-[350px]">
           <SearchResults
             products={products}
-            isLoading={isFetching}
+            isLoading={searchState === "loading"}
             hasSearchValue={hasSearchValue}
             onClear={clearSearch}
             onClose={onClose}

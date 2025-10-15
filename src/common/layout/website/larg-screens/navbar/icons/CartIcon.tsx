@@ -82,7 +82,7 @@ const CartIcon = memo(() => {
           // ref={dropdownRef}
           role="menu"
           aria-label={t("cart dropdown")}
-          className={`min-w-[340px] bg-white shadow-xl rounded-xl p-4 z-40 border border-gray-100
+          className={`min-w-[340px] bg-white shadow-xl rounded-xl p-4 z-50 border border-gray-100
          `}
         >
           <CartDetails />

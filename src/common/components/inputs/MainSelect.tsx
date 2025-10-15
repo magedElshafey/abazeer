@@ -302,7 +302,7 @@ const MainSelectInner = <T extends OptionType>(props: MainSelectProps<T>) => {
             role="listbox"
             aria-labelledby={inputId}
             ref={listRef}
-            className={`absolute top-full  w-full max-h-48 overflow-y-auto bg-white border border-slate-400 rounded-lg shadow-lg z-40 ${
+            className={`absolute top-full  w-full max-h-48 overflow-y-auto bg-white border border-slate-400 rounded-lg shadow-lg z-30 ${
               i18n.language === "ar" ? "right-0" : "left-0"
             }`}
           >

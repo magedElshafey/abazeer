@@ -19,7 +19,7 @@ import { Payment } from "@/features/checkout/types/payment.type";
 export const navLinks: Nav[] = [
   {
     name: "offers",
-    link: "/offers",
+    link: "/products?filter-in_offer=true",
   },
   {
     name: "About",
@@ -50,7 +50,7 @@ export const navLinks: Nav[] = [
 export const sidebarLinks: Nav[] = [
   {
     name: "offers",
-    link: "/offers",
+    link: "/products?filter-in_offer=true",
   },
   {
     name: "About",
