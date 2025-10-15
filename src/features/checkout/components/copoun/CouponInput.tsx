@@ -1,4 +1,4 @@
-import { memo, useCallback } from "react";
+import { memo, useCallback, forwardRef, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { Loader } from "lucide-react";
 import { toast } from "sonner";
@@ -7,76 +7,89 @@ import useApplyCoupon from "../../api/copoun/useApplyCoupon";
 import MainBtn from "@/common/components/buttons/MainBtn";
 
 interface CouponInputProps {
-  code?: string;
+  code: string;
   readOnly?: boolean;
-  handleCodeChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  setCode?: React.Dispatch<React.SetStateAction<string>>;
-  setShowCouponInput?: React.Dispatch<React.SetStateAction<boolean>>;
+  handleCodeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  setCode: (value: string) => void;
+  setShowCouponInput: (value: boolean) => void;
 }
 
-const CouponInput: React.FC<CouponInputProps> = memo(
-  ({
-    code = "",
-    readOnly = false,
-    handleCodeChange,
-    setCode,
-    setShowCouponInput,
-  }) => {
-    const { t } = useTranslation();
-    const { isPending, mutateAsync } = useApplyCoupon();
+const CouponInput = memo(
+  forwardRef<HTMLInputElement, CouponInputProps>(
+    (
+      { code, readOnly = false, handleCodeChange, setCode, setShowCouponInput },
+      ref
+    ) => {
+      const { t } = useTranslation();
+      const { isPending, mutateAsync } = useApplyCoupon();
+      const inputRef = useRef<HTMLInputElement | null>(null);
 
-    const handleClick = useCallback(async () => {
-      if (!code) return;
+      const handleApplyCoupon = useCallback(async () => {
+        if (!code.trim()) return;
 
-      try {
-        const response = await mutateAsync({ code });
-        if (response?.status) {
-          toast.success(response.message);
+        try {
+          const response = await mutateAsync({ code });
 
-          if (!readOnly && setCode && setShowCouponInput) {
-            setCode("");
-            setShowCouponInput(false);
+          if (response?.status) {
+            toast.success(response.message);
+            if (!readOnly) {
+              setCode("");
+              setShowCouponInput(false);
+              // Return focus to input after reset
+              inputRef.current?.focus();
+            }
           }
+        } catch (error) {
+          handlePromisError(error);
         }
-      } catch (error) {
-        handlePromisError(error);
-      }
-    }, [code, readOnly, mutateAsync, setCode, setShowCouponInput]);
+      }, [code, readOnly, mutateAsync, setCode, setShowCouponInput]);
 
-    return (
-      <div
-        className="flex-between py-2 px-4 bg-gray-100 rounded-md focus-within:ring-2 focus-within:ring-orange-400"
-        aria-label={t("coupon input")}
-      >
-        <label htmlFor="coupon-code" className="sr-only">
-          {t("coupon code")}
-        </label>
-        <input
-          id="coupon-code"
-          type="text"
-          readOnly={readOnly}
-          value={code}
-          placeholder={t("enter your coupon code")}
-          onChange={handleCodeChange}
-          aria-invalid={!readOnly && !code ? true : false}
-          className="flex-1 bg-transparent border-none outline-none text-gray-800 placeholder:text-gray-500"
-        />
-        <MainBtn
-          type="button"
-          disabled={!code || isPending}
-          onClick={handleClick}
-          // className="ml-3 flex-center px-4 py-2 rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:bg-blue-400 disabled:cursor-not-allowed transition-all"
-          aria-label={t("apply coupon")}
+      return (
+        <div
+          className="flex-between py-2 px-4 bg-gray-100 rounded-md focus-within:ring-2 focus-within:ring-orange-400 transition-all"
+          aria-label={t("coupon input")}
         >
-          {isPending ? (
-            <Loader className="animate-spin w-4 h-4" aria-hidden="true" />
-          ) : (
-            t("apply")
-          )}
-        </MainBtn>
-      </div>
-    );
-  }
+          <label htmlFor="coupon-code" className="sr-only">
+            {t("coupon code")}
+          </label>
+
+          <input
+            id="coupon-code"
+            type="text"
+            ref={(ref as React.RefObject<HTMLInputElement>) || inputRef}
+            readOnly={readOnly}
+            value={code}
+            placeholder={t("enter your coupon code")}
+            onChange={handleCodeChange}
+            aria-invalid={!readOnly && !code ? true : false}
+            aria-label={t("enter your coupon code")}
+            className="flex-1 bg-transparent border-none outline-none text-gray-800 placeholder:text-gray-500"
+          />
+
+          <MainBtn
+            type="button"
+            disabled={!code || isPending}
+            onClick={handleApplyCoupon}
+            aria-label={t("apply coupon")}
+            aria-busy={isPending}
+          >
+            {isPending ? (
+              <>
+                <Loader
+                  className="animate-spin w-4 h-4 mr-1"
+                  aria-hidden="true"
+                />
+              </>
+            ) : (
+              t("apply")
+            )}
+          </MainBtn>
+        </div>
+      );
+    }
+  )
 );
+
+CouponInput.displayName = "CouponInput";
 
 export default CouponInput;

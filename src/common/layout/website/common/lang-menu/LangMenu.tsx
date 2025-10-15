@@ -104,7 +104,7 @@ const LanguageDropdown = () => {
       </button>
 
       <div
-        className={`absolute md:top-full md:left-0 md:w-[140px] w-full flex flex-col bg-white border rounded-md z-30 shadow-md
+        className={`absolute md:top-full md:left-0 md:w-[140px] w-full flex flex-col bg-white border rounded-md z-[120] shadow-md
           transition-all duration-300 ease-in-out
           ${
             open

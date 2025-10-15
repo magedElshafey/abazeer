@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import Navbar from "../navbar/Navbar";
 import type { NavbarType } from "@/types/navbar.types";
-// import CategoriesHeader from "../navbar/category-header/CategoriesHeader";
 const StickyNavbar: React.FC<NavbarType> = ({ logo, hotline }) => {
   const navRef = useRef<HTMLDivElement | null>(null);
   const [isSticky, setIsSticky] = useState(false);

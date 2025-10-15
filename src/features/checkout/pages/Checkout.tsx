@@ -1,41 +1,38 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, memo } from "react";
 import { useTranslation } from "react-i18next";
-import SEO from "@/common/components/seo/Seo";
 import { Loader } from "lucide-react";
 import { FiMapPin } from "react-icons/fi";
 
-// components
-import OrderDetails from "../components/order-details/OrderDetails";
-import CouponInput from "../components/copoun/CouponInput";
-import PaymentMethods from "../components/payment-methods/PaymentMethods";
-import MainBtn from "@/common/components/buttons/MainBtn";
+import SEO from "@/common/components/seo/Seo";
 import FetchHandler from "@/common/api/fetchHandler/FetchHandler";
-import AddressCard from "@/features/user/components/addresses/AddressCard";
-import EmptyStateCard from "@/features/user/components/common/EmptyStateCard";
-import DialogComponent from "@/common/components/dialog/dialog";
+import MainBtn from "@/common/components/buttons/MainBtn";
 import MainTextArea from "@/common/components/inputs/MainTextArea";
+import DialogComponent from "@/common/components/dialog/dialog";
+import EmptyStateCard from "@/features/user/components/common/EmptyStateCard";
+import AddressCard from "@/features/user/components/addresses/AddressCard";
+import OrderDetails from "../components/order-details/OrderDetails";
+import PriceDetails from "../components/order-details/PriceDetails";
+import ShippingMethods from "../components/shipping-methods/ShippingMethods";
+import PaymentMethods from "../components/payment-methods/PaymentMethods";
+import CouponInput from "../components/copoun/CouponInput";
+
 import useCheckoutLogic from "../logic/useCheckoutLogic";
 
 const Coupon = lazy(() => import("../components/copoun/Coupon"));
 
 const Checkout = () => {
   const { t } = useTranslation();
+
   const {
-    states: { coupon, localAddress, method, notes },
-    handlers: {
-      toggleCouponInput,
-      handleCodeChange,
-      handleLocalAddressChange,
-      handleNotesChange,
-      handleCheckoutClick,
-      setCoupon,
-      setMethod,
-    },
-    data: { paymentMethods },
-    queries: { addressQuery },
-    refs: { dialogRef },
+    states: { coupon, localAddress, paymentMethod, notes, shiipingMethod },
+    handlers,
+    data,
+    queries,
+    refs,
     isPending,
   } = useCheckoutLogic();
+
+  const { addressQuery } = queries;
 
   return (
     <>
@@ -43,17 +40,33 @@ const Checkout = () => {
 
       <main
         className="containerr p-4 grid grid-cols-1 md:grid-cols-2 gap-6"
-        aria-label={t("checkout page")}
+        aria-labelledby="checkout-heading"
       >
-        {/* 🧾 Order Section */}
-        <section aria-labelledby="order-details-section">
-          <h2 id="order-details-section" className="sr-only">
-            {t("order details")}
-          </h2>
+        <h1 id="checkout-heading" className="sr-only">
+          {t("checkout")}
+        </h1>
 
-          <OrderDetails />
+        {/* ✅ LEFT SIDE - Order Summary */}
+        <section aria-label={t("order details")}>
+          <div className="bg-slate-100 p-5 rounded-xl shadow-sm">
+            <OrderDetails />
 
-          <div className="mt-6">
+            <div className="py-4 border-t border-b mt-4">
+              <h2 className="font-semibold mb-3">{t("shipping methods")}</h2>
+              <ShippingMethods
+                method={shiipingMethod}
+                setMethod={handlers.setShippingMethod}
+                shippingMethods={data.shippingMethods}
+              />
+            </div>
+
+            <footer className="pt-4">
+              <PriceDetails method={shiipingMethod} />
+            </footer>
+          </div>
+
+          {/* ✅ Coupon Section */}
+          <section className="mt-6">
             <Suspense
               fallback={
                 <div
@@ -68,62 +81,52 @@ const Checkout = () => {
             >
               <Coupon />
             </Suspense>
-          </div>
 
-          <button
-            onClick={toggleCouponInput}
-            className="text-blue-600 underline mt-4 focus:outline-none focus:ring-2 focus:ring-blue-400 rounded"
-            aria-expanded={coupon.visible}
-          >
-            {t("You have a coupon code?")}
-          </button>
+            <button
+              onClick={handlers.toggleCouponInput}
+              className="text-blue-600 underline mt-4 focus:outline-none focus:ring-2 focus:ring-blue-400 rounded"
+              aria-expanded={coupon.visible}
+            >
+              {t("You have a coupon code?")}
+            </button>
 
-          {coupon.visible && (
-            <div className="mt-3">
-              <CouponInput
-                code={coupon.code}
-                handleCodeChange={handleCodeChange}
-                setCode={(value) =>
-                  setCoupon((prev) => ({
-                    ...prev,
-                    code:
-                      typeof value === "function" ? value(prev.code) : value,
-                  }))
-                }
-                setShowCouponInput={(value) =>
-                  setCoupon((prev) => ({
-                    ...prev,
-                    visible:
-                      typeof value === "function" ? value(prev.visible) : value,
-                  }))
-                }
-              />
-            </div>
-          )}
+            {coupon.visible && (
+              <div className="mt-3">
+                <CouponInput
+                  code={coupon.code}
+                  handleCodeChange={handlers.handleCodeChange}
+                  setCode={(value) =>
+                    handlers.setCoupon((prev) => ({ ...prev, code: value }))
+                  }
+                  setShowCouponInput={(value) =>
+                    handlers.setCoupon((prev) => ({ ...prev, visible: value }))
+                  }
+                />
+              </div>
+            )}
+          </section>
         </section>
 
-        {/* 📍 Address & Payment Section */}
-        <section aria-labelledby="address-and-payment-section">
-          <h2 id="address-and-payment-section" className="sr-only">
-            {t("address and payment")}
-          </h2>
-
+        {/* ✅ RIGHT SIDE - Address & Payment */}
+        <section aria-label={t("address and payment")}>
           <FetchHandler queryResult={addressQuery} skeletonType="coupon">
             {addressQuery?.isSuccess &&
-            addressQuery?.data?.length > 0 &&
+            addressQuery.data?.length > 0 &&
             localAddress ? (
               <>
                 <AddressCard address={localAddress} />
 
                 <DialogComponent
-                  ref={dialogRef}
+                  ref={refs.dialogRef}
                   header={{ title: t("my addresses") }}
                   content={
                     <div className="max-h-[500px] overflow-y-auto md:w-[500px]">
                       {addressQuery.data.map((address) => (
                         <button
                           key={address.id}
-                          onClick={() => handleLocalAddressChange(address)}
+                          onClick={() =>
+                            handlers.handleLocalAddressChange(address)
+                          }
                           className={`mb-4 border transition duration-200 hover:shadow-lg rounded-md w-full ${
                             localAddress?.id === address.id
                               ? "border-orangeColor"
@@ -160,16 +163,16 @@ const Checkout = () => {
 
           <div className="mt-5">
             <PaymentMethods
-              method={method}
-              setMethod={setMethod}
-              paymentMethods={paymentMethods}
+              method={paymentMethod}
+              setMethod={handlers.setPaymentMethod}
+              paymentMethods={data.paymentMethods}
             />
           </div>
 
           <div className="mt-4">
             <MainTextArea
               value={notes}
-              onChange={handleNotesChange}
+              onChange={handlers.handleNotesChange}
               label={t("order notes")}
               placeholder={t("note your order")}
             />
@@ -179,8 +182,13 @@ const Checkout = () => {
             <MainBtn
               text={t("checkout")}
               theme="secondary"
-              onClick={handleCheckoutClick}
-              disabled={isPending}
+              onClick={handlers.handleCheckoutClick}
+              disabled={
+                isPending ||
+                !localAddress?.id ||
+                !paymentMethod?.type ||
+                !shiipingMethod?.id
+              }
               isPending={isPending}
               aria-busy={isPending}
             />
@@ -191,4 +199,4 @@ const Checkout = () => {
   );
 };
 
-export default Checkout;
+export default memo(Checkout);
