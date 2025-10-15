@@ -7,7 +7,7 @@ export const apiRoutes = {
   forgetPasswordOtp: "forget_password/verfication",
   cart: "cart",
   addresses: "addresses",
-  news_letter: "news_letter",
+  news_letter: "newsletter",
   categories_list: "categories/list",
   checkOTP: "/auth/check_otp",
   resetPassword: "auth/rest_password",
