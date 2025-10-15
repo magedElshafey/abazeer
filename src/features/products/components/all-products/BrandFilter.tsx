@@ -12,9 +12,11 @@ interface BrandItemProps {
 
 const BrandItem: React.FC<BrandItemProps> = ({ brand }) => {
   const {
-    filters: { brand: selectedBrands = [] },
+    filters: { brand: brands = [] },
     handleChangeFilters,
   } = useProductsFilters();
+
+  const selectedBrands = Array.isArray(brands) ? brands : [brands];
 
   const isSelected = selectedBrands.includes(brand.id.toString());
 
