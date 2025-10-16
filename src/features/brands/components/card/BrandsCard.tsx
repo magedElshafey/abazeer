@@ -77,7 +77,6 @@ const BrandsCard = memo(({ brand }: BrandsCardProps) => {
 
         <button
           type="button"
-          onClick={handleNavigate}
           className="text-md md:text-lg lg:text-xl font-bold text-foreground transition-colors duration-200 group-hover:text-orangeColor hover:underline focus:underline focus:outline-none truncate"
           title={brandName}
           aria-label={`View details for ${brandName}`}
