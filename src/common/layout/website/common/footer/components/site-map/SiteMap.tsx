@@ -22,7 +22,7 @@ const SiteMap: React.FC<SiteMapProps> = ({
 }) => {
   const { data } = useGetAllStaticPages();
 
-  const allowedSlugs = ["contact-us", "about-us", "faq"];
+  const allowedSlugs = ["about-us", "faq"];
 
   const helpCenterLinks: Nav[] = useMemo(() => {
     if (!data) return [];

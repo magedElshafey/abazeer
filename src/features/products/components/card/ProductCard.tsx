@@ -6,6 +6,7 @@ import SquareImage from "../../../../common/components/images/sqaure-image/Sqaur
 import AddToCartButton from "../../../cart/components/button/AddToCartButton";
 import { Product } from "../../types/product.types";
 import { twMerge } from "tailwind-merge";
+import FavoriteButton from "../product-details/FavoriteButton";
 
 interface ProductCardProps {
   product: Product;
@@ -53,6 +54,13 @@ const ProductCard: React.FC<ProductCardProps> = memo(
         )}
         aria-label={`${product.name} - ${product.category}`}
       >
+        <div className="absolute top-2 right-0 z-20">
+          <FavoriteButton
+            productId={product?.id}
+            showLabel={false}
+            isInWishlist={product?.is_in_wishlist}
+          />
+        </div>
         {/* ✅ Discount badge */}
         {product?.has_discount && product.discount_percentage > 0 && (
           <div
