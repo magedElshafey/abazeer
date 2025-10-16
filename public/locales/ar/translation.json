@@ -343,5 +343,7 @@
   "Back to main page": "العودة إلى الرئيسية",
   "The order could not be completed": "لم نتمكن من إكمال الطلب",
   "Something went wrong while processing your order. Please try again or contact support if the issue persists.": "حدث خطأ أثناء معالجة طلبك. يُرجى المحاولة مرة أخرى أو التواصل مع الدعم الفني إذا استمرت المشكلة.",
-  "Try Again": "أعد المحاولة"
+  "Try Again": "أعد المحاولة",
+  "order notes": "ملاحظات علي طلبك",
+  "note your order": "ضع ملاحظاتك هنا"
 }

@@ -66,7 +66,7 @@ const PriceDetails: React.FC<{ method: Shippings }> = ({ method }) => {
       <div className="flex-between mb-2">
         <dt>{t("Tax (VAT - 15%)")}</dt>
         <dd>
-          {tax.toFixed(2)} {t("SAR")}
+          {tax.toFixed()} {t("SAR")}
         </dd>
       </div>
       <div className="flex-between mb-2">
@@ -78,7 +78,7 @@ const PriceDetails: React.FC<{ method: Shippings }> = ({ method }) => {
       <div className="flex-between font-semibold">
         <dt>{t("Total")}</dt>
         <dd>
-          {grandTotal.toFixed(2)} {t("SAR")}
+          {grandTotal.toFixed()} {t("SAR")}
         </dd>
       </div>
     </dl>

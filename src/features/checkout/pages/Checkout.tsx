@@ -34,7 +34,6 @@ const Checkout = () => {
   return (
     <>
       <SEO title={t("checkout")} />
-
       <main
         className="containerr p-4 grid grid-cols-1 md:grid-cols-2 gap-6"
         aria-labelledby="checkout-heading"

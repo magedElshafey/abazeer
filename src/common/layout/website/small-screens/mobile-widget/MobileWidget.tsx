@@ -28,7 +28,10 @@ const MobileWidget = () => {
   const closeCartSidebar = useCallback(() => setShowCartSidebar(false), []);
 
   const homeAction = useCallback(() => navigate("/"), [navigate]);
-  const wishlistAction = useCallback(() => navigate("/wishlist"), [navigate]);
+  const wishlistAction = useCallback(
+    () => navigate(user ? "/my-profile/favorites" : "/auth/login"),
+    [navigate]
+  );
   const accountAction = useCallback(
     () => navigate(user ? "/my-profile" : "/auth/login"),
     [navigate, user]
