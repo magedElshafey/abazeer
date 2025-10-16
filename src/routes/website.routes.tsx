@@ -67,18 +67,22 @@ export const websiteRoutes: RouteObject = {
           children: [
             {
               index: true,
-              element: lazyLoad(() => import("../features/user/pages/orders/Orders")),
+              element: lazyLoad(
+                () => import("../features/user/pages/orders/Orders")
+              ),
             },
             {
               path: ":id",
-              element: lazyLoad(() => import("../features/user/pages/orders/OrderDetails")),
+              element: lazyLoad(
+                () => import("../features/user/pages/orders/OrderDetails")
+              ),
               handle: {
                 breadcrumb: "order number",
                 queryKey: [apiRoutes.orders],
-                display_attribute: "order_number"
-              }
-            }
-          ]
+                display_attribute: "order_number",
+              },
+            },
+          ],
         },
         {
           path: "settings",
@@ -126,14 +130,14 @@ export const websiteRoutes: RouteObject = {
         breadcrumb: "my_profile",
       },
     },
-    {
-      path: "contact-us",
-      element: lazyLoad(() => import("../features/contact/pages/Contact")),
+    // {
+    //   path: "contact-us",
+    //   element: lazyLoad(() => import("../features/contact/pages/Contact")),
 
-      handle: {
-        breadcrumb: "contact",
-      },
-    },
+    //   handle: {
+    //     breadcrumb: "contact",
+    //   },
+    // },
     {
       path: "category/:slugAndId",
 

@@ -42,10 +42,10 @@ export const navLinks: Nav[] = [
     name: "faq",
     link: "/faq",
   },
-  {
-    name: "contact",
-    link: "/contact-us",
-  },
+  // {
+  //   name: "contact",
+  //   link: "/contact-us",
+  // },
 ];
 export const sidebarLinks: Nav[] = [
   {
@@ -68,10 +68,10 @@ export const sidebarLinks: Nav[] = [
     name: "faq",
     link: "/faq",
   },
-  {
-    name: "contact",
-    link: "/contact-us",
-  },
+  // {
+  //   name: "contact",
+  //   link: "/contact-us",
+  // },
   {
     name: "order tracking",
     link: "/order-tracking",
@@ -147,10 +147,10 @@ export const helpCenterLinks: Nav[] = [
     name: "About",
     link: "/about",
   },
-  {
-    name: "contact",
-    link: "/contact",
-  },
+  // {
+  //   name: "contact",
+  //   link: "/contact",
+  // },
   {
     name: "blogs",
     link: "/refund-policy",
