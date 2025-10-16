@@ -3,35 +3,44 @@ import { useTranslation } from "react-i18next";
 import { ProductDetails } from "../../types/product.types";
 import ReviewItem from "./ReviewItem";
 import ReviewsOverview from "./ReviewsOverview";
+import Slider from "@/common/components/slider/Slider";
 
 interface ReviewsProps {
-    product: ProductDetails;
+  product: ProductDetails;
 }
 
 const Reviews: FC<ReviewsProps> = ({ product }) => {
-    const { t } = useTranslation();
-    const reviews = product.reviews || [];
+  const { t } = useTranslation();
+  const reviews = product.reviews || [];
 
-    return (
-        <div className="space-y-4">
-            <ReviewsOverview product={product} />
-            
-            {/* Individual Reviews List */}
-            <div className="space-y-4">
-                {reviews.length > 0 ? (
-                    reviews.map((review) => (
-                        <ReviewItem key={review.id} review={review} />
-                    ))
-                ) : (
-                    <div className="text-center py-8 text-gray-500">
-                        {t("no_reviews_yet")}
-                    </div>
-                )}
-            </div>
-        </div>
-    );
+  return (
+    <div className="space-y-4">
+      <ReviewsOverview product={product} />
+
+      {/* Individual Reviews List */}
+      <div className="space-y-4">
+        {reviews.length > 0 ? (
+          <Slider
+            showControls={true}
+            breakPoints={{
+              "(min-width: 1280px)": { slides: { perView: 4, spacing: 16 } },
+              "(max-width: 1280px)": { slides: { perView: 3, spacing: 16 } },
+              "(max-width: 1024px)": { slides: { perView: 2, spacing: 16 } },
+              "(max-width: 580px)": { slides: { perView: 1, spacing: 12 } },
+            }}
+          >
+            {reviews.map((review) => (
+              <ReviewItem key={review.id} review={review} />
+            ))}
+          </Slider>
+        ) : (
+          <div className="text-center py-8 text-gray-500">
+            {t("no_reviews_yet")}
+          </div>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default Reviews;
-
-

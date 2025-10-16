@@ -13,7 +13,7 @@ import { apiRoutes } from "@/services/api-routes/apiRoutes";
 interface SearchProps {
   onClose?: () => void;
 }
-const Search: React.FC<SearchProps> = memo(({ onClose }) => {
+const Search: React.FC<SearchProps> = memo(({ onClose = undefined }) => {
   const DEBOUNCE_INTERVAL = 400;
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -78,7 +78,10 @@ const Search: React.FC<SearchProps> = memo(({ onClose }) => {
     if (selectedOpt?.id) params.category = String(selectedOpt.id);
     if (search.value.trim()) params.q = search.value.trim();
     navigate(`/products?${new URLSearchParams(params)}`);
-  }, [navigate, search.value, selectedOpt]);
+    if (onClose) {
+      onClose();
+    }
+  }, [navigate, search.value, selectedOpt, onClose]);
 
   /** 🧩 Outside click handler */
   useEffect(() => {
@@ -131,7 +134,7 @@ const Search: React.FC<SearchProps> = memo(({ onClose }) => {
 
   const showResults = isFocused && hasDeferredValue;
   return (
-    <div className="flex-1 bg-background-gray p-3 flex items-center gap-3 min-w-0 relative">
+    <div className="flex-1 bg-background-gray p-3 flex items-center gap-1 sm:gap-2 md:gap-3 min-w-0 relative">
       {/* Dropdown */}
       <div className="relative flex-shrink-0" ref={dropdownRef}>
         <button
@@ -139,7 +142,7 @@ const Search: React.FC<SearchProps> = memo(({ onClose }) => {
           onClick={toggleDropdown}
           aria-haspopup="menu"
           aria-expanded={showDropDown}
-          className="flex items-center gap-2 w-fit truncate focus:outline-none focus:ring-2 focus:ring-orangeColor"
+          className="flex items-center gap-1 sm:gap-2 w-[70px] sm:w-[80px] md:w-fit truncate focus:outline-none focus:ring-2 focus:ring-orangeColor"
         >
           <span className="truncate">
             {selectedOpt ? selectedOpt.name : t("all categories")}
@@ -168,7 +171,7 @@ const Search: React.FC<SearchProps> = memo(({ onClose }) => {
         onClick={handleSearch}
         disabled={!selectedOpt && !search.value.trim()}
         aria-label={t("search")}
-        className="text-transition hidden lg:block flex-shrink-0 disabled:cursor-not-allowed disabled:opacity-40"
+        className="text-transition  flex-shrink-0 disabled:cursor-not-allowed disabled:opacity-40"
       >
         <TfiSearch size={20} />
       </button>

@@ -4,17 +4,24 @@ import { useNavigate } from "react-router-dom";
 import { useCart } from "@/store/CartProvider";
 import { toast } from "sonner";
 import CartCard from "../card/CartCard";
-
-const CartDetails = () => {
+import { useAuth } from "@/store/AuthProvider";
+interface CartDetailsProps {
+  onClose?: () => void;
+}
+const CartDetails: React.FC<CartDetailsProps> = ({ onClose = undefined }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { user } = useAuth();
   const { items, total, clearCart } = useCart();
   const cartItems = useMemo(() => items || [], [items]);
   const itemCount = cartItems.length || 0;
   const totalAmount = total ?? "0.00";
   const handleGoToCart = useCallback(() => {
-    navigate("/checkout");
-  }, [navigate]);
+    navigate(user ? "/checkout" : "/auth/login");
+    if (onClose) {
+      onClose();
+    }
+  }, [navigate, user, onClose]);
 
   const handleClearCart = useCallback(() => {
     toast(t("Are you sure you want to clear the cart?"), {
@@ -23,15 +30,24 @@ const CartDetails = () => {
         label: t("Clear"),
         onClick: () => {
           clearCart();
+          if (onClose) {
+            onClose();
+          }
         },
       },
       cancel: {
         label: t("Cancel"),
-        onClick: () => console.log("canceld"),
+        onClick: () => {
+          if (onClose) {
+            onClose();
+          } else {
+            console.log("canceled");
+          }
+        },
       },
       duration: 6000,
     });
-  }, [clearCart, t]);
+  }, [clearCart, t, onClose]);
   return (
     <>
       {itemCount > 0 ? (

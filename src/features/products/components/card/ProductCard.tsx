@@ -56,7 +56,7 @@ const ProductCard: React.FC<ProductCardProps> = memo(
         {/* ✅ Discount badge */}
         {product?.has_discount && product.discount_percentage > 0 && (
           <div
-            className="w-16 absolute top-0 left-0 p-1 flex-center bg-orangeColor text-white font-bold z-40 rounded-br-lg"
+            className="w-16 absolute top-0 left-0 p-1 flex-center bg-orangeColor text-white font-bold z-20 rounded-br-lg"
             aria-label={`${product.discount_percentage}% ${t("discount")}`}
           >
             <p>{Math.ceil(product.discount_percentage)}%</p>

@@ -324,7 +324,7 @@ const Slider: React.FC<PropsWithChildren<Props>> = ({
           {title && <SectionTitle title={title || ""} />}
 
           {showArrows && (
-            <div className="flex gap-2">
+            <div className="flex gap-2 mt-10 sm:mt-7 md:mt-0">
               <button
                 className="bg-white hover:bg-orangeColor rounded border flex-center p-1 text-text-gray hover:text-black transition-colors duration-300"
                 onClick={handlePrev}

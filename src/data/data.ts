@@ -76,10 +76,10 @@ export const sidebarLinks: Nav[] = [
     name: "order tracking",
     link: "/order-tracking",
   },
-  {
-    name: "compare",
-    link: "/compare",
-  },
+  // {
+  //   name: "compare",
+  //   link: "/compare",
+  // },
 ];
 
 export const protectedRoutes: string[] = [

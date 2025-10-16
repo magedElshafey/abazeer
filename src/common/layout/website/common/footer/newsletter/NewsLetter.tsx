@@ -26,7 +26,7 @@ const NewsLetter = () => {
 
       <form
         onSubmit={handleSubmit}
-        className="flex items-start flex-col sm:flex-row gap-2 w-full"
+        className="flex items-start  gap-2 w-full"
         aria-label={t("Newsletter subscription")}
         noValidate
       >
@@ -67,7 +67,7 @@ const NewsLetter = () => {
           type="submit"
           aria-busy={isPending}
           disabled={isPending || !email.trim() || !isValid}
-          className="h-12 px-4 bg-orangeColor hover:bg-opacity-90 text-white font-medium border-2 border-orangeColor focus:outline-none focus:ring-2 focus:ring-orangeColor/50 disabled:cursor-not-allowed disabled:bg-orangeColor/20 transition-all duration-200 text-sm rounded-md w-full sm:w-auto"
+          className="h-12 px-4 bg-orangeColor hover:bg-opacity-90 text-white font-medium border-2 border-orangeColor focus:outline-none focus:ring-2 focus:ring-orangeColor/50 disabled:cursor-not-allowed disabled:bg-orangeColor/20 transition-all duration-200 text-sm rounded-md w-auto"
         >
           {isPending ? (
             <Loader />

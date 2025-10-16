@@ -30,7 +30,7 @@ const MobileWidget = () => {
   const homeAction = useCallback(() => navigate("/"), [navigate]);
   const wishlistAction = useCallback(
     () => navigate(user ? "/my-profile/favorites" : "/auth/login"),
-    [navigate]
+    [navigate, user]
   );
   const accountAction = useCallback(
     () => navigate(user ? "/my-profile" : "/auth/login"),
@@ -77,7 +77,7 @@ const MobileWidget = () => {
               <li key={title} className="relative">
                 <IconBadge Icon={Icon} title={title} onClick={onClick} />
                 {type && type === "cart" && (
-                  <div className="absolute top-full left-0 w-4 h-4 bg-orangeColor rounded-[50%]">
+                  <div className="absolute top-0 flex-center -left-2 w-5 h-5 bg-orangeColor rounded-[50%]">
                     <p>{items?.length}</p>
                   </div>
                 )}

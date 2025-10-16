@@ -30,7 +30,7 @@ const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose }) => {
         </SidebarIntro>
 
         <div aria-label="cart Navigation" className="mt-2 px-1">
-          <CartDetails />
+          <CartDetails onClose={onClose} />
         </div>
       </aside>
     </>

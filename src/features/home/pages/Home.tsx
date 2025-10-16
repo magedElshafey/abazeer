@@ -144,7 +144,7 @@ const Home = () => {
           <FetchHandler queryResult={blogsQueryResult} skeletonType="blog">
             {blogsQueryResult?.data && blogsQueryResult?.data?.length > 1 ? (
               <div>
-                <div className="flex-between mb-6">
+                <div className="flex-between flex-col md:flex-row  mb-6">
                   <SectionTitle title="latest blogs" />
                   <MainBtn text="show more" onClick={handleNavigate} />
                 </div>

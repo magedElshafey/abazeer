@@ -51,7 +51,7 @@ const AddressCard: FC<AddressCardProps> = ({
               <MainBtn
                 type="button"
                 theme="outline"
-                className="!px-3 !py-1 text-xs"
+                className="!px-3 !py-1 text-xs !w-fit"
                 text="make_default"
                 onClick={handleMakeDefault}
                 isPending={isPending}
