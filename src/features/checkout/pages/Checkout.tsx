@@ -1,6 +1,5 @@
-import { lazy, Suspense, memo } from "react";
+import { memo } from "react";
 import { useTranslation } from "react-i18next";
-import { Loader } from "lucide-react";
 import { FiMapPin } from "react-icons/fi";
 
 import SEO from "@/common/components/seo/Seo";
@@ -17,8 +16,6 @@ import PaymentMethods from "../components/payment-methods/PaymentMethods";
 import CouponInput from "../components/copoun/CouponInput";
 
 import useCheckoutLogic from "../logic/useCheckoutLogic";
-
-const Coupon = lazy(() => import("../components/copoun/Coupon"));
 
 const Checkout = () => {
   const { t } = useTranslation();
@@ -66,44 +63,39 @@ const Checkout = () => {
           </div>
 
           {/* ✅ Coupon Section */}
-          <section className="mt-6">
-            <Suspense
-              fallback={
-                <div
-                  role="status"
-                  aria-live="polite"
-                  className="text-center text-gray-500"
-                >
-                  <Loader className="animate-spin inline-block mr-2" />
-                  {t("loading coupons...")}
-                </div>
-              }
-            >
-              <Coupon />
-            </Suspense>
-
-            <button
-              onClick={handlers.toggleCouponInput}
-              className="text-blue-600 underline mt-4 focus:outline-none focus:ring-2 focus:ring-blue-400 rounded"
-              aria-expanded={coupon.visible}
-            >
-              {t("You have a coupon code?")}
-            </button>
-
-            {coupon.visible && (
-              <div className="mt-3">
-                <CouponInput
-                  code={coupon.code}
-                  handleCodeChange={handlers.handleCodeChange}
-                  setCode={(value) =>
-                    handlers.setCoupon((prev) => ({ ...prev, code: value }))
-                  }
-                  setShowCouponInput={(value) =>
-                    handlers.setCoupon((prev) => ({ ...prev, visible: value }))
-                  }
-                />
-              </div>
-            )}
+          <section
+            className="rounded-lg p-4 border border-dashed border-blue-400 bg-white shadow-sm mt-6"
+            aria-label={t("available coupons")}
+          >
+            <div className="flex-between">
+              <button
+                onClick={handlers.toggleCouponInput}
+                className="text-blue-600 underline mt-4 focus:outline-none focus:ring-2 focus:ring-blue-400 rounded"
+                aria-expanded={coupon.visible}
+              >
+                {t("You have a coupon code?")}
+              </button>
+              <img
+                src="/images/coupon-code.gif"
+                alt={t("coupon icon")}
+                loading="lazy"
+                width={28}
+                height={28}
+                className="object-contain"
+              />
+            </div>
+            <div className="mt-7">
+              <CouponInput
+                code={coupon.code}
+                handleCodeChange={handlers.handleCodeChange}
+                setCode={(value) =>
+                  handlers.setCoupon((prev) => ({ ...prev, code: value }))
+                }
+                setShowCouponInput={(value) =>
+                  handlers.setCoupon((prev) => ({ ...prev, visible: value }))
+                }
+              />
+            </div>
           </section>
         </section>
 
