@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { OrderItem } from "../../types/orders.types";
-import { FaImage } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 interface OrderItemCardProps {
