@@ -10,8 +10,8 @@ const useGetFavorites = () => {
 
     return useQuery({
         queryKey: [apiRoutes.favorites, user?.id],
-        queryFn: async () => {
-            const { data } = await Axios.get<Response<Product[]>>(apiRoutes.favorites);
+        queryFn: async ({ signal }) => {
+            const { data } = await Axios.get<Response<Product[]>>(apiRoutes.favorites, {signal});
             return data?.data;
         },
         enabled: Boolean(user),

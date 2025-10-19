@@ -38,7 +38,7 @@ const FavoriteButton: FC<FavoriteButtonProps> = ({
         ) : isInWishlist ? (
           <FaHeart className="text-orangeColor" aria-hidden="true" />
         ) : (
-          <FaRegHeart aria-hidden="true" />
+          <FaRegHeart aria-hidden="true" className="text-text-gray" />
         )}
         {showLabel && (
           <p className="text-lg pb-1">

@@ -10,6 +10,8 @@ const useAddFavorite = () => {
   return useMutation({
     mutationKey: ["addFavorite"],
     mutationFn: async (product_id: number) => {
+      queryClient.cancelQueries({ queryKey: [apiRoutes.favorites] });
+      queryClient.cancelQueries({ queryKey: [apiRoutes.products] });
       const { data } = await Axios.post<Response<unknown>>(
         apiRoutes.wishlist,
         { product_id }

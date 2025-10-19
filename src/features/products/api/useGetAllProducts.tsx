@@ -38,13 +38,14 @@ const useGetAllProducts = ({
 
   return useQuery<Product[]>({
     queryKey: [apiRoutes.products, { featured, landing, essential }, filterParams.toString()],
-    queryFn: async () => {
+    queryFn: async ({signal}) => {
       const { data } = await Axios.get(`${apiRoutes.products}?${filterParams.toString()}`, {
         params: {
           featured,
           landing,
           essential,
-        }
+        },
+        signal
       });
 
       return data?.data as Product[];

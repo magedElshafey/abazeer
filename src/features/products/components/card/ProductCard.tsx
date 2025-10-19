@@ -55,7 +55,7 @@ const ProductCard: React.FC<ProductCardProps> = memo(
         aria-label={`${product.name} - ${product.category}`}
       >
         <div
-          className="absolute top-2 right-2 w-7 h-7 flex-center border border-black rounded-[50%] z-20 
+          className="absolute top-2 right-2 w-7 h-7 bg-white flex-center border shadow rounded-[50%] z-20 
     md:opacity-0 
     md:translate-y-[-10px]
     md:group-hover:opacity-100 
