@@ -104,7 +104,7 @@ const CategoriesSidebar = memo(
 
     const handleNavigate = useCallback(
       (id: number) => {
-        navigate(`/product-category/${id}`);
+        navigate(`/products?filter-category=${id}`);
         onClose();
       },
       [navigate, onClose]

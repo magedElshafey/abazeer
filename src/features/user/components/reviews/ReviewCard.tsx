@@ -35,7 +35,7 @@ const ReviewCard: FC<ReviewCardProps> = ({ review }) => {
         />
 
         {/* Product and Review Info */}
-        <div className="flex-1 flex flex-col items-center min-w-0">
+        <div className=" flex flex-col items-center">
           {/* Product Name */}
           <h3
             className="font-semibold text-blue-400 text-sm mb-1 hover:underline hover:text-blue-500 cursor-pointer"
@@ -55,10 +55,10 @@ const ReviewCard: FC<ReviewCardProps> = ({ review }) => {
           {/* Review Comment */}
           <p className="text-sm text-gray-700 mb-3">{review.comment}</p>
         </div>
-        <div className="w-full flex justify-end">
-          {/* Delete Button */}
-          <DeleteReviewButton reviewId={review.id} variant="simple" />
-        </div>
+      </div>
+      <div className="w-full flex justify-end">
+        {/* Delete Button */}
+        <DeleteReviewButton reviewId={review.id} variant="simple" />
       </div>
     </div>
   );

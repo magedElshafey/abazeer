@@ -49,12 +49,19 @@ const ProductCard: React.FC<ProductCardProps> = memo(
     return (
       <div
         className={twMerge(
-          "border relative px-6 pt-6 pb-3 group shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden w-full bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-orangeColor text-start flex flex-col justify-between h-full min-h-[400px]",
+          "border relative px-6 pt-6 pb-3 group shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden w-full bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-orangeColor text-start flex flex-col justify-between h-full min-h-[400px] group",
           className
         )}
         aria-label={`${product.name} - ${product.category}`}
       >
-        <div className="absolute top-2 right-0 z-20">
+        <div
+          className="absolute top-2 right-2 w-7 h-7 flex-center border border-black rounded-[50%] z-20 
+    md:opacity-0 
+    md:translate-y-[-10px]
+    md:group-hover:opacity-100 
+    md:group-hover:translate-y-0 
+    transition-all duration-300"
+        >
           <FavoriteButton
             productId={product?.id}
             showLabel={false}
