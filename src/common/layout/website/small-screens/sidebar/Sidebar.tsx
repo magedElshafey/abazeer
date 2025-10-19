@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { sidebarLinks } from "../../../../../data/data";
+import { navLinks } from "../../../../../data/data";
 import SidebarIntro from "../mobile-navbar/common/SidebarIntro";
 import { memo } from "react";
 import Backdrop from "../mobile-navbar/common/Backdrop";
@@ -35,7 +35,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 
         <nav aria-label="Main Navigation" className="mt-2">
           <ul className="flex flex-col">
-            {sidebarLinks.map((item, idx) => (
+            {navLinks.map((item, idx) => (
               <li key={idx}>
                 <Link
                   onClick={onClose}

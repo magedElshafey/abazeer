@@ -2,8 +2,6 @@ import { Outlet } from "react-router-dom";
 import BgImg from "./BgImg";
 import Logo from "../../components/logo/Logo";
 import { useLocation } from "react-router-dom";
-import successLogo from "../../../assets/Vector.png";
-import gifaya from "../../../assets/gifaya.gif";
 import LangBtn from "./LangBtn";
 import useGetWebsiteSettings from "@/features/settings/api/useGetWebsiteSettings";
 const AuthLayout = () => {
@@ -25,13 +23,13 @@ const AuthLayout = () => {
               {isPasswordSuccess ? (
                 <img
                   alt="password-change-sucfully"
-                  src={successLogo}
+                  src={"/images/Vector.png"}
                   className="w-[93px] h-[93px] object-contain"
                 />
               ) : isForgetPages ? (
                 <img
                   alt="loading"
-                  src={gifaya}
+                  src={"/images/gifaya.gif"}
                   className="w-[144px] h-[144px] object-contain"
                 />
               ) : (

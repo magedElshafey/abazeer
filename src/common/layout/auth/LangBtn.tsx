@@ -1,5 +1,3 @@
-import us from "../../../assets/us.png";
-import ksa from "../../../assets/ksa.png";
 import { useLanguage } from "../../../store/LanguageProvider";
 import { useTranslation } from "react-i18next";
 const LangBtn = () => {
@@ -14,7 +12,7 @@ const LangBtn = () => {
     >
       <img
         alt={t(language === "ar" ? "english" : "arabic")}
-        src={language === "ar" ? us : ksa}
+        src={language === "ar" ? "/images/us.png" : "/images/ksa.png"}
         className="w-5 h-5 object-contain"
       />
       <span>{t(language === "ar" ? "english" : "arabic")}</span>
