@@ -40,15 +40,15 @@ interface ProfileCardProps {
 const ProfileCard: FC<ProfileCardProps> = ({ icon: Icon, title, description, link, buttonText, theme = "order" }) => {
     return (
         <div className={cardVariants({ theme })}>
-            <div className={`shrink-0 p-4 rounded-full flex items-center justify-center ${buttonThemes[theme]}`}>
+            <div className={`p-4 rounded-full flex-center ${buttonThemes[theme]}`}>
                 <Icon size={30} />
             </div>
             <div className="flex-1 min-w-0 text-center">
                 <h3 className="text-base sm:text-lg font-semibold truncate">{title}</h3>
                 <p className="text-sm text-gray-600 line-clamp-2">{description}</p>
             </div>
-            <Link to={link} className="shrink-0">
-                <MainBtn className={`px-4 ${buttonThemes[theme]}`}>
+            <Link to={link} className="shrink-0 lg:w-full">
+                <MainBtn className={`px-4 lg:w-full min-w-full ${buttonThemes[theme]}`}>
                     <p className="pb-1">
                         {buttonText}
                     </p>

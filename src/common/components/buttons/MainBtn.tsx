@@ -12,7 +12,7 @@ const themes = {
 };
 
 const buttonVariants = cv({
-  base: "px-2 py-2 rounded font-bold disabled:cursor-not-allowed transition-all w-full md:w-[220px] lg:w-[280px] flex-center transition disabled:bg-opacity-40",
+  base: "px-2 py-2 rounded font-bold disabled:cursor-not-allowed transition-all w-full flex-center transition disabled:bg-opacity-40",
   variants: {
     theme: {
       ...themes,

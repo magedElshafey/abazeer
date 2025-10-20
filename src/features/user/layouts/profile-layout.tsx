@@ -10,8 +10,8 @@ const ProfileLayout = () => {
           <div className="w-full lg:w-1/4">
               <ProfileNav />
           </div>
-          <div className="flex-1">
-            <div>
+          <div className="flex-1 w-full overflow-x-hidden">
+            <div> 
               <Outlet />
             </div>
           </div>

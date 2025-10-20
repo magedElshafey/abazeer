@@ -27,7 +27,7 @@ const Overview: FC = () => {
                     </p>
                 </div>
             </div>
-            <div className="w-full flex flex-col md:flex-row gap-4">
+            <div className="w-full max-w-full flex flex-col lg:flex-row gap-4">
                 <div className="flex-1">
                     <ProfileCard
                         theme="order"

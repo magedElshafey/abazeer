@@ -8,6 +8,7 @@ import OrderItemCard from "../../components/orders/OrderItemCard";
 import CancelOrderButton from "../../components/orders/CancelOrderButton";
 import MainBtn from "@/common/components/buttons/MainBtn";
 import { IoArrowBack } from "react-icons/io5";
+import { HiDownload } from "react-icons/hi";
 
 const OrderDetails: FC = () => {
   const { t } = useTranslation();
@@ -17,20 +18,31 @@ const OrderDetails: FC = () => {
 
   return (
     <div>
-      <div className="flex-between">
-        <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6">
+      <div className="flex-between flex-col md:flex-row">
+        <h1 className="text-2xl md:text-3xl text-nowrap flex-1 font-bold text-gray-800 mb-6">
           {t("order_details")}
         </h1>
-        <div>
-          <MainBtn theme="outline" onClick={() => navigate("..")}>
-            <IoArrowBack />
-          </MainBtn>
+        <div className="flex flex-col w-full md:w-1/2 md:flex-center md:flex-row gap-2">
           {orderQuery.data &&
             orderQuery.data.order_status_label === "pending" && (
-              <div className="mt-3">
+              <div className="mt-3 flex-1">
                 <CancelOrderButton orderId={orderQuery.data.id} />
               </div>
-            )}
+          )}
+          {
+            orderQuery.data && (orderQuery.data.order_status_label === "completed" || orderQuery.data?.order_status_label === "paid") && orderQuery.data.invoice && (
+              <MainBtn
+                className="flex-1 flex items-center gap-2"
+                onClick={() => {window.open(orderQuery.data.invoice as string, "_blank")}}
+              >
+                <HiDownload size={20} />
+                {t("download_invoice")}
+              </MainBtn>
+            )
+          }
+          <MainBtn className="flex-1" theme="outline" onClick={() => navigate("..")}>
+            <IoArrowBack />
+          </MainBtn>
         </div>
       </div>
 
