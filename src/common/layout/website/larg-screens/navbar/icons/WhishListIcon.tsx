@@ -13,12 +13,11 @@ const WhishListIcon = () => {
         <FaRegHeart size={20} className="text-transition" />
         <div className="absolute -end-4 -top-3 bg-orangeColor flex items-center justify-center text-nowrap w-5 h-5 text-sm">
           <p>
-            {
-              isLoading ?
-                <Loader color="white" />
-                :
-                (data || []).length.toString()
-            }
+            {isLoading ? (
+              <Loader color="white" />
+            ) : (
+              (data || []).length.toString()
+            )}
           </p>
         </div>
       </Link>
