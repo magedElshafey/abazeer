@@ -8,7 +8,7 @@ import useCreateUpdateAddress from "../api/addresses/useCreateUpdateAddress";
 import useGetAddress from "../api/addresses/useGetAddress";
 import { toast } from "sonner";
 import toastErrorMessage from "@/utils/toastApiError";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
 
 const useCreateAddressLogic = () => {
@@ -16,6 +16,7 @@ const useCreateAddressLogic = () => {
 
   const { isPending, mutateAsync } = useCreateUpdateAddress({ id });
   const { data: addressData, isLoading: isLoadingAddress } = useGetAddress({ id });
+  const [ searchParams ] = useSearchParams();
   const navigate = useNavigate();
 
   const {
@@ -57,7 +58,7 @@ const useCreateAddressLogic = () => {
       if (response?.status) {
         toast.success(response?.message);
         reset();
-        navigate("..");
+        navigate(searchParams.get("to") || "..");
       }
     } catch (error) {
       toastErrorMessage(error as Error);

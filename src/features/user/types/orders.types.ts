@@ -34,5 +34,6 @@ export interface OrderItem {
 
 export interface OrderDetails extends Order {
     order_items: OrderItem[];
+    invoice: string | null;
 }
 

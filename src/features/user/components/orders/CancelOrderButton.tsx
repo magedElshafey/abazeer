@@ -42,7 +42,7 @@ const CancelOrderButton: FC<CancelOrderButtonProps> = ({ orderId }) => {
         >
             <MainBtn
                 theme="danger"
-                className="flex items-center gap-2 px-4"
+                className="flex items-center gap-2 px-4 sm:w-auto"
                 aria-label={t("cancel_order")}
             >
                 <FaTimes size={16} />

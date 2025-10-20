@@ -175,15 +175,15 @@ const AddressForm: FC<AddressFormProps> = ({ readonly = false }) => {
                                     text="save address"
                                     isPending={isPending}
                                 />
-                                 <MainBtn
-                                     type="button"
-                                     onClick={() => navigate(-1)}
-                                     className="flex-1 flex-center"
-                                     text="back"
-                                     theme="outline"
-                                 >
-                                     <IoArrowBack size={18} />
-                                 </MainBtn>
+                                <MainBtn
+                                    type="button"
+                                    onClick={() => navigate(-1)}
+                                    className="flex-1 flex-center"
+                                    text="back"
+                                    theme="outline"
+                                >
+                                    <IoArrowBack size={18} />
+                                </MainBtn>
                             </div>
                         </div>
                     )}
