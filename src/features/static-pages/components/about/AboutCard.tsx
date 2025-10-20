@@ -1,5 +1,6 @@
 import { memo, useMemo } from "react";
 import type { AboutType } from "../../types/About.type";
+import HtmlConverter from "@/common/components/htmlConverter/HtmlConverter";
 
 interface AboutCardProps {
   data: AboutType;
@@ -38,7 +39,7 @@ const AboutCard: React.FC<AboutCardProps> = ({ data, index }) => {
           {name}
         </h2>
         <p id={`about-desc-${index}`} className="text-gray-600 leading-relaxed">
-          {description}
+          <HtmlConverter html={description} />
         </p>
       </section>
     </article>
