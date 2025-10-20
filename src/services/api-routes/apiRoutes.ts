@@ -36,4 +36,5 @@ export const apiRoutes = {
   applyCoupon: "coupons/check",
   orders: "orders",
   features: "/features/list",
+  gallery: "galleries",
 };

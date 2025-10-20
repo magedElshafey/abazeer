@@ -1,6 +1,6 @@
 // hooks
 import { useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import useGetHomeSlider from "../api/hero/useGetHomeSlider";
 import useGetHomeBanner from "../api/hero/useGetHomeBanner";
@@ -28,6 +28,7 @@ import MainBtn from "@/common/components/buttons/MainBtn";
 import FlashSaleSection from "../components/flash-sale/components/FlashSaleSection";
 // constant
 import { delayOptions } from "@/lib/tanstack-react-query/delayOptions";
+import useGetAllGallries from "../api/gallery/useGetAllGallries";
 
 const Home = () => {
   const { t } = useTranslation();
@@ -51,7 +52,7 @@ const Home = () => {
   const flashsaleQueryReuslt = useGetFlashsale();
   const sliderQueryResult = useGetHomeSlider();
   const bannerQueryResult = useGetHomeBanner();
-  console.log("blogsQueryResult", blogsQueryResult);
+  const galleryQueryResult = useGetAllGallries();
   const navigate = useNavigate();
   const handleNavigate = useCallback(() => {
     navigate("/blogs");
@@ -123,6 +124,29 @@ const Home = () => {
             CardComponent={ProductCard}
             getCardProps={(item) => ({ product: item })}
           />
+        </div>
+        <div className="space-between-sections">
+          <FetchHandler queryResult={galleryQueryResult} skeletonType="image">
+            {galleryQueryResult?.data &&
+              galleryQueryResult?.data?.length > 0 && (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                  {galleryQueryResult?.data?.map((item) => (
+                    <Link
+                      key={item?.id}
+                      to={`/products/${item?.id}`}
+                      className="block w-full"
+                    >
+                      <img
+                        alt={item?.name}
+                        src={item?.image || "/images/g.png"}
+                        loading="lazy"
+                        className="w-full aspect-[16/10] object-cover rounded-lg"
+                      />
+                    </Link>
+                  ))}
+                </div>
+              )}
+          </FetchHandler>
         </div>
         <div className="space-between-sections">
           <HomeSection<Product, { product: Product }>
