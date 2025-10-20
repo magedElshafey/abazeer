@@ -47,9 +47,11 @@ const Home = () => {
   const categories = useGetSampleCategories();
   const brands = useGetBrands({ featured: true, delay: delayOptions });
   const blogsQueryResult = useGetBlogs();
+
   const flashsaleQueryReuslt = useGetFlashsale();
   const sliderQueryResult = useGetHomeSlider();
   const bannerQueryResult = useGetHomeBanner();
+  console.log("blogsQueryResult", blogsQueryResult);
   const navigate = useNavigate();
   const handleNavigate = useCallback(() => {
     navigate("/blogs");
@@ -142,7 +144,7 @@ const Home = () => {
         </div>
         <div className="space-between-sections">
           <FetchHandler queryResult={blogsQueryResult} skeletonType="blog">
-            {blogsQueryResult?.data && blogsQueryResult?.data?.length > 1 ? (
+            {blogsQueryResult?.data && blogsQueryResult?.data?.length > 0 ? (
               <div>
                 <div className="flex-between flex-col md:flex-row  mb-6">
                   <SectionTitle title="latest blogs" />
