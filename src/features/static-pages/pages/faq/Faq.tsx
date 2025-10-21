@@ -7,6 +7,7 @@ import FetchHandler from "@/common/api/fetchHandler/FetchHandler";
 import EmptyData from "@/common/components/empty-data/EmptyData";
 import SectionTitle from "@/common/components/titles/SectionTitle";
 import type { Faq } from "../../types/Faq.type";
+import HtmlConverter from "@/common/components/htmlConverter/HtmlConverter";
 
 const Faq = () => {
   const { t } = useTranslation();
@@ -42,6 +43,10 @@ interface FaqAccordionProps {
   item: Faq;
 }
 
+interface FaqAccordionProps {
+  item: Faq;
+}
+
 const FaqAccordion = ({ item }: FaqAccordionProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -71,17 +76,23 @@ const FaqAccordion = ({ item }: FaqAccordionProps) => {
         </svg>
       </button>
 
-      {/* Improved transition using scaleY + opacity */}
       <div
         id={`faq-answer-${item.id}`}
         role="region"
-        className={`px-5 transform-gpu origin-top transition-all duration-300 ease-out ${
-          isOpen
-            ? "opacity-100 scale-y-100 max-h-[500px] py-3"
-            : "opacity-0 scale-y-0 max-h-0"
+        className={`grid transition-all duration-300 ease-out overflow-hidden ${
+          isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
         }`}
       >
-        <p className="text-gray-600 leading-relaxed">{item.answer}</p>
+        <div className="overflow-hidden">
+          <div
+            className="px-5 pb-4 text-gray-600 leading-relaxed transition-transform duration-300 ease-out transform"
+            style={{
+              transform: isOpen ? "translateY(0)" : "translateY(-10px)",
+            }}
+          >
+            <HtmlConverter html={item.answer} />
+          </div>
+        </div>
       </div>
     </div>
   );

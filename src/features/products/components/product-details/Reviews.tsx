@@ -24,10 +24,8 @@ const Reviews: FC<ReviewsProps> = ({ product }) => {
             key={reviews?.length}
             showControls={true}
             breakPoints={{
-              "(min-width: 1280px)": { slides: { perView: 4, spacing: 16 } },
-              "(max-width: 1280px)": { slides: { perView: 3, spacing: 16 } },
-              "(max-width: 1024px)": { slides: { perView: 2, spacing: 16 } },
-              "(max-width: 580px)": { slides: { perView: 1, spacing: 12 } },
+              "(min-width: 772px)": { slides: { perView: 2, spacing: 16 } },
+              "(max-width: 772px)": { slides: { perView: 1, spacing: 12 } },
             }}
           >
             {reviews.map((review) => (

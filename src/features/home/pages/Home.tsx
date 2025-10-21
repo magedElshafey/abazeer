@@ -249,6 +249,10 @@ const Home = () => {
             skeletonType="testimonail"
             CardComponent={TestimonialsCard}
             getCardProps={(item) => ({ data: item })}
+            breakPoints={{
+              "(min-width: 772px)": { slides: { perView: 2, spacing: 16 } },
+              "(max-width: 772px)": { slides: { perView: 1, spacing: 12 } },
+            }}
           />
         </div>
       </div>

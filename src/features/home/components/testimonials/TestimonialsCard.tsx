@@ -15,16 +15,14 @@ const TestimonialsCard: React.FC<TestimonialsCardProps> = ({ data }) => {
           <Avatar url="/images/600x600.jpg" alt={data.name} size={60} />
         </div>
 
-        <div className="flex flex-col items-center flex-1">
+        <div className="flex flex-col items-center">
           <span className="font-medium text-gray-800">{data.name}</span>
           <span className="text-gray-600 text-xs text-center">
             {data.job_title}
           </span>
         </div>
       </div>
-      <p className="text-gray-600 mt-3 text-center line-clamp-3">
-        {data.quote}
-      </p>
+      <p className="text-gray-600  line-clamp-3">{data.quote}</p>
 
       {/* Bottom Section */}
       <div className="flex items-center justify-end mt-3 pt-2 border-t border-gray-100">
