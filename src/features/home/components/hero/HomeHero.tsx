@@ -15,7 +15,6 @@ const HomeHero: FC<HomeHeroProps> = memo(({ sliders, banner }) => {
   const handleNavigate = useCallback(() => {
     navigate("/products?filter-in_offer=true");
   }, [navigate]);
-
   return (
     <section
       className="w-full bg-[url('/images/slider-background.jpg')] bg-no-repeat bg-center bg-cover py-10"
@@ -33,7 +32,10 @@ const HomeHero: FC<HomeHeroProps> = memo(({ sliders, banner }) => {
         >
           <img
             src={banner?.image || "/images/600x600.jpg"}
-            alt={banner?.description || "Promotional banner"}
+            alt={
+              banner?.description?.replace(/<[^>]+>/g, "") ||
+              "Promotional banner"
+            }
             className="h-full w-full object-cover object-center transition-transform duration-300 hover:scale-105"
             loading="lazy"
             decoding="async"
