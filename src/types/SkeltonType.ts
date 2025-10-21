@@ -21,4 +21,5 @@ export type SkeletonType =
   | "order-card"
   | "productDetails"
   | "coupon"
-  | "footer";
+  | "footer"
+  | "testimonail";

@@ -38,4 +38,5 @@ export const apiRoutes = {
   features: "/features/list",
   gallery: "galleries",
   ads: "banners/list",
+  testimonials: "testimonials",
 };

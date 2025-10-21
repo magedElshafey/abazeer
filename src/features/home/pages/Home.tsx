@@ -30,6 +30,9 @@ import { delayOptions } from "@/lib/tanstack-react-query/delayOptions";
 import useGetAllGallries from "../api/gallery/useGetAllGallries";
 import useGetAds from "../api/ads/useGetAds";
 import Slider from "@/common/components/slider/Slider";
+import useGetTestimonials from "../api/testimonials/useGetTestimonials";
+import { Testimonials } from "../types/testimonials.types";
+import TestimonialsCard from "../components/testimonials/TestimonialsCard";
 
 const Home = () => {
   const { t } = useTranslation();
@@ -55,6 +58,7 @@ const Home = () => {
   const bannerQueryResult = useGetHomeBanner();
   const galleryQueryResult = useGetAllGallries();
   const adsQueryResult = useGetAds();
+  const testimonailsQueryResult = useGetTestimonials();
   const navigate = useNavigate();
 
   const handleNavigate = useCallback(() => {
@@ -228,6 +232,15 @@ const Home = () => {
               </div>
             )}
           </FetchHandler>
+        </div>
+        <div className="space-between-sections">
+          <HomeSection<Testimonials, { data: Testimonials }>
+            title={t("Testimonials")}
+            queryResult={testimonailsQueryResult}
+            skeletonType="testimonail"
+            CardComponent={TestimonialsCard}
+            getCardProps={(item) => ({ data: item })}
+          />
         </div>
       </div>
     </>

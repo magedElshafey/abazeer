@@ -22,6 +22,7 @@ import OrderCardSkeleton from "./OrderCardSkeleton";
 import ProductDetailsSkeleton from "./ProductDetailsSkeleton";
 import CouponCardSkeleton from "./CouponCardSkeleton";
 import FooterSkeleton from "./FooterSkeleton";
+import TestimonialsCardSkeleton from "./TestimonailSkelton";
 interface SkeltonProps {
   type: SkeletonType;
 }
@@ -73,6 +74,8 @@ const Skeleton: React.FC<SkeltonProps> = ({ type }) => {
       return <CouponCardSkeleton />;
     case "footer":
       return <FooterSkeleton />;
+    case "testimonail":
+      return <TestimonialsCardSkeleton />;
     default:
       return null;
   }

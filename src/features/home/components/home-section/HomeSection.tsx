@@ -6,7 +6,7 @@ import { UseQueryResult } from "@tanstack/react-query";
 interface HomeSectionProps<TItem, TProps> {
   title: string;
   queryResult: UseQueryResult<TItem[], unknown>;
-  skeletonType: "product" | "category" | "brand";
+  skeletonType: "product" | "category" | "brand" | "testimonail";
   CardComponent: React.ComponentType<TProps>;
   getCardProps: (item: TItem) => TProps;
   breakPoints?: Record<string, any>;
