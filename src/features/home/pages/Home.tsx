@@ -67,6 +67,7 @@ const Home = () => {
   return (
     <>
       <SEO title={t("home")} />
+      {/* hero section : slider and offer banner  */}
       <FetchHandler queryResult={sliderQueryResult} skeletonType="slider">
         {sliderQueryResult &&
           sliderQueryResult?.data &&
@@ -79,24 +80,34 @@ const Home = () => {
           )}
       </FetchHandler>
 
+      {/* shop with categories section */}
+      <div className="containerr space-between-sections">
+        <HomeSection<CategoriesListType, { category: CategoriesListType }>
+          title={t("shop with categories")}
+          queryResult={categories}
+          skeletonType="category"
+          CardComponent={CategoryCard}
+          getCardProps={(item) => ({ category: item })}
+          breakPoints={{
+            "(min-width: 1400px)": { slides: { perView: 7, spacing: 16 } },
+            "(max-width: 1400px)": { slides: { perView: 6, spacing: 16 } },
+            "(max-width: 1280px)": { slides: { perView: 5, spacing: 16 } },
+            "(max-width: 1024px)": { slides: { perView: 4, spacing: 16 } },
+            "(max-width: 768px)": { slides: { perView: 3, spacing: 16 } },
+            "(max-width: 580px)": { slides: { perView: 2, spacing: 12 } },
+          }}
+        />
+      </div>
+      {/* flash sale section */}
+      <FetchHandler queryResult={flashsaleQueryReuslt} skeletonType="product">
+        {flashsaleQueryReuslt?.data && (
+          <div className="space-between-sections">
+            <FlashSaleSection data={flashsaleQueryReuslt?.data} />
+          </div>
+        )}
+      </FetchHandler>
       <div className="containerr">
-        <div className="space-between-sections">
-          <HomeSection<CategoriesListType, { category: CategoriesListType }>
-            title={t("shop with categories")}
-            queryResult={categories}
-            skeletonType="category"
-            CardComponent={CategoryCard}
-            getCardProps={(item) => ({ category: item })}
-            breakPoints={{
-              "(min-width: 1400px)": { slides: { perView: 7, spacing: 16 } },
-              "(max-width: 1400px)": { slides: { perView: 6, spacing: 16 } },
-              "(max-width: 1280px)": { slides: { perView: 5, spacing: 16 } },
-              "(max-width: 1024px)": { slides: { perView: 4, spacing: 16 } },
-              "(max-width: 768px)": { slides: { perView: 3, spacing: 16 } },
-              "(max-width: 580px)": { slides: { perView: 2, spacing: 12 } },
-            }}
-          />
-        </div>
+        {/* shop with brands section */}
         <div className="space-between-sections">
           <HomeSection<Brand, { brand: Brand }>
             title={t("featured brands")}
@@ -113,16 +124,33 @@ const Home = () => {
             }}
           />
         </div>
-      </div>
-
-      <FetchHandler queryResult={flashsaleQueryReuslt} skeletonType="product">
-        {flashsaleQueryReuslt?.data && (
-          <div className="space-between-sections">
-            <FlashSaleSection data={flashsaleQueryReuslt?.data} />
-          </div>
-        )}
-      </FetchHandler>
-      <div className="containerr">
+        {/* ads section */}
+        <div className="space-between-sections">
+          <FetchHandler queryResult={adsQueryResult} skeletonType="image">
+            {adsQueryResult?.data && adsQueryResult?.data?.length > 0 && (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                {adsQueryResult?.data?.slice(0, 3)?.map((ad) => (
+                  <Link
+                    key={ad?.id}
+                    to={`/products?filter-category=${ad?.category_id}`}
+                    className="block w-full overflow-hidden rounded-xl"
+                  >
+                    <div className="relative w-full aspect-[688/420]">
+                      <img
+                        loading="lazy"
+                        alt={ad?.category?.name || "Ad image"}
+                        src={ad?.image || "/images/placeholder.jpg"}
+                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                        decoding="async"
+                      />
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </FetchHandler>
+        </div>
+        {/* new arrivale products */}
         <div className="space-between-sections">
           <HomeSection<Product, { product: Product }>
             title={t("just landing")}
@@ -132,6 +160,28 @@ const Home = () => {
             getCardProps={(item) => ({ product: item })}
           />
         </div>
+        {/* featured products section */}
+        <div className="space-between-sections">
+          <HomeSection<Product, { product: Product }>
+            title={t("featured products")}
+            queryResult={featuredProducts}
+            skeletonType="product"
+            CardComponent={ProductCard}
+            getCardProps={(item) => ({ product: item })}
+          />
+        </div>
+        {/* essintal product section  */}
+        <div className="space-between-sections">
+          <HomeSection<Product, { product: Product }>
+            title={t("essential products")}
+            queryResult={essentialProducts}
+            skeletonType="product"
+            CardComponent={ProductCard}
+            getCardProps={(item) => ({ product: item })}
+          />
+        </div>
+
+        {/* products from our farms section */}
         <div className="space-between-sections">
           <FetchHandler queryResult={galleryQueryResult} skeletonType="image">
             {galleryQueryResult?.data &&
@@ -171,49 +221,7 @@ const Home = () => {
               )}
           </FetchHandler>
         </div>
-        <div className="space-between-sections">
-          <HomeSection<Product, { product: Product }>
-            title={t("featured products")}
-            queryResult={featuredProducts}
-            skeletonType="product"
-            CardComponent={ProductCard}
-            getCardProps={(item) => ({ product: item })}
-          />
-        </div>
-        <div className="space-between-sections">
-          <HomeSection<Product, { product: Product }>
-            title={t("essential products")}
-            queryResult={essentialProducts}
-            skeletonType="product"
-            CardComponent={ProductCard}
-            getCardProps={(item) => ({ product: item })}
-          />
-        </div>
-        <div className="space-between-sections">
-          <FetchHandler queryResult={adsQueryResult} skeletonType="image">
-            {adsQueryResult?.data && adsQueryResult?.data?.length > 0 && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                {adsQueryResult?.data?.map((ad) => (
-                  <Link
-                    key={ad?.id}
-                    to={`/products?filter-category=${ad?.category_id}`}
-                    className="block w-full overflow-hidden rounded-xl"
-                  >
-                    <div className="relative w-full aspect-[688/420]">
-                      <img
-                        loading="lazy"
-                        alt={ad?.category?.name || "Ad image"}
-                        src={ad?.image || "/images/placeholder.jpg"}
-                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                        decoding="async"
-                      />
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            )}
-          </FetchHandler>
-        </div>
+        {/* blogs section */}
         <div className="space-between-sections">
           <FetchHandler queryResult={blogsQueryResult} skeletonType="blog">
             {blogsQueryResult?.data && blogsQueryResult?.data?.length > 0 && (
@@ -233,6 +241,7 @@ const Home = () => {
             )}
           </FetchHandler>
         </div>
+        {/* testimonials section */}
         <div className="space-between-sections">
           <HomeSection<Testimonials, { data: Testimonials }>
             title={t("Testimonials")}

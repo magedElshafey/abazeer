@@ -40,7 +40,7 @@ const HomeSlider: React.FC<Props> = ({ sliders }) => {
           if (instanceRef.current) {
             instanceRef.current.next();
           }
-        }, 4000);
+        }, 2000);
       };
 
       startAutoplay();
@@ -114,7 +114,7 @@ const HomeSlider: React.FC<Props> = ({ sliders }) => {
                 src={slider.image}
                 alt={`Banner ${index + 1}`}
                 className="w-full h-full object-cover"
-                loading="lazy"
+                // loading="lazy"
               />
             </div>
           </div>

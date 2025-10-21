@@ -37,7 +37,13 @@ function HomeSection<TItem, TProps>({
     >
       <FetchHandler queryResult={queryResult} skeletonType={skeletonType}>
         {data?.length > 0 && (
-          <Slider title={title} loop spacing={10} breakPoints={breakPoints}>
+          <Slider
+            key={data?.length}
+            title={title}
+            loop
+            spacing={10}
+            breakPoints={breakPoints}
+          >
             {data.map((item: TItem, index: number) => (
               <CardComponent
                 key={(item as any)?.id ?? index}

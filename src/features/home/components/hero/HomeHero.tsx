@@ -20,7 +20,7 @@ const HomeHero: FC<HomeHeroProps> = memo(({ sliders, banner }) => {
       aria-label="Home hero section"
     >
       <div className="containerr flex flex-col lg:flex-row gap-4 lg:max-h-[500px] overflow-hidden">
-        <div className="w-full lg:w-2/3 overflow-hidden min-h-[200px]">
+        <div className="w-full lg:w-2/3 overflow-hidden ">
           <HomeSlider sliders={sliders} />
         </div>
 
@@ -36,7 +36,7 @@ const HomeHero: FC<HomeHeroProps> = memo(({ sliders, banner }) => {
               "Promotional banner"
             }
             className="h-full w-full object-cover object-center transition-transform duration-300 hover:scale-105"
-            loading="lazy"
+            // loading="lazy"
             decoding="async"
           />
         </button>
