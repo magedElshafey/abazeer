@@ -107,7 +107,7 @@ const DialogComponent = forwardRef<RefType, PropsWithChildren<Props>>(
           }
         }}
       >
-        <DialogTrigger onClick={() => setOpened(true)}>
+        <DialogTrigger onClick={() => setOpened(true)} asChild>
           {children}
         </DialogTrigger>
         <DialogContent className="min-w-96 w-fit">
