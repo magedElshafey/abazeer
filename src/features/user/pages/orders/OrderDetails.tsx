@@ -25,7 +25,7 @@ const OrderDetails: FC = () => {
         <div className="flex flex-col w-full md:w-1/2 md:flex-center md:flex-row gap-2">
           {orderQuery.data &&
             orderQuery.data.order_status_label === "pending" && (
-              <div className="mt-3 flex-1">
+              <div className="flex-1">
                 <CancelOrderButton orderId={orderQuery.data.id} />
               </div>
           )}
