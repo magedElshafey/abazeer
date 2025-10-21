@@ -24,15 +24,15 @@ const SiteMap: React.FC<SiteMapProps> = ({
 
   const allowedSlugs = ["about-us", "faq"];
 
-  const helpCenterLinks: Nav[] = useMemo(() => {
-    if (!data) return [];
-    return data
-      .filter((item: any) => allowedSlugs.includes(item.slug))
-      .map((item: any) => ({
-        name: item.name,
-        link: `/${item.slug}`,
-      }));
-  }, [data]);
+  // const helpCenterLinks: Nav[] = useMemo(() => {
+  //   if (!data) return [];
+  //   return data
+  //     .filter((item: any) => allowedSlugs.includes(item.slug))
+  //     .map((item: any) => ({
+  //       name: item.name,
+  //       link: `/${item.slug}`,
+  //     }));
+  // }, [data]);
 
   const usefulLinks: Nav[] = useMemo(() => {
     if (!data) return [];
@@ -54,7 +54,7 @@ const SiteMap: React.FC<SiteMapProps> = ({
           Site Map
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-4">
           {/* ✅ Logo + Description */}
           <div>
             <Logo logo={logo} />
@@ -95,7 +95,7 @@ const SiteMap: React.FC<SiteMapProps> = ({
             <FooterLinkList links={usefulLinks} title="useful links" />
           )}
 
-          {helpCenterLinks.length > 0 && (
+          {/* {helpCenterLinks.length > 0 && (
             <FooterLinkList
               links={[
                 ...helpCenterLinks,
@@ -103,7 +103,7 @@ const SiteMap: React.FC<SiteMapProps> = ({
               ]}
               title="help center"
             />
-          )}
+          )} */}
 
           <FooterLinkList links={myAccount} title="my account" />
 
