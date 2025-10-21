@@ -1,7 +1,6 @@
 import React, { memo } from "react";
 import FetchHandler from "@/common/api/fetchHandler/FetchHandler";
 import Slider from "@/common/components/slider/Slider";
-import EmptyData from "@/common/components/empty-data/EmptyData";
 import { UseQueryResult } from "@tanstack/react-query";
 
 interface HomeSectionProps<TItem, TProps> {
@@ -37,7 +36,7 @@ function HomeSection<TItem, TProps>({
       className="py-8"
     >
       <FetchHandler queryResult={queryResult} skeletonType={skeletonType}>
-        {data?.length ? (
+        {data?.length > 0 && (
           <Slider title={title} loop spacing={10} breakPoints={breakPoints}>
             {data.map((item: TItem, index: number) => (
               <CardComponent
@@ -46,8 +45,6 @@ function HomeSection<TItem, TProps>({
               />
             ))}
           </Slider>
-        ) : (
-          <EmptyData />
         )}
       </FetchHandler>
     </section>

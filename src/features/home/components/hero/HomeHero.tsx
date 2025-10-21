@@ -11,7 +11,6 @@ interface HomeHeroProps {
 
 const HomeHero: FC<HomeHeroProps> = memo(({ sliders, banner }) => {
   const navigate = useNavigate();
-  console.log("slider", sliders);
   const handleNavigate = useCallback(() => {
     navigate("/products?filter-in_offer=true");
   }, [navigate]);

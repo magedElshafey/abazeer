@@ -22,13 +22,14 @@ import CategoryCard from "../../categories/components/card/CategoryCard";
 import ProductCard from "../../products/components/card/ProductCard";
 import BrandsCard from "../../brands/components/card/BrandsCard";
 import BlogCard from "../../static-pages/components/blogs/card/BlogCard";
-import EmptyData from "@/common/components/empty-data/EmptyData";
 import SectionTitle from "@/common/components/titles/SectionTitle";
 import MainBtn from "@/common/components/buttons/MainBtn";
 import FlashSaleSection from "../components/flash-sale/components/FlashSaleSection";
 // constant
 import { delayOptions } from "@/lib/tanstack-react-query/delayOptions";
 import useGetAllGallries from "../api/gallery/useGetAllGallries";
+import useGetAds from "../api/ads/useGetAds";
+import Slider from "@/common/components/slider/Slider";
 
 const Home = () => {
   const { t } = useTranslation();
@@ -53,7 +54,9 @@ const Home = () => {
   const sliderQueryResult = useGetHomeSlider();
   const bannerQueryResult = useGetHomeBanner();
   const galleryQueryResult = useGetAllGallries();
+  const adsQueryResult = useGetAds();
   const navigate = useNavigate();
+
   const handleNavigate = useCallback(() => {
     navigate("/blogs");
   }, [navigate]);
@@ -129,22 +132,38 @@ const Home = () => {
           <FetchHandler queryResult={galleryQueryResult} skeletonType="image">
             {galleryQueryResult?.data &&
               galleryQueryResult?.data?.length > 0 && (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                  {galleryQueryResult?.data?.map((item) => (
-                    <Link
-                      key={item?.id}
-                      to={`/products/${item?.id}`}
-                      className="block w-full"
-                    >
+                <>
+                  <Slider
+                    title="Pictures from our farms"
+                    breakPoints={{
+                      "(min-width: 1280px)": {
+                        slides: { perView: 7, spacing: 16 },
+                      },
+                      "(max-width: 1280px)": {
+                        slides: { perView: 6, spacing: 16 },
+                      },
+                      "(max-width: 1024px)": {
+                        slides: { perView: 5, spacing: 16 },
+                      },
+                      "(max-width: 768px)": {
+                        slides: { perView: 4, spacing: 16 },
+                      },
+                      "(max-width: 580px)": {
+                        slides: { perView: 3, spacing: 12 },
+                      },
+                    }}
+                  >
+                    {galleryQueryResult?.data?.map((item) => (
                       <img
+                        key={item?.id}
                         alt={item?.name}
                         src={item?.image || "/images/g.png"}
                         loading="lazy"
                         className="w-full aspect-[16/10] object-cover rounded-lg"
                       />
-                    </Link>
-                  ))}
-                </div>
+                    ))}
+                  </Slider>
+                </>
               )}
           </FetchHandler>
         </div>
@@ -167,8 +186,33 @@ const Home = () => {
           />
         </div>
         <div className="space-between-sections">
+          <FetchHandler queryResult={adsQueryResult} skeletonType="image">
+            {adsQueryResult?.data && adsQueryResult?.data?.length > 0 && (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                {adsQueryResult?.data?.map((ad) => (
+                  <Link
+                    key={ad?.id}
+                    to={`/products?filter-category=${ad?.category_id}`}
+                    className="block w-full overflow-hidden rounded-xl"
+                  >
+                    <div className="relative w-full aspect-[688/420]">
+                      <img
+                        loading="lazy"
+                        alt={ad?.category?.name || "Ad image"}
+                        src={ad?.image || "/images/placeholder.jpg"}
+                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                        decoding="async"
+                      />
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </FetchHandler>
+        </div>
+        <div className="space-between-sections">
           <FetchHandler queryResult={blogsQueryResult} skeletonType="blog">
-            {blogsQueryResult?.data && blogsQueryResult?.data?.length > 0 ? (
+            {blogsQueryResult?.data && blogsQueryResult?.data?.length > 0 && (
               <div>
                 <div className="flex-between flex-col md:flex-row  mb-6">
                   <SectionTitle title="latest blogs" />
@@ -180,11 +224,9 @@ const Home = () => {
                   ))}
                 </div>
               </div>
-            ) : (
-              <EmptyData />
             )}
           </FetchHandler>
-        </div>{" "}
+        </div>
       </div>
     </>
   );
