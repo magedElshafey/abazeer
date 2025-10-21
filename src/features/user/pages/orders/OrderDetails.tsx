@@ -15,7 +15,7 @@ const OrderDetails: FC = () => {
   const { id } = useParams<{ id: string }>();
   const orderQuery = useGetOrderById(id || "");
   const navigate = useNavigate();
-
+  console.log(orderQuery?.data);
   return (
     <div>
       <div className="flex-between flex-col md:flex-row">
@@ -28,19 +28,26 @@ const OrderDetails: FC = () => {
               <div className="mt-3 flex-1">
                 <CancelOrderButton orderId={orderQuery.data.id} />
               </div>
-          )}
-          {
-            orderQuery.data && (orderQuery.data.order_status_label === "completed" || orderQuery.data?.order_status_label === "paid") && orderQuery.data.invoice && (
+            )}
+          {orderQuery.data &&
+            (orderQuery.data.order_status_label === "completed" ||
+              orderQuery.data?.order_status_label === "paid") &&
+            orderQuery.data.invoice && (
               <MainBtn
                 className="flex-1 flex items-center gap-2"
-                onClick={() => {window.open(orderQuery.data.invoice as string, "_blank")}}
+                onClick={() => {
+                  window.open(orderQuery.data.invoice as string, "_blank");
+                }}
               >
                 <HiDownload size={20} />
                 {t("download_invoice")}
               </MainBtn>
-            )
-          }
-          <MainBtn className="flex-1" theme="outline" onClick={() => navigate("..")}>
+            )}
+          <MainBtn
+            className="flex-1"
+            theme="outline"
+            onClick={() => navigate("..")}
+          >
             <IoArrowBack />
           </MainBtn>
         </div>

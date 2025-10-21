@@ -21,6 +21,7 @@ const Reviews: FC<ReviewsProps> = ({ product }) => {
       <div className="space-y-4">
         {reviews.length > 0 ? (
           <Slider
+            key={reviews?.length}
             showControls={true}
             breakPoints={{
               "(min-width: 1280px)": { slides: { perView: 4, spacing: 16 } },

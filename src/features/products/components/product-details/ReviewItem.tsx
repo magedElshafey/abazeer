@@ -10,37 +10,40 @@ interface ReviewItemProps {
 }
 
 const ReviewItem: FC<ReviewItemProps> = ({ review }) => {
-  // Generate star rating based on rate
   const renderStars = (rating: number) => {
     const stars = [];
     const fullStars = Math.floor(rating);
 
     for (let i = 0; i < 5; i++) {
-      if (i < fullStars) {
-        stars.push(<FaStar key={i} className="text-yellow-400 w-4 h-4" />);
-      } else {
-        stars.push(<FaStar key={i} className="text-gray-300 w-4 h-4" />);
-      }
+      stars.push(
+        <FaStar
+          key={i}
+          className={
+            i < fullStars ? "text-yellow-400 w-4 h-4" : "text-gray-300 w-4 h-4"
+          }
+        />
+      );
     }
-
     return stars;
   };
 
   return (
-    <div className="border rounded-lg p-4 ">
-      <div className="flex  gap-2 mb-5">
+    <div className="border rounded-lg p-4 flex flex-col justify-between h-full min-h-[220px] bg-white shadow-sm">
+      {/* Top Section */}
+      <div className="flex gap-2">
         <div className="w-16 flex-shrink-0">
           <Avatar url="/images/600x600.jpg" alt={review.user.name} size={60} />
         </div>
-        <div className="flex flex-col items-center gap-1">
+
+        <div className="flex flex-col flex-1">
           <span className="font-medium text-gray-800">{review.user.name}</span>
           <div className="flex text-yellow-400">{renderStars(review.rate)}</div>
-          <p className="text-gray-600">{review.comment}</p>
+          <p className="text-gray-600 mt-1 line-clamp-3">{review.comment}</p>
         </div>
-
-        {/* Review Content */}
       </div>
-      <div className="flex-between">
+
+      {/* Bottom Section */}
+      <div className="flex items-center justify-between mt-3 pt-2 border-t border-gray-100">
         {review.is_owner && (
           <DeleteReviewButton
             reviewId={review.id}
