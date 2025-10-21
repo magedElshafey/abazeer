@@ -10,6 +10,7 @@ interface ReviewItemProps {
 }
 
 const ReviewItem: FC<ReviewItemProps> = ({ review }) => {
+
   const renderStars = (rating: number) => {
     const stars = [];
     const fullStars = Math.floor(rating);
@@ -32,7 +33,7 @@ const ReviewItem: FC<ReviewItemProps> = ({ review }) => {
       {/* Top Section */}
       <div className="flex gap-2">
         <div className="w-16 flex-shrink-0">
-          <Avatar url="/images/600x600.jpg" alt={review.user.name} size={60} />
+          <Avatar url={review.user.image || "test"} alt={review.user.name} size={60} />
         </div>
 
         <div className="flex flex-col flex-1">

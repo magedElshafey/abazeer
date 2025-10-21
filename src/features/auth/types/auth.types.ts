@@ -6,4 +6,5 @@ export interface User {
   token: string;
   created_at: string;
   updated_at: string;
+  profile_image: string;
 }

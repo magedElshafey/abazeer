@@ -1,23 +1,21 @@
 import { FC } from "react"
-import Avatar from "@/common/components/avatar/Avatar";
 import ProfileCard from "../components/ProfileCard";
 import { FiPackage, FiMapPin, FiSettings, FiShoppingCart } from "react-icons/fi";
 import MainBtn from "@/common/components/buttons/MainBtn";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@/store/AuthProvider";
+import ProfilePicture from "../components/ProfilePicture";
 
 const Overview: FC = () => {
     const { t } = useTranslation();
     const { user } = useAuth();
     const { name } = user!;
 
-    const avatarUrl = "/images/600x600.jpg"; // fallback image from public
-
     return (
         <div className="flex items-center gap-4 sm:gap-6 flex-col">
             <div className="w-full border p-5 rounded-md flex flex-col items-center gap-2">
-                <Avatar url={avatarUrl} alt={name} size={100} />
+                <ProfilePicture />
                 <div className="flex flex-col gap-1 text-center">
                     <p className="text-lg sm:text-xl md:text-2xl font-semibold">
                         {t("welcome_back_user", { username: name })}
