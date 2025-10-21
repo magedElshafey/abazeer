@@ -35,10 +35,13 @@ const ProductDetails: FC = () => {
           <div className="mt-8 bg-white p-2 rounded-lg">
             <ProductFooter product={product!} />
           </div>
-
-          <div className="mt-8 bg-white p-6 rounded-lg">
-            <RelatedProducts products={product?.related_products_data || []} />
-          </div>
+          {product && product?.related_products_data?.length > 0 && (
+            <div className="mt-8 bg-white p-6 rounded-lg">
+              <RelatedProducts
+                products={product?.related_products_data || []}
+              />
+            </div>
+          )}
         </FetchHandler>
       </div>
     </div>

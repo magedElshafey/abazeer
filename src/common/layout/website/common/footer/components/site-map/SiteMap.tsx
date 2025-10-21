@@ -36,14 +36,15 @@ const SiteMap: React.FC<SiteMapProps> = ({
 
   const usefulLinks: Nav[] = useMemo(() => {
     if (!data) return [];
+    console.log(data);
     return data
       .filter((item: any) => !allowedSlugs.includes(item.slug))
       .map((item: any) => ({
         name: item.name,
-        link: `static/${item.slug}`,
+        link: `static/${item?.id}-${item.slug}`,
       }));
   }, [data]);
-
+  console.log(usefulLinks);
   return (
     <section
       className="py-4 border-b border-t"

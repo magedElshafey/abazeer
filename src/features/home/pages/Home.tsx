@@ -216,7 +216,9 @@ const Home = () => {
               <div>
                 <div className="flex-between flex-col md:flex-row  mb-6">
                   <SectionTitle title="latest blogs" />
-                  <MainBtn text="show more" onClick={handleNavigate} />
+                  {blogsQueryResult?.data?.length > 5 && (
+                    <MainBtn text="show more" onClick={handleNavigate} />
+                  )}
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5  gap-5">
                   {blogsQueryResult?.data?.slice(0, 5)?.map((blog) => (

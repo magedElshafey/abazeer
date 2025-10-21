@@ -16,7 +16,7 @@ const FooterLinkList: React.FC<FooterLinkListProps> = ({ title, links }) => {
     if ("slug" in item) {
       return {
         name: item.name,
-        link: `static/${item.slug}`,
+        link: `static/${item?.id}-${item.slug}`,
       };
     }
     return {

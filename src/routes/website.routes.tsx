@@ -46,6 +46,7 @@ export const websiteRoutes: RouteObject = {
       ),
       handle: {
         breadcrumb: "static page name",
+        queryKey: [apiRoutes.static_page],
       },
     },
 
