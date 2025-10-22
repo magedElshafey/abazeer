@@ -35,7 +35,7 @@ const ReviewCard: FC<ReviewCardProps> = ({ review }) => {
         />
 
         {/* Product and Review Info */}
-        <div className=" flex flex-col items-center">
+        <div className=" flex flex-col">
           {/* Product Name */}
           <h3
             className="font-semibold text-blue-400 text-sm mb-1 hover:underline hover:text-blue-500 cursor-pointer"

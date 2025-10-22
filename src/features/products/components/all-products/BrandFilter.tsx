@@ -49,7 +49,7 @@ const BrandItem: React.FC<BrandItemProps> = ({ brand }) => {
               : "border-gray-300 bg-white"
           }`}
         >
-          {isSelected && <FaCheck className="w-2.5 h-2.5 text-black" />}
+          {isSelected && <FaCheck className="w-2.5 h-2.5 text-white" />}
         </div>
 
         <span

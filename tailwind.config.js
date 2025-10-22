@@ -31,7 +31,7 @@ export default {
 				},
 				darkBlue: "#0642BC",
 				lightBlue: "#3274FF",
-				orangeColor: "#fab528",
+				orangeColor: "#78897f",
 				foreground: 'hsl(var(--foreground))',
 				card: {
 					DEFAULT: 'hsl(var(--card))',

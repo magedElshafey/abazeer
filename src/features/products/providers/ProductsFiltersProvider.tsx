@@ -1,4 +1,4 @@
-import { createContext, FC, PropsWithChildren, useContext, useState, useCallback, useRef } from "react";
+import { createContext, FC, PropsWithChildren, useContext, useState, useCallback, useRef, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import type { Filters, ProductsFiltersContext as IProductsFiltersContext } from "../types/product.types";
 import { sortableKeys } from "../constants/products.constants";
@@ -26,28 +26,23 @@ const ProductsFiltersProvider: FC<PropsWithChildren> = ({ children }) => {
     });
 
     const [filters, setFilters] = useState<Filters>(() => {
-        const filters: Filters = {};
-        
+        const parsed: Filters = {};
         for (const [key, value] of searchParams.entries()) {
-            if(key.startsWith("filter-")) {
+            if (key.startsWith("filter-")) {
                 const filterKey = key.split("-")[1] as keyof Filters;
-                
-                // If the key already exists in filters
-                if (filterKey in filters) {
-                    const existingValue = filters[filterKey];
-                    // If it's already an array, push the new value
+                if (filterKey in parsed) {
+                    const existingValue = parsed[filterKey];
                     if (Array.isArray(existingValue)) {
                         (existingValue as string[]).push(value);
                     } else {
-                        // Convert to array with existing value and new value
-                        filters[filterKey] = [existingValue as string, value] as any;
+                        parsed[filterKey] = [existingValue as string, value] as any;
                     }
                 } else {
-                    filters[filterKey] = value as any;
+                    parsed[filterKey] = value as any;
                 }
             }
         }
-        return filters;
+        return parsed;
     });
 
     const debounceRef = useRef<ReturnType<typeof setTimeout>>();
@@ -102,6 +97,35 @@ const ProductsFiltersProvider: FC<PropsWithChildren> = ({ children }) => {
             handleChange();
         }
     }
+
+    // Keep local state (sortBy, filters) in sync with current search params
+    useEffect(() => {
+        // sortBy - same logic as initial state
+        const sortParam = searchParams.get("sort_by");
+        const sortKey = sortParam?.split("-")[0];
+        const nextSort = sortParam && sortableKeys.some(key => sortKey === key || sortKey === key)
+            ? (sortParam as IProductsFiltersContext["sortBy"]) : undefined;
+        setSortBy(nextSort);
+
+        // filters - same logic as initial state
+        const nextFilters: Filters = {};
+        for (const [key, value] of searchParams.entries()) {
+            if (key.startsWith("filter-")) {
+                const filterKey = key.split("-")[1] as keyof Filters;
+                if (filterKey in nextFilters) {
+                    const existingValue = nextFilters[filterKey];
+                    if (Array.isArray(existingValue)) {
+                        (existingValue as string[]).push(value);
+                    } else {
+                        nextFilters[filterKey] = [existingValue as string, value] as any;
+                    }
+                } else {
+                    nextFilters[filterKey] = value as any;
+                }
+            }
+        }
+        setFilters(nextFilters);
+    }, [searchParams]);
 
     const appliedFilters = Array.from(searchParams.entries()).reduce((current, [key, value]) => {
         if(key.startsWith("filter-")) {

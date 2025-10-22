@@ -10,9 +10,10 @@ export interface Setting {
   social_instagram: string | null;
   site_maintenance: boolean;
   slogan?: string;
-  fav_icon: string | null;
+  site_favicon: string | null;
   site_description_ar: string | null;
   hot_line: string;
+  product_banner: string;
 }
 
 export interface Feature {

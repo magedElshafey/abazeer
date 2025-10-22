@@ -5,7 +5,7 @@ import { twMerge } from "tailwind-merge";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const themes = {
-  main: "bg-orangeColor text-black",
+  main: "bg-orangeColor text-white",
   secondary: "bg-black text-white",
   outline: "border border-gray-300 text-gray-700 hover:bg-gray-50",
   danger: "bg-red-600 text-white hover:bg-red-700",

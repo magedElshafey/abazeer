@@ -4,16 +4,22 @@ import ProductsFilters from "../components/all-products/ProductsFilters";
 import ProductsList from "../components/all-products/ProductsList";
 import ProductsFiltersProvider from "../providers/ProductsFiltersProvider";
 import ProductsViewProvider from "../providers/ProductsViewProvider";
+import useGetWebsiteSettings from "@/features/settings/api/useGetWebsiteSettings";
 
 const AllProducts: FC = () => {
+    const {data: settings} = useGetWebsiteSettings();
+
+    
     return (
         <div>
             <div className="w-full flex-center bg-[url('/images/slider-background.jpg')] bg-center bg-cover bg-no-repeat">
                 <div className="containerr py-10">
-                    <img
-                        src="/images/1650x420.png"
-                        className="rounded-md"
-                    />
+                    <div className="h-[300px] flex-center overflow-hidden">
+                        <img
+                            src={settings?.product_banner || "/images/1650x420.png"}
+                            className="rounded-md w-full h-full object-center object-cover"
+                        />
+                    </div>
                 </div>
             </div>
             <div className="containerr">

@@ -18,7 +18,7 @@ const AllCategories = memo(() => {
   const handleMouseLeave = useCallback(() => setOpen(false), []);
   const handleNavigate = useCallback(
     (id: number) => {
-      navigate(`/product-category/${id}`);
+      navigate(`/products/?filter-category=${id}`);
       setOpen(false);
     },
     [navigate]
@@ -36,7 +36,7 @@ const AllCategories = memo(() => {
         aria-haspopup="menu"
         aria-expanded={open}
         aria-controls="categories-menu"
-        className="py-2 px-4 flex items-center gap-3 bg-orangeColor rounded-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+        className="py-2 px-4 flex items-center gap-3 bg-orangeColor rounded-sm text-white focus:outline-none focus:ring-2 focus:ring-orange-400"
       >
         <GiHamburgerMenu size={20} aria-hidden="true" />
         <span>{t("shop with categories")}</span>

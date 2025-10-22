@@ -34,7 +34,7 @@ const OfferFilter: React.FC = () => {
                 : "border-gray-300 bg-white"
             }`}
           >
-            {isSelected && <FaCheck className="w-2.5 h-2.5 text-black" />}
+            {isSelected && <FaCheck className="w-2.5 h-2.5 text-white" />}
           </div>
 
           <span className="text-sm text-text-gray">

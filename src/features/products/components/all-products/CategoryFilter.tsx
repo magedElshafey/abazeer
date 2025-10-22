@@ -23,6 +23,7 @@ const CategoryItem: React.FC<CategoryItemProps> = ({ category, level = 0 }) => {
 
   // Recursively check if selected category is a descendant of current category
   const hasSelectedDescendant = (cat: CategoriesListType, targetId: string): boolean => {
+    if(cat.id as unknown as string == targetId) return true;
     if (!cat.children || cat.children.length === 0) return false;
     
     for (const child of cat.children) {
@@ -62,7 +63,7 @@ const CategoryItem: React.FC<CategoryItemProps> = ({ category, level = 0 }) => {
     <div className="w-full">
       <div
         className={`flex items-center justify-between py-2 px-2 rounded-md cursor-pointer transition-colors hover:bg-gray-50 ${
-          isSelected ? "bg-orange-50" : ""
+          isSelected ? "bg-green-50" : ""
         }`}
         style={{
           paddingInlineStart: `${level * 20}px`,
