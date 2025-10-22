@@ -5,4 +5,5 @@ export interface Testimonials {
   quote: string;
   is_active: boolean;
   created_at: string;
+  image: string;
 }

@@ -1,6 +1,7 @@
 import { formatDate } from "@/utils/formatDate";
 import { Testimonials } from "../../types/testimonials.types";
 import Avatar from "@/common/components/avatar/Avatar";
+import HtmlConverter from "@/common/components/htmlConverter/HtmlConverter";
 
 interface TestimonialsCardProps {
   data: Testimonials;
@@ -8,11 +9,11 @@ interface TestimonialsCardProps {
 
 const TestimonialsCard: React.FC<TestimonialsCardProps> = ({ data }) => {
   return (
-    <div className="border rounded-lg p-4 flex flex-col justify-between h-full min-h-[220px] bg-white shadow-sm">
+    <div className="border rounded-lg p-4 flex flex-col gap-2 h-[220px] shadow-sm">
       {/* Top Section */}
-      <div className="flex flex-col md:flex-row items-center md:items-start gap-2">
+      <div className="flex flex-col md:flex-row items-center md:items-start gap-2 h-[60px]">
         <div className="w-16 flex-shrink-0">
-          <Avatar url="/images/600x600.jpg" alt={data.name} size={60} />
+          <Avatar url={data.image} alt={data.name} size={60} />
         </div>
 
         <div className="flex flex-col items-center">
@@ -22,10 +23,10 @@ const TestimonialsCard: React.FC<TestimonialsCardProps> = ({ data }) => {
           </span>
         </div>
       </div>
-      <p className="text-gray-600  line-clamp-3">{data.quote}</p>
-
-      {/* Bottom Section */}
-      <div className="flex items-center justify-end mt-3 pt-2 border-t border-gray-100">
+      <div className="line-clamp-4">
+        <HtmlConverter html={data.quote} />
+      </div>
+      <div className="flex items-center justify-end pt-2 mt-auto border-t border-gray-100">
         <span className="text-xs text-gray-500">
           {formatDate(data?.created_at)}
         </span>
