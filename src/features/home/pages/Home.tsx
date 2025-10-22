@@ -5,7 +5,6 @@ import { useTranslation } from "react-i18next";
 import useGetHomeSlider from "../api/hero/useGetHomeSlider";
 import useGetHomeBanner from "../api/hero/useGetHomeBanner";
 import useGetAllProducts from "../../products/api/useGetAllProducts";
-import useGetSampleCategories from "../api/categories/useGetSampleCategories";
 import useGetBrands from "../../brands/api/useGetBrands";
 import useGetBlogs from "../../static-pages/api/blogs/useGetBlogs";
 import useGetFlashsale from "../api/flash-sale/useGetFlashsale";
@@ -33,6 +32,7 @@ import Slider from "@/common/components/slider/Slider";
 import useGetTestimonials from "../api/testimonials/useGetTestimonials";
 import { Testimonials } from "../types/testimonials.types";
 import TestimonialsCard from "../components/testimonials/TestimonialsCard";
+import useGetAllCategories from "@/features/categories/api/useGetAllCategories";
 
 const Home = () => {
   const { t } = useTranslation();
@@ -49,7 +49,7 @@ const Home = () => {
     essential: true,
     delay: delayOptions,
   });
-  const categories = useGetSampleCategories();
+  const categories = useGetAllCategories();
   const brands = useGetBrands({ featured: true, delay: delayOptions });
   const blogsQueryResult = useGetBlogs();
 
