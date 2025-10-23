@@ -26,7 +26,7 @@ const AllCategories = memo(() => {
 
   return (
     <div
-      className="relative cursor-pointer text-nowrap "
+      className="relative cursor-pointer"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -51,7 +51,7 @@ const AllCategories = memo(() => {
         className={`absolute top-full z-30 ${
           dir === "rtl" ? "right-0" : "left-0"
         } 
-        bg-white  shadow-lg p-3 border rounded-md transform transition-all duration-300 ease-out 
+        bg-white shadow-lg p-3 border rounded-md transform transition-all duration-300 ease-out 
         ${
           open
             ? "opacity-100 translate-y-0 visible block"
@@ -68,7 +68,7 @@ const AllCategories = memo(() => {
             <div key={item.id} className="group relative mb-2">
               <button
                 onClick={() => handleNavigate(item.id)}
-                className="w-full flex justify-between items-center gap-5 hover:bg-gray-100 p-2 rounded transition"
+                className="w-full min-w-fit flex overflow-hidden justify-between items-center gap-5 hover:bg-gray-100 p-2 rounded transition"
                 role="menuitem"
               >
                 <div className="flex items-center gap-2">
@@ -80,7 +80,7 @@ const AllCategories = memo(() => {
                     />
                   )}
 
-                  <span>{item.name}</span>
+                  <p className="w-full min-w-fit text-nowrap pe-10">{item.name}</p>
                 </div>
                 {item.children && item.children.length > 0 && (
                   <IoIosArrowBack

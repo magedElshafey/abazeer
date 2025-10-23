@@ -14,10 +14,10 @@ const AllProducts: FC = () => {
         <div>
             <div className="w-full flex-center bg-[url('/images/slider-background.jpg')] bg-center bg-cover bg-no-repeat">
                 <div className="containerr py-10">
-                    <div className="h-[300px] flex-center overflow-hidden">
+                    <div className="h-[300px] flex-center w-full overflow-hidden">
                         <img
                             src={settings?.product_banner || "/images/1650x420.png"}
-                            className="rounded-md w-full h-full object-center object-cover"
+                            className="rounded-md w-full h-full object-center object-contain"
                         />
                     </div>
                 </div>

@@ -37,7 +37,7 @@ const ProductsList: FC = () => {
                         </div>
                     ) : (
                         <div className="flex justify-center items-center py-12">
-                            <div className="text-gray-500">{t("No data found")}</div>
+                            <div className="text-gray-500 text-2xl">{t("no products available")}</div>
                         </div>
                     )}
 

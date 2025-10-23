@@ -87,7 +87,7 @@ const SortDropdown: FC = () => {
                             <button
                                 type="button"
                                 role="menuitem"
-                                className={`w-full text-start text-nowrap px-3 py-2 text-sm hover:bg-gray-100 transition-colors ${option.value === sortBy ? 'bg-orange-50 text-orangeColor font-medium' : 'text-gray-700'
+                                className={`w-full text-start text-nowrap px-3 py-2 text-sm hover:bg-gray-100 transition-colors ${option.value === sortBy ? 'bg-orangeColor/20 text-orangeColor font-medium' : 'text-gray-700'
                                     }`}
                                 onClick={() => handleOptionSelect(option.value as ProductsFiltersContext["sortBy"])}
                             >
