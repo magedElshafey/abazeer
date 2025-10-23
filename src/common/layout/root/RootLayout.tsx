@@ -18,7 +18,7 @@ const RootLayout = () => {
       <SEO
         title={data?.site_name}
         description={data?.site_description}
-        favicon={data?.fav_icon || ""}
+        favicon={data?.site_favicon || ""}
       />
       <Outlet />
     </>
