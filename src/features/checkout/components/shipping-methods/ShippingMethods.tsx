@@ -1,6 +1,8 @@
 import { memo } from "react";
 import { useTranslation } from "react-i18next";
 import type { Shippings } from "../../types/shipping.types";
+import useGetWebsiteSettings from "@/features/settings/api/useGetWebsiteSettings";
+import ListSkeleton from "@/common/components/loader/skeltons/ListSkeleton";
 
 interface Props {
   method: Shippings;
@@ -11,6 +13,14 @@ interface Props {
 const ShippingMethods: React.FC<Props> = memo(
   ({ method, setMethod, shippingMethods }) => {
     const { t } = useTranslation();
+
+    const { isLoading, data } = useGetWebsiteSettings();
+
+    if(isLoading) return (
+      <div className="max-h-[200px] overflow-hidden">
+        <ListSkeleton />
+      </div>
+    )
 
     return (
       <ul role="radiogroup" aria-label={t("shipping methods")}>

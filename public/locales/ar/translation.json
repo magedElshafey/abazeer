@@ -225,6 +225,7 @@
   "address type": "نوع العنوان",
   "Address type is required": "نوع العنوان مطلوب",
   "shipping": "الشحن",
+  "delivery": "التوصيل",
   "billing": "الفواتير",
   "work": "العمل",
   "other": "أخرى",

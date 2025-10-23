@@ -7,18 +7,28 @@ import useCheckout from "../api/checkout/useCheckout";
 import type { Payment } from "../types/payment.type";
 import type { Address } from "@/features/user/types/addresses.types";
 // data
-import { paymentMethods, shippingMethods } from "@/data/data";
+import { paymentMethods } from "@/data/data";
 // toast
 import { toast } from "sonner";
 // utils
 import handlePromisError from "@/utils/handlePromiseError";
 import { Shippings } from "../types/shipping.types";
+import useGetWebsiteSettings from "@/features/settings/api/useGetWebsiteSettings";
 
 const useCheckoutLogic = () => {
   const dialogRef = useRef<{ close: () => void }>(null);
   const { items } = useCart();
+  const {data: settings, isLoading: settingsLoading} = useGetWebsiteSettings();
 
   // ✅ Group related states logically
+  const [shippingMethods, setShippingMethods] = useState<Shippings[]>([
+    {
+      id: 1,
+      name: "local pickup",
+      coastLabel: "free shipping",
+      value: 0,
+    }
+  ]);
   const [shiipingMethod, setShippingMethod] = useState<Shippings>(
     shippingMethods[0]
   );
@@ -84,7 +94,23 @@ const useCheckoutLogic = () => {
     } catch (error) {
       handlePromisError(error);
     }
-  }, [items, paymentMethod, notes, localAddress, coupon.code, mutateAsync]);
+ }, [items, paymentMethod, notes, localAddress, coupon.code, mutateAsync]);
+
+  useEffect(() => {
+    if(!settingsLoading && settings) {
+      setShippingMethods(old => {
+        return [
+          ...old,
+          {
+            coastLabel: settings.delivery_fee, 
+            id: old.length + 1,
+            name: "delivery",
+            value: parseInt(settings.delivery_fee)
+          }
+        ]
+      })
+    }
+  }, [settings, settingsLoading]);
 
   // ✅ Memoize returned object for better performance
   return useMemo(

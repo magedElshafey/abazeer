@@ -89,20 +89,6 @@ export const LANGUAGES: Lang[] = [
   { flag: "/images/us.png", title: "english", label: "en" },
   { flag: "/images/ksa.png", title: "arabic", label: "ar" },
 ];
-export const shippingMethods: Shippings[] = [
-  {
-    id: 1,
-    name: "local pickup",
-    coastLabel: "free shipping",
-    value: 0,
-  },
-  {
-    id: 2,
-    name: "flat rate",
-    coastLabel: "30",
-    value: 30,
-  },
-];
 export const paymentMethods: Payment[] = [
   {
     id: 1,

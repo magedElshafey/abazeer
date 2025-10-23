@@ -224,6 +224,7 @@
   "address type": "Address Type",
   "Address type is required": "Address type is required",
   "shipping": "Shipping",
+  "delivery": "Delivery",
   "billing": "Billing",
   "work": "Work",
   "other": "Other",
