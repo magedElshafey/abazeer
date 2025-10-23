@@ -34,7 +34,7 @@ const useCheckoutLogic = () => {
 
   // ✅ Use derived state only when necessary
   useEffect(() => {
-    if (!addressQuery.isSuccess || !addressQuery.data?.length || localAddress)
+    if (addressQuery.isFetching || !addressQuery.isSuccess || !addressQuery.data?.length || localAddress)
       return;
 
     const defaultAddress =

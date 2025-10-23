@@ -45,7 +45,7 @@ const CouponInput = memo(
 
       return (
         <div
-          className="flex-between py-2 px-4 bg-gray-100 rounded-md focus-within:ring-2 focus-within:ring-orange-400 transition-all"
+          className="flex-between py-2 px-4 bg-gray-100 rounded-md focus-within:ring-2 focus-within:ring-orangeColor/80 transition-all"
           aria-label={t("coupon input")}
         >
           <label htmlFor="coupon-code" className="sr-only">

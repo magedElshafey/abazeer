@@ -18,24 +18,6 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = memo(
 
     const inCart = isInCart(product.id);
 
-    // const handleAddToCart = useCallback(() => {
-    //   addToCart({
-    //     id: product.id,
-    //     name: product.name,
-    //     image: product.image || "",
-    //     price: product.price,
-    //     quantity: 1,
-    //     category: product.category,
-    //     has_discount: product.has_discount,
-    //     discount_percentage: product.discount_percentage,
-    //     average_rate: product.average_rate,
-    //     ratings_count: product.ratings_count,
-    //     stock_quantity: product?.stock_quantity,
-    //     sold_quantity: product?.sold_quantity,
-    //     sale_price: product?.sale_price,
-    //   });
-    // }, [product, addToCart]);
-
     const handleAddToCart = useCallback(() => {
       addToCart({
         id: product.id,
@@ -52,11 +34,12 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = memo(
         sold_quantity: product?.sold_quantity,
         sale_price: product?.sale_price,
         is_in_wishlist: product.is_in_wishlist,
+        item_id: product.id
       });
     }, [product, quantity, addToCart]);
     const handleRemoveFromCart = useCallback(() => {
-      removeFromCart(product.id);
-    }, [product, removeFromCart]);
+      if(inCart) removeFromCart(inCart?.item_id);
+    }, [removeFromCart, inCart]);
 
     return (
       <button
@@ -67,7 +50,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = memo(
         ${
           inCart
             ? "bg-red-500 hover:bg-red-600"
-            : "bg-orangeColor hover:bg-orange-300"
+            : "bg-orangeColor hover:bg-orangeColor/90"
         } 
         text-white py-2 px-4 
         flex-center gap-1

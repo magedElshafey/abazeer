@@ -5,6 +5,7 @@ import { useCart } from "@/store/CartProvider";
 import { toast } from "sonner";
 import CartCard from "../card/CartCard";
 import { useAuth } from "@/store/AuthProvider";
+import Loader from "@/common/components/loader/spinner/Loader";
 interface CartDetailsProps {
   onClose?: () => void;
 }
@@ -12,7 +13,7 @@ const CartDetails: React.FC<CartDetailsProps> = ({ onClose = undefined }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { items, total, clearCart } = useCart();
+  const { items, total, clearCart, cartQuery: {isFetching} } = useCart();
   const cartItems = useMemo(() => items || [], [items]);
   const itemCount = cartItems.length || 0;
   const totalAmount = total ?? "0.00";
@@ -65,8 +66,8 @@ const CartDetails: React.FC<CartDetailsProps> = ({ onClose = undefined }) => {
           <div className="flex items-center justify-between mt-3">
             <p className="text-sm text-gray-600 font-medium">
               {t("total")} :
-              <span className="text-lg font-bold text-orangeColor ml-1">
-                {totalAmount} {t("SAR")}
+              <span className="text-lg font-bold inline-flex gap-2 items-center text-orangeColor ml-1">
+                {isFetching ? <Loader /> : totalAmount} {t("SAR")}
               </span>
             </p>
           </div>
@@ -81,7 +82,7 @@ const CartDetails: React.FC<CartDetailsProps> = ({ onClose = undefined }) => {
 
             <button
               onClick={handleGoToCart}
-              className="bg-orangeColor text-white px-4 py-2 rounded-md font-semibold text-sm hover:bg-orange-500 transition-all focus:ring-2 focus:ring-orange-300 focus:outline-none"
+              className="bg-orangeColor text-white px-4 py-2 rounded-md font-semibold text-sm hover:bg-orangeColor/90 transition-all focus:ring-2 focus:ring-orangeColor/80 focus:outline-none"
             >
               {t("checkout")}
             </button>

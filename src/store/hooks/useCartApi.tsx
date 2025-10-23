@@ -21,11 +21,11 @@ export const useCartApi = () => {
   };
 
   const updateQuantity = async (item_id: number, quantity: number) => {
-    const { data } = await Axios.put(`${apiRoutes.cart}/update`, {
+    const response = Axios.put(`${apiRoutes.cart}/update`, {
       item_id,
       quantity,
     });
-    return data;
+    return response;
   };
 
   const clearCart = async () => {
@@ -35,7 +35,6 @@ export const useCartApi = () => {
 
   const getCartTotal = async () => {
     const { data } = await Axios.get(`${apiRoutes.cart}/total`);
-    console.log("get cart total", data);
     return data?.data;
   };
 

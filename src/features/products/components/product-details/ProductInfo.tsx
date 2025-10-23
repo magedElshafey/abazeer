@@ -19,7 +19,9 @@ type Props = {
 const ProductInfo: FC<Props> = ({ product }) => {
   const { t } = useTranslation();
   const [quantity, setQuantity] = useState<number>(1);
-  const { addToCart } = useCart();
+  const { addToCart, isInCart } = useCart();
+
+  const inCart = isInCart(product.id);
   const navigate = useNavigate();
   const handleBuyNow = useCallback(() => {
     addToCart({
@@ -36,7 +38,8 @@ const ProductInfo: FC<Props> = ({ product }) => {
       stock_quantity: product.stock_quantity,
       sold_quantity: product.sold_quantity,
       sale_price: product.sale_price,
-      is_in_wishlist: product.is_in_wishlist
+      is_in_wishlist: product.is_in_wishlist,
+      item_id: product.id
     });
 
     navigate("/checkout");
@@ -83,13 +86,21 @@ const ProductInfo: FC<Props> = ({ product }) => {
         </p>
       </div>
       <div>
-        <p>{t("quantity")}</p>
+        {
+          !inCart && (
+            <p>{t("quantity")}</p>
+          )
+        }
         <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-2 mt-1">
-          <ProductQuantity
-            className="w-full"
-            maxQuantity={product?.stock_quantity}
-            onQuantityChange={setQuantity}
-          />
+          {
+            !inCart && (
+              <ProductQuantity
+                className="w-full"
+                maxQuantity={product?.stock_quantity}
+                onQuantityChange={setQuantity}
+              />
+            )
+          }
           <AddToCartButton
             product={{ ...product, category: product?.category?.name }}
             quantity={quantity}

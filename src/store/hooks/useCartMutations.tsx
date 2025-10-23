@@ -117,7 +117,7 @@ import { apiRoutes } from "@/services/api-routes/apiRoutes";
 import { useCartApi } from "./useCartApi";
 import { useTranslation } from "react-i18next";
 import { CartItem } from "@/features/cart/types/Cart.types";
-import { useCallback } from "react";
+import { useCallback, useRef } from "react";
 
 const showToast = (type: "success" | "error", message: string) => {
   if (type === "success") toast.success(message);
@@ -131,6 +131,8 @@ export const useCartMutations = (
   const { t } = useTranslation();
   const queryClient = useQueryClient();
   const { addToCart, removeFromCart, updateQuantity, clearCart } = useCartApi();
+  const updateRef = useRef<{item_id: number; quantity: number}[]>([]);
+  const debounceRef = useRef<ReturnType<typeof setTimeout>>();
 
   const invalidateCart = useCallback(() => {
     queryClient.invalidateQueries({ queryKey: [apiRoutes.cart] });
@@ -160,6 +162,8 @@ export const useCartMutations = (
         stock_quantity: 0,
         sold_quantity: 0,
         is_in_wishlist: false,
+        item_id: products[0]?.product_id,
+        isLoading: true,
       };
 
       setItems((prev) => [...prev, newItem]);
@@ -167,7 +171,8 @@ export const useCartMutations = (
       return { previous };
     },
 
-    onError: (_, __, context) => {
+    onError: (e, __, context) => {
+      console.error(e);
       if (context?.previous) setItems(context.previous);
       showToast("error", t("Failed to add item"));
     },
@@ -182,7 +187,7 @@ export const useCartMutations = (
     onMutate: async (id) => {
       await queryClient.cancelQueries({ queryKey: [apiRoutes.cart] });
       const previous = items;
-      setItems((prev) => prev.filter((i) => i.id !== id));
+      setItems((prev) => prev.filter((i) => i.item_id !== id));
       return { previous };
     },
 
@@ -196,19 +201,32 @@ export const useCartMutations = (
 
   // 🧩 Update Quantity
   const updateMutation = useMutation({
-    mutationFn: ({
+    mutationFn:async ({
       item_id,
       quantity,
     }: {
       item_id: number;
       quantity: number;
-    }) => updateQuantity(item_id, quantity),
+    }) => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+      updateRef.current = [...updateRef.current.filter(item => item.item_id !== item_id), {item_id, quantity}];
+      debounceRef.current = setTimeout(async () => {
+
+        const promises: Promise<unknown>[] = [];
+        updateRef.current.forEach((item) => {
+          promises.push(updateQuantity(item.item_id, item.quantity));
+          updateRef.current = updateRef.current.filter(target => item !== target);
+        });
+        await Promise.all(promises);
+        invalidateCart();
+      }, 800)
+    },
 
     onMutate: async ({ item_id, quantity }) => {
       await queryClient.cancelQueries({ queryKey: [apiRoutes.cart] });
       const previous = items;
       setItems((prev) =>
-        prev.map((i) => (i.id === item_id ? { ...i, quantity } : i))
+        prev.map((i) => (i?.item_id === item_id ? { ...i, quantity } : i))
       );
       return { previous };
     },
@@ -217,8 +235,6 @@ export const useCartMutations = (
       if (context?.previous) setItems(context.previous);
       showToast("error", t("Failed to update quantity"));
     },
-
-    onSettled: invalidateCart,
   });
 
   // 🧩 Clear Cart

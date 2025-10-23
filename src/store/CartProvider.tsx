@@ -6,11 +6,11 @@ import React, {
   useState,
   useCallback,
 } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { useAuth } from "./AuthProvider";
 import { useCartApi } from "./hooks/useCartApi";
 import { useCartMutations } from "./hooks/useCartMutations";
-import type { CartItem } from "@/features/cart/types/Cart.types";
+import type { CartItem, CartResponse } from "@/features/cart/types/Cart.types";
 import { apiRoutes } from "@/services/api-routes/apiRoutes";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
@@ -27,7 +27,8 @@ interface CartContextProps {
   removeFromCart: (id: number) => void;
   updateQuantity: (id: number, quantity: number) => void;
   clearCart: () => void;
-  isInCart: (id: number) => boolean;
+  isInCart: (id: number) => CartItem | undefined;
+  cartQuery: UseQueryResult<CartResponse>
 }
 
 const CartContext = createContext<CartContextProps | undefined>(undefined);
@@ -54,12 +55,13 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
   }, [user]);
 
   // Fetch cart for logged-in user
-  const { data: cartData } = useQuery({
+  const cartQuery = useQuery({
     queryKey: [apiRoutes.cart],
     queryFn: getCart,
     enabled: !!user,
     staleTime: 1000 * 60 * 5,
   });
+  const {data: cartData} = cartQuery;
   useEffect(() => {
     if (!user) return;
     const localData = localStorage.getItem(LOCAL_KEY);
@@ -70,12 +72,11 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
         const formatted = guestItems.map((i) => ({
           product_id: i.id,
           quantity: i.quantity,
-        }));
-
-        addMutation.mutate(formatted, {
+        // Find only the items that has not been in the cart before.
+        })).filter(item => cartData?.items.findIndex((el: CartItem) => el.id === item.product_id) === -1);
+        if(formatted.length) addMutation.mutate(formatted, {
           onSuccess: () => {
             localStorage.removeItem(LOCAL_KEY);
-            // toast.success(t("Your cart has been synced"));
           },
         });
       }
@@ -107,10 +108,9 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
         if (items.some((i) => i.id === item.id)) {
           return toast.info(t("Item already in cart"));
         }
-        const updated = [...items, item];
+        const updated = [...items, {...item}];
         setItems(updated);
         persistLocal(updated);
-        // toast.success(t("Added to cart"));
         playAddSound("/sounds/cart.mp3");
       } else {
         addMutation.mutate([{ product_id: item.id, quantity: item.quantity }], {
@@ -121,6 +121,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     [user, items, addMutation, persistLocal, t]
   );
 
+
   // 🧩 Remove item
   const removeFromCart = useCallback(
     (id: number) => {
@@ -130,7 +131,6 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
         persistLocal(updated);
         playAddSound("/sounds/remove.mp3");
 
-        // toast.success(t("Removed from cart"));
       } else {
         removeMutation.mutate(id, {
           onSuccess: () => playAddSound("/sounds/remove.mp3"),
@@ -145,7 +145,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     (id: number, quantity: number) => {
       if (!user) {
         const updated = items.map((i) =>
-          i.id === id ? { ...i, quantity } : i
+          i.item_id === id ? { ...i, quantity } : i
         );
         setItems(updated);
         persistLocal(updated);
@@ -166,8 +166,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   }, [user, clearMutation]);
 
-  const itemIds = useMemo(() => new Set(items.map((i) => i.id)), [items]);
-  const isInCart = useCallback((id: number) => itemIds.has(id), [itemIds]);
+  const isInCart = useCallback((id: number) => items.find(item => item.id === id), [items]);
 
   const localTotal = useMemo(
     () =>
@@ -190,6 +189,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
       updateQuantity,
       clearCart,
       isInCart,
+      cartQuery
     }),
     [
       items,
@@ -199,6 +199,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
       updateQuantity,
       clearCart,
       isInCart,
+      cartQuery
     ]
   );
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

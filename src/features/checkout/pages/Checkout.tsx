@@ -100,7 +100,7 @@ const Checkout = () => {
 
         {/* ✅ RIGHT SIDE - Address & Payment */}
         <section aria-label={t("address and payment")}>
-          <FetchHandler queryResult={addressQuery} skeletonType="coupon">
+          <FetchHandler queryResult={{...addressQuery, isLoading: addressQuery.isLoading || addressQuery.isFetching}} skeletonType="coupon">
             {addressQuery?.isSuccess &&
             addressQuery.data?.length > 0 &&
             localAddress ? (

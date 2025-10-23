@@ -3,6 +3,7 @@ import { useCart } from "@/store/CartProvider";
 import { useTranslation } from "react-i18next";
 import type { CartItem } from "../../types/Cart.types";
 import { CiTrash } from "react-icons/ci";
+import Skeleton from "@/common/components/loader/skeltons/Skeleton";
 
 interface CartCardProps {
   item: CartItem;
@@ -21,6 +22,13 @@ const CartCard: React.FC<CartCardProps> = ({ item }) => {
     },
     [updateQuantity]
   );
+
+  if(item.isLoading) return (
+    <div className="max-w-[300px] max-h-[100px] overflow-hidden">
+      <Skeleton type="list" />
+    </div>
+  )
+
   return (
     <li
       key={item.id}
@@ -51,7 +59,7 @@ const CartCard: React.FC<CartCardProps> = ({ item }) => {
         <div className="flex items-center gap-2 mt-2">
           <button
             aria-describedby={`product-${item.id}`}
-            onClick={() => handleDecrease(item.id, item.quantity ?? 1)}
+            onClick={() => handleDecrease(item.item_id, item.quantity ?? 1)}
             aria-label={t("decrease quantity")}
             className="w-6 h-6 border rounded-md flex items-center justify-center text-gray-600 hover:bg-gray-100"
           >
@@ -60,7 +68,7 @@ const CartCard: React.FC<CartCardProps> = ({ item }) => {
           <span className="text-sm font-medium">{item.quantity ?? 1}</span>
           <button
             aria-describedby={`product-${item.id}`}
-            onClick={() => handleIncrease(item.id, item.quantity ?? 1)}
+            onClick={() => handleIncrease(item.item_id, item.quantity ?? 1)}
             aria-label={t("increase quantity")}
             className="w-6 h-6 border rounded-md flex items-center justify-center text-gray-600 hover:bg-gray-100"
           >
@@ -72,7 +80,7 @@ const CartCard: React.FC<CartCardProps> = ({ item }) => {
       {/* Remove Button */}
       <button
         aria-describedby={`product-${item.id}`}
-        onClick={() => removeFromCart(item.id)}
+        onClick={() => removeFromCart(item.item_id)}
         aria-label={t("remove item")}
         className="text-gray-400 hover:text-red-500 transition-colors p-2"
       >

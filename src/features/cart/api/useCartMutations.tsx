@@ -47,6 +47,8 @@ export const useCartMutations = (
         stock_quantity: 0,
         sold_quantity: 0,
         is_in_wishlist: false,
+        item_id: products[0].product_id,
+        isLoading: true,
       };
 
       setItems((prev) => [...prev, newItem]);

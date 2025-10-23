@@ -27,14 +27,16 @@ const OrderCard: React.FC<OrderCardProps> = memo(({ item }) => {
   }, [item?.average_rate]);
 
   const handleIncrease = useCallback(
-    () => updateQuantity(item.id, (item.quantity ?? 1) + 1),
-    [item.id, item.quantity, updateQuantity]
+    () => updateQuantity(item.item_id, (item.quantity ?? 1) + 1),
+    [item, updateQuantity]
   );
 
   const handleDecrease = useCallback(() => {
     if ((item.quantity ?? 1) > 1)
-      updateQuantity(item.id, (item.quantity ?? 1) - 1);
-  }, [item.id, item.quantity, updateQuantity]);
+      updateQuantity(item.item_id, (item.quantity ?? 1) - 1);
+  }, [item, updateQuantity]);
+
+  const price = item.sale_price ? item.sale_price : item.price;
 
   return (
     <article
@@ -97,14 +99,14 @@ const OrderCard: React.FC<OrderCardProps> = memo(({ item }) => {
       <div className="flex flex-col justify-between items-end text-right w-full sm:w-auto">
         <p className="text-gray-600 text-sm">{t("Price")}</p>
         <p className="font-semibold text-gray-900">
-          {item?.price} {t("SAR")}
+          {price} {t("SAR")}
         </p>
 
         <div className="h-[1px] bg-gray-200 my-2 w-full sm:w-20"></div>
 
         <p className="text-gray-600 text-sm">{t("Total")}</p>
         <p className="font-bold text-orange-600 text-lg">
-          {(+item.price * (item.quantity ?? 1)).toFixed(2)} {t("SAR")}
+          {item.subtotal} {t("SAR")}
         </p>
       </div>
     </article>
