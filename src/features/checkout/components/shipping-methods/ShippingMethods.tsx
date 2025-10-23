@@ -14,7 +14,7 @@ const ShippingMethods: React.FC<Props> = memo(
   ({ method, setMethod, shippingMethods }) => {
     const { t } = useTranslation();
 
-    const { isLoading, data } = useGetWebsiteSettings();
+    const { isLoading } = useGetWebsiteSettings();
 
     if(isLoading) return (
       <div className="max-h-[200px] overflow-hidden">

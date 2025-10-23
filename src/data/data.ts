@@ -1,7 +1,6 @@
 // types
 import type { Nav } from "../types/Nav";
 import type { Lang } from "../types/Lang";
-import { Shippings } from "@/features/checkout/types/shipping.types";
 import { Payment } from "@/features/checkout/types/payment.type";
 
 export const navLinks: Nav[] = [
