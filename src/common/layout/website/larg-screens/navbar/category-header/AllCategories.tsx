@@ -48,15 +48,13 @@ const AllCategories = memo(() => {
         id="categories-menu"
         role="menu"
         aria-label={t("categories")}
-        className={`absolute top-full z-30 ${
-          dir === "rtl" ? "right-0" : "left-0"
-        } 
+        className={`absolute top-full z-30 ${dir === "rtl" ? "right-0" : "left-0"
+          } 
         bg-white shadow-lg p-3 border rounded-md transform transition-all duration-300 ease-out 
-        ${
-          open
+        ${open
             ? "opacity-100 translate-y-0 visible block"
             : "opacity-0 translate-y-4 invisible hidden"
-        }
+          }
 `}
       >
         {isLoading ? (
@@ -86,49 +84,46 @@ const AllCategories = memo(() => {
                   <IoIosArrowBack
                     size={18}
                     aria-hidden="true"
-                    className={`transition-transform duration-300 ${
-                      dir === "rtl" ? "" : "rotate-180"
-                    } group-hover:rotate-90`}
+                    className={`transition-transform duration-300 ${dir === "rtl" ? "" : "rotate-180"
+                      } group-hover:rotate-90`}
                   />
                 )}
               </button>
 
               {item.children && item.children.length > 0 && (
-                <div
-                  role="menu"
-                  aria-label={`${item.name} sub menu`}
-                  className={`absolute top-0 ${
-                    dir === "rtl" ? "right-full mr-2" : "left-full ml-2"
-                  } bg-white shadow-lg border rounded-md p-4 
-                  opacity-0 translate-x-4 pointer-events-none 
-                  group-hover:opacity-100 group-hover:translate-x-0 group-hover:pointer-events-auto 
-                  transition-all duration-300 ease-out w-[400px] text-nowrap`}
-                >
-                  <div className="grid grid-cols-2 gap-6">
-                    {item.children.map((subItem: CategoriesListType) => (
-                      <div key={subItem.id} className="space-y-2">
-                        <button
-                          onClick={() => handleNavigate(subItem.id)}
-                          className="font-semibold text-gray-700 hover:text-orangeColor transition cursor-pointer"
-                          role="menuitem"
-                        >
-                          {subItem.name}
-                        </button>
-                        <ul className="space-y-1 text-sm text-gray-600">
-                          {subItem.children?.map((subSubItem) => (
-                            <li key={subSubItem.id}>
-                              <button
-                                onClick={() => handleNavigate(subSubItem.id)}
-                                className="hover:text-orangeColor transition cursor-pointer"
-                                role="menuitem"
-                              >
-                                {subSubItem.name}
-                              </button>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
+                <div className="absolute top-0 start-full border-s-[12px] border-s-transparent opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto">
+                  <div
+                    role="menu"
+                    aria-label={`${item.name} sub menu`}
+                    className={`bg-white shadow-lg border rounded-md py-4 
+                  transition-all duration-300 ease-out min-w-fit text-nowrap`}
+                  >
+                    <div className="flex flex-col gap-2">
+                      {item.children.map((subItem: CategoriesListType) => (
+                        <div key={subItem.id} className="space-y-2 px-4">
+                          <button
+                            onClick={() => handleNavigate(subItem.id)}
+                            className="font-semibold text-gray-700 hover:text-orangeColor transition cursor-pointer"
+                            role="menuitem"
+                          >
+                            {subItem.name}
+                          </button>
+                          <ul className="space-y-1 text-sm text-gray-600">
+                            {subItem.children?.map((subSubItem) => (
+                              <li key={subSubItem.id}>
+                                <button
+                                  onClick={() => handleNavigate(subSubItem.id)}
+                                  className="hover:text-orangeColor transition cursor-pointer"
+                                  role="menuitem"
+                                >
+                                  {subSubItem.name}
+                                </button>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               )}

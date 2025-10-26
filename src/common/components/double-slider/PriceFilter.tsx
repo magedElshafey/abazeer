@@ -12,7 +12,7 @@ interface PriceFilterProps {
 const PriceFilter: React.FC<PriceFilterProps> = ({
   initialMin = 0,
   initialMax = 10000,
-  step=100
+  step=1
 }) => {
   const { t, i18n } = useTranslation();
   const {
@@ -27,8 +27,8 @@ const PriceFilter: React.FC<PriceFilterProps> = ({
   const minPrice = parseInt(price_from || "") || initialMin;
   const maxPrice = parseInt(price_to || "") || initialMax;
 
-  const minValRef = useRef(minPrice || 0);
-  const maxValRef = useRef(maxPrice || 25000);
+  const minValRef = useRef(minPrice || initialMin);
+  const maxValRef = useRef(maxPrice || initialMax);
   const range = useRef<HTMLDivElement>(null);
   // Convert to percentage
   const getPercent = useCallback(
@@ -39,8 +39,8 @@ const PriceFilter: React.FC<PriceFilterProps> = ({
 
   // Set width of the range to decrease from the left side
   useEffect(() => {
-    const minPercent = getPercent(minPrice || 0);
-    const maxPercent = getPercent(maxPrice || 25000);
+    const minPercent = getPercent(minPrice || initialMin);
+    const maxPercent = getPercent(maxPrice || initialMax);
 
     if (range.current) {
       // Check if the current language is Arabic
@@ -56,7 +56,7 @@ const PriceFilter: React.FC<PriceFilterProps> = ({
   // Set width of the range to decrease from the right side
   useEffect(() => {
     const minPercent = getPercent(minValRef.current);
-    const maxPercent = getPercent(maxPrice || 25000);
+    const maxPercent = getPercent(maxPrice || initialMax);
 
     if (range.current) {
       range.current.style.width = `${maxPercent - minPercent}%`;
