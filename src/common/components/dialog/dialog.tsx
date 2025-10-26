@@ -24,6 +24,7 @@ import MainBtn from "../buttons/MainBtn";
 interface ActionType {
   action?: (() => void) | (() => Promise<void>);
   text?: string;
+  disabled?: boolean;
 }
 
 interface RefType {
@@ -127,7 +128,7 @@ const DialogComponent = forwardRef<RefType, PropsWithChildren<Props>>(
           {content}
 
           <DialogFooter className={content ? "" : "border-t-0"}>
-            <DialogClose className="w-full sm:w-auto" onClick={cancel?.action}>
+            <DialogClose className="w-full sm:w-auto">
               <MainBtn className="w-full" theme="outline">
                 {t(cancel?.text || defaultCancelText)}
               </MainBtn>
@@ -137,6 +138,7 @@ const DialogComponent = forwardRef<RefType, PropsWithChildren<Props>>(
                 onClick={() => mutate()}
                 isPending={isPending}
                 theme={type === "danger" ? "danger" : "main"}
+                disabled={action.disabled}
               >
                 {t(action.text || defaultOkText)}
               </MainBtn>

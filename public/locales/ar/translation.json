@@ -356,5 +356,8 @@
   "No products found": "لا يوجد منتجات",
   "notify me": "اعلمني عند التوفر",
   "no_products_in_cart": "لا توجد منتجات في العربة",
-  "no_products_in_cart_description": "عربة التسوق فارغة. أضف بعض المنتجات لبدء طلبك."
+  "no_products_in_cart_description": "عربة التسوق فارغة. أضف بعض المنتجات لبدء طلبك.",
+  "alert-me-when-product-available": "اعلمني عند توفر المنتج",
+  "enter-your-data-and-become-first-to-know": "أدخل بياناتك وكن أول من يعرف عند توفر هذا المنتج مرة أخرى",
+  "alert-me": "اعلمني"
 }

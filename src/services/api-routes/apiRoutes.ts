@@ -39,4 +39,5 @@ export const apiRoutes = {
   gallery: "galleries",
   ads: "banners/list",
   testimonials: "testimonials",
+  alertUser: "/stock-alerts",
 };

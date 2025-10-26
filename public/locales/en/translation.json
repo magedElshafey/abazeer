@@ -353,5 +353,8 @@
   "No products found": "No products found",
   "notify me": "notify me",
   "no_products_in_cart": "No Products in Cart",
-  "no_products_in_cart_description": "Your cart is empty. Add some products to get started with your order."
+  "no_products_in_cart_description": "Your cart is empty. Add some products to get started with your order.",
+  "alert-me-when-product-available": "Alert me when product is available",
+  "enter-your-data-and-become-first-to-know": "Enter your data and become the first to know when this product is back in stock",
+  "alert-me": "Alert Me"
 }

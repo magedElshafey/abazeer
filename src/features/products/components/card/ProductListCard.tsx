@@ -5,6 +5,7 @@ import { FaStar } from "react-icons/fa";
 import AddToCartButton from "../../../cart/components/button/AddToCartButton";
 import { Product } from "../../types/product.types";
 import { twMerge } from "tailwind-merge";
+import ProductAlertButton from "../product-alert/ProductAlertButton";
 
 interface ProductListCardProps {
   product: Product;
@@ -141,9 +142,15 @@ const ProductListCard: React.FC<ProductListCardProps> = memo(({ product, classNa
           {product?.stock_quantity > 0 ? (
           <AddToCartButton product={product} tabIndex={0} />
           ): (
-            <button className="flex-center w-full py-1 bg-orangeColor text-white rounded-md">
-              {t("notify me")}
-            </button>
+            <ProductAlertButton productId={product.id}>
+              {
+                ({ onClick }) => (
+                  <button onClick={onClick} className="flex-center w-full py-1 bg-orangeColor text-white rounded-md">
+                    {t("notify me")}
+                  </button>
+                ) 
+              }
+            </ProductAlertButton>
           )
         }
         </div>

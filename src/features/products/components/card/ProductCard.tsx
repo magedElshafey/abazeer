@@ -7,6 +7,8 @@ import AddToCartButton from "../../../cart/components/button/AddToCartButton";
 import { Product } from "../../types/product.types";
 import { twMerge } from "tailwind-merge";
 import FavoriteButton from "../product-details/FavoriteButton";
+import ProductAlertButton from "../product-alert/ProductAlertButton";
+import MainBtn from "@/common/components/buttons/MainBtn";
 
 interface ProductCardProps {
   product: Product;
@@ -156,15 +158,19 @@ const ProductCard: React.FC<ProductCardProps> = memo(
               <AddToCartButton product={product} tabIndex={0} />
             </div>
           ) : (
-            <button className="lg:translate-y-full 
-            lg:opacity-0
-            lg:group-hover:translate-y-0 
-            lg:group-hover:opacity-100
-            lg:transition-all lg:duration-500 
-            lg:ease-in-out
-            will-change-transform will-change-opacity flex-center w-full py-1 bg-orangeColor text-white rounded-md">
-              {t("notify me")}
-            </button>
+            <ProductAlertButton productId={product.id}>
+              {({onClick, isPending}) => (
+                <MainBtn isPending={isPending} onClick={onClick} className="lg:translate-y-full 
+                lg:opacity-0
+                lg:group-hover:translate-y-0 
+                lg:group-hover:opacity-100
+                lg:transition-all lg:duration-500 
+                lg:ease-in-out
+                will-change-transform will-change-opacity flex-center sm:!w-full py-1 bg-orangeColor !font-normal text-white rounded-md">
+                  {t("notify me")}
+                </MainBtn>
+              )}
+            </ProductAlertButton>
           )}
           {/* ✅ Add to cart button with smooth animation */}
         </div>
