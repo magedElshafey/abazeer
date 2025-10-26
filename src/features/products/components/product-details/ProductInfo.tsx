@@ -30,7 +30,7 @@ const ProductInfo: FC<Props> = ({ product }) => {
       name: product.name,
       image: product.image || "",
       price: product.price,
-      quantity: 1,
+      quantity,
       category: product.category?.name,
       has_discount: product.has_discount,
       discount_percentage: product.discount_percentage,
@@ -44,7 +44,7 @@ const ProductInfo: FC<Props> = ({ product }) => {
     });
 
     navigate("/checkout");
-  }, [addToCart, navigate, product]);
+  }, [addToCart, navigate, product, quantity]);
   return (
     <div className="px-2 flex flex-col gap-4">
       <div className="border-b pb-4">

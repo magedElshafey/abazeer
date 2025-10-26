@@ -28,7 +28,6 @@ const ProductsList: FC = () => {
                                 ? "grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 sm:gap-4"
                                 : "flex flex-col gap-4"
                             }
-<<<<<<< HEAD
                         `}
             >
               {products.map((product) =>
@@ -42,43 +41,6 @@ const ProductsList: FC = () => {
                   <ProductListCard key={product.id} product={product} />
                 )
               )}
-=======
-                        `}>
-                            {products.map((product) => (
-                                view === "cards" ? (
-                                    <ProductCard className="p-2" key={product.id} product={product} />
-                                ) : (
-                                    <ProductListCard key={product.id} product={product} />
-                                )
-                            ))}
-                        </div>
-                    ) : (
-                        <div className="flex justify-center items-center py-12">
-                            <div className="text-gray-500 text-2xl">{t("no products available")}</div>
-                        </div>
-                    )}
-
-                    {
-                        queryResult.isFetchingNextPage && (
-                            <ProductSkelton />
-                        )
-                    }
-
-                    {
-                        queryResult.hasNextPage && !queryResult.isFetchingNextPage && (
-                            <div className="py-10 flex-center">
-                                <MainBtn
-                                    onClick={() => {
-                                        queryResult.fetchNextPage();
-                                    }}
-                                >
-                                    {t("load more")}
-                                </MainBtn>
-                            </div>
-                        )
-                    }
-                </FetchHandler>
->>>>>>> 655ef049b71a52ffbabfef98d34f2ef5a504f508
             </div>
           ) : (
             <div className="flex justify-center items-center py-12">
