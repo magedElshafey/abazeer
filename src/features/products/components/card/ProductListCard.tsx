@@ -35,13 +35,7 @@ const ProductListCard: React.FC<ProductListCardProps> = memo(({ product, classNa
   }, [product?.average_rate]);
 
   const progressPercent = product.stock_quantity
-    ? Math.min(
-        (product.sold_quantity
-          ? product?.sold_quantity
-          : 0 / product.stock_quantity) * 100,
-        100
-      )
-    : 0;
+    ? ((product?.sold_quantity || 0) / product.stock_quantity) * 100 : 0;
 
   return (
     <div
@@ -57,7 +51,7 @@ const ProductListCard: React.FC<ProductListCardProps> = memo(({ product, classNa
           className="w-16 absolute top-0 left-0 p-1 flex-center bg-orangeColor text-white font-bold z-40 rounded-br-lg"
           aria-label={`${product.discount_percentage}% ${t("discount")}`}
         >
-          <p>{product.discount_percentage}%</p>
+          <p>{Math.ceil(product.discount_percentage)}%</p>
         </div>
       )}
 
@@ -144,7 +138,14 @@ const ProductListCard: React.FC<ProductListCardProps> = memo(({ product, classNa
 
         {/* ✅ Add to cart button - full width on mobile, fixed width on desktop */}
         <div className="w-full md:w-40 md:self-start">
+          {product?.stock_quantity > 0 ? (
           <AddToCartButton product={product} tabIndex={0} />
+          ): (
+            <button className="flex-center w-full py-1 bg-orangeColor text-white rounded-md">
+              {t("notify me")}
+            </button>
+          )
+        }
         </div>
       </div>
     </div>

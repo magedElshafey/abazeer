@@ -1,6 +1,7 @@
 import { memo } from "react";
 import { useTranslation } from "react-i18next";
 import { FiMapPin } from "react-icons/fi";
+import { MdShoppingBag } from "react-icons/md";
 
 import SEO from "@/common/components/seo/Seo";
 import FetchHandler from "@/common/api/fetchHandler/FetchHandler";
@@ -16,9 +17,13 @@ import PaymentMethods from "../components/payment-methods/PaymentMethods";
 import CouponInput from "../components/copoun/CouponInput";
 
 import useCheckoutLogic from "../logic/useCheckoutLogic";
+import { useQueryClient } from "@tanstack/react-query";
+import { apiRoutes } from "@/services/api-routes/apiRoutes";
+import { CartResponse } from "@/features/cart/types/Cart.types";
 
 const Checkout = () => {
   const { t } = useTranslation();
+  const queryClient = useQueryClient();
 
   const {
     states: { coupon, localAddress, paymentMethod, notes, shiipingMethod },
@@ -30,6 +35,7 @@ const Checkout = () => {
   } = useCheckoutLogic();
 
   const { addressQuery } = queries;
+  const cartQuery = queryClient.getQueryState([apiRoutes.cart]);
 
   return (
     <>
@@ -45,20 +51,33 @@ const Checkout = () => {
         {/* ✅ LEFT SIDE - Order Summary */}
         <section aria-label={t("order details")}>
           <div className="bg-slate-100 p-5 rounded-xl shadow-sm">
-            <OrderDetails />
+            {
+              (cartQuery?.data as CartResponse)?.items?.length ?
+                <>
+                  <OrderDetails />
 
-            <div className="py-4 border-t border-b mt-4">
-              <h2 className="font-semibold mb-3">{t("shipping methods")}</h2>
-              <ShippingMethods
-                method={shiipingMethod}
-                setMethod={handlers.setShippingMethod}
-                shippingMethods={data.shippingMethods}
-              />
-            </div>
+                  <div className="py-4 border-t border-b mt-4">
+                    <h2 className="font-semibold mb-3">{t("shipping methods")}</h2>
+                    <ShippingMethods
+                      method={shiipingMethod}
+                      setMethod={handlers.setShippingMethod}
+                      shippingMethods={data.shippingMethods}
+                    />
+                  </div>
 
-            <footer className="pt-4">
-              <PriceDetails method={shiipingMethod} />
-            </footer>
+                  <footer className="pt-4">
+                    <PriceDetails method={shiipingMethod} />
+                  </footer>
+                </>
+                :
+                <EmptyStateCard
+                  icon={MdShoppingBag}
+                  link="/products"
+                  buttonText={t("browse_products")}
+                  title={t("no_products_in_cart")}
+                  description={t("no_products_in_cart_description")}
+                />
+            }
           </div>
 
           {/* ✅ Coupon Section */}
@@ -178,7 +197,8 @@ const Checkout = () => {
                 isPending ||
                 !localAddress?.id ||
                 !paymentMethod?.type ||
-                !shiipingMethod?.id
+                !shiipingMethod?.id || 
+                !(cartQuery?.data as CartResponse)?.items.length
               }
               isPending={isPending}
               aria-busy={isPending}

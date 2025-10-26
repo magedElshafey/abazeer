@@ -349,5 +349,9 @@
   "note your order": "note your order",
   "order notes": "order notes",
   "Pictures from our farms": "Pictures from our farms",
-  "Testimonials": "customers' opinions"
+  "Testimonials": "customers' opinions",
+  "No products found": "No products found",
+  "notify me": "notify me",
+  "no_products_in_cart": "No Products in Cart",
+  "no_products_in_cart_description": "Your cart is empty. Add some products to get started with your order."
 }

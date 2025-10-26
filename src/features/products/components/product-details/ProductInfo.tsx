@@ -17,6 +17,7 @@ type Props = {
 };
 
 const ProductInfo: FC<Props> = ({ product }) => {
+  console.log("product is : ", product);
   const { t } = useTranslation();
   const [quantity, setQuantity] = useState<number>(1);
   const { addToCart, isInCart } = useCart();
@@ -24,27 +25,28 @@ const ProductInfo: FC<Props> = ({ product }) => {
   const inCart = isInCart(product.id);
   const navigate = useNavigate();
   const handleBuyNow = useCallback(() => {
-    addToCart({
-      id: product.id,
-      name: product.name,
-      image: product.image || "",
-      price: product.price,
-      quantity: quantity,
-      category: product.category?.name,
-      has_discount: product.has_discount,
-      discount_percentage: product.discount_percentage,
-      average_rate: product.average_rate,
-      ratings_count: product.ratings_count,
-      stock_quantity: product.stock_quantity,
-      sold_quantity: product.sold_quantity,
-      sale_price: product.sale_price,
-      is_in_wishlist: product.is_in_wishlist,
-      item_id: product.id,
-      isLoading: true
-    });
-
+    if (!inCart) {
+      addToCart({
+        id: product.id,
+        name: product.name,
+        image: product.image || "",
+        price: product.price,
+        quantity: quantity,
+        category: product.category?.name,
+        has_discount: product.has_discount,
+        discount_percentage: product.discount_percentage,
+        average_rate: product.average_rate,
+        ratings_count: product.ratings_count,
+        stock_quantity: product.stock_quantity,
+        sold_quantity: product.sold_quantity,
+        sale_price: product.sale_price,
+        is_in_wishlist: product.is_in_wishlist,
+        item_id: product.id,
+        isLoading: true
+      });
+    }
     navigate("/checkout");
-  }, [addToCart, navigate, product, quantity]);
+  }, [addToCart, navigate, product, quantity, inCart]);
   return (
     <div className="px-2 flex flex-col gap-4">
       <div className="border-b pb-4">
@@ -69,11 +71,10 @@ const ProductInfo: FC<Props> = ({ product }) => {
         <HtmlConverter html={product?.description} />
       </div>
       <div
-        className={`text-sm w-fit flex items-center gap-4 rounded border py-1 px-2 ${
-          product?.stock_status === "in_stock"
-            ? "bg-background-green/20 border-background-green"
-            : "bg-red-50 border-red-300"
-        }`}
+        className={`text-sm w-fit flex items-center gap-4 rounded border py-1 px-2 ${product?.stock_status === "in_stock"
+          ? "bg-background-green/20 border-background-green"
+          : "bg-red-50 border-red-300"
+          }`}
       >
         <p>{t("availability")}</p>
         <p
@@ -86,35 +87,37 @@ const ProductInfo: FC<Props> = ({ product }) => {
           {product?.stock_quantity} {t("currently available")}
         </p>
       </div>
-      <div>
-        {
-          !inCart && (
-            <p>{t("quantity")}</p>
-          )
-        }
-        <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-2 mt-1">
-          {
-            !inCart && (
+      {product?.stock_quantity > 0 ? (
+        <div>
+          {!inCart && <p>{t("quantity")}</p>}
+          <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-2 mt-1">
+            {!inCart && (
               <ProductQuantity
                 className="w-full"
                 maxQuantity={product?.stock_quantity}
                 onQuantityChange={setQuantity}
               />
             )
-          }
-          <AddToCartButton
-            product={{ ...product, category: product?.category?.name }}
-            quantity={quantity}
-          />
-          <MainBtn
-            onClick={handleBuyNow}
-            className="sm:!w-full py-1"
-            theme="secondary"
-          >
-            {t("buy_now")}
-          </MainBtn>
+            }
+            <AddToCartButton
+              product={{ ...product, category: product?.category?.name }}
+              quantity={quantity}
+            />
+            <MainBtn
+              onClick={handleBuyNow}
+              className="sm:!w-full py-1"
+              theme="secondary"
+            >
+              {t("buy_now")}
+            </MainBtn>
+          </div>
         </div>
-      </div>
+      ) : (
+        <button className="flex-center py-2 px-5 bg-orangeColor text-white rounded-md my-4">
+          {t("notify me")}
+        </button>
+      )}
+
       <div className="flex items-center gap-5 pb-4 border-b">
         <FavoriteButton
           productId={product.id}

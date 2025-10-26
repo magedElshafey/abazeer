@@ -141,10 +141,9 @@ const ProductCard: React.FC<ProductCardProps> = memo(
             {t("sold")} : {product.sold_quantity || 0} /{" "}
             {product.stock_quantity}
           </p>
-
-          {/* ✅ Add to cart button with smooth animation */}
-          <div
-            className="
+          {product?.stock_quantity > 0 ? (
+            <div
+              className="
             lg:translate-y-full 
             lg:opacity-0
             lg:group-hover:translate-y-0 
@@ -153,9 +152,21 @@ const ProductCard: React.FC<ProductCardProps> = memo(
             lg:ease-in-out
             will-change-transform will-change-opacity
           "
-          >
-            <AddToCartButton product={product} tabIndex={0} />
-          </div>
+            >
+              <AddToCartButton product={product} tabIndex={0} />
+            </div>
+          ) : (
+            <button className="lg:translate-y-full 
+            lg:opacity-0
+            lg:group-hover:translate-y-0 
+            lg:group-hover:opacity-100
+            lg:transition-all lg:duration-500 
+            lg:ease-in-out
+            will-change-transform will-change-opacity flex-center w-full py-1 bg-orangeColor text-white rounded-md">
+              {t("notify me")}
+            </button>
+          )}
+          {/* ✅ Add to cart button with smooth animation */}
         </div>
       </div>
     );
