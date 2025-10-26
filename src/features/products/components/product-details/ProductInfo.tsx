@@ -17,6 +17,7 @@ type Props = {
 };
 
 const ProductInfo: FC<Props> = ({ product }) => {
+  console.log("product is : ", product);
   const { t } = useTranslation();
   const [quantity, setQuantity] = useState<number>(1);
   const { addToCart, isInCart } = useCart();
@@ -39,7 +40,7 @@ const ProductInfo: FC<Props> = ({ product }) => {
       sold_quantity: product.sold_quantity,
       sale_price: product.sale_price,
       is_in_wishlist: product.is_in_wishlist,
-      item_id: product.id
+      item_id: product.id,
     });
 
     navigate("/checkout");
@@ -85,35 +86,36 @@ const ProductInfo: FC<Props> = ({ product }) => {
           {product?.stock_quantity} {t("currently available")}
         </p>
       </div>
-      <div>
-        {
-          !inCart && (
-            <p>{t("quantity")}</p>
-          )
-        }
-        <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-2 mt-1">
-          {
-            !inCart && (
+      {product?.stock_quantity > 0 ? (
+        <div>
+          {!inCart && <p>{t("quantity")}</p>}
+          <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-2 mt-1">
+            {!inCart && (
               <ProductQuantity
                 className="w-full"
                 maxQuantity={product?.stock_quantity}
                 onQuantityChange={setQuantity}
               />
-            )
-          }
-          <AddToCartButton
-            product={{ ...product, category: product?.category?.name }}
-            quantity={quantity}
-          />
-          <MainBtn
-            onClick={handleBuyNow}
-            className="w-full py-1"
-            theme="secondary"
-          >
-            {t("buy_now")}
-          </MainBtn>
+            )}
+            <AddToCartButton
+              product={{ ...product, category: product?.category?.name }}
+              quantity={quantity}
+            />
+            <MainBtn
+              onClick={handleBuyNow}
+              className="w-full py-1"
+              theme="secondary"
+            >
+              {t("buy_now")}
+            </MainBtn>
+          </div>
         </div>
-      </div>
+      ) : (
+        <button className="flex-center py-2 px-5 bg-orangeColor text-white rounded-md my-4">
+          {t("notify me")}
+        </button>
+      )}
+
       <div className="flex items-center gap-5 pb-4 border-b">
         <FavoriteButton
           productId={product.id}
