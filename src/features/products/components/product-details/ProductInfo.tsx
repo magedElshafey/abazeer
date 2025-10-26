@@ -29,7 +29,7 @@ const ProductInfo: FC<Props> = ({ product }) => {
       name: product.name,
       image: product.image || "",
       price: product.price,
-      quantity: 1,
+      quantity: quantity,
       category: product.category?.name,
       has_discount: product.has_discount,
       discount_percentage: product.discount_percentage,
@@ -39,11 +39,12 @@ const ProductInfo: FC<Props> = ({ product }) => {
       sold_quantity: product.sold_quantity,
       sale_price: product.sale_price,
       is_in_wishlist: product.is_in_wishlist,
-      item_id: product.id
+      item_id: product.id,
+      isLoading: true
     });
 
     navigate("/checkout");
-  }, [addToCart, navigate, product]);
+  }, [addToCart, navigate, product, quantity]);
   return (
     <div className="px-2 flex flex-col gap-4">
       <div className="border-b pb-4">
@@ -107,7 +108,7 @@ const ProductInfo: FC<Props> = ({ product }) => {
           />
           <MainBtn
             onClick={handleBuyNow}
-            className="w-full py-1"
+            className="sm:!w-full py-1"
             theme="secondary"
           >
             {t("buy_now")}

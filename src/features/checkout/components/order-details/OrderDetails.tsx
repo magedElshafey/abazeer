@@ -32,6 +32,9 @@ const OrderDetails = memo(() => {
               </div>
             ))
           : items.map((item) => (
+              item.isLoading ? 
+              <OrderCardSkeleton />
+              :
               <li key={item.id} className="mb-5">
                 <OrderCard item={item} />
               </li>
