@@ -100,7 +100,7 @@ const Home = () => {
       </div>
       {/* flash sale section */}
       <FetchHandler queryResult={flashsaleQueryReuslt} skeletonType="product">
-        {flashsaleQueryReuslt?.data && (
+        {flashsaleQueryReuslt?.data && flashsaleQueryReuslt?.data?.products?.length && (
           <div className="space-between-sections">
             <FlashSaleSection data={flashsaleQueryReuslt?.data} />
           </div>
@@ -126,6 +126,7 @@ const Home = () => {
         </div>
         {/* ads section */}
         <div className="space-between-sections">
+          <SectionTitle title="featured" />
           <FetchHandler queryResult={adsQueryResult} skeletonType="image">
             {adsQueryResult?.data && adsQueryResult?.data?.length > 0 && (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">

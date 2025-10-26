@@ -54,9 +54,8 @@ const ProductsFilters: FC = () => {
                             {t("price")}
                         </h4>
                         <PriceFilter
-                            initialMax={25000}
+                            initialMax={5000}
                             initialMin={0}
-                            step={100}
                         />
                     </div>
 
