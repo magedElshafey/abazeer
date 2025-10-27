@@ -126,27 +126,29 @@ const Home = () => {
         </div>
         {/* ads section */}
         <div className="space-between-sections">
-          <SectionTitle title="featured" />
           <FetchHandler queryResult={adsQueryResult} skeletonType="image">
             {adsQueryResult?.data && adsQueryResult?.data?.length > 0 && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                {adsQueryResult?.data?.slice(0, 3)?.map((ad) => (
-                  <Link
-                    key={ad?.id}
-                    to={`/products?filter-category=${ad?.category_id}`}
-                    className="block w-full overflow-hidden rounded-xl"
-                  >
-                    <div className="relative w-full aspect-[688/420]">
-                      <img
-                        loading="lazy"
-                        alt={ad?.category?.name || "Ad image"}
-                        src={ad?.image || "/images/placeholder.jpg"}
-                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                        decoding="async"
-                      />
-                    </div>
-                  </Link>
+              <div className="containerr">
+                <SectionTitle title="featured" />
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                  {adsQueryResult?.data?.slice(0, 3)?.map((ad) => (
+                    <Link
+                      key={ad?.id}
+                      to={`/products?filter-category=${ad?.category_id}`}
+                      className="block w-full overflow-hidden rounded-xl"
+                    >
+                      <div className="relative w-full aspect-[688/420]">
+                        <img
+                          loading="lazy"
+                          alt={ad?.category?.name || "Ad image"}
+                          src={ad?.image || "/images/placeholder.jpg"}
+                          className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                          decoding="async"
+                        />
+                      </div>
+                    </Link>
                 ))}
+                </div>
               </div>
             )}
           </FetchHandler>

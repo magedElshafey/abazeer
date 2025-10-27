@@ -51,7 +51,7 @@ const ProductAlertButton = ({ children, productId }: { children: ({ onClick, isP
                     toast.success(response.data.message);
                 },
                 onError: (err) => toastErrorMessage(err),
-            }), isPending })
+            }) , isPending })
         )
     }
 
@@ -59,7 +59,7 @@ const ProductAlertButton = ({ children, productId }: { children: ({ onClick, isP
     return (
         <DialogComponent
             content={(
-                <form className="p-2 flex-center flex-col gap-2 text-text-gray">
+                <div className="p-2 flex-center flex-col gap-2 text-text-gray">
                     <div className="flex-center h-20 w-20 rounded-full border text-text-gray">
                         <IoIosNotificationsOutline size={40} />
                     </div>
@@ -75,7 +75,7 @@ const ProductAlertButton = ({ children, productId }: { children: ({ onClick, isP
                         error={errors.email?.message}
                         {...register("email")}
                     />
-                </form>
+                </div>
             )}
             action={{
                 text: "alert-me",

@@ -15,7 +15,6 @@ const OrderDetails: FC = () => {
   const { id } = useParams<{ id: string }>();
   const orderQuery = useGetOrderById(id || "");
   const navigate = useNavigate();
-  console.log(orderQuery?.data);
   return (
     <div>
       <div className="flex-between flex-col md:flex-row">
@@ -128,6 +127,14 @@ const OrderDetails: FC = () => {
                       </span>
                       <span className="text-gray-900 font-semibold">
                         {orderQuery.data.tax} {t("SAR")}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-600 font-medium">
+                        {t("delivery")}:
+                      </span>
+                      <span className="text-gray-900 font-semibold">
+                        {orderQuery.data.shipping} {t("SAR")}
                       </span>
                     </div>
                     <div className="border-t border-gray-200 pt-3 mt-3 flex justify-between items-center">

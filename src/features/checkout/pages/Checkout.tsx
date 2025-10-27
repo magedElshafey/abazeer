@@ -20,6 +20,7 @@ import useCheckoutLogic from "../logic/useCheckoutLogic";
 import { useQueryClient } from "@tanstack/react-query";
 import { apiRoutes } from "@/services/api-routes/apiRoutes";
 import { CartResponse } from "@/features/cart/types/Cart.types";
+import OrderCardSkeleton from "@/common/components/loader/skeltons/OrderCardSkeleton";
 
 const Checkout = () => {
   const { t } = useTranslation();
@@ -34,7 +35,7 @@ const Checkout = () => {
     isPending,
   } = useCheckoutLogic();
 
-  const { addressQuery } = queries;
+  const { addressQuery, settingsQuery } = queries;
   const cartQuery = queryClient.getQueryState([apiRoutes.cart]);
 
   return (
@@ -58,17 +59,30 @@ const Checkout = () => {
 
                   <div className="py-4 border-t border-b mt-4">
                     <h2 className="font-semibold mb-3">{t("shipping methods")}</h2>
-                    <ShippingMethods
-                      method={shiipingMethod}
-                      setMethod={handlers.setShippingMethod}
-                      shippingMethods={data.shippingMethods}
-                    />
+                    <FetchHandler queryResult={settingsQuery} skeletonType="list">
+                      {
+                        data.shippingMethods.length && (
+                          <ShippingMethods
+                            method={shiipingMethod}
+                            setMethod={handlers.setShippingMethod}
+                            shippingMethods={data.shippingMethods}
+                          />
+                        )
+                      }
+                    </FetchHandler>
                   </div>
 
                   <footer className="pt-4">
                     <PriceDetails method={shiipingMethod} />
                   </footer>
                 </>
+                :
+                cartQuery?.status === "pending" ?
+                  Array.from({ length: 3 }).map((_, idx) => (
+                    <div key={idx} className="mb-5">
+                      <OrderCardSkeleton />
+                    </div>
+                  ))
                 :
                 <EmptyStateCard
                   icon={MdShoppingBag}
@@ -82,13 +96,13 @@ const Checkout = () => {
 
           {/* ✅ Coupon Section */}
           <section
-            className="rounded-lg p-4 border border-dashed border-blue-400 bg-white shadow-sm mt-6"
+            className="rounded-lg p-4 border border-dashed border-orangeColor bg-white shadow-sm mt-6"
             aria-label={t("available coupons")}
           >
             <div className="flex-between">
               <button
                 onClick={handlers.toggleCouponInput}
-                className="text-blue-600 underline mt-4 focus:outline-none focus:ring-2 focus:ring-blue-400 rounded"
+                className="mt-4 focus:outline-none focus:ring-2 text-orangeColor font-bold rounded"
                 aria-expanded={coupon.visible}
               >
                 {t("You have a coupon code?")}

@@ -18,17 +18,11 @@ import useGetWebsiteSettings from "@/features/settings/api/useGetWebsiteSettings
 const useCheckoutLogic = () => {
   const dialogRef = useRef<{ close: () => void }>(null);
   const { items } = useCart();
-  const {data: settings, isLoading: settingsLoading} = useGetWebsiteSettings();
+  const settingsQuery = useGetWebsiteSettings();
+  const {data: settings, isLoading: settingsLoading} = settingsQuery;
 
   // ✅ Group related states logically
-  const [shippingMethods, setShippingMethods] = useState<Shippings[]>([
-    {
-      id: 1,
-      name: "local pickup",
-      coastLabel: "free shipping",
-      value: 0,
-    }
-  ]);
+  const [shippingMethods, setShippingMethods] = useState<Shippings[]>([]);
   const [shiipingMethod, setShippingMethod] = useState<Shippings>(
     shippingMethods[0]
   );
@@ -50,7 +44,7 @@ const useCheckoutLogic = () => {
     const defaultAddress =
       addressQuery.data.find((a) => a.is_default) ?? addressQuery.data[0];
     setLocalAddress(defaultAddress);
-  }, [addressQuery.isSuccess, addressQuery.data, localAddress]);
+  }, [addressQuery.isSuccess, addressQuery.data, localAddress, addressQuery.isFetching]);
 
   const { mutateAsync, isPending } = useCheckout();
 
@@ -98,17 +92,14 @@ const useCheckoutLogic = () => {
 
   useEffect(() => {
     if(!settingsLoading && settings) {
-      setShippingMethods(old => {
-        return [
-          ...old,
-          {
+      const shippingMethod = {
             coastLabel: settings.delivery_fee, 
-            id: old.length + 1,
+            id: 1,
             name: "delivery",
             value: parseInt(settings.delivery_fee)
-          }
-        ]
-      })
+      }
+      setShippingMethods([shippingMethod]);
+      setShippingMethod(shippingMethod);
     }
   }, [settings, settingsLoading]);
 
@@ -133,7 +124,7 @@ const useCheckoutLogic = () => {
         setShippingMethod,
       },
       data: { paymentMethods, shippingMethods },
-      queries: { addressQuery },
+      queries: { addressQuery, settingsQuery },
       refs: { dialogRef },
       isPending,
     }),
@@ -150,6 +141,7 @@ const useCheckoutLogic = () => {
       addressQuery,
       isPending,
       shiipingMethod,
+      settingsQuery
     ]
   );
 };

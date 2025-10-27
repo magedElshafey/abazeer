@@ -13,14 +13,13 @@ const Logo: React.FC<NavbarType> = ({ logo }) => {
       {
         isLoading ?
           <div className="h-[50px] w-20 overflow-hidden">
-
             <Skeleton type="hero" />
           </div>
           :
           <img
             alt="Abazeer logo"
             src={logo || data?.site_logo || "/images/logo.png"}
-            className={`${isAuthPages ? "h-[50px]" : "h-[44px]"
+            className={`${isAuthPages ? "h-[100px]" : "h-[44px]"
               } w-auto object-contain`}
           />
       }

@@ -89,7 +89,7 @@ const DialogComponent = forwardRef<RefType, PropsWithChildren<Props>>(
         ) {
           toast.success(response.data.message as string);
         }
-        await queryClient.invalidateQueries({ queryKey: queryKey });
+        if(queryKey) await queryClient.invalidateQueries({ queryKey: queryKey });
         setOpened(false);
         onSuccess?.();
       },

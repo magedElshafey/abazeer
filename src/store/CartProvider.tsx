@@ -59,8 +59,8 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     queryKey: [apiRoutes.cart],
     queryFn: getCart,
     enabled: !!user,
-    staleTime: 1000 * 60 * 5,
   });
+
   const {data: cartData} = cartQuery;
   useEffect(() => {
     if (!user) return;

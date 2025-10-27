@@ -39,14 +39,8 @@ const ProductCard: React.FC<ProductCardProps> = memo(
       });
     }, [product?.average_rate]);
 
-    const progressPercent = product.stock_quantity
-      ? Math.min(
-          (product.sold_quantity
-            ? product?.sold_quantity
-            : 0 / product.stock_quantity) * 100,
-          100
-        )
-      : 0;
+
+    const progressPercent = product.stock_quantity ? ((product?.sold_quantity || 0) / product.stock_quantity) * 100 : 0;
 
     return (
       <div

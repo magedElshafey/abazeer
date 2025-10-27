@@ -51,8 +51,8 @@ const PriceDetails: React.FC<{ method: Shippings }> = ({ method }) => {
 
   const tax = useMemo(() => 0.15 * total, [total]);
   const grandTotal = useMemo(
-    () => total + tax + method.value,
-    [total, tax, method.value]
+    () => total + tax + method?.value,
+    [total, tax, method?.value]
   );
 
   return (
@@ -72,7 +72,7 @@ const PriceDetails: React.FC<{ method: Shippings }> = ({ method }) => {
       <div className="flex-between mb-2">
         <dt>{t("shipping fee")}</dt>
         <dd>
-          {method.value} {method.value !== 0 ? t("SAR") : ""}
+          {method?.value} {method?.value !== 0 ? t("SAR") : ""}
         </dd>
       </div>
       <div className="flex-between font-semibold">
