@@ -30,17 +30,31 @@ const ProductAlertButton = ({ children, productId }: { children: ({ onClick, isP
         handleSubmit,
         formState: {
             errors,
-            isValid
+            isValid,
         },
         reset,
+        clearErrors,
     } = useForm({
         resolver: zodResolver(reviewSchema),
         mode: "onTouched",
-        reValidateMode: "onChange"
+        reValidateMode: "onChange",
+        defaultValues: {
+            email: ""
+        }
     })
 
-    const submitForm = handleSubmit( async (data) => {
-        const response = await mutateAsync(data.email);
+    function handleReset() {
+        reset();
+        clearErrors();
+    }
+
+    const submitForm = handleSubmit(async (data) => {
+        const response = await mutateAsync(data.email, {
+            onSuccess: (response) => {
+                toast.success(response.data.message);
+                handleReset();
+            } 
+        });
         return response;
     })
 
@@ -83,9 +97,8 @@ const ProductAlertButton = ({ children, productId }: { children: ({ onClick, isP
                 disabled: !isValid 
             }}
             cancel={{
-                action: reset
+                action: handleReset
             }}
-            onSuccess={reset}
         >
             {children({})}
         </DialogComponent>

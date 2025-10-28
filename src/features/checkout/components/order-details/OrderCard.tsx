@@ -2,7 +2,7 @@ import { memo, useCallback, useMemo } from "react";
 import { useCart } from "@/store/CartProvider";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { FaStar } from "react-icons/fa";
+import { FaStar, FaTrash } from "react-icons/fa";
 import type { CartItem } from "@/features/cart/types/Cart.types";
 
 interface OrderCardProps {
@@ -11,7 +11,7 @@ interface OrderCardProps {
 
 const OrderCard: React.FC<OrderCardProps> = memo(({ item }) => {
   const { t } = useTranslation();
-  const { updateQuantity } = useCart();
+  const { updateQuantity, removeFromCart } = useCart();
 
   const reviewStars = useMemo(() => {
     const rate = Math.round(item?.average_rate || 0);
@@ -27,7 +27,11 @@ const OrderCard: React.FC<OrderCardProps> = memo(({ item }) => {
   }, [item?.average_rate]);
 
   const handleIncrease = useCallback(
-    () => updateQuantity(item.item_id, (item.quantity ?? 1) + 1),
+    () => {
+      if((item.quantity ?? 1) + 1 <= item.stock_quantity) {
+        updateQuantity(item.item_id, (item.quantity ?? 1) + 1);
+      }
+    },
     [item, updateQuantity]
   );
 
@@ -37,6 +41,8 @@ const OrderCard: React.FC<OrderCardProps> = memo(({ item }) => {
   }, [item, updateQuantity]);
 
   const price = item.sale_price ? item.sale_price : item.price;
+
+  const handleRemoveItem = useCallback(() => removeFromCart(item.id), [item, removeFromCart]);
 
   return (
     <article
@@ -55,13 +61,15 @@ const OrderCard: React.FC<OrderCardProps> = memo(({ item }) => {
 
       {/* Product Info */}
       <div className="flex flex-col flex-grow gap-2">
-        <Link
-          to={`/products/${item?.id}`}
-          className="font-semibold text-gray-800 line-clamp-2 cursor-pointer duration-150 group-hover:text-orangeColor group-hover:underline w-fit"
-        >
-          {item?.name}
-        </Link>
-
+        <div className="flex items-center gap-2">
+          <Link
+            to={`/products/${item?.id}`}
+            className="font-semibold text-gray-800 line-clamp-2 cursor-pointer duration-150 group-hover:text-orangeColor group-hover:underline w-fit"
+          >
+            {item?.name}
+          </Link>
+          <FaTrash className="text-red-500 cursor-pointer opacity-60 hover:opacity-100 duration-100" onClick={handleRemoveItem} />
+        </div>
         {/* Rating */}
         <div
           className="flex items-center gap-1"

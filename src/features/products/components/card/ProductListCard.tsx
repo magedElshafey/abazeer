@@ -138,9 +138,11 @@ const ProductListCard: React.FC<ProductListCardProps> = memo(({ product, classNa
         </div>
 
         {/* ✅ Add to cart button - full width on mobile, fixed width on desktop */}
-        <div className="w-full md:w-40 md:self-start">
+        <div className="w-full md:w-fit md:self-start">
           {product?.stock_quantity > 0 ? (
-          <AddToCartButton product={product} tabIndex={0} />
+            <div className="w-full">
+              <AddToCartButton product={product} tabIndex={0} />
+            </div>
           ): (
             <ProductAlertButton productId={product.id}>
               {

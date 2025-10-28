@@ -12,6 +12,7 @@ import FavoriteButton from "./FavoriteButton";
 import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "@/store/CartProvider";
+import ProductAlertButton from "../product-alert/ProductAlertButton";
 type Props = {
   product: ProductDetails;
 };
@@ -113,9 +114,17 @@ const ProductInfo: FC<Props> = ({ product }) => {
           </div>
         </div>
       ) : (
-        <button className="flex-center py-2 px-5 bg-orangeColor text-white rounded-md my-4">
-          {t("notify me")}
-        </button>
+        <ProductAlertButton productId={product?.id}>
+          {({onClick, isPending}) => (
+            <MainBtn 
+              className="sm:w-full"
+              isPending={isPending}
+              onClick={onClick}
+            >
+              {t("notify me")}
+            </MainBtn>
+          )}
+        </ProductAlertButton>
       )}
 
       <div className="flex items-center gap-5 pb-4 border-b">
@@ -149,7 +158,7 @@ const ProductInfo: FC<Props> = ({ product }) => {
               {t("category")}:
             </span>
             <Link
-              to={`/products?category=${product?.category.id}`}
+              to={`/products?filter-category=${product?.category.id}`}
               className="text-gray-600 hover:text-orangeColor hover:underline transition-colors duration-200"
             >
               {product?.category.name}

@@ -12,8 +12,12 @@ const CartCard: React.FC<CartCardProps> = ({ item }) => {
   const { removeFromCart, updateQuantity } = useCart();
   const { t } = useTranslation();
   const handleIncrease = useCallback(
-    (id: number, currentQty: number) => updateQuantity(id, currentQty + 1),
-    [updateQuantity]
+    (id: number, currentQty: number) => {
+      if(currentQty + 1 <= item.stock_quantity) {
+        updateQuantity(id, currentQty + 1);
+      }
+    },
+    [updateQuantity, item]
   );
 
   const handleDecrease = useCallback(
