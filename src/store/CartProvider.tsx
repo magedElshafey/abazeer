@@ -14,7 +14,7 @@ import type { CartItem, CartResponse } from "@/features/cart/types/Cart.types";
 import { apiRoutes } from "@/services/api-routes/apiRoutes";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
-const playAddSound = (path: string) => {
+export const playAddSound = (path: string) => {
   const audio = new Audio(path);
   audio.volume = 0.5;
   audio.play().catch(() => {});
@@ -73,7 +73,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
           product_id: i.id,
           quantity: i.quantity,
         // Find only the items that has not been in the cart before.
-        })).filter(item => cartData?.items.findIndex((el: CartItem) => el.id === item.product_id) === -1);
+        })).filter(item => cartData?.items.findIndex((el: CartItem) => el.product_id === item.product_id) === -1);
         if(formatted.length) addMutation.mutate(formatted, {
           onSuccess: () => {
             localStorage.removeItem(LOCAL_KEY);
@@ -166,7 +166,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   }, [user, clearMutation]);
 
-  const isInCart = useCallback((id: number) => items.find(item => item.id === id), [items]);
+  const isInCart = useCallback((id: number) => items.find(item => item.product_id === id), [items]);
 
   const localTotal = useMemo(
     () =>

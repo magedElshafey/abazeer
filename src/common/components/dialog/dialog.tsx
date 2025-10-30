@@ -70,6 +70,7 @@ const DialogComponent = forwardRef<RefType, PropsWithChildren<Props>>(
       close: () => {
         setOpened(false);
       },
+      open: () => setOpened(true)
     }));
 
     const { mutate, isPending } = useMutation({

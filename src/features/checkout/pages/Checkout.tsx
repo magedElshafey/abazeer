@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { FiMapPin } from "react-icons/fi";
 import { MdShoppingBag } from "react-icons/md";
@@ -37,6 +37,11 @@ const Checkout = () => {
 
   const { addressQuery, settingsQuery } = queries;
   const cartQuery = queryClient.getQueryState([apiRoutes.cart]);
+
+  useEffect(() => {
+    //invalidate query to check for missing items;
+    queryClient.invalidateQueries({ queryKey: [apiRoutes.cart] });
+  }, [queryClient]);
 
   return (
     <>

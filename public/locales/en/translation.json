@@ -356,5 +356,8 @@
   "no_products_in_cart_description": "Your cart is empty. Add some products to get started with your order.",
   "alert-me-when-product-available": "Alert me when product is available",
   "enter-your-data-and-become-first-to-know": "Enter your data and become the first to know when this product is back in stock",
-  "alert-me": "Alert Me"
+  "alert-me": "Alert Me",
+  "you-have-missing-products-in-cart": "You have missing products in your cart.",
+  "all-items-in-the-list-will-be-removed": "All products in the following list will be removed from the cart.",
+  "ok": "OK"
 }

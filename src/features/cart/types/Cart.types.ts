@@ -5,10 +5,12 @@ export interface CartItem extends Product {
   item_id: number;
   isLoading?: boolean;
   subtotal?: string;
+  product_id?: number;
 }
 
 export interface CartResponse {
   id: number;
   items: CartItem[];
   total: string;
+  out_of_stock_items: number[];
 }

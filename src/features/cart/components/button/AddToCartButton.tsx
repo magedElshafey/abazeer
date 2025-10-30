@@ -34,7 +34,8 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = memo(
         sold_quantity: product?.sold_quantity,
         sale_price: product?.sale_price,
         is_in_wishlist: product.is_in_wishlist,
-        item_id: product.id
+        item_id: product.id,
+        product_id: product.id
       });
     }, [product, quantity, addToCart]);
     const handleRemoveFromCart = useCallback(() => {

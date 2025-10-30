@@ -4,6 +4,7 @@ import useGetWebsiteSettings from "@/features/settings/api/useGetWebsiteSettings
 import { useEffect } from "react";
 import SEO from "@/common/components/seo/Seo";
 import MaintenancePage from "@/features/app-status/pages/maintenance/MaintenancePage";
+import CartQuantityComponent from "@/features/cart/components/CartQuantityComponent";
 // const site_maintenance = true;
 const RootLayout = () => {
   const { pathname } = useLocation();
@@ -21,6 +22,7 @@ const RootLayout = () => {
         favicon={data?.site_favicon || ""}
       />
       <Outlet />
+      <CartQuantityComponent />
     </>
   );
 };

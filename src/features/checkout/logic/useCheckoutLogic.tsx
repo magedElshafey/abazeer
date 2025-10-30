@@ -14,8 +14,11 @@ import { toast } from "sonner";
 import handlePromisError from "@/utils/handlePromiseError";
 import { Shippings } from "../types/shipping.types";
 import useGetWebsiteSettings from "@/features/settings/api/useGetWebsiteSettings";
+import { useQueryClient } from "@tanstack/react-query";
+import { apiRoutes } from "@/services/api-routes/apiRoutes";
 
 const useCheckoutLogic = () => {
+  const queryClient = useQueryClient();
   const dialogRef = useRef<{ close: () => void }>(null);
   const { items } = useCart();
   const settingsQuery = useGetWebsiteSettings();
@@ -87,6 +90,7 @@ const useCheckoutLogic = () => {
       if (response?.status) toast.success(response?.message);
     } catch (error) {
       handlePromisError(error);
+      queryClient.invalidateQueries({ queryKey: [apiRoutes.cart] });
     }
  }, [items, paymentMethod, notes, localAddress, coupon.code, mutateAsync]);
 

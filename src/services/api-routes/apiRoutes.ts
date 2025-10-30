@@ -40,4 +40,5 @@ export const apiRoutes = {
   ads: "banners/list",
   testimonials: "testimonials",
   alertUser: "/stock-alerts",
+  cartRemoveItems: "cart/items/delete-many",
 };

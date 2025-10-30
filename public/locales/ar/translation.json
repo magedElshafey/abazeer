@@ -359,5 +359,8 @@
   "no_products_in_cart_description": "عربة التسوق فارغة. أضف بعض المنتجات لبدء طلبك.",
   "alert-me-when-product-available": "اعلمني عند توفر المنتج",
   "enter-your-data-and-become-first-to-know": "أدخل بياناتك وكن أول من يعرف عند توفر هذا المنتج مرة أخرى",
-  "alert-me": "اعلمني"
+  "alert-me": "اعلمني",
+  "you-have-missing-products-in-cart": "لديك منتجات مفقودة في عربة التسوق.",
+  "all-items-in-the-list-will-be-removed": "جميع المنتجات في القائمة التالية سيتم إزالتها من العربة.",
+  "ok": "حسناً"
 }
