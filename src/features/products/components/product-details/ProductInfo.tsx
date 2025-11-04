@@ -143,7 +143,7 @@ const ProductInfo: FC<Props> = ({ product }) => {
               {t("brand")}:
             </span>
             <Link
-              to={`/products?brand=${product?.brand.id}`}
+              to={`/products?filter-brand=${product?.brand.id}`}
               className="text-gray-600 hover:text-orangeColor hover:underline transition-colors duration-200"
             >
               {product?.brand.name}
