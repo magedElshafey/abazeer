@@ -9,7 +9,7 @@ const OrderSuccess = () => {
     <>
       <SEO title="Your request has been completed successfully" />
       <div
-        className="space-between-sections flex flex-col justify-center items-center bg-gradient-to-br from-green-50 via-white to-green-100 text-center p-6"
+        className="space-between-sections flex flex-col justify-center items-center bg-white text-center p-6"
         role="main"
         aria-labelledby="order-success-title"
       >
@@ -18,7 +18,7 @@ const OrderSuccess = () => {
           className="animate-bounce-slow flex items-center justify-center mb-6"
           aria-hidden="true"
         >
-          <CheckCircle2 className="text-green-600 animate-scale-up" size={96} />
+          <CheckCircle2 className="text-orangeColor animate-scale-up" size={96} />
         </div>
 
         {/* Title */}
@@ -26,7 +26,7 @@ const OrderSuccess = () => {
           id="order-success-title"
           className="text-2xl md:text-4xl font-semibold text-gray-800 mb-3 animate-fade-in"
         >
-          {t("Your request has been completed successfully")} 🎉
+          {t("Your request has been completed successfully")}
         </h1>
 
         {/* Description */}
@@ -39,7 +39,7 @@ const OrderSuccess = () => {
         {/* Button */}
         <button
           onClick={() => navigate("/")}
-          className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-6 rounded-2xl shadow-md focus:outline-none focus:ring-4 focus:ring-green-300 transition-all duration-300 animate-fade-in delay-200"
+          className="flex items-center gap-2 bg-orangeColor hover:opacity-90 text-white font-medium py-3 px-6 rounded-2xl shadow-md focus:outline-none focus:ring-4 focus:ring-orangeColor focus:ring-opacity-50 transition-all duration-300 animate-fade-in delay-200"
         >
           <Home size={20} aria-hidden="true" />
           {t("Back to main page")}

@@ -69,7 +69,7 @@ const BrandsCard = memo(({ brand }: BrandsCardProps) => {
         <button
           type="button"
           onClick={handleCategoryNavigate}
-          className="uppercase mb-1 font-semibold text-slate-500 focus:outline-none hover:underline focus-visible:underline truncate"
+          className={`uppercase mb-1 font-semibold text-slate-500 focus:outline-none hover:underline focus-visible:underline truncate ${!catId && "invisible pointer-events-none"}`}
           aria-label={`Go to category: ${categoryName}`}
         >
           {categoryName}
