@@ -20,9 +20,9 @@ import { apiRoutes } from "@/services/api-routes/apiRoutes";
 const useCheckoutLogic = () => {
   const queryClient = useQueryClient();
   const dialogRef = useRef<{ close: () => void }>(null);
-  const { items } = useCart();
+  const { items, setCouponCode } = useCart();
   const settingsQuery = useGetWebsiteSettings();
-  const {data: settings, isLoading: settingsLoading} = settingsQuery;
+  // const { data: settings, isLoading: settingsLoading } = settingsQuery;
 
   // ✅ Group related states logically
   const [shippingMethods, setShippingMethods] = useState<Shippings[]>([]);
@@ -30,7 +30,11 @@ const useCheckoutLogic = () => {
     shippingMethods[0]
   );
 
-  const [coupon, setCoupon] = useState({ code: "", visible: false });
+  const [coupon, setCoupon] = useState<{
+    code: string;
+    value: string;
+    type: string;
+  }>({ code: "", value: "", type: "" });
   const [paymentMethod, setPaymentMethod] = useState<Payment>(
     paymentMethods[0]
   );
@@ -41,30 +45,35 @@ const useCheckoutLogic = () => {
 
   // ✅ Use derived state only when necessary
   useEffect(() => {
-    if (addressQuery.isFetching || !addressQuery.isSuccess || !addressQuery.data?.length || localAddress)
+    if (
+      addressQuery.isFetching ||
+      !addressQuery.isSuccess ||
+      !addressQuery.data?.length ||
+      localAddress
+    )
       return;
 
     const defaultAddress =
       addressQuery.data.find((a) => a.is_default) ?? addressQuery.data[0];
     setLocalAddress(defaultAddress);
-  }, [addressQuery.isSuccess, addressQuery.data, localAddress, addressQuery.isFetching]);
+  }, [
+    addressQuery.isSuccess,
+    addressQuery.data,
+    localAddress,
+    addressQuery.isFetching,
+  ]);
 
   const { mutateAsync, isPending } = useCheckout();
 
   // ✅ useCallback to avoid unnecessary re-renders
   const handleCodeChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) =>
-      setCoupon((prev) => ({ ...prev, code: e.target.value })),
+      setCoupon((prev) => ({ ...prev, value: e.target.value })),
     []
   );
 
   const handleNotesChange = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => setNotes(e.target.value),
-    []
-  );
-
-  const toggleCouponInput = useCallback(
-    () => setCoupon((prev) => ({ ...prev, visible: !prev.visible })),
     []
   );
 
@@ -87,25 +96,41 @@ const useCheckoutLogic = () => {
       };
 
       const response = await mutateAsync(payload);
-      if (response?.status) toast.success(response?.message);
+
+      if (response?.status) {
+        toast.success(response?.message);
+
+        // ✅ اعمل refetch فوري
+        await queryClient.refetchQueries({
+          queryKey: [apiRoutes.cart, coupon.code || undefined],
+        });
+      }
     } catch (error) {
       handlePromisError(error);
       queryClient.invalidateQueries({ queryKey: [apiRoutes.cart] });
     }
- }, [items, paymentMethod, notes, localAddress, coupon.code, mutateAsync]);
+  }, [
+    items,
+    paymentMethod,
+    notes,
+    localAddress,
+    coupon.code,
+    mutateAsync,
+    setCouponCode,
+  ]);
 
-  useEffect(() => {
-    if(!settingsLoading && settings) {
-      const shippingMethod = {
-            coastLabel: settings.delivery_fee, 
-            id: 1,
-            name: "delivery",
-            value: parseInt(settings.delivery_fee)
-      }
-      setShippingMethods([shippingMethod]);
-      setShippingMethod(shippingMethod);
-    }
-  }, [settings, settingsLoading]);
+  // useEffect(() => {
+  //   if (!settingsLoading && settings) {
+  //     const shippingMethod = {
+  //       coastLabel: settings.delivery_fee,
+  //       id: 1,
+  //       name: "delivery",
+  //       value: parseInt(settings.delivery_fee),
+  //     };
+  //     setShippingMethods([shippingMethod]);
+  //     setShippingMethod(shippingMethod);
+  //   }
+  // }, [settings, settingsLoading]);
 
   // ✅ Memoize returned object for better performance
   return useMemo(
@@ -118,7 +143,6 @@ const useCheckoutLogic = () => {
         shiipingMethod,
       },
       handlers: {
-        toggleCouponInput,
         handleCodeChange,
         handleNotesChange,
         handleLocalAddressChange,
@@ -137,7 +161,6 @@ const useCheckoutLogic = () => {
       paymentMethod,
       localAddress,
       notes,
-      toggleCouponInput,
       handleCodeChange,
       handleNotesChange,
       handleLocalAddressChange,
@@ -145,7 +168,7 @@ const useCheckoutLogic = () => {
       addressQuery,
       isPending,
       shiipingMethod,
-      settingsQuery
+      settingsQuery,
     ]
   );
 };

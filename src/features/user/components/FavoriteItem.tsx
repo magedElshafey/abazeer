@@ -80,7 +80,9 @@ const FavoriteItem: FC<FavoriteItemProps> = ({ product }) => {
       {/* Stock Status Column */}
       <td className="py-4 px-6">
         <span
-          className={`font-medium ${getStockStatusColor(product.stock_quantity)}`}
+          className={`font-medium ${getStockStatusColor(
+            product.stock_quantity
+          )}`}
         >
           {t(getStockStatus(product.stock_quantity))}
         </span>
@@ -126,4 +128,3 @@ const FavoriteItem: FC<FavoriteItemProps> = ({ product }) => {
 };
 
 export default FavoriteItem;
-

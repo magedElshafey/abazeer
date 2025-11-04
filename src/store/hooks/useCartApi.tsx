@@ -3,8 +3,12 @@ import { apiRoutes } from "@/services/api-routes/apiRoutes";
 import { CartResponse } from "@/features/cart/types/Cart.types";
 
 export const useCartApi = () => {
-  const getCart = async (): Promise<CartResponse> => {
-    const { data } = await Axios.get<{ data: CartResponse }>(apiRoutes.cart);
+  const getCart = async (couponCode?: string): Promise<CartResponse> => {
+    const params = couponCode ? { coupon_code: couponCode } : {};
+
+    const { data } = await Axios.get<{ data: CartResponse }>(apiRoutes.cart, {
+      params,
+    });
     return data.data;
   };
 

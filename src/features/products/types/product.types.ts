@@ -18,6 +18,7 @@ export interface Product {
   sale_price: number;
   quantity: number;
   is_in_wishlist: boolean;
+  category_id: number;
 }
 
 export interface Dimensions {
@@ -82,12 +83,16 @@ export interface Filters {
 }
 
 export interface ProductsFiltersContext {
-  sortBy?: SortByKey<typeof sortableKeys[number]>;
+  sortBy?: SortByKey<(typeof sortableKeys)[number]>;
   filters: Filters;
   isDrawerOpen: boolean;
   setSortBy: (sortBy: ProductsFiltersContext["sortBy"]) => void;
   setIsDrawerOpen: (isOpen: boolean) => void;
-  handleChangeFilters: (key: keyof Filters, value: Filters[typeof key], debounce?: boolean) => void;
+  handleChangeFilters: (
+    key: keyof Filters,
+    value: Filters[typeof key],
+    debounce?: boolean
+  ) => void;
   appliedFilters: Record<string, string | []>;
 }
 
@@ -97,4 +102,6 @@ export interface ProductsViewContext {
 }
 
 // Legacy interface for backward compatibility if needed
-export interface ProductsContext extends ProductsFiltersContext, ProductsViewContext {}
+export interface ProductsContext
+  extends ProductsFiltersContext,
+    ProductsViewContext {}

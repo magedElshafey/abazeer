@@ -21,11 +21,9 @@ import { useQueryClient } from "@tanstack/react-query";
 import { apiRoutes } from "@/services/api-routes/apiRoutes";
 import { CartResponse } from "@/features/cart/types/Cart.types";
 import OrderCardSkeleton from "@/common/components/loader/skeltons/OrderCardSkeleton";
-
 const Checkout = () => {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
-
   const {
     states: { coupon, localAddress, paymentMethod, notes, shiipingMethod },
     handlers,
@@ -36,13 +34,13 @@ const Checkout = () => {
   } = useCheckoutLogic();
 
   const { addressQuery, settingsQuery } = queries;
+
   const cartQuery = queryClient.getQueryState([apiRoutes.cart]);
 
   useEffect(() => {
     //invalidate query to check for missing items;
     queryClient.invalidateQueries({ queryKey: [apiRoutes.cart] });
   }, [queryClient]);
-
   return (
     <>
       <SEO title={t("checkout")} />
@@ -57,46 +55,44 @@ const Checkout = () => {
         {/* ✅ LEFT SIDE - Order Summary */}
         <section aria-label={t("order details")}>
           <div className="bg-slate-100 p-5 rounded-xl shadow-sm">
-            {
-              (cartQuery?.data as CartResponse)?.items?.length ?
-                <>
-                  <OrderDetails />
+            {(cartQuery?.data as CartResponse)?.items?.length ? (
+              <>
+                <OrderDetails />
 
-                  <div className="py-4 border-t border-b mt-4">
-                    <h2 className="font-semibold mb-3">{t("shipping methods")}</h2>
-                    <FetchHandler queryResult={settingsQuery} skeletonType="list">
-                      {
-                        data.shippingMethods.length && (
-                          <ShippingMethods
-                            method={shiipingMethod}
-                            setMethod={handlers.setShippingMethod}
-                            shippingMethods={data.shippingMethods}
-                          />
-                        )
-                      }
-                    </FetchHandler>
-                  </div>
+                <div className="py-4 border-t border-b mt-4">
+                  <h2 className="font-semibold mb-3">
+                    {t("shipping methods")}
+                  </h2>
+                  <FetchHandler queryResult={settingsQuery} skeletonType="list">
+                    {data.shippingMethods.length && (
+                      <ShippingMethods
+                        method={shiipingMethod}
+                        setMethod={handlers.setShippingMethod}
+                        shippingMethods={data.shippingMethods}
+                      />
+                    )}
+                  </FetchHandler>
+                </div>
 
-                  <footer className="pt-4">
-                    <PriceDetails method={shiipingMethod} />
-                  </footer>
-                </>
-                :
-                cartQuery?.status === "pending" ?
-                  Array.from({ length: 3 }).map((_, idx) => (
-                    <div key={idx} className="mb-5">
-                      <OrderCardSkeleton />
-                    </div>
-                  ))
-                :
-                <EmptyStateCard
-                  icon={MdShoppingBag}
-                  link="/products"
-                  buttonText={t("browse_products")}
-                  title={t("no_products_in_cart")}
-                  description={t("no_products_in_cart_description")}
-                />
-            }
+                <footer className="pt-4">
+                  <PriceDetails />
+                </footer>
+              </>
+            ) : cartQuery?.status === "pending" ? (
+              Array.from({ length: 3 }).map((_, idx) => (
+                <div key={idx} className="mb-5">
+                  <OrderCardSkeleton />
+                </div>
+              ))
+            ) : (
+              <EmptyStateCard
+                icon={MdShoppingBag}
+                link="/products"
+                buttonText={t("browse_products")}
+                title={t("no_products_in_cart")}
+                description={t("no_products_in_cart_description")}
+              />
+            )}
           </div>
 
           {/* ✅ Coupon Section */}
@@ -105,13 +101,9 @@ const Checkout = () => {
             aria-label={t("available coupons")}
           >
             <div className="flex-between">
-              <button
-                onClick={handlers.toggleCouponInput}
-                className="mt-4 focus:outline-none focus:ring-2 text-orangeColor font-bold rounded"
-                aria-expanded={coupon.visible}
-              >
+              <p className="mt-4 focus:outline-none focus:ring-2 text-orangeColor font-bold rounded">
                 {t("You have a coupon code?")}
-              </button>
+              </p>
               <img
                 src="/images/coupon-code.gif"
                 alt={t("coupon icon")}
@@ -123,14 +115,8 @@ const Checkout = () => {
             </div>
             <div className="mt-7">
               <CouponInput
-                code={coupon.code}
+                code={coupon}
                 handleCodeChange={handlers.handleCodeChange}
-                setCode={(value) =>
-                  handlers.setCoupon((prev) => ({ ...prev, code: value }))
-                }
-                setShowCouponInput={(value) =>
-                  handlers.setCoupon((prev) => ({ ...prev, visible: value }))
-                }
               />
             </div>
           </section>
@@ -138,7 +124,13 @@ const Checkout = () => {
 
         {/* ✅ RIGHT SIDE - Address & Payment */}
         <section aria-label={t("address and payment")}>
-          <FetchHandler queryResult={{...addressQuery, isLoading: addressQuery.isLoading || addressQuery.isFetching}} skeletonType="coupon">
+          <FetchHandler
+            queryResult={{
+              ...addressQuery,
+              isLoading: addressQuery.isLoading || addressQuery.isFetching,
+            }}
+            skeletonType="coupon"
+          >
             {addressQuery?.isSuccess &&
             addressQuery.data?.length > 0 &&
             localAddress ? (
@@ -216,7 +208,7 @@ const Checkout = () => {
                 isPending ||
                 !localAddress?.id ||
                 !paymentMethod?.type ||
-                !shiipingMethod?.id || 
+                !shiipingMethod?.id ||
                 !(cartQuery?.data as CartResponse)?.items.length
               }
               isPending={isPending}

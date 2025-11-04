@@ -14,7 +14,8 @@ export interface Setting {
   site_description_ar: string | null;
   hot_line: string;
   product_banner: string;
-  delivery_fee: string;
+  delivery_fee: number | string;
+  tax_rate: number | string;
 }
 
 export interface Feature {

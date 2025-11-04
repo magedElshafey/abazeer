@@ -14,7 +14,6 @@ const ProductDetails: FC = () => {
     productId: id || "",
   });
   const { data: product } = queryResult;
-
   return (
     <div className="bg-background-gray min-h-screen pb-10">
       <div className="containerr pt-10">

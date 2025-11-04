@@ -363,5 +363,6 @@
   "alert-me": "Alert Me",
   "you-have-missing-products-in-cart": "You have missing products in your cart.",
   "all-items-in-the-list-will-be-removed": "All products in the following list will be removed from the cart.",
-  "ok": "OK"
+  "ok": "OK",
+  "Disable": "Disable"
 }

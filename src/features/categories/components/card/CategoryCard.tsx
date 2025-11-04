@@ -11,7 +11,7 @@ const CategoryCard: React.FC<CategoryCardProps> = memo(({ category }) => {
 
   const handleNavigate = useCallback(() => {
     navigate(`/products?filter-category=${category.id}`);
-  }, [navigate, category.id, category.slug]);
+  }, [navigate, category.id]);
 
   return (
     <article

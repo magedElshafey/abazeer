@@ -49,6 +49,7 @@ const Home = () => {
     essential: true,
     delay: delayOptions,
   });
+  console.log("landingProducts", landingProducts?.data);
   const categories = useGetAllCategories();
   const brands = useGetBrands({ featured: true, delay: delayOptions });
   const blogsQueryResult = useGetBlogs();
@@ -100,11 +101,12 @@ const Home = () => {
       </div>
       {/* flash sale section */}
       <FetchHandler queryResult={flashsaleQueryReuslt} skeletonType="product">
-        {flashsaleQueryReuslt?.data && flashsaleQueryReuslt?.data?.products?.length && (
-          <div className="space-between-sections">
-            <FlashSaleSection data={flashsaleQueryReuslt?.data} />
-          </div>
-        )}
+        {flashsaleQueryReuslt?.data &&
+          flashsaleQueryReuslt?.data?.products?.length && (
+            <div className="space-between-sections">
+              <FlashSaleSection data={flashsaleQueryReuslt?.data} />
+            </div>
+          )}
       </FetchHandler>
       <div className="containerr">
         {/* shop with brands section */}
@@ -147,7 +149,7 @@ const Home = () => {
                         />
                       </div>
                     </Link>
-                ))}
+                  ))}
                 </div>
               </div>
             )}

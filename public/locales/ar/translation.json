@@ -366,5 +366,6 @@
   "alert-me": "اعلمني",
   "you-have-missing-products-in-cart": "لديك منتجات مفقودة في عربة التسوق.",
   "all-items-in-the-list-will-be-removed": "جميع المنتجات في القائمة التالية سيتم إزالتها من العربة.",
-  "ok": "حسناً"
+  "ok": "حسناً",
+  "Disable": "تعطيل"
 }
