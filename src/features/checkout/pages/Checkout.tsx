@@ -21,6 +21,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { apiRoutes } from "@/services/api-routes/apiRoutes";
 import { CartResponse } from "@/features/cart/types/Cart.types";
 import OrderCardSkeleton from "@/common/components/loader/skeltons/OrderCardSkeleton";
+import { useCart } from "@/store/CartProvider";
 const Checkout = () => {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
@@ -35,12 +36,13 @@ const Checkout = () => {
 
   const { addressQuery, settingsQuery } = queries;
 
-  const cartQuery = queryClient.getQueryState([apiRoutes.cart]);
+  const {cartQuery} = useCart();
 
   useEffect(() => {
     //invalidate query to check for missing items;
     queryClient.invalidateQueries({ queryKey: [apiRoutes.cart] });
-  }, [queryClient]);
+  }, []);
+
   return (
     <>
       <SEO title={t("checkout")} />

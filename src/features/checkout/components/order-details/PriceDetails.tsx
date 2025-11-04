@@ -1,11 +1,13 @@
 import { useTranslation } from "react-i18next";
 import { useCart } from "@/store/CartProvider";
+import useGetWebsiteSettings from "@/features/settings/api/useGetWebsiteSettings";
 
 const PriceDetails = () => {
   const { t } = useTranslation();
   const { total, tax, shipping, subtotal, couponCode, discount_amount } =
     useCart();
 
+  const { data: settings } = useGetWebsiteSettings();
   return (
     <dl className="text-gray-700">
       <div className="flex-between mb-2">
@@ -23,7 +25,7 @@ const PriceDetails = () => {
         </div>
       )}
       <div className="flex-between mb-2">
-        <dt>{t("Tax (VAT - 15%)")}</dt>
+        <dt>{`${t("tax")} ${parseFloat(settings?.tax_rate || "0") * 100}%`}</dt>
         <dd>
           {Number(tax).toFixed(2)} {t("SAR")}
         </dd>

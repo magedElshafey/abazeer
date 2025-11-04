@@ -6,10 +6,10 @@ import i18n from "@/lib/i18n/i18n";
 import CartDetails from "@/features/cart/components/details/CartDetails";
 const CartIcon = memo(() => {
   const { t } = useTranslation();
-  const { items, total } = useCart();
+  const { items, subtotal } = useCart();
   const cartItems = useMemo(() => items || [], [items]);
   const itemCount = cartItems.length || 0;
-  const totalAmount = total ?? "0.00";
+  const totalAmount = subtotal ?? "0.00";
 
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);

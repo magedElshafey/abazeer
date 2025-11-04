@@ -49,7 +49,8 @@ export const useCartMutations = (
         is_in_wishlist: false,
         item_id: products[0].product_id,
         isLoading: true,
-        product_id: products[0]?.product_id
+        product_id: products[0]?.product_id,
+        category_id: 0
       };
 
       setItems((prev) => [...prev, newItem]);

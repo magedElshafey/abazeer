@@ -56,7 +56,6 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     value: string;
     type: string;
   }>();
-  console.log("couponCode", couponCode);
   // Load local cart for guest
   useEffect(() => {
     const localData = localStorage.getItem(LOCAL_KEY);
@@ -69,8 +68,8 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 
   // Fetch cart for logged-in user
   const cartQuery = useQuery({
-    queryKey: couponCode ? [apiRoutes.cart, couponCode] : [apiRoutes.cart],
-    queryFn: () => getCart(couponCode?.code),
+    queryKey: [apiRoutes.cart],
+    queryFn:  getCart,
     enabled: !!user,
   });
   const { data: cartData } = cartQuery;

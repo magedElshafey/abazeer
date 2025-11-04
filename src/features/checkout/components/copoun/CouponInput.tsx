@@ -32,14 +32,12 @@ const CouponInput = memo(
         try {
           const response = await mutateAsync({ code: code.value });
           if (response?.status) {
-            console.log("response", response);
             toast.success(response.message);
             setCouponCode({
               code: response?.data?.code ?? "",
               value: response?.data?.value ?? "",
               type: response?.data?.type ?? "",
             });
-            cartQuery.refetch();
           }
         } catch (error) {
           handlePromisError(error);

@@ -43,7 +43,8 @@ const ProductInfo: FC<Props> = ({ product }) => {
         sale_price: product.sale_price,
         is_in_wishlist: product.is_in_wishlist,
         item_id: product.id,
-        isLoading: true
+        isLoading: true,
+        category_id: product.category_id
       });
     }
     navigate("/checkout");

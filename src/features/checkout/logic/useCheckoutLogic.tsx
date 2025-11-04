@@ -99,6 +99,7 @@ const useCheckoutLogic = () => {
 
       if (response?.status) {
         toast.success(response?.message);
+        setCouponCode(undefined);
 
         // ✅ اعمل refetch فوري
         await queryClient.refetchQueries({

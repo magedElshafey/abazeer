@@ -164,6 +164,7 @@ export const useCartMutations = (
         is_in_wishlist: false,
         item_id: products[0]?.product_id,
         isLoading: true,
+        category_id: 0,
       };
 
       setItems((prev) => [...prev, newItem]);

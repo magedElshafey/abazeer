@@ -13,10 +13,10 @@ const CartDetails: React.FC<CartDetailsProps> = ({ onClose = undefined }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { items, total, clearCart, cartQuery: {isFetching} } = useCart();
+  const { items, subtotal, clearCart, cartQuery: {isFetching} } = useCart();
   const cartItems = useMemo(() => items || [], [items]);
   const itemCount = cartItems.length || 0;
-  const totalAmount = total ?? "0.00";
+  const totalAmount = subtotal ?? "0.00";
   const handleGoToCart = useCallback(() => {
     navigate(user ? "/checkout" : "/auth/login");
     if (onClose) {
