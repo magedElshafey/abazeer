@@ -91,14 +91,15 @@ const FavoriteItem: FC<FavoriteItemProps> = ({ product }) => {
       {/* Add to Cart Column */}
       <td className="py-4 px-6">
         <div className="text-nowrap">
-          {product?.stock_quantity > 0 ? (
+          {product.stock_quantity > 0 ? (
             <AddToCartButton product={product} quantity={1} />
           ) : (
             <ProductAlertButton productId={product.id}>
-              {({ onClick }) => (
+              {({ onClick, isPending }) => (
                 <MainBtn
+                  isPending={isPending}
                   onClick={onClick}
-                  className="sm:!w-fit px-5 text-sm font-normal  rounded-md"
+                  className="flex-center sm:!w-full py-1 bg-orangeColor !font-normal text-white rounded-md"
                 >
                   {t("notify me")}
                 </MainBtn>
@@ -114,7 +115,7 @@ const FavoriteItem: FC<FavoriteItemProps> = ({ product }) => {
           <button
             onClick={handleRemoveFromFavorites}
             disabled={isPending}
-            className="p-2 text-gray-500 hover:text-red-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="p-2 text-red-500/60 hover:text-red-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             aria-label={t("remove from favorites")}
             title={t("remove from favorites")}
           >

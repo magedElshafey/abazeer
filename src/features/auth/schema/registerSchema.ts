@@ -7,10 +7,8 @@ export const registerSchema = loginSchema
     email: emailSchema,
     phone: z
       .string()
-      .regex(
-        /^01[0|1|2|5][0-9]{8}$/,
-        "Phone must be 11 digits and start with 010, 011, 012, or 015"
-      ),
+      .min(1, "phone is required")
+      .regex(/^05\d{8}$/, "Phone must start with 05 followed by 8 digits"),
     password_confirmation: z.string(),
   })
   .refine((data) => data.password === data.password_confirmation, {

@@ -12,7 +12,7 @@ export const profileSchema = z.object({
   phone: z
     .string()
     .min(1, "phone is required")
-    .regex(/^01[0-5]\d{8}$/, "Phone must be 11 digits and start with 010, 011, 012, or 015"),
+    .regex(/^05\d{8}$/, "Phone must start with 05 followed by 8 digits"),
 });
 
 export type ProfileSchemaType = z.infer<typeof profileSchema>;
