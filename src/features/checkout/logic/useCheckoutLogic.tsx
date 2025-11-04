@@ -22,7 +22,7 @@ const useCheckoutLogic = () => {
   const dialogRef = useRef<{ close: () => void }>(null);
   const { items, setCouponCode } = useCart();
   const settingsQuery = useGetWebsiteSettings();
-  // const { data: settings, isLoading: settingsLoading } = settingsQuery;
+  const { data: settings, isLoading: settingsLoading } = settingsQuery;
 
   // ✅ Group related states logically
   const [shippingMethods, setShippingMethods] = useState<Shippings[]>([]);
@@ -119,18 +119,18 @@ const useCheckoutLogic = () => {
     setCouponCode,
   ]);
 
-  // useEffect(() => {
-  //   if (!settingsLoading && settings) {
-  //     const shippingMethod = {
-  //       coastLabel: settings.delivery_fee,
-  //       id: 1,
-  //       name: "delivery",
-  //       value: parseInt(settings.delivery_fee),
-  //     };
-  //     setShippingMethods([shippingMethod]);
-  //     setShippingMethod(shippingMethod);
-  //   }
-  // }, [settings, settingsLoading]);
+  useEffect(() => {
+    if (!settingsLoading && settings) {
+      const shippingMethod = {
+        coastLabel: settings.delivery_fee,
+        id: 1,
+        name: "delivery",
+        value: parseInt(settings.delivery_fee),
+      };
+      setShippingMethods([shippingMethod]);
+      setShippingMethod(shippingMethod);
+    }
+  }, [settings, settingsLoading]);
 
   // ✅ Memoize returned object for better performance
   return useMemo(

@@ -16,4 +16,10 @@ export interface CartResponse {
   out_of_stock_items: number[];
   tax: string;
   shipping: string;
+  coupon: {
+    value: string;
+    code: string;
+    type: string;
+  };
+  discount_amount: string;
 }

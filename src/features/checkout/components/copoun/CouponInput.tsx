@@ -1,4 +1,4 @@
-import { memo, useCallback, forwardRef, useRef } from "react";
+import { memo, useCallback, forwardRef, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Loader } from "lucide-react";
 import { toast } from "sonner";
@@ -6,6 +6,7 @@ import handlePromisError from "@/utils/handlePromiseError";
 import useApplyCoupon from "../../api/copoun/useApplyCoupon";
 import MainBtn from "@/common/components/buttons/MainBtn";
 import { useCart } from "@/store/CartProvider";
+
 interface CouponInputProps {
   code: { code: string; value: string; type: string };
   handleCodeChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -15,24 +16,43 @@ const CouponInput = memo(
   forwardRef<HTMLInputElement, CouponInputProps>(
     ({ code, handleCodeChange }, ref) => {
       const { t } = useTranslation();
-      const { setCouponCode } = useCart();
+      const { setCouponCode, couponCode, cartQuery } = useCart();
       const { isPending, mutateAsync } = useApplyCoupon();
       const inputRef = useRef<HTMLInputElement | null>(null);
 
-      const handleApplyCoupon = useCallback(async () => {
-        if (!code.value.trim()) return;
+      useEffect(() => {
+        if (couponCode?.code) {
+          handleCodeChange?.({
+            target: { value: couponCode.code },
+          } as React.ChangeEvent<HTMLInputElement>);
+        }
+      }, [couponCode]);
 
+      const handleApplyCoupon = useCallback(async () => {
         try {
           const response = await mutateAsync({ code: code.value });
-
           if (response?.status) {
+            console.log("response", response);
             toast.success(response.message);
-            setCouponCode(code);
+            setCouponCode({
+              code: response?.data?.code ?? "",
+              value: response?.data?.value ?? "",
+              type: response?.data?.type ?? "",
+            });
+            cartQuery.refetch();
           }
         } catch (error) {
           handlePromisError(error);
         }
-      }, [code, mutateAsync, setCouponCode]);
+      }, [code, mutateAsync, setCouponCode, cartQuery]);
+
+      const handleRemoveCoupon = useCallback(() => {
+        setCouponCode(undefined);
+        toast.info(t("Coupon removed successfully"));
+        cartQuery.refetch();
+      }, [setCouponCode, t, cartQuery]);
+
+      const hasActiveCoupon = !!couponCode?.code;
 
       return (
         <div
@@ -52,27 +72,39 @@ const CouponInput = memo(
             onChange={(e) => handleCodeChange?.(e)}
             aria-invalid={!code ? true : false}
             aria-label={t("enter your coupon code")}
-            className="flex-1 bg-transparent border-none outline-none text-gray-800 placeholder:text-gray-500"
+            disabled={hasActiveCoupon}
+            className={`flex-1 bg-transparent border-none outline-none text-gray-800 placeholder:text-gray-500 ${
+              hasActiveCoupon ? "opacity-70 cursor-not-allowed" : ""
+            }`}
           />
 
-          <MainBtn
-            type="button"
-            disabled={!code.value || isPending}
-            onClick={handleApplyCoupon}
-            aria-label={t("apply coupon")}
-            aria-busy={isPending}
-          >
-            {isPending ? (
-              <>
+          {hasActiveCoupon ? (
+            <MainBtn
+              type="button"
+              theme="danger"
+              onClick={handleRemoveCoupon}
+              aria-label={t("remove coupon")}
+            >
+              {t("remove")}
+            </MainBtn>
+          ) : (
+            <MainBtn
+              type="button"
+              disabled={!code.value || isPending}
+              onClick={handleApplyCoupon}
+              aria-label={t("apply coupon")}
+              aria-busy={isPending}
+            >
+              {isPending ? (
                 <Loader
                   className="animate-spin w-4 h-4 mr-1"
                   aria-hidden="true"
                 />
-              </>
-            ) : (
-              t("apply")
-            )}
-          </MainBtn>
+              ) : (
+                t("apply")
+              )}
+            </MainBtn>
+          )}
         </div>
       );
     }
@@ -80,5 +112,4 @@ const CouponInput = memo(
 );
 
 CouponInput.displayName = "CouponInput";
-
 export default CouponInput;

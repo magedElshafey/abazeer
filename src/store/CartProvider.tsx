@@ -31,13 +31,10 @@ interface CartContextProps {
   isInCart: (id: number) => CartItem | undefined;
   cartQuery: UseQueryResult<CartResponse>;
   setCouponCode: (code?: { code: string; value: string; type: string }) => void;
-  couponCode: {
-    code: string;
-    value: string;
-    type: string;
-  };
   tax: string;
   shipping: string;
+  couponCode?: { code: string; value: string; type: string };
+  discount_amount?: string;
 }
 
 const CartContext = createContext<CartContextProps | undefined>(undefined);
@@ -59,7 +56,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     value: string;
     type: string;
   }>();
-
+  console.log("couponCode", couponCode);
   // Load local cart for guest
   useEffect(() => {
     const localData = localStorage.getItem(LOCAL_KEY);
@@ -73,7 +70,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
   // Fetch cart for logged-in user
   const cartQuery = useQuery({
     queryKey: couponCode ? [apiRoutes.cart, couponCode] : [apiRoutes.cart],
-    queryFn: () => getCart(couponCode?.value),
+    queryFn: () => getCart(couponCode?.code),
     enabled: !!user,
   });
   const { data: cartData } = cartQuery;
@@ -107,6 +104,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     if (cartData) {
       setTax(cartData?.tax);
       setShipping(cartData?.shipping);
+      setCouponCode(cartData?.coupon);
     }
     if (cartData?.items) {
       setItems(cartData.items);
@@ -216,6 +214,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
       ? Number(cartData?.subtotal)
       : 0
     : Math.floor(localTotal);
+  const discount_amount = user ? cartData?.discount_amount : "";
   const value = useMemo(
     () => ({
       items,
@@ -231,6 +230,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
       shipping,
       subtotal,
       couponCode,
+      discount_amount,
     }),
     [
       items,
@@ -246,6 +246,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
       shipping,
       subtotal,
       couponCode,
+      discount_amount,
     ]
   );
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
