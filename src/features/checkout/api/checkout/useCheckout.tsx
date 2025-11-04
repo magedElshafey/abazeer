@@ -10,7 +10,6 @@ const useCheckout = () => {
     payment_type: string;
     notes?: string;
     address_id: number;
-    // coupon_code?: string;
   };
 
   return useMutation({

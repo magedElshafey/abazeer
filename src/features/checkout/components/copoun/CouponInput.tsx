@@ -6,6 +6,7 @@ import handlePromisError from "@/utils/handlePromiseError";
 import useApplyCoupon from "../../api/copoun/useApplyCoupon";
 import MainBtn from "@/common/components/buttons/MainBtn";
 import { useCart } from "@/store/CartProvider";
+import useDeleteCoupon from "../../api/copoun/useDelteCoupon";
 
 interface CouponInputProps {
   code: { code: string; value: string; type: string };
@@ -18,6 +19,9 @@ const CouponInput = memo(
       const { t } = useTranslation();
       const { setCouponCode, couponCode, cartQuery } = useCart();
       const { isPending, mutateAsync } = useApplyCoupon();
+      const { isPending: isDeleting, mutateAsync: deleteCoupon } =
+        useDeleteCoupon();
+
       const inputRef = useRef<HTMLInputElement | null>(null);
 
       useEffect(() => {
@@ -44,11 +48,13 @@ const CouponInput = memo(
         }
       }, [code, mutateAsync, setCouponCode, cartQuery]);
 
-      const handleRemoveCoupon = useCallback(() => {
-        setCouponCode(undefined);
-        toast.info(t("Coupon removed successfully"));
-        cartQuery.refetch();
-      }, [setCouponCode, t, cartQuery]);
+      const handleRemoveCoupon = useCallback(async () => {
+        try {
+          await deleteCoupon();
+        } catch (error) {
+          handlePromisError(error);
+        }
+      }, [deleteCoupon]);
 
       const hasActiveCoupon = !!couponCode?.code;
 
@@ -80,10 +86,15 @@ const CouponInput = memo(
             <MainBtn
               type="button"
               theme="danger"
+              disabled={isDeleting}
               onClick={handleRemoveCoupon}
               aria-label={t("remove coupon")}
             >
-              {t("remove")}
+              {isDeleting ? (
+                <Loader className="animate-spin w-4 h-4 mr-1" />
+              ) : (
+                t("remove")
+              )}
             </MainBtn>
           ) : (
             <MainBtn
@@ -91,7 +102,6 @@ const CouponInput = memo(
               disabled={!code.value || isPending}
               onClick={handleApplyCoupon}
               aria-label={t("apply coupon")}
-              aria-busy={isPending}
             >
               {isPending ? (
                 <Loader
