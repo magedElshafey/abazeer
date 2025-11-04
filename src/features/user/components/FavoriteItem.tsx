@@ -6,6 +6,8 @@ import AddToCartButton from "@/features/cart/components/button/AddToCartButton";
 import useAddFavorite from "@/features/products/api/useAddFavorite";
 import Loader from "@/common/components/loader/spinner/Loader";
 import type { Product } from "@/features/products/types/product.types";
+import ProductAlertButton from "@/features/products/components/product-alert/ProductAlertButton";
+import MainBtn from "@/common/components/buttons/MainBtn";
 
 interface FavoriteItemProps {
   product: Product;
@@ -78,7 +80,9 @@ const FavoriteItem: FC<FavoriteItemProps> = ({ product }) => {
       {/* Stock Status Column */}
       <td className="py-4 px-6">
         <span
-          className={`font-medium ${getStockStatusColor(product.stock_quantity)}`}
+          className={`font-medium ${getStockStatusColor(
+            product.stock_quantity
+          )}`}
         >
           {t(getStockStatus(product.stock_quantity))}
         </span>
@@ -87,7 +91,20 @@ const FavoriteItem: FC<FavoriteItemProps> = ({ product }) => {
       {/* Add to Cart Column */}
       <td className="py-4 px-6">
         <div className="text-nowrap">
-          <AddToCartButton product={product} quantity={1} />
+          {product?.stock_quantity > 0 ? (
+            <AddToCartButton product={product} quantity={1} />
+          ) : (
+            <ProductAlertButton productId={product.id}>
+              {({ onClick }) => (
+                <MainBtn
+                  onClick={onClick}
+                  className="sm:!w-fit px-5 text-sm font-normal  rounded-md"
+                >
+                  {t("notify me")}
+                </MainBtn>
+              )}
+            </ProductAlertButton>
+          )}
         </div>
       </td>
 
@@ -110,4 +127,3 @@ const FavoriteItem: FC<FavoriteItemProps> = ({ product }) => {
 };
 
 export default FavoriteItem;
-

@@ -23,12 +23,21 @@ export const playAddSound = (path: string) => {
 interface CartContextProps {
   items: CartItem[];
   total: number;
+  subtotal: number;
   addToCart: (item: CartItem) => void;
   removeFromCart: (id: number) => void;
   updateQuantity: (id: number, quantity: number) => void;
   clearCart: () => void;
   isInCart: (id: number) => CartItem | undefined;
-  cartQuery: UseQueryResult<CartResponse>
+  cartQuery: UseQueryResult<CartResponse>;
+  setCouponCode: (code?: { code: string; value: string; type: string }) => void;
+  couponCode: {
+    code: string;
+    value: string;
+    type: string;
+  };
+  tax: string;
+  shipping: string;
 }
 
 const CartContext = createContext<CartContextProps | undefined>(undefined);
@@ -39,10 +48,17 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const { user } = useAuth();
   const { t } = useTranslation();
-  const { getCart, getCartTotal } = useCartApi();
+  const { getCart } = useCartApi();
   const [items, setItems] = useState<CartItem[]>([]);
+  const [tax, setTax] = useState<string>("");
+  const [shipping, setShipping] = useState<string>("");
   const { addMutation, removeMutation, updateMutation, clearMutation } =
     useCartMutations(items, setItems);
+  const [couponCode, setCouponCode] = useState<{
+    code: string;
+    value: string;
+    type: string;
+  }>();
 
   // Load local cart for guest
   useEffect(() => {
@@ -56,12 +72,11 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 
   // Fetch cart for logged-in user
   const cartQuery = useQuery({
-    queryKey: [apiRoutes.cart],
-    queryFn: getCart,
+    queryKey: couponCode ? [apiRoutes.cart, couponCode] : [apiRoutes.cart],
+    queryFn: () => getCart(couponCode?.value),
     enabled: !!user,
   });
-
-  const {data: cartData} = cartQuery;
+  const { data: cartData } = cartQuery;
   useEffect(() => {
     if (!user) return;
     const localData = localStorage.getItem(LOCAL_KEY);
@@ -69,19 +84,30 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
       const guestItems: CartItem[] = JSON.parse(localData);
 
       if (guestItems.length > 0) {
-        const formatted = guestItems.map((i) => ({
-          product_id: i.id,
-          quantity: i.quantity,
-        // Find only the items that has not been in the cart before.
-        })).filter(item => cartData?.items.findIndex((el: CartItem) => el.product_id === item.product_id) === -1);
-        if(formatted.length) addMutation.mutate(formatted, {
-          onSuccess: () => {
-            localStorage.removeItem(LOCAL_KEY);
-          },
-        });
+        const formatted = guestItems
+          .map((i) => ({
+            product_id: i.id,
+            quantity: i.quantity,
+            // Find only the items that has not been in the cart before.
+          }))
+          .filter(
+            (item) =>
+              cartData?.items.findIndex(
+                (el: CartItem) => el.product_id === item.product_id
+              ) === -1
+          );
+        if (formatted.length)
+          addMutation.mutate(formatted, {
+            onSuccess: () => {
+              localStorage.removeItem(LOCAL_KEY);
+            },
+          });
       }
     }
-
+    if (cartData) {
+      setTax(cartData?.tax);
+      setShipping(cartData?.shipping);
+    }
     if (cartData?.items) {
       setItems(cartData.items);
     }
@@ -93,11 +119,11 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
   }, []);
 
   // Fetch total from API for logged-in user
-  const { data: totalData } = useQuery({
-    queryKey: [apiRoutes.cart, "total"],
-    queryFn: getCartTotal,
-    enabled: !!user,
-  });
+  // const { data: totalData } = useQuery({
+  //   queryKey: [apiRoutes.cart, "total"],
+  //   queryFn: getCartTotal,
+  //   enabled: !!user,
+  // });
 
   // Methods
 
@@ -108,7 +134,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
         if (items.some((i) => i.id === item.id)) {
           return toast.info(t("Item already in cart"));
         }
-        const updated = [...items, {...item}];
+        const updated = [...items, { ...item }];
         setItems(updated);
         persistLocal(updated);
         playAddSound("/sounds/cart.mp3");
@@ -121,7 +147,6 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     [user, items, addMutation, persistLocal, t]
   );
 
-
   // 🧩 Remove item
   const removeFromCart = useCallback(
     (id: number) => {
@@ -130,7 +155,6 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
         setItems(updated);
         persistLocal(updated);
         playAddSound("/sounds/remove.mp3");
-
       } else {
         removeMutation.mutate(id, {
           onSuccess: () => playAddSound("/sounds/remove.mp3"),
@@ -166,7 +190,10 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   }, [user, clearMutation]);
 
-  const isInCart = useCallback((id: number) => items.find(item => item.product_id === id), [items]);
+  const isInCart = useCallback(
+    (id: number) => items.find((item) => item.product_id === id),
+    [items]
+  );
 
   const localTotal = useMemo(
     () =>
@@ -179,7 +206,16 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     [items]
   );
 
-  const total = user ? totalData?.total ?? 0 : Math.floor(localTotal);
+  const total = user
+    ? cartData?.total
+      ? Number(cartData?.total)
+      : 0
+    : Math.floor(localTotal);
+  const subtotal = user
+    ? cartData?.subtotal
+      ? Number(cartData?.subtotal)
+      : 0
+    : Math.floor(localTotal);
   const value = useMemo(
     () => ({
       items,
@@ -189,7 +225,12 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
       updateQuantity,
       clearCart,
       isInCart,
-      cartQuery
+      cartQuery,
+      setCouponCode,
+      tax,
+      shipping,
+      subtotal,
+      couponCode,
     }),
     [
       items,
@@ -199,7 +240,12 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
       updateQuantity,
       clearCart,
       isInCart,
-      cartQuery
+      cartQuery,
+      setCouponCode,
+      tax,
+      shipping,
+      subtotal,
+      couponCode,
     ]
   );
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

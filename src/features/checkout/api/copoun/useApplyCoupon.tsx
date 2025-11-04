@@ -9,13 +9,14 @@ const useApplyCoupon = () => {
     mutationKey: [apiRoutes?.applyCoupon],
     mutationFn: async ({ code }: { code: string }) => {
       const { data } = await Axios.post(apiRoutes?.applyCoupon, { code });
-      console.log("data is", data);
       return data;
     },
-    onSuccess: () =>
-      queryClient.invalidateQueries({
-        queryKey: [apiRoutes?.cart],
-      }),
+    onSuccess: async (_, variables) => {
+      await queryClient.invalidateQueries({ queryKey: [apiRoutes.cart] });
+      await queryClient.refetchQueries({
+        queryKey: [apiRoutes.cart, variables.code],
+      });
+    },
   });
 };
 

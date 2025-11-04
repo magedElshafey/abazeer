@@ -12,5 +12,8 @@ export interface CartResponse {
   id: number;
   items: CartItem[];
   total: string;
+  subtotal: string;
   out_of_stock_items: number[];
+  tax: string;
+  shipping: string;
 }

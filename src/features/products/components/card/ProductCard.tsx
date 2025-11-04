@@ -39,9 +39,12 @@ const ProductCard: React.FC<ProductCardProps> = memo(
       });
     }, [product?.average_rate]);
 
-
-    const progressPercent = product.stock_quantity ? ((product?.sold_quantity || 0) / product.stock_quantity) * 100 : 0;
-
+    const progressPercent = product.stock_quantity
+      ? ((product?.sold_quantity || 0) / product.stock_quantity) * 100
+      : 0;
+    const handleCategoryNavigate = useCallback(() => {
+      navigate(`/products?filter-category=${product.category_id}`);
+    }, [navigate, product.category_id]);
     return (
       <div
         className={twMerge(
@@ -82,7 +85,10 @@ const ProductCard: React.FC<ProductCardProps> = memo(
 
         {/* ✅ Content */}
         <div className="mt-3 relative">
-          <p className="mb-1 transition-colors duration-200 group-hover:text-orangeColor font-medium text-sm text-gray-600">
+          <p
+            onClick={handleCategoryNavigate}
+            className="mb-1 duration-300 cursor-pointer w-fit hover:underline  transition-colors group-hover:text-orangeColor font-medium text-sm text-gray-600"
+          >
             {product.category}
           </p>
 
@@ -153,14 +159,18 @@ const ProductCard: React.FC<ProductCardProps> = memo(
             </div>
           ) : (
             <ProductAlertButton productId={product.id}>
-              {({onClick, isPending}) => (
-                <MainBtn isPending={isPending} onClick={onClick} className="lg:translate-y-full 
+              {({ onClick, isPending }) => (
+                <MainBtn
+                  isPending={isPending}
+                  onClick={onClick}
+                  className="lg:translate-y-full 
                 lg:opacity-0
                 lg:group-hover:translate-y-0 
                 lg:group-hover:opacity-100
                 lg:transition-all lg:duration-500 
                 lg:ease-in-out
-                will-change-transform will-change-opacity flex-center sm:!w-full py-1 bg-orangeColor !font-normal text-white rounded-md">
+                will-change-transform will-change-opacity flex-center sm:!w-full py-1 bg-orangeColor !font-normal text-white rounded-md"
+                >
                   {t("notify me")}
                 </MainBtn>
               )}

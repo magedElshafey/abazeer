@@ -40,7 +40,9 @@ const ProductListCard: React.FC<ProductListCardProps> = memo(
     const progressPercent = product.stock_quantity
       ? ((product?.sold_quantity || 0) / product.stock_quantity) * 100
       : 0;
-
+    const handleCategoryNavigate = useCallback(() => {
+      navigate(`/products?filter-category=${product.category_id}`);
+    }, [navigate, product.category_id]);
     return (
       <div
         className={twMerge(
@@ -82,7 +84,10 @@ const ProductListCard: React.FC<ProductListCardProps> = memo(
         <div className="flex-1 flex flex-col justify-between gap-3">
           {/* ✅ Product Info */}
           <div>
-            <p className="mb-1 transition-colors duration-200 group-hover:text-orangeColor font-medium text-xs text-gray-600">
+            <p
+              onClick={handleCategoryNavigate}
+              className="mb-1 transition-colors duration-200 group-hover:text-orangeColor hover:underline w-fit cursor-pointer font-medium text-xs text-gray-600"
+            >
               {product.category}
             </p>
 

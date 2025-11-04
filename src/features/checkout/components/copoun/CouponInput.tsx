@@ -5,43 +5,34 @@ import { toast } from "sonner";
 import handlePromisError from "@/utils/handlePromiseError";
 import useApplyCoupon from "../../api/copoun/useApplyCoupon";
 import MainBtn from "@/common/components/buttons/MainBtn";
-
+import { useCart } from "@/store/CartProvider";
 interface CouponInputProps {
-  code: string;
-  readOnly?: boolean;
+  code: { code: string; value: string; type: string };
   handleCodeChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  setCode?: (value: string) => void;
-  setShowCouponInput?: (value: boolean) => void;
 }
 
 const CouponInput = memo(
   forwardRef<HTMLInputElement, CouponInputProps>(
-    (
-      { code, readOnly = false, handleCodeChange, setCode, setShowCouponInput },
-      ref
-    ) => {
+    ({ code, handleCodeChange }, ref) => {
       const { t } = useTranslation();
+      const { setCouponCode } = useCart();
       const { isPending, mutateAsync } = useApplyCoupon();
       const inputRef = useRef<HTMLInputElement | null>(null);
 
       const handleApplyCoupon = useCallback(async () => {
-        if (!code.trim()) return;
+        if (!code.value.trim()) return;
 
         try {
-          const response = await mutateAsync({ code });
+          const response = await mutateAsync({ code: code.value });
 
           if (response?.status) {
             toast.success(response.message);
-            if (!readOnly) {
-              setCode?.("");
-              setShowCouponInput?.(false);
-              inputRef.current?.focus();
-            }
+            setCouponCode(code);
           }
         } catch (error) {
           handlePromisError(error);
         }
-      }, [code, readOnly, mutateAsync, setCode, setShowCouponInput]);
+      }, [code, mutateAsync, setCouponCode]);
 
       return (
         <div
@@ -56,18 +47,17 @@ const CouponInput = memo(
             id="coupon-code"
             type="text"
             ref={(ref as React.RefObject<HTMLInputElement>) || inputRef}
-            readOnly={readOnly}
-            value={code}
+            value={code.value}
             placeholder={t("enter your coupon code")}
             onChange={(e) => handleCodeChange?.(e)}
-            aria-invalid={!readOnly && !code ? true : false}
+            aria-invalid={!code ? true : false}
             aria-label={t("enter your coupon code")}
             className="flex-1 bg-transparent border-none outline-none text-gray-800 placeholder:text-gray-500"
           />
 
           <MainBtn
             type="button"
-            disabled={!code || isPending}
+            disabled={!code.value || isPending}
             onClick={handleApplyCoupon}
             aria-label={t("apply coupon")}
             aria-busy={isPending}
