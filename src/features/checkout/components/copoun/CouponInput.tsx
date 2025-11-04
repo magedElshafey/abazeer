@@ -10,7 +10,7 @@ import useDeleteCoupon from "../../api/copoun/useDelteCoupon";
 
 interface CouponInputProps {
   code: { code: string; value: string; type: string };
-  handleCodeChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleCodeChange?: (e: string) => void;
 }
 
 const CouponInput = memo(
@@ -26,9 +26,7 @@ const CouponInput = memo(
 
       useEffect(() => {
         if (couponCode?.code) {
-          handleCodeChange?.({
-            target: { value: couponCode.code },
-          } as React.ChangeEvent<HTMLInputElement>);
+          handleCodeChange?.(couponCode.code);
         }
       }, [couponCode]);
 
@@ -42,6 +40,7 @@ const CouponInput = memo(
               value: response?.data?.value ?? "",
               type: response?.data?.type ?? "",
             });
+            cartQuery.refetch();
           }
         } catch (error) {
           handlePromisError(error);
@@ -51,6 +50,7 @@ const CouponInput = memo(
       const handleRemoveCoupon = useCallback(async () => {
         try {
           await deleteCoupon();
+          handleCodeChange?.("");
         } catch (error) {
           handlePromisError(error);
         }
@@ -73,7 +73,7 @@ const CouponInput = memo(
             ref={(ref as React.RefObject<HTMLInputElement>) || inputRef}
             value={code.value}
             placeholder={t("enter your coupon code")}
-            onChange={(e) => handleCodeChange?.(e)}
+            onChange={(e) => handleCodeChange?.(e.target.value)}
             aria-invalid={!code ? true : false}
             aria-label={t("enter your coupon code")}
             disabled={hasActiveCoupon}

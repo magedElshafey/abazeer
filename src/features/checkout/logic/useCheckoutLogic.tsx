@@ -67,8 +67,8 @@ const useCheckoutLogic = () => {
 
   // ✅ useCallback to avoid unnecessary re-renders
   const handleCodeChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) =>
-      setCoupon((prev) => ({ ...prev, value: e.target.value })),
+    (e: string) =>
+      setCoupon((prev) => ({ ...prev, value: e })),
     []
   );
 

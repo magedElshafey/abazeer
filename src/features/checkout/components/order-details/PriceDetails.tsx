@@ -4,19 +4,19 @@ import useGetWebsiteSettings from "@/features/settings/api/useGetWebsiteSettings
 
 const PriceDetails = () => {
   const { t } = useTranslation();
-  const { total, tax, shipping, subtotal, couponCode, discount_amount } =
+  const { total, tax, shipping, subtotal, couponCode, discount_amount, cartQuery: {isFetching} } =
     useCart();
 
   const { data: settings } = useGetWebsiteSettings();
   return (
-    <dl className="text-gray-700">
+    <dl className={`text-gray-700 ${isFetching ? "opacity-40" : ""}`}>
       <div className="flex-between mb-2">
         <dt>{t("subtotal")}</dt>
         <dd>
           {subtotal.toFixed(2)} {t("SAR")}
         </dd>
       </div>
-      {couponCode?.value && discount_amount && (
+      {couponCode?.value && !!Number(discount_amount) && (
         <div className="flex-between mb-2 text-green-600 font-medium">
           <dt>{t("discount")}</dt>
           <dd>

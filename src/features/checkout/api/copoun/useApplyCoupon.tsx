@@ -8,7 +8,7 @@ const useApplyCoupon = () => {
     mutationKey: [apiRoutes?.applyCoupon],
     mutationFn: async ({ code }: { code: string }) => {
       const { data } = await Axios.post(apiRoutes?.applyCoupon, { code });
-      Axios.get(apiRoutes.cart, {params: {
+      await Axios.get(apiRoutes.cart, {params: {
         coupon_code: code
       }});
       return data;

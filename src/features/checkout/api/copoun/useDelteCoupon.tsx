@@ -16,11 +16,7 @@ const useDeleteCoupon = () => {
     onSuccess: () => {
       toast.success(t("coupon removed successfully"));
       cartQuery.refetch();
-      setCouponCode({
-        code: "",
-        value: "",
-        type: "",
-      });
+      setCouponCode(undefined);
     },
   });
 };
