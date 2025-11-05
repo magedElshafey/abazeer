@@ -49,7 +49,6 @@ const Home = () => {
     essential: true,
     delay: delayOptions,
   });
-  console.log("landingProducts", landingProducts?.data);
   const categories = useGetAllCategories();
   const brands = useGetBrands({ featured: true, delay: delayOptions });
   const blogsQueryResult = useGetBlogs();
