@@ -9,16 +9,19 @@ const WhishListIcon = () => {
 
   return (
     <LoginPrompt>
-      <Link to="/my-profile/favorites" className="relative">
-        <FaRegHeart size={20} className="text-transition" />
-        <div className="absolute -end-4 -top-3 bg-orangeColor text-white flex items-center justify-center text-nowrap w-5 h-5 text-sm">
-          <p>
+      <Link
+        to="/my-profile/favorites"
+        className="flex items-center gap-4 focus:outline-none focus:ring-2 focus:ring-orangeColor rounded-md transition-all"
+      >
+        <div className="relative">
+          <FaRegHeart size={22} className="text-gray-700" />
+          <span className="absolute -end-4 -top-3.5 bg-orangeColor text-white flex items-center justify-center w-5 h-5 text-xs">
             {isLoading ? (
               <Loader color="white" />
             ) : (
               (data || []).length.toString()
             )}
-          </p>
+          </span>
         </div>
       </Link>
     </LoginPrompt>

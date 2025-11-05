@@ -6,9 +6,11 @@ import useGetNotifications from "@/features/notifications/useGetNotifications";
 import useMarkNotification from "@/features/notifications/useMarkNotification";
 import { formatRelativeTime } from "@/utils/formatRelativeTime";
 import Loader from "@/common/components/loader/spinner/Loader";
+import { useAuth } from "@/store/AuthProvider";
 
 const NotificationIcon = memo(() => {
   const { t } = useTranslation();
+  const { user } = useAuth();
   const { data: notifications = [], isLoading } = useGetNotifications();
   const markAsReadMutation = useMarkNotification();
   
@@ -39,6 +41,11 @@ const NotificationIcon = memo(() => {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [open, handleKeyDown]);
 
+  // Hide notification icon if user is not logged in
+  if (!user) {
+    return null;
+  }
+
   return (
     <div
       className="relative"
@@ -59,18 +66,16 @@ const NotificationIcon = memo(() => {
             className="text-gray-700"
             aria-hidden="true"
           />
-          {(isLoading || unreadCount > 0) && (
-            <span
-              aria-label={t("unread notifications count")}
-              className="absolute -end-3 -top-3 bg-orangeColor text-white flex items-center justify-center w-5 h-5 text-xs"
-            >
-              {isLoading ? (
-                <Loader color="white" />
-              ) : (
-                unreadCount
-              )}
-            </span>
-          )}
+          <span
+            aria-label={t("unread notifications count")}
+            className="absolute -end-3 -top-3 bg-orangeColor text-white flex items-center justify-center w-5 h-5 text-xs"
+          >
+            {isLoading ? (
+              <Loader color="white" />
+            ) : (
+              unreadCount
+            )}
+          </span>
         </div>
       </button>
 
