@@ -66,7 +66,7 @@ const Overview: FC = () => {
                     <p className="text-sm text-gray-600 truncate sm:whitespace-normal sm:line-clamp-2">{t("orders_banner_description")}</p>
                 </div>
                 <div className="shrink-0">
-                    <Link to="/" className="block">
+                    <Link to="/products" className="block">
                         <MainBtn className="!bg-cyan-400 !text-black">
                             {t("orders_banner_cta")}
                         </MainBtn>

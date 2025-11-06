@@ -40,7 +40,7 @@ const ProductCard: React.FC<ProductCardProps> = memo(
     }, [product?.average_rate]);
 
     const progressPercent = product.stock_quantity
-      ? ((product?.sold_quantity || 0) / product.stock_quantity) * 100
+      ? ((product?.sold_quantity || 0) / (product.stock_quantity + (product.sold_quantity || 0))) * 100
       : 0;
     const handleCategoryNavigate = useCallback(() => {
       navigate(`/products?filter-category=${product.category_id}`);
@@ -142,7 +142,7 @@ const ProductCard: React.FC<ProductCardProps> = memo(
             product.stock_quantity > 0 ?
               <p className="font-medium text-sm mb-2 text-end" aria-live="polite">
                 {t("sold")} : {product.sold_quantity || 0} / {" "}
-                {product.stock_quantity}
+                {product.stock_quantity + (product?.sold_quantity || 0)}
               </p>
             :
             <p className="font-medium text-sm mb-2 text-end">
