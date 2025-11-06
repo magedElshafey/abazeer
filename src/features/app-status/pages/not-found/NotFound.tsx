@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import AnimatedTitle from "../../components/AnimatedTitle";
+import AppStatusFooter from "@/common/components/app-status/AppStatusFooter";
 
 const NotFound = () => {
   const { t, i18n } = useTranslation();
@@ -57,9 +58,7 @@ const NotFound = () => {
         </Link>
       </div>
 
-      <footer className="relative z-10 mt-10 text-sm text-gray-500">
-        {t("© ")} {new Date().getFullYear()} {t("abazeer")}
-      </footer>
+      <AppStatusFooter />
     </div>
   );
 };

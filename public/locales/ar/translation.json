@@ -368,5 +368,6 @@
   "all-items-in-the-list-will-be-removed": "جميع المنتجات في القائمة التالية سيتم إزالتها من العربة.",
   "ok": "حسناً",
   "Disable": "تعطيل",
-  "coupon removed successfully": "تم حذف الكوبون بنجاح"
+  "coupon removed successfully": "تم حذف الكوبون بنجاح",
+  "Unexpected Error": "خطأ غير متوقع"
 }

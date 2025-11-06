@@ -365,5 +365,6 @@
   "all-items-in-the-list-will-be-removed": "All products in the following list will be removed from the cart.",
   "ok": "OK",
   "Disable": "Disable",
-  "coupon removed successfully": "coupon removed successfully"
+  "coupon removed successfully": "coupon removed successfully",
+  "Unexpected Error": "Unexpected Error"
 }

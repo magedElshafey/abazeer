@@ -1,8 +1,11 @@
+import ErrorBoundary from "@/features/error/ErrorBoundary";
 import { lazyLoad } from "../utils/LazyLoad";
 import Guard from "./Guard";
 export const authRoutes = {
   path: "auth",
   element: lazyLoad(() => import("../common/layout/auth/AuthLayout")),
+  errorElement: <ErrorBoundary />,
+
   children: [
     {
       path: "login",
