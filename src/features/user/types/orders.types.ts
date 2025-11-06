@@ -1,6 +1,7 @@
 import { NameAndId } from "@/types/global.types";
 import { Address } from "./addresses.types";
 import { Product } from "@/features/products/types/product.types";
+import { Copoun } from "@/features/checkout/types/copoun.type";
 
 export interface Order {
     id: number;
@@ -12,7 +13,7 @@ export interface Order {
     discount: string;
     total: string;
     coupon_code: string | null;
-    coupon: unknown | null;
+    coupon: Copoun | null;
     payment_method: string | null;
     payment_status: string;
     order_status: string;
