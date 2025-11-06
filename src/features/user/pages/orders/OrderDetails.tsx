@@ -121,6 +121,16 @@ const OrderDetails: FC = () => {
                         {orderQuery.data.subtotal} {t("SAR")}
                       </span>
                     </div>
+                    {
+                      orderQuery.data.coupon && (
+                        <div className="flex-between mb-2 text-green-600 font-medium">
+                          <dt>{t("discount")}</dt>
+                          <dd>
+                            - {orderQuery.data.discount} {t("SAR")}
+                          </dd>
+                        </div>
+                      )
+                    }
                     <div className="flex justify-between items-center">
                       <span className="text-gray-600 font-medium">
                         {t("tax")}:

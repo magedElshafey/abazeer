@@ -28,7 +28,7 @@ const FlashSaleSection: React.FC<FlashSaleSectionProps> = ({ data }) => {
         </h2>
 
         {/* Timer */}
-        <div className="flex justify-center gap-4 mb-8">
+        <div dir="ltr" className="flex justify-center gap-4 mb-8">
           {[
             { label: "Days", value: countdown.days },
             { label: "Hours", value: countdown.hours },

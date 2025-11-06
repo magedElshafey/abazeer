@@ -138,11 +138,17 @@ const ProductCard: React.FC<ProductCardProps> = memo(
               style={{ width: `${progressPercent}%` }}
             />
           </div>
-
-          <p className="font-medium text-sm mb-2 text-end" aria-live="polite">
-            {t("sold")} : {product.sold_quantity || 0} /{" "}
-            {product.stock_quantity}
-          </p>
+          {
+            product.stock_quantity > 0 ?
+              <p className="font-medium text-sm mb-2 text-end" aria-live="polite">
+                {t("sold")} : {product.sold_quantity || 0} / {" "}
+                {product.stock_quantity}
+              </p>
+            :
+            <p className="font-medium text-sm mb-2 text-end">
+              {t("not-available")}
+            </p>
+          }
           {product?.stock_quantity > 0 ? (
             <div
               className="

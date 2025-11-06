@@ -56,7 +56,6 @@ const ReviewForm: FC<ReviewFormProps> = ({ productId }) => {
                     label="comment"
                     placeholder="share your experience with this product"
                     error={errors.comment?.message}
-                    required
                     rows={5}
                     resize="vertical"
                     {...register("comment")}

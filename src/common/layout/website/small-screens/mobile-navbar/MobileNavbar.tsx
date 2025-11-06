@@ -5,6 +5,7 @@ import SidebarIcon from "../sidebar/SidebarIcon";
 import { TfiSearch } from "react-icons/tfi";
 import SearchSidebar from "../search/SearchSidebar";
 import Sidebar from "../sidebar/Sidebar";
+import NotificationIcon from "../../larg-screens/navbar/icons/NotificationIcon";
 import type { NavbarType } from "@/types/navbar.types";
 const MobileNavbar: React.FC<NavbarType> = ({ logo }) => {
   const [showSidebar, setShowSidebar] = useState(false);
@@ -46,13 +47,16 @@ const MobileNavbar: React.FC<NavbarType> = ({ logo }) => {
         <div className="containerr py-3 flex-between">
           <SidebarIcon openSidebar={openSidebar} />
           {logoMemo}
-          <button
-            onClick={openSearch}
-            aria-label="Open search"
-            className="text-transition"
-          >
-            <TfiSearch size={20} aria-hidden="true" />
-          </button>
+          <div className="flex items-center gap-3">
+            <NotificationIcon />
+            <button
+              onClick={openSearch}
+              aria-label="Open search"
+              className="text-transition"
+            >
+              <TfiSearch size={20} aria-hidden="true" />
+            </button>
+          </div>
         </div>
       </div>
 
