@@ -75,7 +75,7 @@ const Search: React.FC<SearchProps> = memo(({ onClose = undefined }) => {
   /** 🧭 Navigate on search button click */
   const handleSearch = useCallback(() => {
     const params: Record<string, string> = {};
-    if (selectedOpt?.id) params.category = String(selectedOpt.id);
+    if (selectedOpt?.id) params.category_id = String(selectedOpt.id);
     if (search.value.trim()) params.q = search.value.trim();
     navigate(`/products?${new URLSearchParams(params)}`);
     if (onClose) {
@@ -98,12 +98,13 @@ const Search: React.FC<SearchProps> = memo(({ onClose = undefined }) => {
   }, []);
 
   const { data: products, isFetching } = useQuery({
-    queryKey: [apiRoutes.search, search.deferred],
+    queryKey: [apiRoutes.search, search.deferred, selectedOpt],
     enabled: !!search.deferred,
     queryFn: async ({ queryKey, signal }) => {
       const [, term] = queryKey as [string, string];
+      const category_id = selectedOpt?.id || undefined
       const response = await Axios.get(apiRoutes.search, {
-        params: { name: term },
+        params: { name: term, category_id },
         signal,
       });
       return response.data.data;
