@@ -93,6 +93,7 @@ export interface ProductsFiltersContext {
     value: Filters[typeof key],
     debounce?: boolean
   ) => void;
+  resetFilters: () => void;
   appliedFilters: Record<string, string | []>;
 }
 

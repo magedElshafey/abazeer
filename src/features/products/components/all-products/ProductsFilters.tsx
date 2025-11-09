@@ -1,5 +1,6 @@
 import { FC, memo, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import MainBtn from "@/common/components/buttons/MainBtn";
 import { useProductsFilters } from "../../providers/ProductsFiltersProvider";
 import PriceFilter from "@/common/components/double-slider/PriceFilter";
 import CategoryFilter from "./CategoryFilter";
@@ -9,7 +10,13 @@ import OfferFilter from "./OfferFilter";
 
 const ProductsFilters: FC = () => {
     const { t } = useTranslation();
-    const { isDrawerOpen, setIsDrawerOpen } = useProductsFilters();
+    const { isDrawerOpen, setIsDrawerOpen, filters, resetFilters } = useProductsFilters();
+    const isThereFilters = Object.values(filters).some(value => {
+        if (Array.isArray(value)) {
+            return value.length > 0;
+        }
+        return value !== undefined && value !== null && value !== "";
+    });
 
     // Disable scroll on body when drawer is open (mobile/tablet only)
     useEffect(() => {
@@ -48,6 +55,20 @@ const ProductsFilters: FC = () => {
                 ${isDrawerOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
             `}>
                 <div className="flex flex-col gap-4">
+                    <div className="flex items-center justify-between px-2 pt-4">
+                        <h3 className="text-lg font-semibold text-gray-800">
+                            {t("filters")}
+                        </h3>
+                        <div className="w-auto">
+                            <MainBtn
+                                text="Clear"
+                                onClick={() => resetFilters()}
+                                disabled={!isThereFilters}
+                                className="!w-auto h-9 px-4 py-0 text-sm font-medium transition-colors duration-200"
+                            />
+                        </div>
+                    </div>
+
                     {/* Price Range Filter */}
                     <div className="bg-background-gray px-2 py-4">
                         <h4 className="text-md font-medium text-gray-700 mb-3">
