@@ -104,7 +104,7 @@ const Search: React.FC<SearchProps> = memo(({ onClose = undefined }) => {
       const [, term] = queryKey as [string, string];
       const category_id = selectedOpt?.id || undefined
       const response = await Axios.get(apiRoutes.search, {
-        params: { name: term, category_id },
+        params: { name: term, category: category_id },
         signal,
       });
       return response.data.data;
