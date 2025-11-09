@@ -130,7 +130,7 @@ const ProductCard: React.FC<ProductCardProps> = memo(
 
           {/* ✅ Progress bar */}
           <div
-            className="w-full h-3 bg-gray-200 overflow-hidden mb-1"
+            className={`w-full h-3 bg-gray-200 overflow-hidden mb-1 ${product.stock_quantity == 0 ? "invisible" : ""}`}
             aria-label={`Stock remaining: ${product.sold_quantity} of ${product.stock_quantity}`}
           >
             <div
