@@ -1,6 +1,7 @@
 import { memo, useState, useCallback, useEffect, useRef, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { IoIosNotificationsOutline } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 import i18n from "@/lib/i18n/i18n";
 import useGetNotifications from "@/features/notifications/useGetNotifications";
 import useMarkNotification from "@/features/notifications/useMarkNotification";
@@ -11,6 +12,7 @@ import { useAuth } from "@/store/AuthProvider";
 const NotificationIcon = memo(() => {
   const { t } = useTranslation();
   const { user } = useAuth();
+  const navigate = useNavigate();
   const { data: notifications = [], isLoading } = useGetNotifications();
   const markAsReadMutation = useMarkNotification();
   
@@ -118,6 +120,21 @@ const NotificationIcon = memo(() => {
                 const handleClick = () => {
                   if (!isRead) {
                     markAsReadMutation.mutate(notification.id);
+                  }
+                  const orderId = notification?.data?.data?.order_id;
+                  const productId = notification?.data?.data?.product_id;
+                  if (
+                    orderId != null &&
+                    String(orderId).trim().length > 0
+                  ) {
+                    navigate(`/my-profile/orders/${orderId}`);
+                    setOpen(false);
+                  } else if (
+                    productId != null &&
+                    String(productId).trim().length > 0
+                  ) {
+                    navigate(`/products/${productId}`);
+                    setOpen(false);
                   }
                 };
                 return (
