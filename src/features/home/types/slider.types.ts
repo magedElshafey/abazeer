@@ -5,5 +5,6 @@ export interface SliderHome {
   created_at: string;
   updated_at: string;
   is_active: boolean;
-  product_id: number;
+  type_id: number;
+  type_name: string;
 }

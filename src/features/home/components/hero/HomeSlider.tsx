@@ -90,7 +90,13 @@ const HomeSlider: React.FC<Props> = ({ sliders }) => {
         <FaImage className="text-text-gray" size={80} />
       </div>
     );
-
+  const handleNavigate = (item: SliderHome) => {
+    if (item?.type_name === "category") {
+      navigate(`/products?filter-category=${item.type_id}`);
+    } else {
+      navigate(`/products/${item?.type_id}`);
+    }
+  };
   return (
     <div
       className="relative w-full h-full rounded-md overflow-hidden"
@@ -101,13 +107,7 @@ const HomeSlider: React.FC<Props> = ({ sliders }) => {
         {sliders.map((slider, index) => (
           <div key={index} className="keen-slider__slide">
             <div
-              onClick={() =>
-                navigate(
-                  `/products${
-                    slider.product_id ? `/${slider?.product_id}` : ""
-                  }`
-                )
-              }
+              onClick={() => handleNavigate(slider)}
               className="relative w-full h-full cursor-pointer"
             >
               <img

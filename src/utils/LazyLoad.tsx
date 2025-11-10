@@ -14,7 +14,7 @@ function retryImport<T>(
     if (retries === 0) {
       // If the module completely failed, force reload to fix the broken cache
       console.error("Lazy module failed to load. Reloading app...");
-      window.location.reload();
+      window.location.reload();                                                                                                                                     
       throw err;
     }
     console.warn(`Retrying lazy import... (${retries} left)`);
