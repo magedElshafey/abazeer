@@ -129,7 +129,7 @@ const ProductListCard: React.FC<ProductListCardProps> = memo(
 
             {/* ✅ Progress bar */}
             <div
-              className="w-full h-2 bg-gray-200 rounded-full overflow-hidden mb-1"
+              className={`w-full h-2 bg-gray-200 rounded-full overflow-hidden mb-1 ${product.stock_quantity == 0 ? "invisible" : ""}`}
               aria-label={`Stock remaining: ${product.sold_quantity} of ${product.stock_quantity}`}
             >
               <div
@@ -138,13 +138,17 @@ const ProductListCard: React.FC<ProductListCardProps> = memo(
               />
             </div>
 
-            <p
-              className="font-medium text-xs text-gray-500 text-end"
-              aria-live="polite"
-            >
-              {t("sold")} : {product.sold_quantity || 0} /{" "}
-              {product.stock_quantity}
-            </p>
+            {
+              product.stock_quantity > 0 ?
+                <p className="font-medium text-sm mb-2 text-end" aria-live="polite">
+                  {t("sold")} : {product.sold_quantity || 0} / {" "}
+                  {product.stock_quantity + (product?.sold_quantity || 0)}
+                </p>
+              :
+              <p className="font-medium text-sm mb-2 text-end">
+                {t("not-available")}
+              </p>
+            }
           </div>
 
           {/* ✅ Add to cart button - full width on mobile, fixed width on desktop */}

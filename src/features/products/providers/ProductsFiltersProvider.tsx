@@ -10,6 +10,7 @@ const ProductsFiltersContext = createContext<IProductsFiltersContext>({
     isDrawerOpen: false,
     setIsDrawerOpen: () => null,
     handleChangeFilters: () => null,
+    resetFilters: () => null,
     appliedFilters: {},
 });
 
@@ -98,6 +99,23 @@ const ProductsFiltersProvider: FC<PropsWithChildren> = ({ children }) => {
         }
     }
 
+    const resetFilters = useCallback(() => {
+        if (debounceRef.current) {
+            clearTimeout(debounceRef.current);
+        }
+
+        setFilters({});
+
+        setSearchParams(params => {
+            Array.from(params.keys()).forEach(key => {
+                if (key.startsWith("filter-")) {
+                    params.delete(key);
+                }
+            });
+            return params;
+        });
+    }, [setSearchParams]);
+
     // Keep local state (sortBy, filters) in sync with current search params
     useEffect(() => {
         // sortBy - same logic as initial state
@@ -143,6 +161,7 @@ const ProductsFiltersProvider: FC<PropsWithChildren> = ({ children }) => {
                 setIsDrawerOpen,
                 filters,
                 handleChangeFilters,
+                resetFilters,
                 appliedFilters
             }}
         >

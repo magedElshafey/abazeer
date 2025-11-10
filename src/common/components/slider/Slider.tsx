@@ -79,6 +79,7 @@ const Slider: React.FC<PropsWithChildren<Props>> = ({
     },
     loop,
     mode: "free-snap",
+    renderMode: "performance",
     slides: {
       perView: sliderPerView as number | "auto",
       spacing: spacing,
