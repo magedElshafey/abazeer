@@ -36,7 +36,7 @@ const Checkout = () => {
 
   const { addressQuery, settingsQuery } = queries;
 
-  const {cartQuery} = useCart();
+  const { cartQuery } = useCart();
 
   useEffect(() => {
     //invalidate query to check for missing items;

@@ -7,6 +7,7 @@ import { Product } from "../../types/product.types";
 import { twMerge } from "tailwind-merge";
 import ProductAlertButton from "../product-alert/ProductAlertButton";
 import MainBtn from "@/common/components/buttons/MainBtn";
+import SaudiCurrency from "@/common/components/currency/SaudiCurrency";
 
 interface ProductListCardProps {
   product: Product;
@@ -111,25 +112,28 @@ const ProductListCard: React.FC<ProductListCardProps> = memo(
 
             {/* ✅ Price */}
             <div className="flex items-center gap-3 mb-2">
-              <p
+              <div
                 aria-label={`${product.sale_price || product?.price} ${t(
                   "Saudi Riyal"
                 )}`}
-                className="text-orangeColor text-xl font-bold"
+                className="text-orangeColor text-xl font-bold flex justify-center items-center  gap-1"
               >
-                {product.sale_price || +product?.price} {t("SAR")}
-              </p>
+                <p> {product.sale_price || +product?.price}</p>
+                <SaudiCurrency />
+              </div>
 
               {product?.has_discount && product?.sale_price && (
-                <p className="text-gray-500 line-through text-sm">
-                  {product.price} {t("SAR")}
+                <p className="text-gray-500 line-through text-sm flex items-center gap-1">
+                  <p>{product.price}</p> <SaudiCurrency />
                 </p>
               )}
             </div>
 
             {/* ✅ Progress bar */}
             <div
-              className={`w-full h-2 bg-gray-200 rounded-full overflow-hidden mb-1 ${product.stock_quantity == 0 ? "invisible" : ""}`}
+              className={`w-full h-2 bg-gray-200 rounded-full overflow-hidden mb-1 ${
+                product.stock_quantity == 0 ? "invisible" : ""
+              }`}
               aria-label={`Stock remaining: ${product.sold_quantity} of ${product.stock_quantity}`}
             >
               <div
@@ -138,17 +142,19 @@ const ProductListCard: React.FC<ProductListCardProps> = memo(
               />
             </div>
 
-            {
-              product.stock_quantity > 0 ?
-                <p className="font-medium text-sm mb-2 text-end" aria-live="polite">
-                  {t("sold")} : {product.sold_quantity || 0} / {" "}
-                  {product.stock_quantity + (product?.sold_quantity || 0)}
-                </p>
-              :
+            {product.stock_quantity > 0 ? (
+              <p
+                className="font-medium text-sm mb-2 text-end"
+                aria-live="polite"
+              >
+                {t("sold")} : {product.sold_quantity || 0} /{" "}
+                {product.stock_quantity + (product?.sold_quantity || 0)}
+              </p>
+            ) : (
               <p className="font-medium text-sm mb-2 text-end">
                 {t("not-available")}
               </p>
-            }
+            )}
           </div>
 
           {/* ✅ Add to cart button - full width on mobile, fixed width on desktop */}

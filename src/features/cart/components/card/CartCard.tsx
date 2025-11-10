@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import type { CartItem } from "../../types/Cart.types";
 import { CiTrash } from "react-icons/ci";
 import Skeleton from "@/common/components/loader/skeltons/Skeleton";
+import SaudiCurrency from "@/common/components/currency/SaudiCurrency";
 
 interface CartCardProps {
   item: CartItem;
@@ -13,7 +14,7 @@ const CartCard: React.FC<CartCardProps> = ({ item }) => {
   const { t } = useTranslation();
   const handleIncrease = useCallback(
     (id: number, currentQty: number) => {
-      if(currentQty + 1 <= item.stock_quantity) {
+      if (currentQty + 1 <= item.stock_quantity) {
         updateQuantity(id, currentQty + 1);
       }
     },
@@ -27,11 +28,12 @@ const CartCard: React.FC<CartCardProps> = ({ item }) => {
     [updateQuantity]
   );
 
-  if(item.isLoading) return (
-    <div className="max-w-[300px] max-h-[100px] overflow-hidden">
-      <Skeleton type="list" />
-    </div>
-  )
+  if (item.isLoading)
+    return (
+      <div className="max-w-[300px] max-h-[100px] overflow-hidden">
+        <Skeleton type="list" />
+      </div>
+    );
 
   return (
     <li
@@ -53,8 +55,8 @@ const CartCard: React.FC<CartCardProps> = ({ item }) => {
         <p className="font-semibold line-clamp-1">{item.name}</p>
         <p className="text-gray-500 text-xs">{item.category || t("product")}</p>
         <div className="flex items-center gap-3">
-          <p className="text-orangeColor font-semibold text-sm mt-1">
-            {item.sale_price || item.price} {t("SAR")}
+          <p className="text-orangeColor font-semibold text-sm mt-1 flex items-center">
+            <p>{item.sale_price || item.price}</p> <SaudiCurrency />
           </p>
           <p className="text-gray-500">* {item?.quantity}</p>
         </div>

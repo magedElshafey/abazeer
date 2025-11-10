@@ -13,6 +13,7 @@ import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "@/store/CartProvider";
 import ProductAlertButton from "../product-alert/ProductAlertButton";
+import SaudiCurrency from "@/common/components/currency/SaudiCurrency";
 type Props = {
   product: ProductDetails;
 };
@@ -44,7 +45,7 @@ const ProductInfo: FC<Props> = ({ product }) => {
         is_in_wishlist: product.is_in_wishlist,
         item_id: product.id,
         isLoading: true,
-        category_id: product.category_id
+        category_id: product.category_id,
       });
     }
     navigate("/checkout");
@@ -60,12 +61,13 @@ const ProductInfo: FC<Props> = ({ product }) => {
       </div>
       <div>
         <p className="inline text-2xl font-bold text-text-darkRed">
-          {product.has_discount ? product.sale_price : product.price} {t("SAR")}
+          {product.has_discount ? product.sale_price : product.price}{" "}
+          <SaudiCurrency />
         </p>
         <span className="invisible">place</span>
         {product?.has_discount && (
           <p className="inline text-lg font-bold text-text-gray opacity-60 line-through">
-            {product?.price} {t("SAR")}
+            {product?.price} <SaudiCurrency />
           </p>
         )}
       </div>
@@ -73,10 +75,11 @@ const ProductInfo: FC<Props> = ({ product }) => {
         <HtmlConverter html={product?.description} />
       </div>
       <div
-        className={`text-sm w-fit flex items-center gap-4 rounded border py-1 px-2 ${product?.stock_status === "in_stock"
-          ? "bg-background-green/20 border-background-green"
-          : "bg-red-50 border-red-300"
-          }`}
+        className={`text-sm w-fit flex items-center gap-4 rounded border py-1 px-2 ${
+          product?.stock_status === "in_stock"
+            ? "bg-background-green/20 border-background-green"
+            : "bg-red-50 border-red-300"
+        }`}
       >
         <p>{t("availability")}</p>
         <p
@@ -99,8 +102,7 @@ const ProductInfo: FC<Props> = ({ product }) => {
                 maxQuantity={product?.stock_quantity}
                 onQuantityChange={setQuantity}
               />
-            )
-            }
+            )}
             <AddToCartButton
               product={{ ...product, category: product?.category?.name }}
               quantity={quantity}
@@ -116,8 +118,8 @@ const ProductInfo: FC<Props> = ({ product }) => {
         </div>
       ) : (
         <ProductAlertButton productId={product?.id}>
-          {({onClick, isPending}) => (
-            <MainBtn 
+          {({ onClick, isPending }) => (
+            <MainBtn
               className="sm:w-full"
               isPending={isPending}
               onClick={onClick}

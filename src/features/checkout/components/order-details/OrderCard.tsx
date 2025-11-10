@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FaStar, FaTrash } from "react-icons/fa";
 import type { CartItem } from "@/features/cart/types/Cart.types";
+import SaudiCurrency from "@/common/components/currency/SaudiCurrency";
 
 interface OrderCardProps {
   item: CartItem;
@@ -26,14 +27,11 @@ const OrderCard: React.FC<OrderCardProps> = memo(({ item }) => {
     ));
   }, [item?.average_rate]);
 
-  const handleIncrease = useCallback(
-    () => {
-      if((item.quantity ?? 1) + 1 <= item.stock_quantity) {
-        updateQuantity(item.item_id, (item.quantity ?? 1) + 1);
-      }
-    },
-    [item, updateQuantity]
-  );
+  const handleIncrease = useCallback(() => {
+    if ((item.quantity ?? 1) + 1 <= item.stock_quantity) {
+      updateQuantity(item.item_id, (item.quantity ?? 1) + 1);
+    }
+  }, [item, updateQuantity]);
 
   const handleDecrease = useCallback(() => {
     if ((item.quantity ?? 1) > 1)
@@ -42,7 +40,10 @@ const OrderCard: React.FC<OrderCardProps> = memo(({ item }) => {
 
   const price = item.sale_price ? item.sale_price : item.price;
 
-  const handleRemoveItem = useCallback(() => removeFromCart(item.id), [item, removeFromCart]);
+  const handleRemoveItem = useCallback(
+    () => removeFromCart(item.id),
+    [item, removeFromCart]
+  );
 
   return (
     <article
@@ -68,7 +69,10 @@ const OrderCard: React.FC<OrderCardProps> = memo(({ item }) => {
           >
             {item?.name}
           </Link>
-          <FaTrash className="text-red-500 cursor-pointer opacity-60 hover:opacity-100 duration-100" onClick={handleRemoveItem} />
+          <FaTrash
+            className="text-red-500 cursor-pointer opacity-60 hover:opacity-100 duration-100"
+            onClick={handleRemoveItem}
+          />
         </div>
         {/* Rating */}
         <div
@@ -106,15 +110,15 @@ const OrderCard: React.FC<OrderCardProps> = memo(({ item }) => {
       {/* Pricing */}
       <div className="flex flex-col justify-between items-end text-right w-full sm:w-auto">
         <p className="text-gray-600 text-sm">{t("Price")}</p>
-        <p className="font-semibold text-gray-900">
-          {price} {t("SAR")}
+        <p className="font-semibold text-gray-900 flex items-center">
+          <p>{price}</p> <SaudiCurrency />
         </p>
 
         <div className="h-[1px] bg-gray-200 my-2 w-full sm:w-20"></div>
 
         <p className="text-gray-600 text-sm">{t("Total")}</p>
-        <p className="font-bold text-orange-600 text-lg">
-          {item.subtotal} {t("SAR")}
+        <p className="font-bold text-orange-600 text-lg flex items-center">
+          <p>{item.subtotal}</p> <SaudiCurrency />
         </p>
       </div>
     </article>

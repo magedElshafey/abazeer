@@ -2,6 +2,7 @@ import { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { OrderItem } from "../../types/orders.types";
 import { useNavigate } from "react-router-dom";
+import SaudiCurrency from "@/common/components/currency/SaudiCurrency";
 
 interface OrderItemCardProps {
   item: OrderItem;
@@ -34,7 +35,7 @@ const OrderItemCard: FC<OrderItemCardProps> = ({ item }) => {
       <div className="flex flex-col gap-1 text-sm">
         <div className="text-gray-600">
           <span className="font-medium">{t("price")}:</span> {item.price}{" "}
-          {t("SAR")}
+          <SaudiCurrency />
         </div>
         <div className="text-gray-600">
           <span className="font-medium">{t("quantity")}:</span> {item.quantity}
@@ -42,7 +43,7 @@ const OrderItemCard: FC<OrderItemCardProps> = ({ item }) => {
         <div className="w-full h-px bg-gray-200 my-1"></div>
         <div className="font-semibold text-gray-900">
           <span className="font-medium">{t("total")}:</span> {item.total}{" "}
-          {t("SAR")}
+          <SaudiCurrency />
         </div>
       </div>
     </div>

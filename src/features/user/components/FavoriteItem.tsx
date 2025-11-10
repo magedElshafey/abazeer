@@ -8,6 +8,7 @@ import Loader from "@/common/components/loader/spinner/Loader";
 import type { Product } from "@/features/products/types/product.types";
 import ProductAlertButton from "@/features/products/components/product-alert/ProductAlertButton";
 import MainBtn from "@/common/components/buttons/MainBtn";
+import SaudiCurrency from "@/common/components/currency/SaudiCurrency";
 
 interface FavoriteItemProps {
   product: Product;
@@ -63,16 +64,21 @@ const FavoriteItem: FC<FavoriteItemProps> = ({ product }) => {
       {/* Unit Price Column */}
       <td className="py-4 px-6">
         <div className="flex flex-col text-nowrap">
-          <span className="text-red-600 font-medium">
-            {product.has_discount
-              ? product.sale_price
-              : formatPrice(product.price)}{" "}
-            {t("SAR")}
-          </span>
+          <div className="text-red-600 font-medium flex items-center">
+            <p>
+              {product.has_discount
+                ? product.sale_price
+                : formatPrice(product.price)}
+            </p>
+            <SaudiCurrency />
+          </div>
           {product.has_discount && (
-            <span className="text-gray-400 text-sm line-through">
-              {formatPrice(product.price)} {t("SAR")}
-            </span>
+            <div className="flex items-center">
+              <span className="text-gray-400 text-sm line-through">
+                {formatPrice(product.price)}
+              </span>
+              <SaudiCurrency />
+            </div>
           )}
         </div>
       </td>

@@ -9,6 +9,7 @@ import { twMerge } from "tailwind-merge";
 import FavoriteButton from "../product-details/FavoriteButton";
 import ProductAlertButton from "../product-alert/ProductAlertButton";
 import MainBtn from "@/common/components/buttons/MainBtn";
+import SaudiCurrency from "@/common/components/currency/SaudiCurrency";
 
 interface ProductCardProps {
   product: Product;
@@ -40,7 +41,9 @@ const ProductCard: React.FC<ProductCardProps> = memo(
     }, [product?.average_rate]);
 
     const progressPercent = product.stock_quantity
-      ? ((product?.sold_quantity || 0) / (product.stock_quantity + (product.sold_quantity || 0))) * 100
+      ? ((product?.sold_quantity || 0) /
+          (product.stock_quantity + (product.sold_quantity || 0))) *
+        100
       : 0;
     const handleCategoryNavigate = useCallback(() => {
       navigate(`/products?filter-category=${product.category_id}`);
@@ -112,25 +115,27 @@ const ProductCard: React.FC<ProductCardProps> = memo(
 
           {/* ✅ Price */}
           <div className="flex items-center gap-3 mb-2">
-            <p
+            <div
               aria-label={`${product.sale_price || product?.price} ${t(
                 "Saudi Riyal"
               )}`}
-              className="text-orangeColor text-lg font-bold"
+              className="text-orangeColor text-lg font-bold flex items-center gap-1"
             >
-              {product.sale_price || +product?.price} {t("SAR")}
-            </p>
+              <p> {product.sale_price || +product?.price}</p> <SaudiCurrency />
+            </div>
 
             {product?.has_discount && product?.sale_price && (
-              <p className="text-gray-500 line-through text-sm">
-                {product.price} {t("SAR")}
+              <p className="text-gray-500 line-through text-sm flex items-center gap-1">
+                {product.price} <SaudiCurrency />
               </p>
             )}
           </div>
 
           {/* ✅ Progress bar */}
           <div
-            className={`w-full h-3 bg-gray-200 overflow-hidden mb-1 ${product.stock_quantity == 0 ? "invisible" : ""}`}
+            className={`w-full h-3 bg-gray-200 overflow-hidden mb-1 ${
+              product.stock_quantity == 0 ? "invisible" : ""
+            }`}
             aria-label={`Stock remaining: ${product.sold_quantity} of ${product.stock_quantity}`}
           >
             <div
@@ -138,17 +143,16 @@ const ProductCard: React.FC<ProductCardProps> = memo(
               style={{ width: `${progressPercent}%` }}
             />
           </div>
-          {
-            product.stock_quantity > 0 ?
-              <p className="font-medium text-sm mb-2 text-end" aria-live="polite">
-                {t("sold")} : {product.sold_quantity || 0} / {" "}
-                {product.stock_quantity + (product?.sold_quantity || 0)}
-              </p>
-            :
+          {product.stock_quantity > 0 ? (
+            <p className="font-medium text-sm mb-2 text-end" aria-live="polite">
+              {t("sold")} : {product.sold_quantity || 0} /{" "}
+              {product.stock_quantity + (product?.sold_quantity || 0)}
+            </p>
+          ) : (
             <p className="font-medium text-sm mb-2 text-end">
               {t("not-available")}
             </p>
-          }
+          )}
           {product?.stock_quantity > 0 ? (
             <div
               className="

@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import CartCard from "../card/CartCard";
 import { useAuth } from "@/store/AuthProvider";
 import Loader from "@/common/components/loader/spinner/Loader";
+import SaudiCurrency from "@/common/components/currency/SaudiCurrency";
 interface CartDetailsProps {
   onClose?: () => void;
 }
@@ -13,7 +14,12 @@ const CartDetails: React.FC<CartDetailsProps> = ({ onClose = undefined }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { items, subtotal, clearCart, cartQuery: {isFetching} } = useCart();
+  const {
+    items,
+    subtotal,
+    clearCart,
+    cartQuery: { isFetching },
+  } = useCart();
   const cartItems = useMemo(() => items || [], [items]);
   const itemCount = cartItems.length || 0;
   const totalAmount = subtotal ?? "0.00";
@@ -66,8 +72,8 @@ const CartDetails: React.FC<CartDetailsProps> = ({ onClose = undefined }) => {
           <div className="flex items-center justify-between mt-3">
             <p className="text-sm text-gray-600 font-medium">
               {t("total")} :
-              <span className="text-lg font-bold inline-flex gap-2 items-center text-orangeColor ml-1">
-                {isFetching ? <Loader /> : totalAmount} {t("SAR")}
+              <span className="text-lg font-bold inline-flex  items-center text-orangeColor ml-1">
+                {isFetching ? <Loader /> : totalAmount} <SaudiCurrency />
               </span>
             </p>
           </div>

@@ -2,6 +2,7 @@ import { useRef, useCallback, useEffect, memo } from "react";
 import { useTranslation } from "react-i18next";
 import "./double-slider.css";
 import { useProductsFilters } from "@/features/products/providers/ProductsFiltersProvider";
+import SaudiCurrency from "../currency/SaudiCurrency";
 
 interface PriceFilterProps {
   initialMin?: number;
@@ -12,17 +13,13 @@ interface PriceFilterProps {
 const PriceFilter: React.FC<PriceFilterProps> = ({
   initialMin = 0,
   initialMax = 10000,
-  step=1
+  step = 1,
 }) => {
   const { t, i18n } = useTranslation();
   const {
-    filters: {
-      price_from,
-      price_to
-    },
-    handleChangeFilters
+    filters: { price_from, price_to },
+    handleChangeFilters,
   } = useProductsFilters();
-
 
   const minPrice = parseInt(price_from || "") || initialMin;
   const maxPrice = parseInt(price_to || "") || initialMax;
@@ -62,7 +59,7 @@ const PriceFilter: React.FC<PriceFilterProps> = ({
       range.current.style.width = `${maxPercent - minPercent}%`;
     }
   }, [maxPrice, getPercent]);
-  
+
   return (
     <div className="my-5">
       <div className="flex-center relative">
@@ -79,7 +76,7 @@ const PriceFilter: React.FC<PriceFilterProps> = ({
           className={`thumb thumbLeft`}
           step={step}
           style={{ zIndex: minPrice > minPrice - 100 ? 5 : undefined }}
-          />
+        />
         <input
           type="range"
           min={initialMin}
@@ -101,13 +98,13 @@ const PriceFilter: React.FC<PriceFilterProps> = ({
       </div>
       <div className="flex items-center justify-between mt-4">
         <p>
-          <div className="flex items-center">
-            {minPrice} {t("SAR")}
+          <div className="flex items-center gap-2">
+            <p> {minPrice}</p> <SaudiCurrency />
           </div>
         </p>
         <p>
           <div className="flex items-center">
-            {maxPrice} {t("SAR")}
+            <p>{maxPrice}</p> <SaudiCurrency />
           </div>
         </p>
       </div>

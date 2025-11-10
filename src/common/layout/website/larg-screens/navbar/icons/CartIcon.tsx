@@ -4,6 +4,7 @@ import { useCart } from "@/store/CartProvider";
 import { CiShoppingCart } from "react-icons/ci";
 import i18n from "@/lib/i18n/i18n";
 import CartDetails from "@/features/cart/components/details/CartDetails";
+import SaudiCurrency from "@/common/components/currency/SaudiCurrency";
 const CartIcon = memo(() => {
   const { t } = useTranslation();
   const { items, subtotal } = useCart();
@@ -61,8 +62,12 @@ const CartIcon = memo(() => {
 
         <div className="flex flex-col items-start text-start">
           <p className="text-xs text-gray-400">{t("cart")}</p>
-          <p dir="ltr" className="text-lg font-bold text-gray-800">
-            {totalAmount} {t("SAR")}
+
+          <p
+            dir="ltr"
+            className="text-lg font-bold text-gray-800 flex items-center gap-1"
+          >
+            <p>{totalAmount}</p> <SaudiCurrency />
           </p>
         </div>
       </button>

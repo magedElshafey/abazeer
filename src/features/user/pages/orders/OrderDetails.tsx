@@ -9,6 +9,7 @@ import CancelOrderButton from "../../components/orders/CancelOrderButton";
 import MainBtn from "@/common/components/buttons/MainBtn";
 import { IoArrowBack } from "react-icons/io5";
 import { HiDownload } from "react-icons/hi";
+import SaudiCurrency from "@/common/components/currency/SaudiCurrency";
 
 const OrderDetails: FC = () => {
   const { t } = useTranslation();
@@ -118,25 +119,23 @@ const OrderDetails: FC = () => {
                         {t("subtotal")}:
                       </span>
                       <span className="text-gray-900 font-semibold">
-                        {orderQuery.data.subtotal} {t("SAR")}
+                        {orderQuery.data.subtotal} <SaudiCurrency />
                       </span>
                     </div>
-                    {
-                      orderQuery.data.coupon && (
-                        <div className="flex-between mb-2 text-green-600 font-medium">
-                          <dt>{t("discount")}</dt>
-                          <dd>
-                            - {orderQuery.data.discount} {t("SAR")}
-                          </dd>
-                        </div>
-                      )
-                    }
+                    {orderQuery.data.coupon && (
+                      <div className="flex-between mb-2 text-green-600 font-medium">
+                        <dt>{t("discount")}</dt>
+                        <dd>
+                          - {orderQuery.data.discount} <SaudiCurrency />
+                        </dd>
+                      </div>
+                    )}
                     <div className="flex justify-between items-center">
                       <span className="text-gray-600 font-medium">
                         {t("tax")}:
                       </span>
                       <span className="text-gray-900 font-semibold">
-                        {orderQuery.data.tax} {t("SAR")}
+                        {orderQuery.data.tax} <SaudiCurrency />
                       </span>
                     </div>
                     <div className="flex justify-between items-center">
@@ -144,7 +143,7 @@ const OrderDetails: FC = () => {
                         {t("delivery")}:
                       </span>
                       <span className="text-gray-900 font-semibold">
-                        {orderQuery.data.shipping} {t("SAR")}
+                        {orderQuery.data.shipping} <SaudiCurrency />
                       </span>
                     </div>
                     <div className="border-t border-gray-200 pt-3 mt-3 flex justify-between items-center">
@@ -152,7 +151,7 @@ const OrderDetails: FC = () => {
                         {t("total")}:
                       </span>
                       <span className="text-lg font-bold text-orangeColor">
-                        {orderQuery.data.total} {t("SAR")}
+                        {orderQuery.data.total} <SaudiCurrency />
                       </span>
                     </div>
                   </div>
