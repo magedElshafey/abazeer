@@ -1,5 +1,6 @@
 // hooks
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
+import type { MouseEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import useGetHomeSlider from "../api/hero/useGetHomeSlider";
@@ -33,9 +34,17 @@ import useGetTestimonials from "../api/testimonials/useGetTestimonials";
 import { Testimonials } from "../types/testimonials.types";
 import TestimonialsCard from "../components/testimonials/TestimonialsCard";
 import useGetAllCategories from "@/features/categories/api/useGetAllCategories";
+import {
+  IoChevronBack,
+  IoChevronForward,
+  IoClose,
+} from "react-icons/io5";
 
 const Home = () => {
   const { t } = useTranslation();
+  const [galleryFullScreenIndex, setGalleryFullScreenIndex] = useState<
+    number | null
+  >(null);
 
   const landingProducts = useGetAllProducts({
     landing: true,
@@ -60,6 +69,49 @@ const Home = () => {
   const adsQueryResult = useGetAds();
   const testimonailsQueryResult = useGetTestimonials();
   const navigate = useNavigate();
+  const galleryItems = galleryQueryResult?.data ?? [];
+
+  useEffect(() => {
+    if (galleryFullScreenIndex !== null) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [galleryFullScreenIndex]);
+
+  const closeGalleryFullScreen = useCallback(() => {
+    setGalleryFullScreenIndex(null);
+  }, []);
+
+  const handleNextGalleryImage = useCallback(
+    (event: MouseEvent<HTMLButtonElement>) => {
+      event.stopPropagation();
+      setGalleryFullScreenIndex((prev) => {
+        if (prev === null || galleryItems.length === 0) {
+          return prev;
+        }
+        return (prev + 1) % galleryItems.length;
+      });
+    },
+    [galleryItems.length]
+  );
+
+  const handlePrevGalleryImage = useCallback(
+    (event: MouseEvent<HTMLButtonElement>) => {
+      event.stopPropagation();
+      setGalleryFullScreenIndex((prev) => {
+        if (prev === null || galleryItems.length === 0) {
+          return prev;
+        }
+        return (prev - 1 + galleryItems.length) % galleryItems.length;
+      });
+    },
+    [galleryItems.length]
+  );
 
   const handleNavigate = useCallback(() => {
     navigate("/blogs");
@@ -211,13 +263,16 @@ const Home = () => {
                       },
                     }}
                   >
-                    {galleryQueryResult?.data?.map((item) => (
+                    {galleryQueryResult?.data?.map((item, index) => (
                       <img
                         key={item?.id}
                         alt={item?.name}
                         src={item?.image || "/images/g.png"}
                         loading="lazy"
-                        className="w-full aspect-[16/10] object-cover rounded-lg"
+                        className="w-full aspect-[16/10] object-cover rounded-lg cursor-zoom-in transition-transform duration-300 hover:scale-105"
+                        onClick={() => {
+                          setGalleryFullScreenIndex(index);
+                        }}
                       />
                     ))}
                   </Slider>
@@ -225,6 +280,56 @@ const Home = () => {
               )}
           </FetchHandler>
         </div>
+        {galleryFullScreenIndex !== null &&
+          galleryItems.length > 0 &&
+          galleryItems[galleryFullScreenIndex] && (
+            <div
+              className="fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center p-4"
+              onClick={closeGalleryFullScreen}
+            >
+              <button
+                onClick={closeGalleryFullScreen}
+                className="absolute top-4 right-4 z-10 text-white hover:text-orangeColor transition-colors duration-200"
+              >
+                <IoClose className="w-8 h-8" />
+              </button>
+              {galleryItems.length > 1 && (
+                <>
+                  <button
+                    onClick={handlePrevGalleryImage}
+                    className="absolute left-4 top-1/2 -translate-y-1/2 z-10 text-white hover:text-orangeColor transition-colors duration-200"
+                  >
+                    <IoChevronBack className="w-8 h-8" />
+                  </button>
+                  <button
+                    onClick={handleNextGalleryImage}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 z-10 text-white hover:text-orangeColor transition-colors duration-200"
+                  >
+                    <IoChevronForward className="w-8 h-8" />
+                  </button>
+                </>
+              )}
+              <div
+                className="w-[90vw] h-[90vh] flex items-center justify-center"
+                onClick={(event) => event.stopPropagation()}
+              >
+                <img
+                  src={
+                    galleryItems[galleryFullScreenIndex]?.image ||
+                    "/images/g.png"
+                  }
+                  alt={
+                    galleryItems[galleryFullScreenIndex]?.name ||
+                    "Full screen product image"
+                  }
+                  className="w-full h-full object-contain rounded-md"
+                />
+              </div>
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white text-sm bg-black bg-opacity-50 px-3 py-1 rounded-full">
+                {galleryFullScreenIndex + 1} / {galleryItems.length}
+              </div>
+            </div>
+          )}
         {/* blogs section */}
         <div className="space-between-sections">
           <FetchHandler queryResult={blogsQueryResult} skeletonType="blog">
