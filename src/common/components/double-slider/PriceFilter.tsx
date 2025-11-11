@@ -15,7 +15,7 @@ const PriceFilter: React.FC<PriceFilterProps> = ({
   initialMax = 10000,
   step = 1,
 }) => {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const {
     filters: { price_from, price_to },
     handleChangeFilters,
