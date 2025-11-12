@@ -69,6 +69,10 @@ export interface ProductDetails extends Omit<Product, "category"> {
   quantity: number;
   long_description: string;
   properties: ProductProperty[];
+  faqs: {
+    question: string;
+    answer: string;
+  }[]
 }
 
 type SortByKey<T> = T extends string ? `${T}-asc` | `${T}-desc` : never;
