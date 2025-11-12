@@ -9,6 +9,7 @@ interface UseGetProductsOptions {
   landing?: boolean;
   essential?: boolean;
   delay?: Partial<UseQueryOptions<Product[]>>;
+  recentlyViewed?: boolean;
 }
 
 const useGetAllProducts = ({
@@ -16,6 +17,7 @@ const useGetAllProducts = ({
   landing,
   delay,
   essential,
+  recentlyViewed
 }: UseGetProductsOptions = {}) => {
   const [searchParams] = useSearchParams();
 
@@ -44,6 +46,7 @@ const useGetAllProducts = ({
           featured,
           landing,
           essential,
+          recent_viewed: recentlyViewed
         },
         signal
       });
