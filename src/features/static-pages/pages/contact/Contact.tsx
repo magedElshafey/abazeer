@@ -23,11 +23,11 @@ const Contact = () => {
           />
         </div>
       </FetchHandler>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-7 lg:gap-20 xl:gap-24 2xl:gap-28 mt-12">
-        <form onSubmit={handleSubmit(onSubmit)}>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-7 lg:gap-20 mt-12">
+        <form onSubmit={handleSubmit(onSubmit)} className="w-full">
           <SectionTitle title="contact us" />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="mb-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div className="mb-4 col-span-2 lg:col-span-1">
               <MainInput
                 required={true}
                 placeholder="user name"
@@ -37,7 +37,7 @@ const Contact = () => {
                 error={errors.name?.message}
               />
             </div>
-            <div className="mb-4">
+            <div className="mb-4 col-span-2 lg:col-span-1">
               <MainInput
                 required={true}
                 placeholder="email"
@@ -47,7 +47,7 @@ const Contact = () => {
                 error={errors.email?.message}
               />
             </div>
-            <div className="mb-4">
+            <div className="mb-4 col-span-2 lg:col-span-1">
               <MainInput
                 required={false}
                 placeholder="phone"
@@ -57,7 +57,7 @@ const Contact = () => {
                 error={errors.phone?.message}
               />
             </div>
-            <div className="mb-4">
+            <div className="mb-4 col-span-2 lg:col-span-1">
               <MainInput
                 required={false}
                 placeholder="address"
@@ -87,7 +87,6 @@ const Contact = () => {
               />
             </div>
           </div>
-
           <div className="w-full flex-center">
             <div className="w-full md:w-[180px]">
               <MainBtn
