@@ -19,7 +19,6 @@ type Props = {
 };
 
 const ProductInfo: FC<Props> = ({ product }) => {
-  console.log("product is : ", product);
   const { t } = useTranslation();
   const [quantity, setQuantity] = useState<number>(1);
   const { addToCart, isInCart } = useCart();
@@ -60,15 +59,15 @@ const ProductInfo: FC<Props> = ({ product }) => {
         />
       </div>
       <div>
-        <p className="inline text-2xl font-bold text-text-darkRed">
-          {product.has_discount ? product.sale_price : product.price}{" "}
+        <div className="flex gap-1 text-2xl font-bold text-text-darkRed items-center">
+          <p>{product.has_discount ? product.sale_price : product.price}</p>
           <SaudiCurrency />
-        </p>
+        </div>
         <span className="invisible">place</span>
         {product?.has_discount && (
-          <p className="inline text-lg font-bold text-text-gray opacity-60 line-through">
-            {product?.price} <SaudiCurrency />
-          </p>
+          <div className="flex gap-1 items-center text-lg font-bold text-text-gray opacity-60 line-through">
+            <p>{product?.price}</p> <SaudiCurrency />
+          </div>
         )}
       </div>
       <div className="appearance-auto">

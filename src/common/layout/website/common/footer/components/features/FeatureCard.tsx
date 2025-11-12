@@ -11,7 +11,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ data }) => {
   const { t } = useTranslation();
 
   return (
-    <article className="flex items-center gap-3" aria-label={t(data.name)}>
+    <article className="flex  gap-3" aria-label={t(data.name)}>
       <img
         src={data.image}
         alt={t(data.name)}
