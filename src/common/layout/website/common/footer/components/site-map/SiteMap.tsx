@@ -24,16 +24,6 @@ const SiteMap: React.FC<SiteMapProps> = ({
 
   const allowedSlugs = ["about-us", "faq"];
 
-  // const helpCenterLinks: Nav[] = useMemo(() => {
-  //   if (!data) return [];
-  //   return data
-  //     .filter((item: any) => allowedSlugs.includes(item.slug))
-  //     .map((item: any) => ({
-  //       name: item.name,
-  //       link: `/${item.slug}`,
-  //     }));
-  // }, [data]);
-
   const usefulLinks: Nav[] = useMemo(() => {
     if (!data) return [];
     return data
@@ -91,18 +81,17 @@ const SiteMap: React.FC<SiteMapProps> = ({
           </div>
 
           {usefulLinks.length > 0 && (
-            <FooterLinkList links={usefulLinks} title="useful links" />
-          )}
-
-          {/* {helpCenterLinks.length > 0 && (
             <FooterLinkList
               links={[
-                ...helpCenterLinks,
-                { name: "latest blogs", link: "blogs" },
+                ...usefulLinks,
+                {
+                  link: "contact-us",
+                  name: "contact us",
+                },
               ]}
-              title="help center"
+              title="useful links"
             />
-          )} */}
+          )}
 
           <FooterLinkList links={myAccount} title="my account" />
 

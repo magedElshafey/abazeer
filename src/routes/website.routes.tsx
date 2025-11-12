@@ -131,14 +131,16 @@ export const websiteRoutes: RouteObject = {
         breadcrumb: "my_profile",
       },
     },
-    // {
-    //   path: "contact-us",
-    //   element: lazyLoad(() => import("../features/contact/pages/Contact")),
+    {
+      path: "contact-us",
+      element: lazyLoad(
+        () => import("../features/static-pages/pages/contact/Contact")
+      ),
 
-    //   handle: {
-    //     breadcrumb: "contact",
-    //   },
-    // },
+      handle: {
+        breadcrumb: "contact",
+      },
+    },
     {
       path: "category/:slugAndId",
 

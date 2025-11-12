@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { validateEmail } from "@/utils/validateEmail";
 import useNewsLetterApi from "../api/useNewsLetterApi";
 
-const useNewsLetterLogic = () => {
+const useNewsLetterLogic = (onClose?: () => void) => {
   const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [isValid, setIsValid] = useState(true);
@@ -44,7 +44,10 @@ const useNewsLetterLogic = () => {
       if (!valid) return;
 
       toast.promise(mutateAsync(email), {
-        success: (res) => res?.message || t("Subscribed successfully"),
+        success: (res) => {
+          if (onClose) onClose();
+          return res?.message || t("Subscribed successfully");
+        },
         error: () => t("Subscription failed"),
       });
 

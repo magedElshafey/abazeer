@@ -389,5 +389,12 @@
   "Disable": "تعطيل",
   "coupon removed successfully": "تم حذف الكوبون بنجاح",
   "Unexpected Error": "خطأ غير متوقع",
-  "not-available": "غير متوفر"
+  "not-available": "غير متوفر",
+  "address is required": "العنوان مطلوب",
+  "subject is required": "الموضوع مطلوب",
+  "message is required": "الرسالة مطلوبة",
+  "subject": "الموضوع",
+  "send": "إرسال",
+  "contact message": "رسالتك",
+  "contact information": "معلومات التواصل"
 }
