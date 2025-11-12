@@ -1,13 +1,15 @@
 import { useTranslation } from "react-i18next";
 import useNewsLetterLogic from "./logic/useNewsLetterLogic";
 import Loader from "@/common/components/loader/spinner/Loader";
-
-const NewsLetter = () => {
+interface NewsLetterProps {
+  onClose?: () => void;
+}
+const NewsLetter: React.FC<NewsLetterProps> = ({ onClose }) => {
   const { t } = useTranslation();
   const {
     states: { isValid, isTouched, email, isPending },
     handlers: { handleBlur, handleInputChange, handleSubmit },
-  } = useNewsLetterLogic();
+  } = useNewsLetterLogic(onClose);
 
   const showError = !isValid && isTouched;
 

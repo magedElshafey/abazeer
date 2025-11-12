@@ -43,4 +43,6 @@ export const apiRoutes = {
   cartRemoveItems: "cart/items/delete-many",
   removeCoupon: "cart/remove-coupon",
   notifications: "/notifications",
+  contactStore: "contact-us/store",
+  contactSettings: "settings/contact",
 };

@@ -384,5 +384,12 @@
   "Disable": "Disable",
   "coupon removed successfully": "coupon removed successfully",
   "Unexpected Error": "Unexpected Error",
-  "not-available": "Not Available"
+  "not-available": "Not Available",
+  "address is required": "address is required",
+  "subject is required": "subject is required",
+  "message is required": "message is required",
+  "subject": "subject",
+  "send": "send",
+  "contact message": "message",
+  "contact information": "contact information"
 }
