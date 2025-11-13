@@ -59,7 +59,7 @@ const CategoryItem = memo(
               onClick={toggleOpen}
               aria-expanded={open}
               aria-label={`Toggle ${category.name}`}
-              className="p-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              className="p-1 border bg-white rounded-md shadow focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
               <IoIosArrowBack
                 size={18}
