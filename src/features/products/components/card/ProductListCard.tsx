@@ -8,6 +8,7 @@ import { twMerge } from "tailwind-merge";
 import ProductAlertButton from "../product-alert/ProductAlertButton";
 import MainBtn from "@/common/components/buttons/MainBtn";
 import SaudiCurrency from "@/common/components/currency/SaudiCurrency";
+import FavoriteButton from "../product-details/FavoriteButton";
 
 interface ProductListCardProps {
   product: Product;
@@ -52,6 +53,20 @@ const ProductListCard: React.FC<ProductListCardProps> = memo(
         )}
         aria-label={`${product.name} - ${product.category}`}
       >
+        <div
+          className="absolute top-2 right-2 w-7 h-7 bg-white flex-center border shadow rounded-[50%] z-20 
+    md:opacity-0 
+    md:translate-y-[-10px]
+    md:group-hover:opacity-100 
+    md:group-hover:translate-y-0 
+    transition-all duration-300"
+        >
+          <FavoriteButton
+            productId={product?.id}
+            showLabel={false}
+            isInWishlist={product?.is_in_wishlist}
+          />
+        </div>
         {/* ✅ Discount badge */}
         {product?.has_discount && product.discount_percentage > 0 && (
           <div
