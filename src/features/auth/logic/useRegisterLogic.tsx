@@ -29,6 +29,7 @@ const useRegisterLogic = () => {
       email: "",
       password_confirmation: "",
       rememberMe: false,
+      agree_on_terms: false
     },
   });
 
@@ -47,9 +48,9 @@ const useRegisterLogic = () => {
 
   return {
     register,
+    control,
     handleSubmit,
     errors,
-    control,
     isPending,
     onSubmit,
   };

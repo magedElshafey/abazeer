@@ -258,6 +258,8 @@
   "add_another_address": "أضف عنوانًا آخر",
   "make_default": "اجعله الافتراضي",
   "update_address": "تحديث العنوان",
+  "agree-on-terms-and-conditions": "أوافق على الشروط والأحكام",
+  "must-agree-on-terms": "يجب الموافقة على الشروط والأحكام.",
   "delete_address_confirmation": "هل أنت متأكد من حذف هذا العنوان؟",
   "delete_address_named_confirmation": "هل أنت متأكد من حذف \"{{name}}\"؟",
   "login_required": "تسجيل الدخول مطلوب",

@@ -10,6 +10,9 @@ export const registerSchema = loginSchema
       .min(1, "phone is required")
       .regex(/^05\d{8}$/, "Phone must start with 05 followed by 8 digits"),
     password_confirmation: z.string(),
+    agree_on_terms: z
+      .boolean()
+      .refine((val) => val === true, { message: "must-agree-on-terms" }),
   })
   .refine((data) => data.password === data.password_confirmation, {
     path: ["password_confirmation"],

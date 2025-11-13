@@ -257,6 +257,8 @@
   "add_another_address": "Add another address",
   "make_default": "Make default",
   "update_address": "Update Address",
+  "agree-on-terms-and-conditions": "I agree to the terms and conditions",
+  "must-agree-on-terms": "You must agree to the terms and conditions.",
   "delete_address_confirmation": "Are you sure you want to delete this address?",
   "delete_address_named_confirmation": "Are you sure you want to delete \"{{name}}\"?",
   "login_required": "Login Required",

@@ -7,11 +7,13 @@ import { CiUser } from "react-icons/ci";
 import { GoKey } from "react-icons/go";
 import { Link } from "react-router-dom";
 import { MdOutlineEmail, MdOutlinePhoneEnabled } from "react-icons/md";
+import MainCheckInput from "../../../common/components/inputs/MainCheckInput";
 
 const Register = () => {
-  const { register, errors, handleSubmit, onSubmit, isPending } =
+  const { register, errors, handleSubmit, onSubmit, isPending, control } =
     useRegisterLogic();
   const { t } = useTranslation();
+
   return (
     <AuthCard
       title="Create a new account"
@@ -71,6 +73,13 @@ const Register = () => {
             {...register("password_confirmation")}
           />
         </div>
+        <div>
+          <MainCheckInput 
+            label="agree-on-terms-and-conditions"
+            control={control}
+            name="agree_on_terms"
+          />
+        </div>
         <div className="w-full mb-7 text-sm gap-2">
           <span className="text-text-gray">{t("have an account ?")}</span>
           <Link to="/auth/login" className="text-orangeColor underline">
@@ -81,7 +90,7 @@ const Register = () => {
           <div className="w-full md:w-[180px]">
             <MainBtn
               type="submit"
-              className="w-full flex-center"
+              className="w-full flex-center disabled:!pointer-events-auto"
               text="Create a new account"
               isPending={isPending}
             />
