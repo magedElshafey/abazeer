@@ -5,6 +5,7 @@ import type { CartItem } from "../../types/Cart.types";
 import { CiTrash } from "react-icons/ci";
 import Skeleton from "@/common/components/loader/skeltons/Skeleton";
 import SaudiCurrency from "@/common/components/currency/SaudiCurrency";
+import { Link } from "react-router-dom";
 
 interface CartCardProps {
   item: CartItem;
@@ -52,7 +53,9 @@ const CartCard: React.FC<CartCardProps> = ({ item }) => {
 
       {/* Product Details */}
       <div className="flex flex-col flex-1 text-sm text-gray-700">
-        <p className="font-semibold line-clamp-1">{item.name}</p>
+        <Link to={`/products/${item.product_id}`}>
+          <p className="font-semibold line-clamp-1 text-orangeColor hover:underline">{item.name}</p>
+        </Link>
         <p className="text-gray-500 text-xs">{item.category || t("product")}</p>
         <div className="flex items-center gap-3">
           <p className="text-orangeColor font-semibold text-sm mt-1 flex items-center">

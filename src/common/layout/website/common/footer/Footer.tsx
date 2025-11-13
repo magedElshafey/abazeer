@@ -25,7 +25,7 @@ const Footer: React.FC<FooterSettings> = ({
   site_description
 }) => {
   return (
-    <footer className="bg-white shadow-md" role="contentinfo">
+    <footer className="bg-white shadow-md pb-28 md:pb-0" role="contentinfo">
       <Features />
       <SiteMap
         logo={site_logo || "/images/logo.png"}

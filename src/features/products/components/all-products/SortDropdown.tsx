@@ -80,7 +80,7 @@ const SortDropdown: FC = () => {
                 <ul
                     role="menu"
                     aria-label="sort options"
-                    className="absolute w-full top-full start-0 bg-white shadow-lg border border-gray-200 rounded-md mt-1 z-50 overflow-y-auto"
+                    className="absolute min-w-fit w-full top-full sm:start-full md:start-0 bg-white shadow-lg border border-gray-200 rounded-md mt-1 z-30 overflow-y-auto"
                 >
                     {sortOptions.map((option) => (
                         <li key={option.value || 'default'}>
