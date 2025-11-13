@@ -8,7 +8,7 @@ const useAboutApi = () => {
     queryKey: [apiRoutes?.about],
     queryFn: async () => {
       const { data } = await Axios.get(apiRoutes?.about);
-      return data?.data as AboutType[];
+      return data?.data as AboutType;
     },
     ...delayOptions,
   });

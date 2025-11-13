@@ -27,6 +27,16 @@ const Contact = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="w-full">
           <SectionTitle title="contact us" />
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div className="mb-4 col-span-2">
+              <MainInput
+                required={false}
+                placeholder="subject"
+                label="subject"
+                enableAutocomplete
+                {...register("subject")}
+                error={errors.subject?.message}
+              />
+            </div>
             <div className="mb-4 col-span-2 lg:col-span-1">
               <MainInput
                 required={true}
@@ -67,16 +77,7 @@ const Contact = () => {
                 error={errors.address?.message}
               />
             </div>
-            <div className="mb-4 col-span-2">
-              <MainInput
-                required={false}
-                placeholder="subject"
-                label="subject"
-                enableAutocomplete
-                {...register("subject")}
-                error={errors.subject?.message}
-              />
-            </div>
+
             <div className="mb-4 col-span-2">
               <MainTextArea
                 required={false}

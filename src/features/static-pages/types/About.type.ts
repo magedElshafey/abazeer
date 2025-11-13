@@ -1,9 +1,23 @@
 export interface AboutType {
-  id: number;
-  name: string;
-  description: string;
-  image: string | null;
-  is_active: boolean;
-  created_at: string;
-  updated_at: string;
+  header: {
+    id: number;
+    name: string;
+    description: string;
+    meta_description: string;
+    image: string;
+  };
+  main: {
+    id: number;
+    name: string;
+    description: string;
+    meta_description: string;
+    image: string;
+  };
+  other: {
+    id: number;
+    name: string;
+    description: string;
+    meta_description: string;
+    image: string;
+  }[];
 }

@@ -1,9 +1,14 @@
 import { memo } from "react";
-import type { AboutType } from "../../types/About.type";
 import HtmlConverter from "@/common/components/htmlConverter/HtmlConverter";
 
 interface AboutCardProps {
-  data: AboutType;
+  data: {
+    id: number;
+    name: string;
+    description: string;
+    meta_description: string;
+    image: string;
+  };
   index: number;
 }
 
@@ -20,13 +25,13 @@ const AboutCard: React.FC<AboutCardProps> = ({ data, index }) => {
       {/* Text Content */}
       <section className="w-full  space-y-4 ">
         <div className="flex gap-3">
-          <div className="flex-center w-12 h-12 rounded-sm bg-white shadow-sm border p-2">
+          <div className="flex-center w-16 h-16 rounded-[50%] bg-orangeColor ">
             <img
               src={image || "/images/card-big-image.png"}
               alt={name || "About image"}
               loading="lazy"
               decoding="async"
-              className="max-w-full max-h-full object-contain rounded-xl "
+              className="w-12 h-12 object-contain"
             />
           </div>
           <h2 className="text-xl lg:text-2xl 2xl:text-3xl">{name}</h2>
