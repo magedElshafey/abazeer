@@ -1,6 +1,6 @@
 import NewsLetter from "@/common/layout/website/common/footer/newsletter/NewsLetter";
 import { useTranslation } from "react-i18next";
-import SquareImage from "../images/sqaure-image/SqaureImage";
+// import SquareImage from "../images/sqaure-image/SqaureImage";
 type Props = {
   onClose: () => void;
 };
@@ -19,11 +19,11 @@ const NewsletterModal = ({ onClose }: Props) => {
           >
             ✕
           </button>
-          <SquareImage
+          {/* <SquareImage
             src="https://as2.ftcdn.net/v2/jpg/02/59/98/87/1000_F_259988723_FkzrqRyMP1kQk8WMkYnKT4o2Tw29d9Ki.jpg"
             alt="news-letter"
-          />
-          <div className="px-5 pb-8 mt-5">
+          /> */}
+          <div className="px-5 py-12 ">
             <NewsLetter onClose={onClose} />
           </div>
         </div>

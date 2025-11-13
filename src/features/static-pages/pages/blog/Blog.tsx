@@ -22,9 +22,9 @@ const Blog = () => {
             <SEO title={blog?.name} />
 
             {/* Blog Header Section */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
               {/* Image Section */}
-              <div className="relative w-full overflow-hidden rounded-2xl shadow-md">
+              <div className="relative w-full overflow-hidden rounded-2xl shadow-md h-[450px]">
                 <img
                   src={blog?.image || "/placeholder.jpg"}
                   alt={blog?.name}

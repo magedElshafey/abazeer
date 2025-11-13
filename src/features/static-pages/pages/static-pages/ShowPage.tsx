@@ -6,6 +6,7 @@ import SectionTitle from "@/common/components/titles/SectionTitle";
 import HtmlConverter from "@/common/components/htmlConverter/HtmlConverter";
 const ShowPage = () => {
   const { slug } = useParams();
+  console.log("slug is", slug);
   const queryResult = useStaticPageDetails(slug || "");
   return (
     <div className="containerr">
@@ -16,7 +17,11 @@ const ShowPage = () => {
             <div className="flex-center">
               <SectionTitle title={queryResult?.data?.name} />
             </div>
-            <div className="my-4 text-gray-500 leading-relaxed">
+            <div
+              className={`my-4 text-gray-500 leading-relaxed ${
+                slug === "9-our-branches" ? "text-center" : ""
+              }`}
+            >
               <HtmlConverter html={queryResult?.data?.description || ""} />
             </div>
           </>
