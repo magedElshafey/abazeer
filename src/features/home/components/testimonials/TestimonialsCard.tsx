@@ -11,7 +11,7 @@ const TestimonialsCard: React.FC<TestimonialsCardProps> = ({ data }) => {
   return (
     <div className="border rounded-lg p-4 flex flex-col gap-2 h-[220px] shadow-sm">
       {/* Top Section */}
-      <div className="flex flex-col md:flex-row items-center md:items-start gap-2 h-[60px]">
+      <div className="flex  items-center gap-2 h-[60px]">
         <div className="w-16 flex-shrink-0">
           <Avatar url={data.image} alt={data.name} size={60} />
         </div>
