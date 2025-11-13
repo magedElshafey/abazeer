@@ -94,27 +94,3 @@ const About: React.FC = () => {
 };
 
 export default memo(About);
-
-/**
- * 
- *    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 space-between-sections mb-24">
-            <div className="relative ">
-              <img
-                alt={queryResult?.data?.main?.name}
-                src={queryResult?.data?.main?.image}
-                loading="lazy"
-                decoding="async"
-                className="w-full h-[300px] md:h-[400px] lg:h-[500px] object-cover transition-transform duration-300 hover:scale-105"
-              />
-            </div>
-            <div>
-              {queryResult?.data?.main?.name && (
-                <SectionTitle title={queryResult?.data?.main?.name} mb="mb-5" />
-              )}
-              {queryResult?.data?.main?.description && (
-                <HtmlConverter html={queryResult?.data?.main?.description} />
-              )}
-            </div>
-          </div>
- * 
- */
