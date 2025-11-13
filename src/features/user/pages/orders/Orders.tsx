@@ -78,9 +78,9 @@ const Orders: FC = () => {
                     >
                       {order.order_status}
                     </span>
-                    <span className="text-lg font-bold text-gray-900">
-                      {order.total} <SaudiCurrency />
-                    </span>
+                    <div className=" flex items-center gap-1 text-lg font-bold text-gray-900">
+                      <p> {order.total}</p> <SaudiCurrency />
+                    </div>
                   </div>
                   <MainBtn
                     className="px-6"

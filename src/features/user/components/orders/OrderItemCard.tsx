@@ -33,7 +33,7 @@ const OrderItemCard: FC<OrderItemCardProps> = ({ item }) => {
       </div>
 
       <div className="flex flex-col gap-1 text-sm">
-        <div className="text-gray-600">
+        <div className="text-gray-600 flex items-center gap-1">
           <span className="font-medium">{t("price")}:</span> {item.price}{" "}
           <SaudiCurrency />
         </div>
@@ -41,7 +41,7 @@ const OrderItemCard: FC<OrderItemCardProps> = ({ item }) => {
           <span className="font-medium">{t("quantity")}:</span> {item.quantity}
         </div>
         <div className="w-full h-px bg-gray-200 my-1"></div>
-        <div className="font-semibold text-gray-900">
+        <div className="flex items-center gap-1 font-semibold text-gray-900">
           <span className="font-medium">{t("total")}:</span> {item.total}{" "}
           <SaudiCurrency />
         </div>

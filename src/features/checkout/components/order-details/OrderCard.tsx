@@ -110,7 +110,7 @@ const OrderCard: React.FC<OrderCardProps> = memo(({ item }) => {
       {/* Pricing */}
       <div className="flex flex-col justify-between items-end text-right w-full sm:w-auto">
         <p className="text-gray-600 text-sm">{t("Price")}</p>
-        <p className="font-semibold text-gray-900 flex items-center">
+        <p className=" gap-1 font-semibold text-gray-900 flex items-center">
           <p>{price}</p> <SaudiCurrency />
         </p>
 

@@ -118,15 +118,15 @@ const OrderDetails: FC = () => {
                       <span className="text-gray-600 font-medium">
                         {t("subtotal")}:
                       </span>
-                      <span className="text-gray-900 font-semibold">
-                        {orderQuery.data.subtotal} <SaudiCurrency />
-                      </span>
+                      <div className="flex items-center gap-1 text-gray-900 font-semibold">
+                        <p> {orderQuery.data.subtotal}</p> <SaudiCurrency />
+                      </div>
                     </div>
                     {orderQuery.data.coupon && (
                       <div className="flex-between mb-2 text-green-600 font-medium">
                         <dt>{t("discount")}</dt>
-                        <dd>
-                          - {orderQuery.data.discount} <SaudiCurrency />
+                        <dd className="flex items-center gap-1 ">
+                          <p>- {orderQuery.data.discount}</p> <SaudiCurrency />
                         </dd>
                       </div>
                     )}
@@ -134,25 +134,25 @@ const OrderDetails: FC = () => {
                       <span className="text-gray-600 font-medium">
                         {t("tax")}:
                       </span>
-                      <span className="text-gray-900 font-semibold">
-                        {orderQuery.data.tax} <SaudiCurrency />
-                      </span>
+                      <div className="flex items-center gap-1 text-gray-900 font-semibold">
+                        <p>{orderQuery.data.tax}</p> <SaudiCurrency />
+                      </div>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-gray-600 font-medium">
                         {t("delivery")}:
                       </span>
-                      <span className="text-gray-900 font-semibold">
-                        {orderQuery.data.shipping} <SaudiCurrency />
-                      </span>
+                      <div className="flex items-center gap-1 text-gray-900 font-semibold">
+                        <p> {orderQuery.data.shipping}</p> <SaudiCurrency />
+                      </div>
                     </div>
                     <div className="border-t border-gray-200 pt-3 mt-3 flex justify-between items-center">
                       <span className="text-lg font-bold text-gray-800">
                         {t("total")}:
                       </span>
-                      <span className="text-lg font-bold text-orangeColor">
-                        {orderQuery.data.total} <SaudiCurrency />
-                      </span>
+                      <div className="flex items-center gap-1 text-lg font-bold text-orangeColor">
+                        <p> {orderQuery.data.total}</p> <SaudiCurrency />
+                      </div>
                     </div>
                   </div>
                 </div>
