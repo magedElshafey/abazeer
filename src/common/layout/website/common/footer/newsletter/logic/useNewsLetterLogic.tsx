@@ -3,6 +3,8 @@ import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { validateEmail } from "@/utils/validateEmail";
 import useNewsLetterApi from "../api/useNewsLetterApi";
+import { AxiosError } from "axios";
+import { Response } from "@/types/Response";
 
 const useNewsLetterLogic = (onClose?: () => void) => {
   const { t } = useTranslation();
@@ -48,7 +50,7 @@ const useNewsLetterLogic = (onClose?: () => void) => {
           if (onClose) onClose();
           return res?.message || t("Subscribed successfully");
         },
-        error: () => t("Subscription failed"),
+        error: (err: AxiosError<Response>) => err?.response?.data.message || "",
       });
 
       setEmail("");
