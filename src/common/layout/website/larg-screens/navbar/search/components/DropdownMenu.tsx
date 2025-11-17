@@ -3,14 +3,16 @@ import { CategoriesListType } from "@/features/categories/types/category.types";
 import useGetAllCategories from "@/features/categories/api/useGetAllCategories";
 import Loader from "@/common/components/loader/spinner/Loader";
 import EmptyData from "@/common/components/empty-data/EmptyData";
-
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 interface DropdownMenuProps {
-  onSelect: (category: CategoriesListType) => void;
+  onSelect: (category: CategoriesListType | null) => void;
 }
 
 const DropdownMenu = memo(({ onSelect }: DropdownMenuProps) => {
   const { data, isLoading } = useGetAllCategories();
-
+  const { t } = useTranslation();
+  const navigate = useNavigate();
   return (
     <ul
       role="menu"
@@ -22,7 +24,19 @@ const DropdownMenu = memo(({ onSelect }: DropdownMenuProps) => {
           <Loader />
         </div>
       )}
-
+      <li className="mb-2">
+        <button
+          type="button"
+          role="menuitem"
+          className="w-full text-start hover:bg-gray-100 p-1 rounded focus:outline-none focus:ring-2 focus:ring-orangeColor"
+          onClick={() => {
+            onSelect(null);
+            navigate("/products");
+          }}
+        >
+          {t("all categories")}
+        </button>
+      </li>
       {!isLoading && data?.length
         ? data.map((category) => (
             <li key={category.id} className="mb-2">
