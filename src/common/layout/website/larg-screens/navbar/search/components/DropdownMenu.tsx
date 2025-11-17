@@ -4,7 +4,7 @@ import useGetAllCategories from "@/features/categories/api/useGetAllCategories";
 import Loader from "@/common/components/loader/spinner/Loader";
 import EmptyData from "@/common/components/empty-data/EmptyData";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 interface DropdownMenuProps {
   onSelect: (category: CategoriesListType | null) => void;
 }
@@ -12,7 +12,7 @@ interface DropdownMenuProps {
 const DropdownMenu = memo(({ onSelect }: DropdownMenuProps) => {
   const { data, isLoading } = useGetAllCategories();
   const { t } = useTranslation();
-  const navigate = useNavigate();
+  const [searchparams] = useSearchParams();
   return (
     <ul
       role="menu"
@@ -31,7 +31,7 @@ const DropdownMenu = memo(({ onSelect }: DropdownMenuProps) => {
           className="w-full text-start hover:bg-gray-100 p-1 rounded focus:outline-none focus:ring-2 focus:ring-orangeColor"
           onClick={() => {
             onSelect(null);
-            navigate("/products");
+            searchparams.delete("filter-category");
           }}
         >
           {t("all categories")}
