@@ -398,5 +398,12 @@
   "subject": "الموضوع",
   "send": "إرسال",
   "contact message": "رسالتك",
-  "contact information": "معلومات التواصل"
+  "contact information": "معلومات التواصل",
+  "share": "مشاركة",
+  "share_product": "مشاركة المنتج",
+  "share_product_description": "انسخ هذا الرابط وشاركه مع أصدقائك",
+  "copy_link": "انسخ الرابط",
+  "copied": "تم النسخ",
+  "link_copied_successfully": "تم نسخ الرابط بنجاح",
+  "close": "إغلاق"
 }

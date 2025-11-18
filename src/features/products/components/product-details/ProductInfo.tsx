@@ -8,6 +8,7 @@ import AddToCartButton from "@/features/cart/components/button/AddToCartButton";
 import { ProductDetails } from "../../types/product.types";
 import HtmlConverter from "../../../../common/components/htmlConverter/HtmlConverter";
 import FavoriteButton from "./FavoriteButton";
+import ShareButton from "./ShareButton";
 
 import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
@@ -134,6 +135,7 @@ const ProductInfo: FC<Props> = ({ product }) => {
           productId={product.id}
           isInWishlist={product.is_in_wishlist}
         />
+        <ShareButton product={product} />
       </div>
 
       {/* Product Metadata Section */}

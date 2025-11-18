@@ -29,6 +29,7 @@ interface ActionType {
 
 interface RefType {
   close: () => void;
+  open: () => void;
 }
 
 interface Props {
@@ -42,6 +43,7 @@ interface Props {
   queryKey?: string[];
   type?: "regular" | "danger";
   onSuccess?: () => void;
+  onOpenChange?: (isOpen: boolean) => void;
 }
 
 const defaultCancelText = "cancel";
@@ -58,6 +60,7 @@ const DialogComponent = forwardRef<RefType, PropsWithChildren<Props>>(
       queryKey,
       type = "regular",
       onSuccess,
+      onOpenChange,
     },
     ref
   ) => {
@@ -66,12 +69,16 @@ const DialogComponent = forwardRef<RefType, PropsWithChildren<Props>>(
 
     const [opened, setOpened] = useState(false);
 
-    useImperativeHandle(ref, () => ({
-      close: () => {
-        setOpened(false);
-      },
-      open: () => setOpened(true)
-    }));
+    useImperativeHandle(
+      ref,
+      () => ({
+        close: () => {
+          setOpened(false);
+        },
+        open: () => setOpened(true),
+      }),
+      []
+    );
 
     const { mutate, isPending } = useMutation({
       mutationKey: [queryKey],
@@ -107,6 +114,7 @@ const DialogComponent = forwardRef<RefType, PropsWithChildren<Props>>(
           if (!e) {
             cancel?.action?.();
           }
+          onOpenChange?.(e);
         }}
       >
         <DialogTrigger onClick={() => setOpened(true)} asChild>
