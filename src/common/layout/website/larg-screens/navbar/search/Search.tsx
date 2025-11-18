@@ -33,7 +33,7 @@ const Search: React.FC<SearchProps> = memo(({ onClose = undefined }) => {
     setShowDropDown((prev) => !prev);
   }, []);
 
-  const handleSelectCategory = useCallback((opt: CategoriesListType) => {
+  const handleSelectCategory = useCallback((opt: CategoriesListType | null) => {
     setSelectedOpt(opt);
     setShowDropDown(false);
   }, []);
@@ -75,12 +75,20 @@ const Search: React.FC<SearchProps> = memo(({ onClose = undefined }) => {
   /** 🧭 Navigate on search button click */
   const handleSearch = useCallback(() => {
     const params: Record<string, string> = {};
-    if (selectedOpt?.id) params.category_id = String(selectedOpt.id);
-    if (search.value.trim()) params.q = search.value.trim();
-    navigate(`/products?${new URLSearchParams(params)}`);
-    if (onClose) {
-      onClose();
+
+    // فقط لو المستخدم اختار category
+    if (selectedOpt?.id) {
+      params["filter-category"] = String(selectedOpt.id);
     }
+
+    // فقط لو كتب search
+    if (search.value.trim()) {
+      params["filter-name"] = search.value.trim();
+    }
+
+    navigate(`/products?${new URLSearchParams(params)}`);
+
+    if (onClose) onClose();
   }, [navigate, search.value, selectedOpt, onClose]);
 
   /** 🧩 Outside click handler */
@@ -102,13 +110,21 @@ const Search: React.FC<SearchProps> = memo(({ onClose = undefined }) => {
     enabled: !!search.deferred,
     queryFn: async ({ queryKey, signal }) => {
       const [, term] = queryKey as [string, string];
-      const category_id = selectedOpt?.id || undefined
+
+      const params: any = { name: term };
+
+      if (selectedOpt?.id) {
+        params.category = selectedOpt.id;
+      }
+
       const response = await Axios.get(apiRoutes.search, {
-        params: { name: term, category: category_id },
+        params,
         signal,
       });
+
       return response.data.data;
     },
+
     staleTime: 1000 * 30,
   });
 
@@ -134,6 +150,7 @@ const Search: React.FC<SearchProps> = memo(({ onClose = undefined }) => {
   }, [hasDeferredValue, isFetching, products]);
 
   const showResults = isFocused && hasDeferredValue;
+
   return (
     <div className="flex-1 bg-background-gray p-3 flex items-center gap-1 sm:gap-2 md:gap-3 min-w-0 relative">
       {/* Dropdown */}
