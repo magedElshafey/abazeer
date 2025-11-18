@@ -39,7 +39,7 @@ const Blog = () => {
                   {blog?.name}
                 </h1>
 
-                <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
+                <div className="prose prose-lg max-w-none leading-relaxed">
                   <HtmlConverter html={blog?.description} />
                 </div>
 
