@@ -19,7 +19,7 @@ import { apiRoutes } from "@/services/api-routes/apiRoutes";
 
 const useCheckoutLogic = () => {
   const queryClient = useQueryClient();
-  const dialogRef = useRef<{ close: () => void }>(null);
+  const dialogRef = useRef<{ close: () => void, open: () => void }>(null);
   const { items, setCouponCode } = useCart();
   const settingsQuery = useGetWebsiteSettings();
   const { data: settings, isLoading: settingsLoading } = settingsQuery;
