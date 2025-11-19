@@ -57,4 +57,4 @@ Fully integrated with:
 
 --------------------------------------------------------------------------
 🧱 Tech Stack
-<p align="left"> <img src="https://skillicons.dev/icons?i=react,ts,tailwind,redux,vite,git,github,figma" /> </p>
+<p align="left"> <img src="https://skillicons.dev/icons?i=react,ts,tailwind,redux,vite,reactquery,git,github,figma" /> </p>
