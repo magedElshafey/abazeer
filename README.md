@@ -58,3 +58,27 @@ Fully integrated with:
 --------------------------------------------------------------------------
 🧱 Tech Stack
 <p align="left"> <img src="https://skillicons.dev/icons?i=react,ts,tailwind,redux,vite,reactquery,git,github,figma" /> </p>
+
+--------------------------------------------------------------------------
+📁 Project Structure
+src/
+ ┣ features /
+ ┣ common /   # reusable components and hooks 
+ ┣ routes/ 
+ ┣ types/     #global types
+ ┣ data /     # constant data
+ ┣ lib/ configruation for packages in the project ( Axios , i18n , tanstack react query )
+ ┣ services/       # API Layer
+ ┣ utils/
+ ┣ store/
+ ┗ styles/
+ 
+
+
+--------------------------------------------------------------------------
+⚙️ Installation
+git clone https://github.com/magedElshafey/abazeer.git
+cd abazeer
+npm install
+npm run dev
+
