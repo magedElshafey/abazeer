@@ -56,6 +56,16 @@ Fully integrated with:
 - Clean, user-friendly product browsing experience
 
 --------------------------------------------------------------------------
+📸 Screenshots
+
+<div align="center"> <h2>🏠 Home Page</h2> <img src="https://github.com/user-attachments/assets/7f301dff-5e7c-453d-bb08-5eb51ce01e6a" width="100%" alt="Home Page" /> </div>
+<div align="center"> <h2>🛍️ All Products Page</h2> <img src="https://github.com/user-attachments/assets/2dc1d5be-bf7b-4b7a-92d9-bcd8fe8554f1" width="100%" alt="All Products Page" /> </div>
+<div align="center"> <h2>📄 Product Details Page</h2> <img src="https://github.com/user-attachments/assets/8a09e69d-3759-4d1c-b4bc-f940b7c868a1" width="100%" alt="Product Details Page" /> </div>
+<div align="center"> <h2>🔐 Login Page</h2> <img src="https://github.com/user-attachments/assets/2b9a5b3f-b10c-437b-a052-7842abd1c9b6" width="100%" alt="Login Page" /> </div>
+<div align="center"> <h2>📱 Home Page (Mobile Version)</h2> <img src="https://github.com/user-attachments/assets/91056a8d-2855-4ec8-b956-271867cbf971" width="35%" alt="Mobile View Home Page" /> </div>
+
+--------------------------------------------------------------------------
+
 🧱 Tech Stack
 <p align="left"> <img src="https://skillicons.dev/icons?i=react,ts,tailwind,redux,vite,reactquery,git,github,figma" /> </p>
 
