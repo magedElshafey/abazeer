@@ -9,8 +9,7 @@ import { ProductDetails } from "../../types/product.types";
 import HtmlConverter from "../../../../common/components/htmlConverter/HtmlConverter";
 import FavoriteButton from "./FavoriteButton";
 
-import { useState, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { useCart } from "@/store/CartProvider";
 import ProductAlertButton from "../product-alert/ProductAlertButton";
 import SaudiCurrency from "@/common/components/currency/SaudiCurrency";
@@ -21,34 +20,34 @@ type Props = {
 const ProductInfo: FC<Props> = ({ product }) => {
   const { t } = useTranslation();
   const [quantity, setQuantity] = useState<number>(1);
-  const { addToCart, isInCart } = useCart();
+  const { isInCart } = useCart();
 
   const inCart = isInCart(product.id);
-  const navigate = useNavigate();
-  const handleBuyNow = useCallback(() => {
-    if (!inCart) {
-      addToCart({
-        id: product.id,
-        name: product.name,
-        image: product.image || "",
-        price: product.price,
-        quantity: quantity,
-        category: product.category?.name,
-        has_discount: product.has_discount,
-        discount_percentage: product.discount_percentage,
-        average_rate: product.average_rate,
-        ratings_count: product.ratings_count,
-        stock_quantity: product.stock_quantity,
-        sold_quantity: product.sold_quantity,
-        sale_price: product.sale_price,
-        is_in_wishlist: product.is_in_wishlist,
-        item_id: product.id,
-        isLoading: true,
-        category_id: product.category_id,
-      });
-    }
-    navigate("/checkout");
-  }, [addToCart, navigate, product, quantity, inCart]);
+  // const navigate = useNavigate();
+  // const handleBuyNow = useCallback(() => {
+  //   if (!inCart) {
+  //     addToCart({
+  //       id: product.id,
+  //       name: product.name,
+  //       image: product.image || "",
+  //       price: product.price,
+  //       quantity: quantity,
+  //       category: product.category?.name,
+  //       has_discount: product.has_discount,
+  //       discount_percentage: product.discount_percentage,
+  //       average_rate: product.average_rate,
+  //       ratings_count: product.ratings_count,
+  //       stock_quantity: product.stock_quantity,
+  //       sold_quantity: product.sold_quantity,
+  //       sale_price: product.sale_price,
+  //       is_in_wishlist: product.is_in_wishlist,
+  //       item_id: product.id,
+  //       isLoading: true,
+  //       category_id: product.category_id,
+  //     });
+  //   }
+  //   navigate("/checkout");
+  // }, [addToCart, navigate, product, quantity, inCart]);
   return (
     <div className="px-2 flex flex-col gap-4">
       <div className="border-b pb-4">
@@ -106,13 +105,13 @@ const ProductInfo: FC<Props> = ({ product }) => {
               product={{ ...product, category: product?.category?.name }}
               quantity={quantity}
             />
-            <MainBtn
+            {/* <MainBtn
               onClick={handleBuyNow}
               className="sm:!w-full py-1"
               theme="secondary"
             >
               {t("buy_now")}
-            </MainBtn>
+            </MainBtn> */}
           </div>
         </div>
       ) : (
