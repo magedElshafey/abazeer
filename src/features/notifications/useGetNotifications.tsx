@@ -18,6 +18,7 @@ const useGetNotifications = () => {
       return data?.data;
     },
     enabled: Boolean(user),
+    refetchInterval: 5000
   });
 };
 

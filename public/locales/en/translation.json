@@ -395,5 +395,12 @@
   "subject": "subject",
   "send": "send",
   "contact message": "message",
-  "contact information": "contact information"
+  "contact information": "contact information",
+  "share": "Share",
+  "share_product": "Share product",
+  "share_product_description": "Copy and share this link with your friends",
+  "copy_link": "Copy link",
+  "copied": "Copied",
+  "link_copied_successfully": "Link copied successfully",
+  "close": "Close"
 }
