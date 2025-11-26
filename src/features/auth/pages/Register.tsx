@@ -5,7 +5,7 @@ import MainInput from "../../../common/components/inputs/MainInput";
 import MainBtn from "../../../common/components/buttons/MainBtn";
 import { CiUser } from "react-icons/ci";
 import { GoKey } from "react-icons/go";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MdOutlineEmail, MdOutlinePhoneEnabled } from "react-icons/md";
 import MainCheckInput from "../../../common/components/inputs/MainCheckInput";
 
@@ -13,7 +13,8 @@ const Register = () => {
   const { register, errors, handleSubmit, onSubmit, isPending, control } =
     useRegisterLogic();
   const { t } = useTranslation();
-
+  const navigate = useNavigate();
+  const handleNavigateClick = () => navigate("/static/3-terms-and-conditions");
   return (
     <AuthCard
       title="Create a new account"
@@ -35,7 +36,7 @@ const Register = () => {
           <MainInput
             required={true}
             Icon={MdOutlineEmail}
-            placeholder="email"
+            placeholder="example@example.com"
             label="email"
             enableAutocomplete
             {...register("email")}
@@ -46,7 +47,7 @@ const Register = () => {
           <MainInput
             required={false}
             Icon={MdOutlinePhoneEnabled}
-            placeholder="phone"
+            placeholder="0574896520"
             label="phone"
             enableAutocomplete
             {...register("phone")}
@@ -73,8 +74,11 @@ const Register = () => {
             {...register("password_confirmation")}
           />
         </div>
-        <div>
-          <MainCheckInput 
+        <div
+          onClick={handleNavigateClick}
+          className="cursor-pointer! underline"
+        >
+          <MainCheckInput
             label="agree-on-terms-and-conditions"
             control={control}
             name="agree_on_terms"

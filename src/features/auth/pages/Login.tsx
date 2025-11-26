@@ -9,18 +9,10 @@ import MainBtn from "../../../common/components/buttons/MainBtn";
 import useLoginLogic from "../logic/useLoginLogic";
 import { MdOutlineEmail } from "react-icons/md";
 
-
 const Login = () => {
   const { t } = useTranslation();
-  const {
-    errors,
-    register,
-    onSubmit,
-    handleSubmit,
-    isPending,
-    control
-  } = useLoginLogic();
-
+  const { errors, register, onSubmit, handleSubmit, isPending, control } =
+    useLoginLogic();
 
   return (
     <AuthCard
@@ -35,7 +27,7 @@ const Login = () => {
           <MainInput
             required={true}
             Icon={MdOutlineEmail}
-            placeholder="email"
+            placeholder="example@example.com"
             label="email"
             enableAutocomplete
             storageKey="email"
@@ -67,7 +59,12 @@ const Login = () => {
         </div>
         <div className="w-full flex-center mb-7 sm:mb-8 md:mb-9 lg:mb-10">
           <div className="w-full md:w-[150px]">
-            <MainBtn type="submit" className="w-full flex-center" text="login" isPending={isPending} />
+            <MainBtn
+              type="submit"
+              className="w-full flex-center"
+              text="login"
+              isPending={isPending}
+            />
           </div>
         </div>
         <div className="w-full flex-center text-sm gap-2">
