@@ -74,19 +74,27 @@ const Register = () => {
             {...register("password_confirmation")}
           />
         </div>
-        <div
-          onClick={handleNavigateClick}
-          className="cursor-pointer! underline"
-        >
-          <MainCheckInput
-            label="agree-on-terms-and-conditions"
-            control={control}
-            name="agree_on_terms"
-          />
-        </div>
-        <div className="w-full mb-7 text-sm gap-2">
+        <MainCheckInput
+          label={
+            <div>
+              <span className="me-1">{t("agree-on-terms-and-conditions")}</span>
+              <span
+                className="underline text-sm cursor-pointer font-bold"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNavigateClick();
+                }}
+              >
+                {t("terms and conditions")}
+              </span>
+            </div>
+          }
+          control={control}
+          name="agree_on_terms"
+        />
+        <div className="w-full mb-7 text-sm">
           <span className="text-text-gray">{t("have an account ?")}</span>
-          <Link to="/auth/login" className="text-orangeColor underline">
+          <Link to="/auth/login" className="text-orangeColor underline ms-1">
             {t("login now")}
           </Link>
         </div>

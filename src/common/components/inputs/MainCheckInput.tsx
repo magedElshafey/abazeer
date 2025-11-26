@@ -3,11 +3,12 @@ import { useTranslation } from "react-i18next";
 import { FiCheck } from "react-icons/fi";
 import { Controller, Control, FieldPath, FieldValues } from "react-hook-form";
 
-interface MainCheckInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'> {
-  label?: string;
+interface MainCheckInputProps
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type"> {
+  label?: string | React.ReactNode;
   required?: boolean;
   error?: string;
-  labelPosition?: 'inline' | 'above';
+  labelPosition?: "inline" | "above";
 }
 
 const MainCheckInput = React.forwardRef<HTMLInputElement, MainCheckInputProps>(
@@ -23,7 +24,7 @@ const MainCheckInput = React.forwardRef<HTMLInputElement, MainCheckInputProps>(
       onBlur,
       className = "",
       error,
-      labelPosition = 'inline',
+      labelPosition = "inline",
       ...rest
     },
     ref
@@ -31,23 +32,31 @@ const MainCheckInput = React.forwardRef<HTMLInputElement, MainCheckInputProps>(
     const { t } = useTranslation();
     const autoId = useId();
     const inputId = id || autoId;
-    const isChecked = typeof checked !== "undefined" ? checked : (typeof value === "boolean" ? value : undefined);
+    const isChecked =
+      typeof checked !== "undefined"
+        ? checked
+        : typeof value === "boolean"
+        ? value
+        : undefined;
 
     return (
       <div className="flex flex-col gap-1">
-        {labelPosition === 'above' && label && (
+        {labelPosition === "above" && label && (
           <label
             htmlFor={inputId}
             className={`text-sm md:text-base block mb-2 font-medium text-gray-700 ${
               disabled ? "opacity-50" : ""
             }`}
           >
-            {t(label)}
+            {typeof label === "string" ? t(label) : label}
             {required && <span className="text-red-500 ml-1">*</span>}
           </label>
         )}
 
-        <label htmlFor={inputId} className={`inline-flex items-center gap-2 ${className}`}>
+        <label
+          htmlFor={inputId}
+          className={`inline-flex items-center gap-2 ${className}`}
+        >
           {/* Visually hidden native checkbox to keep accessibility and form integration */}
           <input
             id={inputId}
@@ -68,8 +77,16 @@ const MainCheckInput = React.forwardRef<HTMLInputElement, MainCheckInputProps>(
           <span
             className={`flex items-center justify-center w-4 h-4 rounded border transition-colors duration-150
               ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}
-              ${isChecked ? "bg-orangeColor border-orangeColor" : "bg-gray-100 border-gray-300"}
-              ${error ? "ring-2 ring-red-500 border-red-500" : "focus-within:ring-2 focus-within:ring-orangeColor"}
+              ${
+                isChecked
+                  ? "bg-orangeColor border-orangeColor"
+                  : "bg-gray-100 border-gray-300"
+              }
+              ${
+                error
+                  ? "ring-2 ring-red-500 border-red-500"
+                  : "focus-within:ring-2 focus-within:ring-orangeColor"
+              }
             `}
           >
             {isChecked ? (
@@ -77,9 +94,13 @@ const MainCheckInput = React.forwardRef<HTMLInputElement, MainCheckInputProps>(
             ) : null}
           </span>
 
-          {labelPosition === 'inline' && label && (
-            <span className={`text-sm md:text-base font-medium text-gray-700 ${disabled ? "opacity-50" : ""}`}>
-              {t(label)}
+          {labelPosition === "inline" && label && (
+            <span
+              className={`text-sm md:text-base font-medium text-gray-700 ${
+                disabled ? "opacity-50" : ""
+              }`}
+            >
+              {typeof label === "string" ? t(label) : label}
               {required && <span className="text-red-500 ml-1">*</span>}
             </span>
           )}
@@ -90,7 +111,11 @@ const MainCheckInput = React.forwardRef<HTMLInputElement, MainCheckInputProps>(
             error ? "max-h-10 opacity-100 mt-1" : "max-h-0 opacity-0"
           }`}
         >
-          <p id={`${inputId}-error`} className="text-red-500 text-xs" role="alert">
+          <p
+            id={`${inputId}-error`}
+            className="text-red-500 text-xs"
+            role="alert"
+          >
             {error && t(error)}
           </p>
         </div>
@@ -108,11 +133,11 @@ interface MainCheckInputControllerProps<
 > {
   name: TName;
   control: Control<TFieldValues>;
-  label?: string;
+  label?: string | React.ReactNode;
   required?: boolean;
   disabled?: boolean;
   className?: string;
-  labelPosition?: 'inline' | 'above';
+  labelPosition?: "inline" | "above";
   rules?: any; // react-hook-form rules
 }
 
@@ -127,7 +152,7 @@ const MainCheckInputController = <
   required = false,
   disabled = false,
   className = "",
-  labelPosition = 'inline',
+  labelPosition = "inline",
   rules,
 }: MainCheckInputControllerProps<TFieldValues, TName>) => {
   return (
