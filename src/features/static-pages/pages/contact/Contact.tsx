@@ -106,14 +106,17 @@ const Contact = () => {
         >
           <SectionTitle title="contact information" />
           <div>
-            {queryResult?.data?.contact_address && (
-              <div className="flex items-center gap-2 mb-4">
-                <p className="font-bold">{t("address")}</p>
-                <p className=" duration-300 transition-all hover:underline">
-                  {queryResult?.data?.contact_address}
-                </p>
-              </div>
-            )}
+            {queryResult?.data?.contact_address &&
+              queryResult?.data?.contact_address_en && (
+                <div className="flex items-center gap-2 mb-4">
+                  <p className="font-bold">{t("address")}</p>
+                  <p className=" duration-300 transition-all hover:underline">
+                    {i18n.language === "ar"
+                      ? queryResult?.data?.contact_address
+                      : queryResult?.data?.contact_address_en}
+                  </p>
+                </div>
+              )}
             {queryResult?.data?.contact_email && (
               <div className="flex items-center gap-2 mb-4">
                 <p className="font-bold">{t("email")}</p>
