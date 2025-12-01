@@ -41,12 +41,17 @@ const AuthLayout = () => {
 
         {/* right side */}
         <div className="w-full py-20 px-10 md:w-1/2 bg-orangeColor h-screen relative flex-center overflow-hidden">
-            <img src="/images/auth-decorations.png" className="absolute -start-2 top-8 h-full w-full lg:h-auto lg:w-auto" />
-            <div className="border-white border h-full w-full rounded-xl py-10 flex justify-center items-center backdrop-blur-md border-opacity-35 relative flex-col">
-              <img src="/images/logo.png" width={200} />
-              <img src="/images/auth-image.png" className="mt-auto -mb-10 max-h-[500px]" />
-            </div>
-            
+          <img
+            src="/images/auth-decorations.png"
+            className="absolute -start-2 top-8 h-full w-full lg:h-auto lg:w-auto"
+          />
+          <div className="border-white border h-full w-full rounded-xl py-10 flex justify-center items-center backdrop-blur-md border-opacity-35 relative flex-col">
+            <img src="/images/logo-white.png" width={200} />
+            <img
+              src="/images/auth-image.png"
+              className="mt-auto -mb-10 max-h-[500px]"
+            />
+          </div>
         </div>
       </div>
     </>

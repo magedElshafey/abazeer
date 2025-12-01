@@ -70,6 +70,7 @@ const WebsiteLayout = () => {
           contact_phone={data?.contact_phone || ""}
           contact_email={data?.contact_email || ""}
           contact_address={data?.contact_address || ""}
+          contact_address_en={data?.contact_address_en || ""}
           social_facebook={data?.social_facebook || null}
           social_twitter={data?.social_twitter || null}
           social_instagram={data?.social_instagram || null}

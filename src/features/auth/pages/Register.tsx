@@ -5,7 +5,7 @@ import MainInput from "../../../common/components/inputs/MainInput";
 import MainBtn from "../../../common/components/buttons/MainBtn";
 import { CiUser } from "react-icons/ci";
 import { GoKey } from "react-icons/go";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MdOutlineEmail, MdOutlinePhoneEnabled } from "react-icons/md";
 import MainCheckInput from "../../../common/components/inputs/MainCheckInput";
 
@@ -13,7 +13,8 @@ const Register = () => {
   const { register, errors, handleSubmit, onSubmit, isPending, control } =
     useRegisterLogic();
   const { t } = useTranslation();
-
+  const navigate = useNavigate();
+  const handleNavigateClick = () => navigate("/static/3-terms-and-conditions");
   return (
     <AuthCard
       title="Create a new account"
@@ -35,7 +36,7 @@ const Register = () => {
           <MainInput
             required={true}
             Icon={MdOutlineEmail}
-            placeholder="email"
+            placeholder="example@example.com"
             label="email"
             enableAutocomplete
             {...register("email")}
@@ -46,7 +47,7 @@ const Register = () => {
           <MainInput
             required={false}
             Icon={MdOutlinePhoneEnabled}
-            placeholder="phone"
+            placeholder="0574896520"
             label="phone"
             enableAutocomplete
             {...register("phone")}
@@ -73,16 +74,27 @@ const Register = () => {
             {...register("password_confirmation")}
           />
         </div>
-        <div>
-          <MainCheckInput 
-            label="agree-on-terms-and-conditions"
-            control={control}
-            name="agree_on_terms"
-          />
-        </div>
-        <div className="w-full mb-7 text-sm gap-2">
+        <MainCheckInput
+          label={
+            <div>
+              <span className="me-1">{t("agree-on-terms-and-conditions")}</span>
+              <span
+                className="underline text-sm cursor-pointer font-bold"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNavigateClick();
+                }}
+              >
+                {t("terms and conditions")}
+              </span>
+            </div>
+          }
+          control={control}
+          name="agree_on_terms"
+        />
+        <div className="w-full mb-7 text-sm">
           <span className="text-text-gray">{t("have an account ?")}</span>
-          <Link to="/auth/login" className="text-orangeColor underline">
+          <Link to="/auth/login" className="text-orangeColor underline ms-1">
             {t("login now")}
           </Link>
         </div>

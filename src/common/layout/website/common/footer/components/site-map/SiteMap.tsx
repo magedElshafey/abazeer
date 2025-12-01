@@ -6,12 +6,14 @@ import useGetAllStaticPages from "@/features/static-pages/api/all/useGetAllStati
 import { myAccount } from "../../../../../../../data/data";
 import type { Nav } from "@/types/Nav";
 import type { NavbarType } from "@/types/navbar.types";
+import i18n from "@/lib/i18n/i18n";
 // to do  : fav icon and slogan
 interface SiteMapProps extends NavbarType {
   contact_address: string;
   contact_email: string;
   contact_phone: string;
   slogan?: string;
+  contact_address_en?: string;
 }
 const SiteMap: React.FC<SiteMapProps> = ({
   logo,
@@ -19,6 +21,7 @@ const SiteMap: React.FC<SiteMapProps> = ({
   contact_email,
   contact_phone,
   slogan,
+  contact_address_en,
 }) => {
   const { data } = useGetAllStaticPages();
 
@@ -51,8 +54,12 @@ const SiteMap: React.FC<SiteMapProps> = ({
               {slogan || ""}
             </p>
             <ul>
-              {contact_address && (
-                <li className="text-transition mb-3">{contact_address}</li>
+              {contact_address && contact_address_en && (
+                <li className="text-transition mb-3">
+                  {i18n.language === "ar"
+                    ? contact_address
+                    : contact_address_en}
+                </li>
               )}
               {contact_phone && (
                 <li className="text-transition mb-3">
