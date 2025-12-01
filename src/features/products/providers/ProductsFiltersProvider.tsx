@@ -57,7 +57,7 @@ const ProductsFiltersProvider: FC<PropsWithChildren> = ({ children }) => {
                 searchParams.delete("sort_by");
             }
             return searchParams;
-        });
+        }, {replace: true});
     }, [setSearchParams]);
 
     function handleChangeFilters(key: keyof Filters, value: Filters[typeof key] | undefined, debounce?: boolean) {
@@ -79,7 +79,7 @@ const ProductsFiltersProvider: FC<PropsWithChildren> = ({ children }) => {
                     params.set(paramKey, value.toString());
                 }
                 return params;
-            });
+            }, {replace: true});
     
         }
         
@@ -113,7 +113,7 @@ const ProductsFiltersProvider: FC<PropsWithChildren> = ({ children }) => {
                 }
             });
             return params;
-        });
+        }, {replace: true});
     }, [setSearchParams]);
 
     // Keep local state (sortBy, filters) in sync with current search params
