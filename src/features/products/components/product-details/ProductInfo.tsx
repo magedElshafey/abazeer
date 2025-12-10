@@ -14,6 +14,7 @@ import { useState } from "react";
 import { useCart } from "@/store/CartProvider";
 import ProductAlertButton from "../product-alert/ProductAlertButton";
 import SaudiCurrency from "@/common/components/currency/SaudiCurrency";
+import { formatDate } from "@/utils/formatDate";
 type Props = {
   product: ProductDetails;
 };
@@ -24,39 +25,27 @@ const ProductInfo: FC<Props> = ({ product }) => {
   const { isInCart } = useCart();
 
   const inCart = isInCart(product.id);
-  // const navigate = useNavigate();
-  // const handleBuyNow = useCallback(() => {
-  //   if (!inCart) {
-  //     addToCart({
-  //       id: product.id,
-  //       name: product.name,
-  //       image: product.image || "",
-  //       price: product.price,
-  //       quantity: quantity,
-  //       category: product.category?.name,
-  //       has_discount: product.has_discount,
-  //       discount_percentage: product.discount_percentage,
-  //       average_rate: product.average_rate,
-  //       ratings_count: product.ratings_count,
-  //       stock_quantity: product.stock_quantity,
-  //       sold_quantity: product.sold_quantity,
-  //       sale_price: product.sale_price,
-  //       is_in_wishlist: product.is_in_wishlist,
-  //       item_id: product.id,
-  //       isLoading: true,
-  //       category_id: product.category_id,
-  //     });
-  //   }
-  //   navigate("/checkout");
-  // }, [addToCart, navigate, product, quantity, inCart]);
+
   return (
     <div className="px-2 flex flex-col gap-4">
-      <div className="border-b pb-4">
-        <p className="text-inherit text-xl mb-2 text-wrap">{product?.name}</p>
-        <ProductRate
-          rating={product?.average_rate}
-          reviewCount={product?.reviews.length}
-        />
+      <div className="border-b pb-4 ">
+        <div className="mb-3">
+          <p className="text-inherit text-xl mb-2 text-wrap">{product?.name}</p>
+          <ProductRate
+            rating={product?.average_rate}
+            reviewCount={product?.reviews.length}
+          />
+        </div>
+        <div className="flex-between text-xs">
+          <div>
+            <p className=" text-slate-500">{t("Production date")}</p>
+            <p>{formatDate(product?.product_at)}</p>
+          </div>
+          <div>
+            <p className=" text-slate-500">{t("expired date")}</p>
+            <p>{formatDate(product?.expired_at)}</p>
+          </div>
+        </div>
       </div>
       <div>
         <div className="flex gap-1 text-2xl font-bold text-text-darkRed items-center">

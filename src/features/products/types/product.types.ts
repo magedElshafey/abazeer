@@ -19,6 +19,8 @@ export interface Product {
   quantity: number;
   is_in_wishlist: boolean;
   category_id: number;
+  product_at: string;
+  expired_at: string;
 }
 
 export interface Dimensions {
@@ -72,7 +74,7 @@ export interface ProductDetails extends Omit<Product, "category"> {
   faqs: {
     question: string;
     answer: string;
-  }[]
+  }[];
 }
 
 type SortByKey<T> = T extends string ? `${T}-asc` | `${T}-desc` : never;

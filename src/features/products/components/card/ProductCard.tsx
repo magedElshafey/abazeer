@@ -10,6 +10,7 @@ import FavoriteButton from "../product-details/FavoriteButton";
 import ProductAlertButton from "../product-alert/ProductAlertButton";
 import MainBtn from "@/common/components/buttons/MainBtn";
 import SaudiCurrency from "@/common/components/currency/SaudiCurrency";
+import { formatDate } from "@/utils/formatDate";
 
 interface ProductCardProps {
   product: Product;
@@ -20,7 +21,7 @@ const ProductCard: React.FC<ProductCardProps> = memo(
   ({ product, className }) => {
     const { t } = useTranslation();
     const navigate = useNavigate();
-
+    console.log("product", product);
     const handleNavigate = useCallback(() => {
       navigate(`/products/${product.id}`);
     }, [navigate, product.id]);
@@ -153,6 +154,16 @@ const ProductCard: React.FC<ProductCardProps> = memo(
               {t("not-available")}
             </p>
           )}
+          <div className="flex-between text-xs">
+            <div>
+              <p className=" text-slate-500">{t("Production date")}</p>
+              <p>{formatDate(product?.product_at)}</p>
+            </div>
+            <div>
+              <p className=" text-slate-500">{t("expired date")}</p>
+              <p>{formatDate(product?.expired_at)}</p>
+            </div>
+          </div>
           {product?.stock_quantity > 0 ? (
             <div
               className="

@@ -74,6 +74,7 @@ const WebsiteLayout = () => {
           social_facebook={data?.social_facebook || null}
           social_twitter={data?.social_twitter || null}
           social_instagram={data?.social_instagram || null}
+          whatsup2={data?.whatsup2 || ""}
           site_description={
             (language === "ar"
               ? data?.site_description_ar

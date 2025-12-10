@@ -6,6 +6,9 @@ import useGetAllStaticPages from "@/features/static-pages/api/all/useGetAllStati
 import { myAccount } from "../../../../../../../data/data";
 import type { Nav } from "@/types/Nav";
 import type { NavbarType } from "@/types/navbar.types";
+import { FaWhatsapp, FaPhone, FaLocationDot } from "react-icons/fa6";
+import { MdEmail } from "react-icons/md";
+
 import i18n from "@/lib/i18n/i18n";
 // to do  : fav icon and slogan
 interface SiteMapProps extends NavbarType {
@@ -14,6 +17,7 @@ interface SiteMapProps extends NavbarType {
   contact_phone: string;
   slogan?: string;
   contact_address_en?: string;
+  whats?: string;
 }
 const SiteMap: React.FC<SiteMapProps> = ({
   logo,
@@ -22,6 +26,7 @@ const SiteMap: React.FC<SiteMapProps> = ({
   contact_phone,
   slogan,
   contact_address_en,
+  whats,
 }) => {
   const { data } = useGetAllStaticPages();
 
@@ -36,6 +41,9 @@ const SiteMap: React.FC<SiteMapProps> = ({
         link: `static/${item?.id}-${item.slug}`,
       }));
   }, [data]);
+  function extractPhone(url: string) {
+    return url.match(/wa\.me\/([^?]+)/)?.[1] || "";
+  }
   return (
     <section
       className="py-4 border-b border-t"
@@ -55,14 +63,18 @@ const SiteMap: React.FC<SiteMapProps> = ({
             </p>
             <ul>
               {contact_address && contact_address_en && (
-                <li className="text-transition mb-3">
-                  {i18n.language === "ar"
-                    ? contact_address
-                    : contact_address_en}
+                <li className="text-transition mb-3 flex items-center gap-1">
+                  <FaLocationDot className="mt-1" size={20} />
+                  <span className="block">
+                    {i18n.language === "ar"
+                      ? contact_address
+                      : contact_address_en}
+                  </span>
                 </li>
               )}
               {contact_phone && (
-                <li className="text-transition mb-3">
+                <li className="text-transition mb-3 flex items-center gap-1">
+                  <FaPhone size={20} />
                   <a
                     href={`tel:${contact_phone}`}
                     target="_blank"
@@ -74,13 +86,22 @@ const SiteMap: React.FC<SiteMapProps> = ({
                 </li>
               )}
               {contact_email && (
-                <li className="text-transition lowercase">
+                <li className="text-transition lowercase flex items-center gap-1 mb-3">
+                  <MdEmail className="mt-1" size={20} />
                   <a
                     href={`mailto:${contact_email}`}
                     target="_blank"
                     rel="noreferrer noopener"
                   >
                     {contact_email}
+                  </a>
+                </li>
+              )}
+              {whats && (
+                <li className="text-transition lowercase flex items-center gap-1">
+                  <FaWhatsapp size={20} className="mt-1" />
+                  <a href={whats} target="_blank" rel="noreferrer noopener">
+                    {extractPhone(whats)}
                   </a>
                 </li>
               )}

@@ -17,6 +17,7 @@ export interface Setting {
   product_banner: string;
   delivery_fee: string;
   tax_rate: string;
+  whatsup2: string;
 }
 
 export interface Feature {
