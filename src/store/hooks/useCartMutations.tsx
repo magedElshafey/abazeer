@@ -131,7 +131,7 @@ export const useCartMutations = (
   const { t } = useTranslation();
   const queryClient = useQueryClient();
   const { addToCart, removeFromCart, updateQuantity, clearCart } = useCartApi();
-  const updateRef = useRef<{item_id: number; quantity: number}[]>([]);
+  const updateRef = useRef<{ item_id: number; quantity: number }[]>([]);
   const debounceRef = useRef<ReturnType<typeof setTimeout>>();
 
   const invalidateCart = useCallback(() => {
@@ -166,6 +166,8 @@ export const useCartMutations = (
         product_id: products[0]?.product_id,
         isLoading: true,
         category_id: 0,
+        expired_at: "",
+        product_at: "",
       };
 
       setItems((prev) => [...prev, newItem]);
@@ -203,7 +205,7 @@ export const useCartMutations = (
 
   // 🧩 Update Quantity
   const updateMutation = useMutation({
-    mutationFn:async ({
+    mutationFn: async ({
       item_id,
       quantity,
     }: {
@@ -211,17 +213,21 @@ export const useCartMutations = (
       quantity: number;
     }) => {
       if (debounceRef.current) clearTimeout(debounceRef.current);
-      updateRef.current = [...updateRef.current.filter(item => item.item_id !== item_id), {item_id, quantity}];
+      updateRef.current = [
+        ...updateRef.current.filter((item) => item.item_id !== item_id),
+        { item_id, quantity },
+      ];
       debounceRef.current = setTimeout(async () => {
-
         const promises: Promise<unknown>[] = [];
         updateRef.current.forEach((item) => {
           promises.push(updateQuantity(item.item_id, item.quantity));
-          updateRef.current = updateRef.current.filter(target => item !== target);
+          updateRef.current = updateRef.current.filter(
+            (target) => item !== target
+          );
         });
         await Promise.all(promises);
         invalidateCart();
-      }, 800)
+      }, 800);
     },
 
     onMutate: async ({ item_id, quantity }) => {

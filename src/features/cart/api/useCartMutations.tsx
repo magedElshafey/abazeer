@@ -50,7 +50,9 @@ export const useCartMutations = (
         item_id: products[0].product_id,
         isLoading: true,
         product_id: products[0]?.product_id,
-        category_id: 0
+        category_id: 0,
+        expired_at: "",
+        product_at: "",
       };
 
       setItems((prev) => [...prev, newItem]);

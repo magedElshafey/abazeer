@@ -37,10 +37,12 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = memo(
         item_id: product.id,
         product_id: product.id,
         category_id: product.category_id,
+        expired_at: "",
+        product_at: "",
       });
     }, [product, quantity, addToCart]);
     const handleRemoveFromCart = useCallback(() => {
-      if(inCart) removeFromCart(inCart?.item_id);
+      if (inCart) removeFromCart(inCart?.item_id);
     }, [removeFromCart, inCart]);
 
     return (
