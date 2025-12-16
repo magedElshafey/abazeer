@@ -26,10 +26,10 @@ const useRegisterLogic = () => {
     defaultValues: {
       name: "",
       password: "",
-      email: "",
+      phone: "",
       password_confirmation: "",
       rememberMe: false,
-      agree_on_terms: false
+      agree_on_terms: false,
     },
   });
 

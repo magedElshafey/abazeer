@@ -7,7 +7,8 @@ import { useProfileLogic } from "../../logic/useProfileLogic";
 import SettingsCard from "./SettingsCard";
 
 const ProfileForm: FC = () => {
-  const { onSubmit, isPending, register, handleSubmit, errors } = useProfileLogic();
+  const { onSubmit, isPending, register, handleSubmit, errors } =
+    useProfileLogic();
 
   const handleFormSubmit = async (data: ProfileSchemaType) => {
     await onSubmit(data);
@@ -30,17 +31,6 @@ const ProfileForm: FC = () => {
           required
           error={errors.name?.message}
         />
-
-        <MainInput
-          {...register("email")}
-          label="email"
-          placeholder="email"
-          type="email"
-          required
-          disabled
-          error={errors.email?.message}
-        />
-
         <MainInput
           {...register("phone")}
           label="phone"
@@ -48,14 +38,17 @@ const ProfileForm: FC = () => {
           type="tel"
           required
           error={errors.phone?.message}
+          disabled
+        />
+        <MainInput
+          {...register("email")}
+          label="email"
+          placeholder="email"
+          type="email"
         />
 
         <div className="pt-4">
-          <MainBtn
-            type="submit"
-            isPending={isPending}
-            text="update"
-          />
+          <MainBtn type="submit" isPending={isPending} text="update" />
         </div>
       </form>
     </SettingsCard>

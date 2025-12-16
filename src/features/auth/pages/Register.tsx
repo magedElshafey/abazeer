@@ -35,17 +35,6 @@ const Register = () => {
         <div className="mb-4">
           <MainInput
             required={true}
-            Icon={MdOutlineEmail}
-            placeholder="example@example.com"
-            label="email"
-            enableAutocomplete
-            {...register("email")}
-            error={errors.email?.message}
-          />
-        </div>
-        <div className="mb-4">
-          <MainInput
-            required={false}
             Icon={MdOutlinePhoneEnabled}
             placeholder="0574896520"
             label="phone"
@@ -54,6 +43,18 @@ const Register = () => {
             error={errors.phone?.message}
           />
         </div>
+        <div className="mb-4">
+          <MainInput
+            required={false}
+            Icon={MdOutlineEmail}
+            placeholder="example@example.com"
+            label="email"
+            enableAutocomplete
+            {...register("email")}
+            error={errors.email?.message}
+          />
+        </div>
+
         <div className="mb-4 grid-2 gap-4">
           <MainInput
             required={true}

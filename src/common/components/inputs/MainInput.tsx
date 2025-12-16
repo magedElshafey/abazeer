@@ -71,6 +71,11 @@ const MainInput = React.forwardRef<HTMLInputElement, MainInputProps>(
           >
             {t(label)}
             {required && <span className="text-red-500 ml-1">*</span>}
+            {!required && (
+              <span className="text-gray-400 mx-2 font-normal">
+                ({t("optional")})
+              </span>
+            )}
           </label>
         )}
 

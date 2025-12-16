@@ -1,9 +1,11 @@
 import { z } from "zod";
-import { emailSchema } from "./emailSchema";
 import { singlePasswordSchema } from "./passwordSchema";
 
 export const loginSchema = z.object({
-  email: emailSchema,
+  phone: z
+    .string()
+    .min(1, "phone is required")
+    .regex(/^05\d{8}$/, "Phone must start with 05 followed by 8 digits"),
   password: singlePasswordSchema,
   rememberMe: z.boolean().optional(),
 });

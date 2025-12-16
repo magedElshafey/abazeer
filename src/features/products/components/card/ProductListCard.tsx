@@ -157,16 +157,19 @@ const ProductListCard: React.FC<ProductListCardProps> = memo(
                 style={{ width: `${progressPercent}%` }}
               />
             </div>
-            <div className="flex-between my-3 text-xs">
-              <div>
-                <p className=" text-slate-500">{t("Production date")}</p>
-                <p>{formatDate(product?.product_at)}</p>
+            {product?.stock_quantity > 0 && (
+              <div className="flex-between my-3 text-xs">
+                <div>
+                  <p className=" text-slate-500">{t("Production date")}</p>
+                  <p>{formatDate(product?.product_at)}</p>
+                </div>
+                <div>
+                  <p className=" text-slate-500">{t("expired date")}</p>
+                  <p>{formatDate(product?.expired_at)}</p>
+                </div>
               </div>
-              <div>
-                <p className=" text-slate-500">{t("expired date")}</p>
-                <p>{formatDate(product?.expired_at)}</p>
-              </div>
-            </div>
+            )}
+
             {product.stock_quantity > 0 ? (
               <p
                 className="font-medium text-sm mb-2 text-end"

@@ -36,16 +36,18 @@ const ProductInfo: FC<Props> = ({ product }) => {
             reviewCount={product?.reviews.length}
           />
         </div>
-        <div className="flex-between text-xs">
-          <div>
-            <p className=" text-slate-500">{t("Production date")}</p>
-            <p>{formatDate(product?.product_at)}</p>
+        {product?.stock_quantity > 0 && (
+          <div className="flex-between text-xs">
+            <div>
+              <p className=" text-slate-500">{t("Production date")}</p>
+              <p>{formatDate(product?.product_at)}</p>
+            </div>
+            <div>
+              <p className=" text-slate-500">{t("expired date")}</p>
+              <p>{formatDate(product?.expired_at)}</p>
+            </div>
           </div>
-          <div>
-            <p className=" text-slate-500">{t("expired date")}</p>
-            <p>{formatDate(product?.expired_at)}</p>
-          </div>
-        </div>
+        )}
       </div>
       <div>
         <div className="flex gap-1 text-2xl font-bold text-text-darkRed items-center">

@@ -7,8 +7,13 @@ export const profileSchema = z.object({
     .min(2, "full name must be at least 2 characters"),
 
   email: z
-    .email("invalid email address"),
-  
+    .string()
+    .trim()
+    .optional()
+    .or(z.literal(""))
+    .transform((v) => (v === "" ? undefined : v))
+    .pipe(z.string().email().optional()),
+
   phone: z
     .string()
     .min(1, "phone is required")
