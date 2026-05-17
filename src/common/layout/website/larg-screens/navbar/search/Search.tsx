@@ -13,7 +13,7 @@ interface SearchProps {
 
 const Search: React.FC<SearchProps> = memo(({ onClose = undefined }) => {
   const { t } = useTranslation();
-  
+
   // Custom hook for search logic
   const {
     searchTerm,
@@ -31,7 +31,7 @@ const Search: React.FC<SearchProps> = memo(({ onClose = undefined }) => {
   // UI State
   const [showDropDown, setShowDropDown] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
-  
+
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   /** 🧠 Dropdown handlers */
@@ -59,7 +59,7 @@ const Search: React.FC<SearchProps> = memo(({ onClose = undefined }) => {
   const showResults = isFocused && hasDeferredValue;
 
   return (
-    <div className="flex-1 bg-background-gray p-3 flex items-center gap-1 sm:gap-2 md:gap-3 min-w-0 relative">
+    <div className="relative flex items-center flex-1 min-w-0 gap-1 p-3 bg-background-gray sm:gap-2 md:gap-3">
       {/* Dropdown */}
       <div className="relative flex-shrink-0" ref={dropdownRef}>
         <button
@@ -82,12 +82,17 @@ const Search: React.FC<SearchProps> = memo(({ onClose = undefined }) => {
       <input
         type="text"
         aria-label={t("search")}
-        className="flex-1 border-none outline-none bg-transparent caret-orangeColor truncate"
+        className="flex-1 truncate bg-transparent border-none outline-none caret-orangeColor"
         placeholder={t("search")}
         value={searchTerm}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setTimeout(() => setIsFocused(false), 200)}
         onChange={(e) => handleInputChange(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            performSearch();
+          }
+        }}
         aria-busy={searchState === "loading"}
       />
 
@@ -96,7 +101,7 @@ const Search: React.FC<SearchProps> = memo(({ onClose = undefined }) => {
         onClick={performSearch}
         disabled={!selectedCategory && !searchTerm.trim()}
         aria-label={t("search")}
-        className="text-transition flex-shrink-0 disabled:cursor-not-allowed disabled:opacity-40"
+        className="flex-shrink-0 text-transition disabled:cursor-not-allowed disabled:opacity-40"
       >
         <TfiSearch size={20} />
       </button>
@@ -119,4 +124,3 @@ const Search: React.FC<SearchProps> = memo(({ onClose = undefined }) => {
 
 Search.displayName = "Search";
 export default Search;
-
